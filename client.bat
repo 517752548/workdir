@@ -1,5 +1,5 @@
 @echo off
-pushd bin
+pushd ToolBin
 ExcelOut dir:../ExcelConfig namespace:ExcelConfig  exportJson:../Unity/Assets/StreamingAssets/Json exportCs:../src/NetSources/Config.cs ex:*.xlsx
 ProtoParser dir:../Net file:const.proto saveto:../src/NetSources/GameConst.cs
 ProtoParser dir:../Net file:data.proto saveto:../src/NetSources/GameData.cs
