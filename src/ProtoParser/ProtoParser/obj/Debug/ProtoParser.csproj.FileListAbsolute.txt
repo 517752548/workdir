@@ -1,6 +1,0 @@
-D:\workdir\src\ProtoParser\ProtoParser\bin\Debug\ProtoParser.exe.config
-D:\workdir\src\ProtoParser\ProtoParser\bin\Debug\ProtoParser.exe
-D:\workdir\src\ProtoParser\ProtoParser\bin\Debug\ProtoParser.pdb
-D:\workdir\src\ProtoParser\ProtoParser\obj\Debug\ProtoParser.exe
-D:\workdir\src\ProtoParser\ProtoParser\obj\Debug\ProtoParser.pdb
-D:\workdir\src\ProtoParser\ProtoParser\obj\Debug\ProtoParser.csprojResolveAssemblyReference.cache

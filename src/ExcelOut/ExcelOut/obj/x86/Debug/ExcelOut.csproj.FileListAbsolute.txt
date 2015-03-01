@@ -1,8 +1,0 @@
-D:\workdir\src\ExcelOut\ExcelOut\bin\x86\Debug\ExcelOut.exe.config
-D:\workdir\src\ExcelOut\ExcelOut\bin\x86\Debug\ExcelOut.exe
-D:\workdir\src\ExcelOut\ExcelOut\bin\x86\Debug\ExcelOut.pdb
-D:\workdir\src\ExcelOut\ExcelOut\bin\x86\Debug\org.vxwo.csharp.json.dll
-D:\workdir\src\ExcelOut\ExcelOut\bin\x86\Debug\org.vxwo.csharp.json.pdb
-D:\workdir\src\ExcelOut\ExcelOut\obj\x86\Debug\ExcelOut.exe
-D:\workdir\src\ExcelOut\ExcelOut\obj\x86\Debug\ExcelOut.pdb
-D:\workdir\src\ExcelOut\ExcelOut\obj\x86\Debug\ExcelOut.csprojResolveAssemblyReference.cache

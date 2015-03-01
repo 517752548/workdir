@@ -231,3 +231,7 @@ pip-log.txt
 /Unity/Assembly-CSharp-Editor.csproj
 /Unity/Assembly-CSharp-Editor-vs.csproj
 /Unity/Assembly-CSharp-firstpass.csproj
+obj
+bin
+/src/ProtoParser/ProtoParser/bin
+/src/ProtoParser/ProtoParser/obj
