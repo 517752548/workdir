@@ -1,0 +1,38 @@
+package Proto;
+
+message Session
+{
+   required string UserName;
+   required int32 Time;
+}
+//optional
+
+message Item
+{
+   required int32 Num;
+   required int32 Entry;   
+}
+
+message ItemPackage
+{
+   required int32 CountMax;//±³°üÉÏÏŞ
+   repeated Item Items;
+}
+
+message Soldier
+{
+    required int32 ConfigID;
+	required int32 Num;
+}
+
+enum ArmyCamp
+{
+   Player  =1;
+   Monster =2;
+}
+
+message Army
+{
+  repeated Soldier Soldiers;
+  required ArmyCamp Camp;
+}

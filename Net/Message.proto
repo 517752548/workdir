@@ -1,0 +1,8 @@
+import "data.proto";
+import "const.proto";
+package Proto;
+message C2S_Login
+{
+   required string Token;//用户名称
+   required UserType Type;//用户类型
+}

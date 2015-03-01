@@ -1,0 +1,44 @@
+﻿using Assets.Scripts.Combat.Battle.Elements;
+using Assets.Scripts.Combat.Simulate;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Assets.Scripts.Combat.Battle.States
+{
+    public class BattlePerception :GPerception
+    {
+        public BattlePerception(GState state) : base(state)
+        { }
+
+        public bool HaveDeadArmy()
+        {
+            bool have = false;
+            State.Each<BattleArmy>((el) => { 
+               if(el.IsDead)
+               {
+                   have = true;
+                   return true;
+               }
+               return false;
+            });
+            return have;
+        }
+        
+
+        public BattleArmy GetEnemy(BattleArmy el)
+        {
+            BattleArmy enemy =null;
+            State.Each<BattleArmy>((item) => {
+                if(item.Camp != el.Camp)
+                {
+                    enemy = item;
+                    return true;
+                }
+                return false;
+            });
+            return enemy;
+        }
+    }
+}
