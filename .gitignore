@@ -216,3 +216,18 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+/Unity/Assembly-CSharp-firstpass-vs.csproj
+/Unity/Assembly-CSharp-vs.csproj
+/Unity/Assembly-UnityScript.unityproj
+/Unity/Assembly-UnityScript-vs.unityproj
+/Unity/Unity.sln
+/Unity/Unity.userprefs
+/Unity/Unity-csharp.sln
+/Unity/UnityVS.Unity.CSharp.csproj
+/Unity/UnityVS.Unity.CSharp.Editor.csproj
+/Unity/UnityVS.Unity.CSharp.Plugins.csproj
+/Unity/UnityVS.Unity.sln
+/Unity/Assembly-CSharp.csproj
+/Unity/Assembly-CSharp-Editor.csproj
+/Unity/Assembly-CSharp-Editor-vs.csproj
+/Unity/Assembly-CSharp-firstpass.csproj
