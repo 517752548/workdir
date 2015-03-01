@@ -235,3 +235,5 @@ obj
 bin
 /src/ProtoParser/ProtoParser/bin
 /src/ProtoParser/ProtoParser/obj
+/Unity/Library
+/Unity/obj
