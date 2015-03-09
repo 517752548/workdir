@@ -6,11 +6,11 @@ using Assets.Scripts.Tools;
 
 namespace Assets.Scripts.UI.Windows
 {
-    partial class UILogin
+    partial class UICastlePanel
     {
-        public class GridTableModel : TableItemModel<GridTableTemplate>
+        public class ItemGridTableModel : TableItemModel<ItemGridTableTemplate>
         {
-            public GridTableModel(){}
+            public ItemGridTableModel(){}
             public override void InitModel()
             {
                 //todo
@@ -20,12 +20,13 @@ namespace Assets.Scripts.UI.Windows
         public override void InitModel()
         {
             base.InitModel();
-            //Write Code here
             
+            //Write Code here
         }
         public override void OnShow()
         {
             base.OnShow();
+            ItemGridTableManager.Count = 10;
         }
         public override void OnHide()
         {

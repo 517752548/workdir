@@ -22,20 +22,15 @@ namespace Assets.Scripts.Tools
             var child = trans.FindChild(name);
             if (child == null) 
             {
-                for (var i = 0; i < child.childCount; i++)
+                for (var i = 0; i < trans.childCount; i++)
                 {
-                    var current = child.GetChild(i);
+                    var current = trans.GetChild(i);
                     var result = FindInAllChild<T>(current, name);
                     if (result != null) return result;
                 }
-
                 return null;
-            }
-            else
-            {
-
-                return child.GetComponent<T>();
-            }
+            }else
+                return child.GetComponent<T>() ;
         }
 
     }

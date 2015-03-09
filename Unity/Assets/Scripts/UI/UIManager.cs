@@ -7,6 +7,14 @@ using Assets.Scripts.Tools;
 
 namespace Assets.Scripts.UI
 {
+    public enum WindowStates
+    {
+        Normal,
+        Show,
+        Showing,
+        Hide,
+        Hiding
+    }
     public interface IUIRender
     {
         void Render(GameObject uiRoot);
@@ -25,6 +33,13 @@ namespace Assets.Scripts.UI
     public class UIWindow
     {
         private GameObject Root { set; get; }
+
+        public void Init(GameObject root)
+        {
+            State = WindowStates.Normal;
+            Root = root;
+            OnCreate();
+        }
         public bool CanDestoryWhenHide { set; get; }
         public T FindChild<T>(string name) where T : Component
         {
@@ -37,11 +52,37 @@ namespace Assets.Scripts.UI
         public virtual void AfterHide() { }
         public virtual void OnLanguage() { }
         public virtual void OnUpdateUIData() { }
-        public void ShowWindow() { }
+        public virtual void OnLateUpdate() { }
+        public virtual void OnUpdate() { }
+        public void ShowWindow()
+        {
+            OnShow();
+            AfterShow();
+            State = WindowStates.Show;
+        }
         public void ShowAsChildWindow(UIWindow window)
-        { }
-        public void ShowAsDialogWindow(bool showMask) { }
+        {
+            ShowWindow();
+        }
+        public void ShowAsDialogWindow(bool showMask)
+        {
+            ShowWindow();
+        }
+
+        public void HideWindow() 
+        {
+            OnHide();
+            AfterShow();
+
+            State = WindowStates.Hide;
+
+        }
+
+        public WindowStates State { private set; get; }
+        
     }
+
+
     public class UIManager : Tools.XSingleton<UIManager>
     {
         public IUIRender Render { private set; get; }
@@ -55,17 +96,77 @@ namespace Assets.Scripts.UI
         }
         public void OnUpdate()
         {
+            foreach(var i in _windows)
+            {
+                if(i.Value.State == WindowStates.Hiding || i.Value.State == WindowStates.Show || i.Value.State == WindowStates.Showing )
+                    i.Value.OnUpdate();
+            }
+        }
 
-        }
         public void OnLateUpdate() {
-        
+            foreach (var i in _windows)
+            {
+                if ( i.Value.State == WindowStates.Show )
+                    i.Value.OnLateUpdate();
+            }
         }
-        public void OnUpdateUIData() { }
-        public void OnUpdateUIData(params string[] keys) { }
+        public void OnUpdateUIData()
+        {
+            foreach (var i in _windows)
+            {
+                if (i.Value.State == WindowStates.Show)
+                    i.Value.OnUpdateUIData();
+            }
+        }
+        public void OnUpdateUIData(params string[] keys)
+        {
+            foreach(var i in keys)
+            {
+                UIWindow w;
+                if (_windows.TryGetValue(i, out w))
+                    if (w.State == WindowStates.Show)
+                        w.OnUpdateUIData();
+            }
+        }
 
         public void OnUpdateUIData<T>() where T : UIWindow
         {
             OnUpdateUIData(typeof(T).Name);
+        }
+
+        public T CreateOrShowWindow<T>() where T: UIWindow, new ()
+        {
+            var key = typeof(T).Name;
+            T window;
+            if(_windows.ContainsKey(key))
+            {
+                window = _windows[key] as T;
+            }
+            else
+            {
+                window = Create<T>();
+            }
+
+            return window;
+        }
+
+        private T Create<T>() where T : UIWindow, new()
+        {
+            var atts = typeof(T).GetCustomAttributes(typeof(UI.UIWindowAttribute), false) as UI.UIWindowAttribute[];
+            if (atts.Length > 0)
+            {
+                var ui = new T();
+                var resourse = Tools.ResourcesManager.Singleton.LoadResources<GameObject>("UI/" + atts[0].Resource);
+                if (resourse == null) return default(T);
+                var uiRoot = GameObject.Instantiate<GameObject>(resourse);             
+                this.Render.Render(uiRoot);
+                ui.Init(uiRoot);
+                _windows.Add(typeof(T).Name, ui);
+
+                return ui;
+            }
+            else
+                return default(T);
         }
     }
 }

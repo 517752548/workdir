@@ -16,6 +16,11 @@ public class UIRender : MonoBehaviour, Assets.Scripts.UI.IUIRender
 
     }
 
+    void Awake()
+    {
+        Assets.Scripts.UI.UIManager.Singleton.Init(this);
+    }
+
     [SerializeField]
     public Camera UICamera;
     [SerializeField]

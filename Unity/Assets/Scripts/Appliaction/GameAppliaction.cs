@@ -86,7 +86,9 @@ namespace Assets.Scripts.Appliaction
         /// 进入城堡
         /// </summary>
         public void JoinCastle() 
-        { 
+        {
+            var state = new CastleState();
+            ChangeState(state);
         }
 
         /// <summary>

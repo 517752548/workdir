@@ -89,6 +89,10 @@ namespace Assets.Scripts.UI
 
         public void RepositionLayout()
         {
+            if (currentTable != null)
+                currentTable.repositionNow = true;
+            if (currentGrid != null)
+                currentGrid.repositionNow = true;
             //throw new NotImplementedException();
         }
 
@@ -122,12 +126,18 @@ namespace Assets.Scripts.UI
         }
 
         private UIGrid currentGrid;
+        private UITable currentTable;
         internal void InitFromGrid(UIGrid grid)
         {
             currentGrid = grid;
+            Init(grid.transform);
         }
 
-        public void InitFromTable(UITable table) { }
+        public void InitFromTable(UITable table)
+        {
+            currentTable = table;
+            Init(table.transform);
+        }
     }
     public abstract class TableItemTemplate
     {
