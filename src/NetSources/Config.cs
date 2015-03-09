@@ -132,6 +132,26 @@ namespace ExcelConfig
     }
 
     /// <summary>
+    /// 英雄数据表
+    /// </summary>
+    [ConfigFile("ProduceLevelUpConfig.json","ProduceLevelUpConfig")]
+    public class ProduceLevelUpConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 点击次数
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int ProduceCount { set; get; }
+        
+        /// <summary>
+        /// 产出值
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int ProduceValue { set; get; }
+
+    }
+
+    /// <summary>
     /// 道具材料
     /// </summary>
     [ConfigFile("ItemConfig.json","ItemConfig")]
