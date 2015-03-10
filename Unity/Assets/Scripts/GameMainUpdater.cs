@@ -19,16 +19,6 @@ namespace Assets.Scripts
         void Start()
         {
             GameAppliaction.Singleton.Start();
-            var package = new Proto.ItemPackage();
-            for (var i = 0; i < 1000; i++)
-            {
-                package.Items.Add(new Proto.Item() { Entry = 1, Num = i });
-            }
-            byte[] bytes = Tools.ProtoTool.Serialize(package);
-            Debug.Log("Length=" + bytes.Length);
-            var newp = Tools.ProtoTool.Deserialize<Proto.ItemPackage>(bytes); 
-            var user = new Proto.Session() {  UserName ="张三是个大蹦达美", Time = 100000};
-            Debug.Log(Tools.ProtoTool.Deserialize<Proto.Session>(Tools.ProtoTool.Serialize(user)).UserName);
         }
 
         void LateUpdate()

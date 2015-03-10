@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.Tools;
+using Assets.Scripts.Appliaction;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -20,7 +21,13 @@ namespace Assets.Scripts.UI.Windows
         public override void InitModel()
         {
             base.InitModel();
-            
+
+            bt_produce.OnMouseClick((s, e) =>
+            {
+                //onclick 
+                var produceID = GameAppliaction.Singleton.ConstValues.PRODUCE_ITEM_ID;
+                
+            });
             //Write Code here
         }
         public override void OnShow()

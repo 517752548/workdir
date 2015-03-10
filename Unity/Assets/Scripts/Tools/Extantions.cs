@@ -20,7 +20,7 @@ namespace Assets.Scripts.Tools
         private static T FindInAllChild<T>(Transform trans, string name) where T : Component
         {
             var child = trans.FindChild(name);
-            if (child == null) 
+            if (child == null)
             {
                 for (var i = 0; i < trans.childCount; i++)
                 {
@@ -29,9 +29,26 @@ namespace Assets.Scripts.Tools
                     if (result != null) return result;
                 }
                 return null;
-            }else
-                return child.GetComponent<T>() ;
+            }
+            else
+                return child.GetComponent<T>();
         }
 
+        public static UIMouseClick OnMouseClick(this Component comp, EventHandler<UIEventArgs> handler)
+        {
+            return OnMouseClick(comp, handler, null);
+        }
+
+        public static UIMouseClick OnMouseClick(this Component comp, EventHandler<UIEventArgs> handler, object userState)
+        {
+            UIMouseClick click = comp.GetComponent<UIMouseClick>(); ;
+            if (click == null)
+            {
+                click = comp.gameObject.AddComponent<UIMouseClick>();
+            }
+            click.Click = handler;
+            click.UserState = userState;
+            return click;
+        }
     }
 }

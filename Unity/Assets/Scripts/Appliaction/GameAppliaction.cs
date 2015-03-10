@@ -24,6 +24,8 @@ namespace Assets.Scripts.Appliaction
             PlayerItemManager.Singleton.Load();
             GamePlayerManager.Singleton.Load();
             Debug.Log(LanguageManager.Singleton["APP_NAME"]);
+
+            JoinCastle();
            
         }
 
