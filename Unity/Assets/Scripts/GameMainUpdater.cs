@@ -45,6 +45,8 @@ namespace Assets.Scripts
         }
 
         public int ExploreID = -1;
+
+#if UNITY_EDITOR
         void OnGUI()
         {
             int line = 1;
@@ -61,5 +63,6 @@ namespace Assets.Scripts
                 GameAppliaction.Singleton.JoinCastle();
             }
         }
+#endif
     }
 }
