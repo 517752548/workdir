@@ -64,11 +64,16 @@ namespace Proto
         /// 
         /// </summary>
         public int Entry { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Diff { set; get; }
 
         public void ParseFormBinary(BinaryReader reader)
         {
             Num = reader.ReadInt32();
             Entry = reader.ReadInt32();
+            Diff = reader.ReadInt32();
              
         }
 
@@ -76,6 +81,7 @@ namespace Proto
         {
             writer.Write(Num);
             writer.Write(Entry);
+            writer.Write(Diff);
             
         }
 

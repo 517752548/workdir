@@ -216,8 +216,12 @@ namespace Assets.Scripts.UI.Windows
                 .Replace("[TableType]", i.Value.Type == TableTypes.UIGrid ? "Grid" : "Table"));
         }
 
-        var modeCode = modelFile.Replace("[TableModels]", tableModel.ToString()).Replace("[ClassName]",className);
-        File.WriteAllText(Path.Combine( windowsRoot,className+".cs") ,modeCode);
+        if (createModelFile)
+        {
+            var modeCode = modelFile.Replace("[TableModels]", tableModel.ToString()).Replace("[ClassName]", className);
+            File.WriteAllText(Path.Combine(windowsRoot, className + ".cs"), modeCode);
+        }
+
         var templateCode = templateFile.Replace("[ClassName]", className)
             .Replace("[ResourceName]", className)
             .Replace("[Fields]", fields.ToString())

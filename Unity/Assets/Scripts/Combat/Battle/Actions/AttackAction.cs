@@ -25,9 +25,11 @@ namespace Assets.Scripts.Combat.Battle.Actions
             Soldier.AttackCdTime = Time.time;
             var damage = Soldier.Config.Damage* Soldier.Soldier.Num;
             var dead = Enemy.CalHp(-damage);
-            Debug.Log(cur.Camp.ToString() +" Attack "+Enemy.Camp +" damage "+ damage +" hp="+ Enemy.HP+" Time="+Time.time);
+            //Debug.Log(cur.Camp.ToString() +" Attack "+Enemy.Camp +" damage "+ damage +" hp="+ Enemy.HP+" Time="+Time.time);
+            UI.UITipManager.Singleton.DrawNotify (cur.Camp.ToString() + " Attack " + Enemy.Camp + " damage " + damage + " hp=" + Enemy.HP + " Time=" + Time.time);
+            
             if (dead)
-                Debug.Log(Enemy.Camp.ToString() +"Dead");
+                UI.UITipManager.Singleton.DrawNotify(Enemy.Camp.ToString() + "Dead");
 
             //throw new NotImplementedException();
         }

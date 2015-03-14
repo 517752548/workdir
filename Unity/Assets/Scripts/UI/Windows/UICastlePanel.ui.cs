@@ -27,6 +27,7 @@ namespace Assets.Scripts.UI.Windows
         public UIButton bt_left;
         public UIButton bt_right;
         public UIButton bt_produce;
+        public UILabel lb_time;
         public UIButton bt_contruct;
         public UIButton bt_market;
         public UIButton bt_make;
@@ -44,6 +45,7 @@ namespace Assets.Scripts.UI.Windows
             bt_left = FindChild<UIButton>("bt_left");
             bt_right = FindChild<UIButton>("bt_right");
             bt_produce = FindChild<UIButton>("bt_produce");
+            lb_time = FindChild<UILabel>("lb_time");
             bt_contruct = FindChild<UIButton>("bt_contruct");
             bt_market = FindChild<UIButton>("bt_market");
             bt_make = FindChild<UIButton>("bt_make");

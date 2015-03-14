@@ -50,5 +50,13 @@ namespace Assets.Scripts.Tools
             click.UserState = userState;
             return click;
         }
+
+        public static UIButton Disable(this UIButton button, bool disable)
+        {
+            var collier = button.GetComponent<Collider>();
+            collier.enabled = !disable;
+            button.SetState(disable ? UIButton.State.Disabled : UIButtonColor.State.Normal, true);
+            return button;
+        }
     }
 }

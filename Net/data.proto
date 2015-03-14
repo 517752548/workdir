@@ -10,7 +10,8 @@ message Session
 message Item
 {
    required int32 Num;
-   required int32 Entry;   
+   required int32 Entry;
+   required int32 Diff;   
 }
 
 message ItemPackage

@@ -17,7 +17,7 @@ namespace Assets.Scripts.Combat.Battle.Actions
 
             Appliaction.GameAppliaction.Singleton.GoToExplore(-1);
             //ShowBattle result 
-            Debug.Log(string.Format("BattleEnd"));
+            UI.UITipManager.Singleton.DrawNotify(string.Format("BattleEnd"));
             //throw new NotImplementedException();
             
         }

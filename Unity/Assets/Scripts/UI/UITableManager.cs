@@ -105,6 +105,7 @@ namespace Assets.Scripts.UI
                 templet = root.GetChild(0);
             else
                 throw new Exception("Can't init table from a empty root!");
+            templet.ActiveSelfObject(false);
         }
 
         public T this[int index]

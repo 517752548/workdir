@@ -16,6 +16,32 @@ namespace ExcelConfig
 {
 
     /// <summary>
+    /// 制作表
+    /// </summary>
+    [ConfigFile("MakeConfig.json","MakeConfig")]
+    public class MakeConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 需要道具
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String RequireItems { set; get; }
+        
+        /// <summary>
+        /// 获得道具
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String RewardItems { set; get; }
+
+    }
+
+    /// <summary>
     /// 功能对应产出表
     /// </summary>
     [ConfigFile("FunctionConfig.json","FunctionConfig")]
@@ -38,6 +64,38 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(3)]
         public String Produce { set; get; }
+
+    }
+
+    /// <summary>
+    /// 英雄数据表
+    /// </summary>
+    [ConfigFile("ShopConfig.json","ShopConfig")]
+    public class ShopConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 获得道具
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int Item { set; get; }
+        
+        /// <summary>
+        /// 需要道具
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int RequireItem { set; get; }
+        
+        /// <summary>
+        /// 需要数量
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int RequireNum { set; get; }
+        
+        /// <summary>
+        /// 是否默认打开 0=N 1=Y
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int IsOpen { set; get; }
 
     }
 
@@ -148,6 +206,18 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(2)]
         public int ProduceValue { set; get; }
+        
+        /// <summary>
+        /// 对应的功能ID
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int FunctionID { set; get; }
+        
+        /// <summary>
+        /// 时间 
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public float CdTime { set; get; }
 
     }
 

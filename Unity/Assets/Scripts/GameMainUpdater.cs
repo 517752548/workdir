@@ -47,6 +47,7 @@ namespace Assets.Scripts
         public int ExploreID = -1;
 
 #if UNITY_EDITOR
+        private string GM = string.Empty;
         void OnGUI()
         {
             int line = 1;
@@ -62,7 +63,23 @@ namespace Assets.Scripts
             {
                 GameAppliaction.Singleton.JoinCastle();
             }
+            if (GUI.Button(new Rect(10, Screen.height - (line++ * 30), 120, 25), "SaveData"))
+            {
+                //will save when exit
+                GameAppliaction.Singleton.Exit();
+            }
+            var rect = new Rect(10, Screen.height - (line++ * 30), 120, 25);
+
+            GM = GUI.TextField(rect, GM);
+            rect.Set(rect.xMin+120, rect.yMin, rect.width, rect.height);
+            if(GUI.Button(rect,"GMSubmit"))
+            {
+                //处理GM命令
+                Assets.Scripts.DataManagers.GMCommTool.Singleton.ExecuteGMComm(GM);
+            }
         }
+
+        //GM 
 #endif
     }
 }
