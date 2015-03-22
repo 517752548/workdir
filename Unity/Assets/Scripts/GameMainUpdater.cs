@@ -13,6 +13,11 @@ namespace Assets.Scripts
         void Awake() { }
 
         void Update() {
+            if(Input.GetKey(KeyCode.Escape))
+            {
+                Application.Quit();
+                return;
+            }
             GameAppliaction.Singleton.Update();
         }
 

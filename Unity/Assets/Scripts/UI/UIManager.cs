@@ -87,6 +87,7 @@ namespace Assets.Scripts.UI
     {
         public IUIRender Render { private set; get; }
 
+        
         private Dictionary<string, UIWindow> _windows { set; get; }
 
         public void Init(IUIRender render)
@@ -167,6 +168,18 @@ namespace Assets.Scripts.UI
             }
             else
                 return default(T);
+        }
+
+        public delegate bool FindContion<T>(T item) where T : UIWindow;
+
+        public void Each<T>(FindContion<T> cond) where T:UIWindow
+        {
+            foreach(var i in _windows)
+            {
+                if (i.Value.State != WindowStates.Show) continue;
+                if (!(i.Value is T)) continue; 
+                if (cond(i.Value as T)) break;
+            }
         }
     }
 }

@@ -7,6 +7,14 @@ namespace Assets.Scripts.GameStates
 {
     public class ExploreState:Appliaction.GameState
     {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+        }
 
+        public override void OnExit()
+        {
+            base.OnExit();
+        }
     }
 }

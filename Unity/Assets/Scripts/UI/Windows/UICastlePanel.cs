@@ -73,6 +73,11 @@ namespace Assets.Scripts.UI.Windows
                     cdTime = -1f;
                     bt_produce.Disable(false);
                     lb_time.text = string.Empty;
+                    var s = bt_produce.tweenTarget.GetComponent<UISprite>();
+                    if(s!=null &&!string.IsNullOrEmpty( bt_produce.normalSprite))
+                    {
+                        s.spriteName = bt_produce.normalSprite;
+                    }
                 }
                 else
                 {

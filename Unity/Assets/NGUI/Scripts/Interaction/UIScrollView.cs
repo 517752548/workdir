@@ -510,6 +510,7 @@ public class UIScrollView : MonoBehaviour
 		}
 	}
 
+    public bool TopWhenNotFull = false;
 	/// <summary>
 	/// Helper function used in UpdateScrollbars(float) function above.
 	/// </summary>

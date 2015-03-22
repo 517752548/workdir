@@ -18,7 +18,11 @@ namespace Assets.Scripts.DataManagers
         
         //user data
         public const string PLAYER_DATA_PATH = "_PALYER_DATA_.json";
+        //资源生产技术开放
+        public const string PLAYER_PRODUCE_OPEN = "_PLAYER_PRODUCE_OPEN.json";
         private Dictionary<int, string> PlayerData { set; get; }
+
+        private Dictionary<int, bool> ProduceOpenState { set; get; }
 
         public GamePlayerManager()
         {
@@ -47,14 +51,23 @@ namespace Assets.Scripts.DataManagers
 
         public void Load()
         {
-            string json = GameAppliaction.Singleton.ReadFile(PLAYER_DATA_PATH);
+            var list = Tools.PresistTool.LoadJson<List<PlayerData>>(PLAYER_DATA_PATH);
             PlayerData = new Dictionary<int, string>();
-            if(!string.IsNullOrEmpty(json))
+            if (list != null)
             {
-                var list = JsonTool.Deserialize<List<PlayerData>>(json);
-                foreach(var i in list)
+                foreach (var i in list)
                 {
                     PlayerData.Add(i.Key, i.Value);
+                }
+            }
+            var data = Tools.PresistTool.LoadJson<List<ProducePrisitData>>(PLAYER_PRODUCE_OPEN);
+            ProduceOpenState = new Dictionary<int, bool>();
+            if (data!=null)
+            {
+                foreach (var i in data)
+                {
+                    if (ProduceOpenState.ContainsKey(i.ProduceID)) continue;
+                    ProduceOpenState.Add(i.ProduceID, i.IsOpen);
                 }
             }
         }
@@ -64,7 +77,39 @@ namespace Assets.Scripts.DataManagers
             var list = PlayerData.Select(t => new PlayerData { Key = t.Key, Value = t.Value }).ToList();
             var json = JsonTool.Serialize(list);
             GameAppliaction.Singleton.SaveFile(PLAYER_DATA_PATH, json, false);
+            
+            var produceList = ProduceOpenState.Select(t => new ProducePrisitData { ProduceID = t.Key, IsOpen = t.Value }).ToList();
+            var produceJson = JsonTool.Serialize(produceList);
+            GameAppliaction.Singleton.SaveFile(PLAYER_PRODUCE_OPEN, produceJson, false);
+        }
 
+        public List<ExcelConfig.ResourcesProduceConfig> OpenProduceConfigs()
+        {
+            var configs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.ResourcesProduceConfig>();
+            var openeds = configs.Where(t => {
+                bool result = false;
+                if(ProduceOpenState.TryGetValue(t.ID, out result))
+                {
+                    return result;
+                }
+                return result;
+            })
+            .ToList();
+
+            return openeds;
+        }
+
+        public void OpenProduceById(int id)
+        {
+            if(this.ProduceOpenState.ContainsKey(id))
+            {
+                this.ProduceOpenState[id] = true;
+            }else
+            {
+                this.ProduceOpenState.Add(id, true);
+            }
+            //保存
+            Presist();
         }
 
         public int GetIntValue(PlayDataKeys key)
@@ -124,15 +169,23 @@ namespace Assets.Scripts.DataManagers
             UI.UIManager.Singleton.OnUpdateUIData();
             return CurrentLevel == null ? 0f : CurrentLevel.CdTime;
         }
-
         private void AddProduceTimes(int time)
         {
             var currentTime = GetIntValue(PlayDataKeys.PRODUCE_CLICK_TIMES);
             currentTime+=time;
             this[PlayDataKeys.PRODUCE_CLICK_TIMES] = string.Format("{0}",currentTime);
         }
+
     }
 
+    public class ProducePrisitData
+    {
+        [JsonName("P")]
+        public int ProduceID { set; get; }
+
+        [JsonName("S")]
+        public bool IsOpen { set; get; }
+    }
     public class PlayerData
     {
         public int Key { set; get; }
