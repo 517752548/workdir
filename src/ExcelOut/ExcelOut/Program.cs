@@ -89,6 +89,7 @@ namespace ExcelOut
                     table.ClassName = row[1].ToString();
                     table.FileName = row[2].ToString();
                     table.Description = row[3].ToString();
+                    
                     exTables.Add(table);
                 }
                 #endregion
@@ -105,11 +106,13 @@ namespace ExcelOut
                     {
                         try
                         {
+
                             var colnum = new Libs.EX.ExcelTableCol();
                             colnum.ColIndex = col - 1;
                             colnum.Comment = ds.Tables[0].Rows[2][col].ToString();
                             colnum.Name = ds.Tables[0].Rows[0][col].ToString();
                             colnum.Type = ds.Tables[0].Rows[1][col].ToString();
+                            if (string.IsNullOrEmpty(colnum.Name)) continue;
                             table.Cols.Add(colnum);
                             var coln = ds.Tables[0].Columns[col];
 
@@ -131,10 +134,11 @@ namespace ExcelOut
                     for (var i = 3; i < ds.Tables[0].Rows.Count; i++)
                     {
                         var row = dataTable.NewRow();
-                        for (var col = 1; col < ds.Tables[0].Columns.Count; col++)
+                        for (var col = 1; col < ds.Tables[0].Columns.Count && col<dataTable.Columns.Count+1 ; col++)
                         {
                             row[col - 1] = ds.Tables[0].Rows[i][col];
                         }
+
                         dataTable.Rows.Add(row);
                     }
                     #endregion

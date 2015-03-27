@@ -33,7 +33,7 @@ namespace XNet.Libs.Net
 		/// <param name="server"></param>
 		/// <param name="client"></param>
 		/// <param name="id"></param>
-		public Client (SocketServer server, Socket client, int id, AThreadPool.ThreadWorkGroup worker)
+		public Client (SocketServer server, Socket client, int id)
 		{
 			ID = id;
 			Buffer = new byte[BUFFER_SIZE];
@@ -41,7 +41,6 @@ namespace XNet.Libs.Net
 			IsClose = false;
 			Server = server;
 			Socket = client;
-			Worker = worker;
 			HaveAdmission = false;
 		}
 		/// <summary>
@@ -76,9 +75,6 @@ namespace XNet.Libs.Net
 			if (OnDisconnect != null) {
 				OnDisconnect (this, new EventArgs ());
 			}
-			if (Worker != null) {
-				Worker.Cancel ();
-			}
 		}
 		/// <summary>
 		/// 当前服务器
@@ -99,10 +95,6 @@ namespace XNet.Libs.Net
 		/// 连接断开事件 
 		/// </summary>
 		public event EventHandler<EventArgs> OnDisconnect;
-		/// <summary>
-		/// 工作线程
-		/// </summary>
-		public AThreadPool.ThreadWorkGroup Worker { set; get; }
 		
 		public bool HaveAdmission {
 			get;

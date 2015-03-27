@@ -267,7 +267,7 @@ namespace XNet.Libs.Net
 			this._socket.Shutdown (SocketShutdown.Both);
 			this._socket.Close ();
 			this._socket = null;
-			Xxp.Libs.Utility.Debuger.DebugLog ("Client socket Disconnect!");
+			XNet.Libs.Utility.Debuger.DebugLog ("Client socket Disconnect!");
 		}
 		/// <summary>
 		/// 连接完成
@@ -339,7 +339,7 @@ namespace XNet.Libs.Net
 				}
 				bytes = mem.ToArray ();
 			}
-			var message = new Message ((byte)MessageClass.Ping, 0, bytes);
+			var message = new Message (MessageClass.Ping, 0, bytes);
 			SendMessage (message);
 		}
 		/// <summary>

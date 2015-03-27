@@ -48,6 +48,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\JSON\JSON.csproj">
+      <Project>{60fdf2ef-f0f7-44d8-b19d-799c51d7022c}</Project>
+      <Name>JSON</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\xxp\XNet.Libs.csproj">
+      <Project>{32ac4539-87a0-4e68-bce8-fea1d8d05062}</Project>
+      <Name>XNet.Libs</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

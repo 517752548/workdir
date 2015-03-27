@@ -174,4 +174,12 @@ namespace Assets.Scripts.UI
 
         private Queue<UITip> _delTemp = new Queue<UITip>();
     }
+
+    public class UITipDrawer : Tools.XSingleton<UITipDrawer>
+    {
+        public void DrawNotify(string notify)
+        {
+            UITipManager.Singleton.DrawNotify(notify);
+        }
+    }
 }

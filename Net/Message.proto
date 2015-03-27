@@ -1,8 +1,34 @@
 import "data.proto";
 import "const.proto";
 package Proto;
+
+
+message GameSession
+{
+    required int32 SessionID;
+	required int32 UserID;
+}
+
 message C2S_Login
 {
    required string Token;//用户名称
    required UserType Type;//用户类型
+}
+
+message S2C_Login
+{
+   required bool Success;
+   required string SessionKey;
+}
+
+
+message C2S_SaveData
+{
+   required GameSession Session;
+   required string Json;
+}
+
+message S2C_SaveData
+{
+   required bool Success;
 }

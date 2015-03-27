@@ -186,6 +186,76 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(1)]
         public int PRODUCE_ITEM_ID { set; get; }
+        
+        /// <summary>
+        /// 资源生产计算间隔时间（秒）
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int RESOURCES_PRODUCE_TIME { set; get; }
+        
+        /// <summary>
+        /// 收集间隔时间（秒）
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int COLLECT_TIME { set; get; }
+
+    }
+
+    /// <summary>
+    /// 建筑表
+    /// </summary>
+    [ConfigFile("BuildingConfig.json","BuildingConfig")]
+    public class BuildingConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 描述
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String Description { set; get; }
+
+    }
+
+    /// <summary>
+    /// 建筑升级表
+    /// </summary>
+    [ConfigFile("BuildingLevelConfig.json","BuildingLevelConfig")]
+    public class BuildingLevelConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 建筑编号
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int BuildID { set; get; }
+        
+        /// <summary>
+        /// 等级
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int Level { set; get; }
+        
+        /// <summary>
+        /// 道具列表
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String LevelUpRequire { set; get; }
+        
+        /// <summary>
+        /// 升级触发事件
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public String LevelUpEvent { set; get; }
+        
+        /// <summary>
+        /// 参数
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public String LevelUpParams { set; get; }
 
     }
 
@@ -218,6 +288,38 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(4)]
         public float CdTime { set; get; }
+
+    }
+
+    /// <summary>
+    /// 资源产量表
+    /// </summary>
+    [ConfigFile("ResourcesProduceConfig.json","ResourcesProduceConfig")]
+    public class ResourcesProduceConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 单位消耗资源
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String CostItems { set; get; }
+        
+        /// <summary>
+        /// 单位收获
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String RewardItems { set; get; }
+        
+        /// <summary>
+        /// 说明描述
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public String Description { set; get; }
 
     }
 

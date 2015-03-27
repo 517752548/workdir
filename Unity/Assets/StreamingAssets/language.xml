@@ -2,4 +2,12 @@
 <ArrayOfLanguageKey xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <LanguageKey Key="APP_NAME">三国战斗</LanguageKey>
   <LanguageKey Key="REWARD_ITEM">{0} +{1}</LanguageKey>
+  <LanguageKey Key="UIShop_Require_Item_Enough">[000000]</LanguageKey>
+  <LanguageKey Key="UIShop_Require_Item_Not_Enough">[00ff00]</LanguageKey>
+  <LanguageKey Key="UIShop_Require_Item">{0} *{1}</LanguageKey>
+  <LanguageKey Key="BUY_ITEM_NO_ENOUGH">{0}不足，需要{1}个</LanguageKey>
+  <LanguageKey Key="MAKE_NOT_ENOUGHT">{0}不足</LanguageKey>
+  <LanguageKey Key="NOT_ENOUGHT">缺少</LanguageKey>
+  <LanguageKey Key="Need_Item_Count">{0} *{1}</LanguageKey>
+  <LanguageKey Key="BUILD_LEVEL_MAX">MAX</LanguageKey>
 </ArrayOfLanguageKey>

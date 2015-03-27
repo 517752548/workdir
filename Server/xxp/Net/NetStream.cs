@@ -214,13 +214,16 @@ namespace XNet.Libs.Net
         /// <param name="class"></param>
         /// <param name="flag"></param>
         /// <param name="content"></param>
-        public Message(byte @class, int flag, byte[] content)
+        private Message(byte @class, int flag, byte[] content)
         {
             _class = @class;
             _flag = flag;
             _size = content.Length;
             _content = content;
         }
+
+        public Message(MessageClass @class,int flag, byte[] content):this((byte)@class,flag,content)
+        { }
         /// <summary>
         /// 
         /// </summary>

@@ -10,7 +10,10 @@ namespace Assets.Scripts
 {
     public class GameMainUpdater :MonoBehaviour
     {
-        void Awake() { }
+        void Awake()
+        {
+
+        }
 
         void Update() {
             if(Input.GetKey(KeyCode.Escape))
@@ -36,7 +39,7 @@ namespace Assets.Scripts
             GameAppliaction.Singleton.FixedUpdate();
         }
 
-        void OnAppliactionPause(bool isPause)
+        void OnApplicationPause(bool isPause)
         {
             if (isPause)
                 GameAppliaction.Singleton.Pause();
@@ -44,14 +47,14 @@ namespace Assets.Scripts
                 GameAppliaction.Singleton.Ruseme();
         }
 
-        void OnAppliactionQuit()
+        void OnApplicationQuit()
         {
             GameAppliaction.Singleton.Exit();
         }
 
         public int ExploreID = -1;
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
         private string GM = string.Empty;
         void OnGUI()
         {
@@ -85,6 +88,6 @@ namespace Assets.Scripts
         }
 
         //GM 
-#endif
+//#endif
     }
 }

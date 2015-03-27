@@ -70,7 +70,7 @@ namespace XNet.Libs.Net
                         int flag = br.ReadInt32();
                         int size = br.ReadInt32();
                         byte[] content = br.ReadBytes(size);
-                        buffer.AddMessage(new Message(type, flag, content));
+                        buffer.AddMessage(new Message((MessageClass)type, flag, content));
                     }
                 }
             }

@@ -125,19 +125,7 @@ namespace Assets.Scripts.DataManagers
             var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.FunctionConfig>(id);
             if (config != null)
             {
-                var splits = config.Produce.Split('|');
-                var produces = new List<int[]>();
-                foreach (var i in splits)
-                {
-                    var strSplit = i.Split(':');
-                    if (strSplit.Length != 2)
-                    {
-                        Debug.LogError(string.Format("FunctionConfig:{0} Produce:{1}", id, config.Produce));
-                        continue;
-                    }
-                    produces.Add(new int[] { Convert.ToInt32(strSplit[0]), Convert.ToInt32(strSplit[01]) });
-                }
-
+                var produces = PlayerItemManager.SplitFormatItemData(config.Produce);
                 foreach (var i in produces)
                 {
                    Proto.Item item= PlayerItemManager.Singleton.AddItem(i[0], i[1]);
@@ -146,7 +134,6 @@ namespace Assets.Scripts.DataManagers
             }
             return result;
         }
-
         public ExcelConfig.ProduceLevelUpConfig CurrentLevel { private set; get; }
         internal float CallProduceGold()
         {

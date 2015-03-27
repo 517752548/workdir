@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.UI
 {
-    public class UIAutoGenWindow : UIWindow
+    public abstract class UIAutoGenWindow : UIWindow
     {
         public override void OnCreate()
         {

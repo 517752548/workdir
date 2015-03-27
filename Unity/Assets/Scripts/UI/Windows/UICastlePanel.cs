@@ -29,15 +29,48 @@ namespace Assets.Scripts.UI.Windows
                     Template.lb_name.text = _GameItem.Config.Name;
                 }
             }
+
+
+            private bool _canDrag = false;
+            public bool CanDrag
+            {
+                get { return _canDrag; }
+                set
+                {
+                    _canDrag = value;
+                    var drag = this.Item.Root.GetComponent<UIDragScrollView>();
+                    if (drag == null) return;
+                    drag.enabled = _canDrag;
+                }
+            }
         }
 
         public override void InitModel()
         {
             base.InitModel();
+            CanDestoryWhenHide = true;
             bt_produce.OnMouseClick((s, e) => {
                 var cd = DataManagers.GamePlayerManager.Singleton.CallProduceGold();
                 cdTime = cd + Time.time;
                 bt_produce.Disable(true);
+            });
+
+            bt_market.OnMouseClick((s, e) => {
+                this.HideWindow();
+                var ui = UIManager.Singleton.CreateOrShowWindow<Windows.UIShop>();
+                ui.ShowWindow();
+            });
+
+            bt_make.OnMouseClick((s, e) => {
+                this.HideWindow();
+                var ui = UIManager.Singleton.CreateOrShowWindow<UIMake>();
+                ui.ShowWindow();
+            });
+
+            bt_contruct.OnMouseClick((s, e) => {
+                this.HideWindow();
+                var ui = UIManager.Singleton.CreateOrShowWindow<UIBuilding>();
+                ui.ShowWindow();
             });
             //Write Code here
         }
@@ -59,8 +92,11 @@ namespace Assets.Scripts.UI.Windows
             foreach(var i in ItemGridTableManager)
             {
                 i.Model.GameItem = allItem[index];
+                i.Model.CanDrag = allItem.Count > 20;
                 index++;
             }
+
+           
         }
 
         public override void OnUpdate()

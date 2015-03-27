@@ -128,7 +128,7 @@ namespace XNet.Libs.Net
             if (Index == int.MaxValue)
                 Index = 1;
             var id = Index++;
-            var client = new Client(server, socket, id, server.WorkThreadPool.CreateGroup(id));
+            var client = new Client(server, socket, id);
             AddClient(client);
 			client.LastMessageTime = DateTime.UtcNow;
             return client;

@@ -58,6 +58,7 @@ namespace Assets.Scripts.UI
         {
             OnShow();
             AfterShow();
+            this.Root.SetActive(true);
             State = WindowStates.Show;
         }
         public void ShowAsChildWindow(UIWindow window)
@@ -68,18 +69,30 @@ namespace Assets.Scripts.UI
         {
             ShowWindow();
         }
-
+        
         public void HideWindow() 
         {
             OnHide();
-            AfterShow();
+            AfterHide();
 
+            if (!CanDestoryWhenHide)
+                this.Root.SetActive(false);
             State = WindowStates.Hide;
 
         }
 
         public WindowStates State { private set; get; }
-        
+
+
+        public string Key { get; set; }
+
+        internal void Destory()
+        {
+            OnDestory();
+            GameObject.Destroy(this.Root);
+        }
+
+        public virtual void OnDestory() { }
     }
 
 
@@ -104,11 +117,31 @@ namespace Assets.Scripts.UI
             }
         }
 
+        private Queue<UIWindow> _deletes = new Queue<UIWindow>();
         public void OnLateUpdate() {
             foreach (var i in _windows)
             {
-                if ( i.Value.State == WindowStates.Show )
+                if (i.Value.State == WindowStates.Show)
+                {
                     i.Value.OnLateUpdate();
+                }
+                if(i.Value.State== WindowStates.Hide)
+                {
+                    if (i.Value.CanDestoryWhenHide) 
+                    {
+                        _deletes.Enqueue(i.Value);
+                    }
+                }
+            }
+
+            while(_deletes.Count>0)
+            {
+                var ui = _deletes.Dequeue();
+                if (_windows.ContainsKey(ui.Key))
+                {
+                    _windows.Remove(ui.Key);
+                    ui.Destory();
+                }
             }
         }
         public void OnUpdateUIData()
@@ -159,10 +192,11 @@ namespace Assets.Scripts.UI
                 var ui = new T();
                 var resourse = Tools.ResourcesManager.Singleton.LoadResources<GameObject>("UI/" + atts[0].Resource);
                 if (resourse == null) return default(T);
-                var uiRoot = GameObject.Instantiate<GameObject>(resourse);             
+                var uiRoot = GameObject.Instantiate(resourse) as GameObject;             
                 this.Render.Render(uiRoot);
                 ui.Init(uiRoot);
-                _windows.Add(typeof(T).Name, ui);
+                ui.Key = typeof(T).Name;
+                _windows.Add(ui.Key, ui);
 
                 return ui;
             }
@@ -170,6 +204,8 @@ namespace Assets.Scripts.UI
                 return default(T);
         }
 
+
+       
         public delegate bool FindContion<T>(T item) where T : UIWindow;
 
         public void Each<T>(FindContion<T> cond) where T:UIWindow
@@ -180,6 +216,18 @@ namespace Assets.Scripts.UI
                 if (!(i.Value is T)) continue; 
                 if (cond(i.Value as T)) break;
             }
+        }
+
+        public T GetUIWindow<T>() where T:UIWindow
+        {
+            var type = typeof(T).Name;
+            UIWindow t;
+            if(this._windows.TryGetValue(type,out t))
+            {
+                return t as T;
+            }
+
+            return null;
         }
     }
 }

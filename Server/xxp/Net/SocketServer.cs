@@ -70,7 +70,6 @@ namespace XNet.Libs.Net
             CurrentConnectionManager = cManager;
             Port = port;
             BufferQueue = new MessageQueue<SendMessageBuffer>();
-            WorkThreadPool = new AThreadPool.ThreadPool();
             Init();
         }
         /// <summary>
@@ -91,11 +90,9 @@ namespace XNet.Libs.Net
             AcceptThread = new Thread(new ThreadStart(ThreadRun));
             AcceptThread.IsBackground = true;
             AcceptThread.Start();
-
             SendThread = new Thread(new ThreadStart(SendMessage));
             SendThread.IsBackground = true;
             SendThread.Start();
-            WorkThreadPool.Start();
         }
 
         private Thread SendThread;
@@ -211,7 +208,6 @@ namespace XNet.Libs.Net
 
                 IsWorking = false;
                 MREvent.Set();
-                WorkThreadPool.Stop();
                 AcceptThread.Join();
                 SendThread.Join();
                 SendThread = null;
@@ -287,7 +283,7 @@ namespace XNet.Libs.Net
                     queue.Clear();
                 }
 
-                Thread.Sleep(1);
+                Thread.Sleep(35);
             }
 
         }
@@ -302,10 +298,6 @@ namespace XNet.Libs.Net
         /// </summary>
         public volatile int lastBufferSize;
 
-        /// <summary>
-        /// 网络处理 工作线程池
-        /// </summary>
-        public AThreadPool.ThreadPool WorkThreadPool { set; get; }
 
         /// <summary>
         /// 关闭一个会话
@@ -314,11 +306,10 @@ namespace XNet.Libs.Net
         /// <param name="code">关闭的时候显示的错误代码</param>
         public void DisConnectClient(Client client, byte code)
         {
-
 			try{
             //发送一个关闭信息
             if(client.Socket.Connected)
-			  this.SendMessage ( client,new Message((byte)MessageClass.Close, 0, new byte[] { code }).ToBytes());
+			  this.SendMessage ( client,new Message(MessageClass.Close, 0, new byte[] { code }).ToBytes());
 			}catch(Exception ex)
 			{
 				Debuger.LogError(ex);

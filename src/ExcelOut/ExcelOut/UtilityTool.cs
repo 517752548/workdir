@@ -44,7 +44,7 @@ namespace ExcelOut.Libs.EX
 
         public static string GetPropety(ExcelTableCol col)
         {
-
+            if(string.IsNullOrEmpty(col.Name)) return string.Empty;
             if (!IsCshapName(col.Name)) throw new Exception(string.Format("列名[{0}]不符合C#命名规则，请确定！！！", col.Name));
             string str = @"        
         /// <summary>
