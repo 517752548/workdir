@@ -72,6 +72,13 @@ namespace Assets.Scripts.UI.Windows
                 var ui = UIManager.Singleton.CreateOrShowWindow<UIBuilding>();
                 ui.ShowWindow();
             });
+
+            bt_train.OnMouseClick((s, e) =>
+            {
+                this.HideWindow();
+                var ui = UIManager.Singleton.CreateOrShowWindow<UIArmyTrain>();
+                ui.ShowWindow();
+            });
             //Write Code here
         }
 

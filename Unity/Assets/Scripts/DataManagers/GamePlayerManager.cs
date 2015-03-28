@@ -11,31 +11,33 @@ namespace Assets.Scripts.DataManagers
     public enum PlayDataKeys
     {
         PRODUCE_LEVEL = 1, //玩家的炼金等级
-        PRODUCE_CLICK_TIMES = 2//炼金点击次数
+        PRODUCE_CLICK_TIMES = 2,//炼金点击次数
+        PEOPLE_COUNT = 3//当前中的民工数
     }
-    public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>
+    public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
     {
         
         //user data
         public const string PLAYER_DATA_PATH = "_PALYER_DATA_.json";
         //资源生产技术开放
         public const string PLAYER_PRODUCE_OPEN = "_PLAYER_PRODUCE_OPEN.json";
-        private Dictionary<int, string> PlayerData { set; get; }
+        private Dictionary<int, int> PlayerData { set; get; }
 
-        private Dictionary<int, bool> ProduceOpenState { set; get; }
+        private Dictionary<int, ProducePrisitData> ProduceOpenState { set; get; }
 
         public GamePlayerManager()
         {
-            PlayerData = new Dictionary<int, string>();
+            PlayerData = new Dictionary<int, int>();
+            ProduceOpenState = new Dictionary<int, ProducePrisitData>();
         }
 
-        public string this[PlayDataKeys key]
+        public int this[PlayDataKeys key]
         {
             get
             {
-                string value;
+                int value;
                 if (PlayerData.TryGetValue((int)key, out value)) return value;
-                return null;
+                return -1;
             }
             set
             {
@@ -52,7 +54,7 @@ namespace Assets.Scripts.DataManagers
         public void Load()
         {
             var list = Tools.PresistTool.LoadJson<List<PlayerData>>(PLAYER_DATA_PATH);
-            PlayerData = new Dictionary<int, string>();
+            PlayerData = new Dictionary<int, int>();
             if (list != null)
             {
                 foreach (var i in list)
@@ -61,13 +63,13 @@ namespace Assets.Scripts.DataManagers
                 }
             }
             var data = Tools.PresistTool.LoadJson<List<ProducePrisitData>>(PLAYER_PRODUCE_OPEN);
-            ProduceOpenState = new Dictionary<int, bool>();
+            ProduceOpenState = new Dictionary<int, ProducePrisitData>();
             if (data!=null)
             {
                 foreach (var i in data)
                 {
                     if (ProduceOpenState.ContainsKey(i.ProduceID)) continue;
-                    ProduceOpenState.Add(i.ProduceID, i.IsOpen);
+                    ProduceOpenState.Add(i.ProduceID, i);
                 }
             }
         }
@@ -78,7 +80,7 @@ namespace Assets.Scripts.DataManagers
             var json = JsonTool.Serialize(list);
             GameAppliaction.Singleton.SaveFile(PLAYER_DATA_PATH, json, false);
             
-            var produceList = ProduceOpenState.Select(t => new ProducePrisitData { ProduceID = t.Key, IsOpen = t.Value }).ToList();
+            var produceList = ProduceOpenState.Select(t => t.Value).ToList();
             var produceJson = JsonTool.Serialize(produceList);
             GameAppliaction.Singleton.SaveFile(PLAYER_PRODUCE_OPEN, produceJson, false);
         }
@@ -87,12 +89,12 @@ namespace Assets.Scripts.DataManagers
         {
             var configs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.ResourcesProduceConfig>();
             var openeds = configs.Where(t => {
-                bool result = false;
+                ProducePrisitData result ;
                 if(ProduceOpenState.TryGetValue(t.ID, out result))
                 {
-                    return result;
+                    return result.IsOpen;
                 }
-                return result;
+                return false;
             })
             .ToList();
 
@@ -103,22 +105,14 @@ namespace Assets.Scripts.DataManagers
         {
             if(this.ProduceOpenState.ContainsKey(id))
             {
-                this.ProduceOpenState[id] = true;
+                this.ProduceOpenState[id].IsOpen = true; ;
             }else
             {
-                this.ProduceOpenState.Add(id, true);
+                this.ProduceOpenState.Add(id, new ProducePrisitData { IsOpen = true, PeopleNum = 0, ProduceID = id });
             }
             //保存
             Presist();
         }
-
-        public int GetIntValue(PlayDataKeys key)
-        {
-            var data = this[key];
-            if (string.IsNullOrEmpty(data)) return 0;
-            return Convert.ToInt32(data);
-        }
-
         public List<Proto.Item> CallFunByID(int id)
         {
             var result = new List<Proto.Item>();
@@ -139,10 +133,10 @@ namespace Assets.Scripts.DataManagers
         {
             if (CurrentLevel == null)
             {
-                var produceLevel = DataManagers.GamePlayerManager.Singleton.GetIntValue(DataManagers.PlayDataKeys.PRODUCE_LEVEL);
+                var produceLevel = DataManagers.GamePlayerManager.Singleton[DataManagers.PlayDataKeys.PRODUCE_LEVEL];
                 if (produceLevel <= 0)
                 {
-                    this[DataManagers.PlayDataKeys.PRODUCE_LEVEL] = "1";
+                    this[DataManagers.PlayDataKeys.PRODUCE_LEVEL] = 1;
                     produceLevel = 1;
 
                 }
@@ -158,9 +152,10 @@ namespace Assets.Scripts.DataManagers
         }
         private void AddProduceTimes(int time)
         {
-            var currentTime = GetIntValue(PlayDataKeys.PRODUCE_CLICK_TIMES);
+            var currentTime = this[PlayDataKeys.PRODUCE_CLICK_TIMES];
+            if (currentTime < 0) currentTime = 0;
             currentTime+=time;
-            this[PlayDataKeys.PRODUCE_CLICK_TIMES] = string.Format("{0}",currentTime);
+            this[PlayDataKeys.PRODUCE_CLICK_TIMES] = currentTime;
         }
 
     }
@@ -172,10 +167,12 @@ namespace Assets.Scripts.DataManagers
 
         [JsonName("S")]
         public bool IsOpen { set; get; }
+        [JsonName("N")]
+        public int PeopleNum { set; get; }
     }
     public class PlayerData
     {
         public int Key { set; get; }
-        public string Value { set; get; }
+        public int Value { set; get; }
     }
 }

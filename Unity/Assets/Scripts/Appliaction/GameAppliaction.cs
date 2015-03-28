@@ -16,18 +16,21 @@ namespace Assets.Scripts.Appliaction
         {
             //初始化配置
             var excelConfig = new ExcelToJSONConfigManager(this);
-            foreach (var i in excelConfig.GetConfigs<ExcelConfig.ItemConfig>())
-            {
-                Debug.Log(i.Name);
-            }
+            prisit = new List<IPresist>(){
+                PlayerItemManager.Singleton,
+                GamePlayerManager.Singleton,
+                BuildingManager.Singleton,
+                PlayerSoldierManager.Singleton
+            };
+            foreach (var i in prisit)
+                i.Load();
             //初始化道具
-            PlayerItemManager.Singleton.Load();
-            GamePlayerManager.Singleton.Load();
             Debug.Log(LanguageManager.Singleton["APP_NAME"]);
-
+            //进入游戏
             JoinCastle();
-           
         }
+
+        private List<IPresist> prisit;
 
         private ConstValuesConfig _ConstValues;
         public ConstValuesConfig ConstValues
@@ -42,8 +45,8 @@ namespace Assets.Scripts.Appliaction
 
         public void Exit() 
         {
-            PlayerItemManager.Singleton.Presist();
-            GamePlayerManager.Singleton.Presist();
+            foreach (var i in prisit)
+                i.Presist();
         }
         public void Pause() { }
         public void Ruseme() { }

@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.DataManagers
 {
-    public class PlayerItemManager : Tools.XSingleton<PlayerItemManager>
+    public class PlayerItemManager : Tools.XSingleton<PlayerItemManager>,IPresist
     {
 
         public PlayerItemManager()
@@ -58,16 +58,14 @@ namespace Assets.Scripts.DataManagers
         public void Load()
         {
             this._items = new Dictionary<int, PlayerGameItem>();
-            var json = GameAppliaction.Singleton.ReadFile(_ITEM_SAVE_FILE_);
-            if (!string.IsNullOrEmpty(json))
+            var list = Tools.PresistTool.LoadJson<List<PlayerGameItem>>(_ITEM_SAVE_FILE_);
+            if (list == null) return;
+            foreach (var i in list)
             {
-                var list = JsonTool.Deserialize<List<PlayerGameItem>>(json);
-                foreach (var i in list)
-                {
-                    if (_items.ContainsKey(i.ConfigID)) continue;
-                    _items.Add(i.ConfigID, i);
-                }
+                if (_items.ContainsKey(i.ConfigID)) continue;
+                _items.Add(i.ConfigID, i);
             }
+
         }
 
         public int CalItem(int entry,int calValue)
@@ -87,8 +85,7 @@ namespace Assets.Scripts.DataManagers
         public void Presist()
         {
             var items = _items.Values.ToList();
-            var json = JsonTool.Serialize(items);
-            GameAppliaction.Singleton.SaveFile(_ITEM_SAVE_FILE_, json, false);
+            Tools.PresistTool.SaveJson(items, _ITEM_SAVE_FILE_);
         }
 
         internal Proto.Item AddItem(int itemID, int diff)

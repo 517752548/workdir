@@ -7,7 +7,7 @@ using ExcelConfig;
 
 namespace Assets.Scripts.DataManagers
 {
-    public class BuildingManager : Tools.XSingleton<BuildingManager>
+    public class BuildingManager : Tools.XSingleton<BuildingManager>, IPresist
     {
         public const string BUILDING_LIST_PATH = "BUILDING_LIST.json";//已经建造的建筑
 
@@ -27,7 +27,7 @@ namespace Assets.Scripts.DataManagers
             }
         }
 
-        public void Save()
+        public void Presist()
         {
             Tools.PresistTool.SaveJson(_ConstructBuildings.Values.ToList(), BUILDING_LIST_PATH);
         }
@@ -100,7 +100,19 @@ namespace Assets.Scripts.DataManagers
 
         private bool BuildEvent(BuildingLevelConfig levelConfig)
         {
-            return false;
+            //ADD_PEOPLE
+            //PRODUCE
+            switch(levelConfig.LevelUpEvent)
+            {
+                case "ADD_PEOPLE":
+                    GamePlayerManager.Singleton[PlayDataKeys.PEOPLE_COUNT] += Convert.ToInt32(levelConfig.LevelUpParams);
+                    break;
+                case "PRODUCE":
+                    GamePlayerManager.Singleton.OpenProduceById(Convert.ToInt32(levelConfig.LevelUpParams));
+                    break;
+            }
+
+            return true;
         }
 
         public PlayerBuild this[int entry]

@@ -112,39 +112,45 @@ namespace ExcelConfig
         public String Name { set; get; }
         
         /// <summary>
-        /// 最大血量
+        /// 技能名称
         /// </summary>
         [ExcelConfigColIndex(2)]
+        public String SkillName { set; get; }
+        
+        /// <summary>
+        /// 最大血量
+        /// </summary>
+        [ExcelConfigColIndex(3)]
         public int HPMax { set; get; }
         
         /// <summary>
         /// 伤害
         /// </summary>
-        [ExcelConfigColIndex(3)]
+        [ExcelConfigColIndex(4)]
         public int Damage { set; get; }
         
         /// <summary>
         /// 防御力
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(5)]
         public int Defence { set; get; }
         
         /// <summary>
         /// 攻击类型
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(6)]
         public int AttackType { set; get; }
         
         /// <summary>
         /// 攻击间隔毫秒
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(7)]
         public int AttackSpeed { set; get; }
         
         /// <summary>
         /// 士兵星级
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(8)]
         public int Star { set; get; }
 
     }

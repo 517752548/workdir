@@ -9,5 +9,13 @@
   <LanguageKey Key="MAKE_NOT_ENOUGHT">{0}不足</LanguageKey>
   <LanguageKey Key="NOT_ENOUGHT">缺少</LanguageKey>
   <LanguageKey Key="Need_Item_Count">{0} *{1}</LanguageKey>
-  <LanguageKey Key="BUILD_LEVEL_MAX">MAX</LanguageKey>
+  <LanguageKey Key="BUILD_LEVEL_MAX">MAX</LanguageKey> 
+  <LanguageKey Key="TRAIN_SOLDIER">成功训练{0}</LanguageKey>
+  <LanguageKey Key="TRAIN_BT_NAME">招募</LanguageKey>
+  <LanguageKey Key="SOLDIER_SKILL">武器:{0}</LanguageKey>
+  <LanguageKey Key="SOLDIER_HP">血量:{0:N0}</LanguageKey>
+  <LanguageKey Key="SOLDIER_DAMAGE">伤害:{0:N0}</LanguageKey>
+  <LanguageKey Key="SOLDIER_SPEED">速度:{0:0}</LanguageKey>
+  <LanguageKey Key="MAX_LEVEL_SOLDIER">终极兵种无法训练</LanguageKey>
+  <LanguageKey Key="SOLDIER_NAME">{0}*{1}</LanguageKey>
 </ArrayOfLanguageKey>
