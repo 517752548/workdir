@@ -17,8 +17,8 @@ namespace MasterServer
             Server = new XNet.Libs.Net.SocketServer(new XNet.Libs.Net.ConnectionManager(), port);
             HanderManager = new XNet.Libs.Net.DefaultMessageHandlerManager();
             Server.HandlerManager = HanderManager;
-            HanderManager.RegsiterHandler(10, typeof(ServerRegHandle));
-            HanderManager.RegsiterHandler(100, typeof(StopAllServerHandle));
+            HanderManager.RegsiterHandler((int)Proto.HandlerNo.RegServer, typeof(ServerRegHandle));
+            HanderManager.RegsiterHandler((int)Proto.HandlerNo.StopMasterServer, typeof(StopAllServerHandle));
             Server.Start();
             while (Server.IsWorking)
             {

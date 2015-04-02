@@ -73,6 +73,7 @@ namespace Proto
         public S2C_Login()
         {
             SessionKey = string.Empty;
+Session = new GameSession();
 
         }
         /// <summary>
@@ -83,11 +84,16 @@ namespace Proto
         /// 
         /// </summary>
         public string SessionKey { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public GameSession Session { set; get; }
 
         public void ParseFormBinary(BinaryReader reader)
         {
             Success = reader.ReadBoolean();
             SessionKey = Encoding.UTF8.GetString(reader.ReadBytes( reader.ReadInt32()));
+            Session = new GameSession();Session.ParseFormBinary(reader);
              
         }
 
@@ -95,6 +101,7 @@ namespace Proto
         {
             writer.Write(Success);
             var SessionKey_bytes = Encoding.UTF8.GetBytes(SessionKey);writer.Write(SessionKey_bytes.Length);writer.Write(SessionKey_bytes);
+            Session.ToBinary(writer);
             
         }
 

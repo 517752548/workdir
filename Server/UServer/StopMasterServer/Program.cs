@@ -12,13 +12,16 @@ namespace StopMasterServer
     {
         static void Main(string[] args)
         {
+
+            
             var ip = args[0];
             var prot = Convert.ToInt32(args[1]);
             var client = new XNet.Libs.Net.SocketClient(prot, ip);
             client.UseSendThreadUpdate = true;
             client.OnConnectCompleted = (s, e) =>
             {
-                client.SendMessage(new XNet.Libs.Net.Message(MessageClass.Request, 100, new byte[] { 1 }));
+                client.SendMessage(new XNet.Libs.Net.Message(MessageClass.Request, 
+                    (int)Proto.HandlerNo.StopMasterServer, new byte[] { 1 }));
                 OK = true;
             };
             client.Connect();

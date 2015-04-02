@@ -21,6 +21,11 @@ namespace Assets.Scripts.UI
     }
     public class UITableManager<T> : IEnumerable<T> where T : UITableItem, new()
     {
+        public UITableManager()
+        {
+            Cached = false;
+            AutoLayout = true;
+        }
         private int _count = 0;
 
         public bool Cached { set; get; }
@@ -83,10 +88,12 @@ namespace Assets.Scripts.UI
 
                 }
                 _count = value;
-                RepositionLayout();
+                if (AutoLayout)
+                    RepositionLayout();
             }
         }
 
+        public bool AutoLayout { set; get; }
         public void RepositionLayout()
         {
             if (currentTable != null)

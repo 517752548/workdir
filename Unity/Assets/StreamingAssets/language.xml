@@ -18,4 +18,8 @@
   <LanguageKey Key="SOLDIER_SPEED">速度:{0:0}</LanguageKey>
   <LanguageKey Key="MAX_LEVEL_SOLDIER">终极兵种无法训练</LanguageKey>
   <LanguageKey Key="SOLDIER_NAME">{0}*{1}</LanguageKey>
+  <LanguageKey Key="PRODUCE_PEOPLE">{0}/{1}</LanguageKey> 
+  <LanguageKey Key="PRODUCE_TIME">收获时间:{0}:{1:00}</LanguageKey>
+  <LanguageKey Key="NO_PEOPLE_FREE">无空闲村民</LanguageKey>
+  <LanguageKey Key="PEOPLE_NAME">村民:</LanguageKey>
 </ArrayOfLanguageKey>

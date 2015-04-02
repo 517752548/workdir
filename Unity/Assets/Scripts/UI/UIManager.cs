@@ -54,6 +54,8 @@ namespace Assets.Scripts.UI
         public virtual void OnUpdateUIData() { }
         public virtual void OnLateUpdate() { }
         public virtual void OnUpdate() { }
+
+        public virtual void OnPreScecondUpdate() { }
         public void ShowWindow()
         {
             OnShow();
@@ -108,12 +110,24 @@ namespace Assets.Scripts.UI
             Render = render;
             _windows = new Dictionary<string, UIWindow>();
         }
+
+        private float lastTime = 0f;
         public void OnUpdate()
         {
             foreach(var i in _windows)
             {
                 if(i.Value.State == WindowStates.Hiding || i.Value.State == WindowStates.Show || i.Value.State == WindowStates.Showing )
                     i.Value.OnUpdate();
+            }
+
+            if(lastTime+1<Time.time)
+            {
+                lastTime = Time.time;
+                foreach (var i in _windows)
+                {
+                    if (i.Value.State == WindowStates.Hiding || i.Value.State == WindowStates.Show || i.Value.State == WindowStates.Showing)
+                        i.Value.OnPreScecondUpdate();
+                }
             }
         }
 

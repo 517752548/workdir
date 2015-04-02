@@ -19,6 +19,7 @@ message S2C_Login
 {
    required bool Success;
    required string SessionKey;
+   required GameSession Session;
 }
 
 

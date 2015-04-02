@@ -10,11 +10,20 @@ namespace UServer
     {
         public void Start()
         {
+            var handler = new MessageHandler();
+
             var connectManager = new XNet.Libs.Net.ConnectionManager();
+            DefaultHandler = new XNet.Libs.Net.DefaultMessageHandlerManager();
+            DefaultHandler.RegsiterHandler((int)Proto.HandlerNo.MessageHandler, typeof(MessageHandler));
             Server = new XNet.Libs.Net.SocketServer(connectManager, 9000);
+            Server.HandlerManager = DefaultHandler;
             Server.Start();
+            
+
         }
 
+
+        private XNet.Libs.Net.DefaultMessageHandlerManager DefaultHandler;
 
         public XNet.Libs.Net.SocketServer Server { private set; get; }
 

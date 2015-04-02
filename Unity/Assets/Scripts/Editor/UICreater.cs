@@ -122,6 +122,7 @@ private static string templateFields =
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 //Auto gen code can't rewrite .
 //send to email:54249636@qq.com for help
 namespace Assets.Scripts.UI.Windows

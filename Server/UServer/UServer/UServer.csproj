@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="org.vxwo.csharp.json">
+      <HintPath>..\..\..\src\ExcelOut\ExcelOut\lib\org.vxwo.csharp.json.dll</HintPath>
+    </Reference>
+    <Reference Include="proto">
+      <HintPath>..\..\Lib\proto.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,8 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameServerAppliaction.cs" />
+    <Compile Include="MessageHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtoTool.cs" />
+    <Compile Include="ResponseHandler.cs" />
+    <Compile Include="Responsers\LoginMessageResponser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -58,6 +68,7 @@
       <Name>XNet.Libs</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

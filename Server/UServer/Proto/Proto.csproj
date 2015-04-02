@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{98F5087F-31D0-4841-905A-24B48B9CC497}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{0744DF99-7772-4711-9983-A899206D549F}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StopMasterServer</RootNamespace>
-    <AssemblyName>StopMasterServer</AssemblyName>
+    <RootNamespace>Proto</RootNamespace>
+    <AssemblyName>Proto</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="proto">
-      <HintPath>..\..\Lib\proto.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,21 +39,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="..\..\..\src\NetSources\Config.cs">
+      <Link>Config.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\src\NetSources\ExcelToJSONConfigManager.cs">
+      <Link>ExcelToJSONConfigManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\src\NetSources\GameConst.cs">
+      <Link>GameConst.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\src\NetSources\GameData.cs">
+      <Link>GameData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\src\NetSources\GameMessage.cs">
+      <Link>GameMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\src\NetSources\ISerializerable.cs">
+      <Link>ISerializerable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\src\NetSources\NetMessage.cs">
+      <Link>NetMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\src\NetSources\NetMessageMapping.cs">
+      <Link>NetMessageMapping.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\JSON\JSON.csproj">
-      <Project>{60fdf2ef-f0f7-44d8-b19d-799c51d7022c}</Project>
-      <Name>JSON</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\xxp\XNet.Libs.csproj">
-      <Project>{32ac4539-87a0-4e68-bce8-fea1d8d05062}</Project>
-      <Name>XNet.Libs</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

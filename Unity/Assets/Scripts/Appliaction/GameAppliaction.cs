@@ -58,6 +58,10 @@ namespace Assets.Scripts.Appliaction
 
         public void LateUpdate()
         {
+            if(GamePlayerManager.Singleton.TimeToProduce.TotalSeconds<=0)
+            {
+                GamePlayerManager.Singleton.CalProduce();
+            }
         }
 
         public void FixedUpdate() { }
@@ -156,5 +160,7 @@ namespace Assets.Scripts.Appliaction
             }
             //throw new NotImplementedException();
         }
+
+        public void ShowLogMessage(string message) { }
     }
 }
