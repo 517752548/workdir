@@ -14,5 +14,13 @@ namespace Assets.Scripts.UI
                 return false;
             });
         }
+
+        public void ShowOrHideUIBackground(bool flag)
+        {
+            var uiReander = UIManager.Singleton.Render as UIRender;
+            if (uiReander == null) return;
+            if (uiReander.BackgroundTexutre == null) return;
+            uiReander.BackgroundTexutre.enabled = flag;
+        }
     }
 }

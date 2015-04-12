@@ -104,8 +104,8 @@ namespace Assets.Scripts.Appliaction
         /// 开始探索
         /// </summary>
         public void GoToExplore(int configID) {
-
-            var state = new ExploreState();
+            
+            var state = new ExploreState(configID);
             ChangeState(state);
         }
 
@@ -134,7 +134,6 @@ namespace Assets.Scripts.Appliaction
 
         public string ReadFile(string path)
         {
-            var presistPath = Tools.Utility.GetPersistentPath(path);
             return Tools.Utility.ReadTextFileFromPersistentPath(path);
         }
 
@@ -150,17 +149,5 @@ namespace Assets.Scripts.Appliaction
 
             return null;
         }
-
-        internal void NotifyReward(List<Proto.Item> items)
-        {
-            foreach (var i in items)
-            {
-                var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(i.Entry);
-                UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["REWARD_ITEM"],config.Name,i.Diff));
-            }
-            //throw new NotImplementedException();
-        }
-
-        public void ShowLogMessage(string message) { }
     }
 }

@@ -14,7 +14,9 @@ namespace Assets.Scripts.DataManagers
         PRODUCE_LEVEL = 1, //玩家的炼金等级
         PRODUCE_CLICK_TIMES = 2,//炼金点击次数
         PEOPLE_COUNT = 3,//当前中的民工数
-        PRODUCE_TIME =4//上次计算时间
+        PRODUCE_TIME =4,//上次计算时间
+        PACKAGE_SIZE =5,//背包大小
+        TEAM_SIZE =6,//队伍上线
     }
     public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
     {
@@ -149,7 +151,7 @@ namespace Assets.Scripts.DataManagers
                 CurrentLevel = config;
             }
             var items = CallFunByID(CurrentLevel.FunctionID);
-            GameAppliaction.Singleton.NotifyReward(items);
+            PlayerItemManager.Singleton.NotifyReward(items);
             AddProduceTimes(1);
             //refresh all ui
             UI.UIManager.Singleton.OnUpdateUIData();
@@ -259,7 +261,6 @@ namespace Assets.Scripts.DataManagers
             return data == null ? 0 : data.PeopleNum;
         }
     }
-
     public class ProducePrisitData
     {
         [JsonName("P")]

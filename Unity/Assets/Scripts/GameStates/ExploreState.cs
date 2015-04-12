@@ -16,5 +16,10 @@ namespace Assets.Scripts.GameStates
         {
             base.OnExit();
         }
+
+        public ExploreState(int mapID)
+        {
+
+        }
     }
 }

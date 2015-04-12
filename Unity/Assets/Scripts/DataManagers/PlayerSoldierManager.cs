@@ -10,7 +10,6 @@ namespace Assets.Scripts.DataManagers
     public class PlayerSoldierManager : Tools.XSingleton<PlayerSoldierManager>, IPresist
     {
         public const string _SOLDIER_FILE = "_SOLDIER_FILE.json";//保存文件
-
         private Dictionary<int, PlayerSoldierData> _Soldiers = new Dictionary<int, PlayerSoldierData>();
 
         public void Presist()

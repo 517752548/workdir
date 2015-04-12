@@ -86,6 +86,12 @@ namespace Assets.Scripts.UI.Windows
                 var ui = UIManager.Singleton.CreateOrShowWindow<UIProducePanel>();
                 ui.ShowWindow();
             });
+
+            this.bt_left.OnMouseClick((s, e) => {
+                this.HideWindow();
+                var ui = UIManager.Singleton.CreateOrShowWindow<UIGoToExplore>();
+                ui.ShowWindow();
+            });
             //Write Code here
         }
 

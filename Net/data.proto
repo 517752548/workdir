@@ -1,10 +1,11 @@
 package Proto;
-
 message Session
 {
    required string UserName;
    required int32 Time;
 }
+
+
 //optional
 
 message Item
@@ -37,3 +38,4 @@ message Army
   repeated Soldier Soldiers;
   required ArmyCamp Camp;
 }
+

@@ -54,10 +54,11 @@ namespace Assets.Scripts
 
         public int ExploreID = -1;
 
-//#if UNITY_EDITOR
+
         private string GM = string.Empty;
         void OnGUI()
         {
+            
             int line = 1;
             if(GUI.Button(new Rect(10,Screen.height-(line++ *30), 120,25 ),"GoToBattle"))
             {
@@ -87,7 +88,6 @@ namespace Assets.Scripts
             }
         }
 
-        //GM 
-//#endif
+
     }
 }

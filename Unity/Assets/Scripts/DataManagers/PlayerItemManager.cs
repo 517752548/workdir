@@ -189,6 +189,17 @@ namespace Assets.Scripts.DataManagers
             }
 
         }
+
+        public void NotifyReward(List<Proto.Item> items)
+        {
+            foreach (var i in items)
+            {
+                var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(i.Entry);
+                UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["REWARD_ITEM"], config.Name, i.Diff));
+            }
+            //throw new NotImplementedException();
+        }
+
     }
 
     public class PlayerGameItem 

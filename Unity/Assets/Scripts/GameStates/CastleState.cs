@@ -11,6 +11,7 @@ namespace Assets.Scripts.GameStates
         public override void OnEnter()
         {
             base.OnEnter();
+            UI.UIControllor.Singleton.ShowOrHideUIBackground(true);
             var ui = UI.UIManager.Singleton.CreateOrShowWindow<UI.Windows.UICastlePanel>();
             ui.ShowWindow();
         }
@@ -18,9 +19,6 @@ namespace Assets.Scripts.GameStates
         public override void OnExit()
         {
             base.OnExit();
-            UICastlePanel ui = UI.UIManager.Singleton.GetUIWindow<UICastlePanel>();
-            if (ui != null)
-                ui.HideWindow();
         }
     }
 }

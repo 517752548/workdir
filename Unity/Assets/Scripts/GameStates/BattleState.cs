@@ -21,6 +21,8 @@ namespace Assets.Scripts.GameStates
         {
             base.OnEnter();
             State = new Combat.Battle.States.BattleState(player, monster);
+            UI.UIControllor.Singleton.ShowOrHideUIBackground(false);
+            UI.UIControllor.Singleton.HideAllUI();
         }
 
         public override void OnTick()

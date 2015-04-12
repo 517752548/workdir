@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.Tools;
 using UnityEngine;
+using ExcelConfig;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -48,7 +49,7 @@ namespace Assets.Scripts.UI.Windows
         }
         public class RewardItemGridTableModel : TableItemModel<RewardItemGridTableTemplate>
         {
-            public RewardItemGridTableModel(){}
+            public RewardItemGridTableModel() { }
             public override void InitModel()
             {
                 //todo
@@ -59,7 +60,21 @@ namespace Assets.Scripts.UI.Windows
                 if (drag != null)
                     drag.enabled = p;
             }
-            public ExcelConfig.ResourcesProduceConfig Config { get; set; }
+
+            private DisplayItem _DItem;
+            public DisplayItem DItem
+            {
+                get
+                {
+                    return _DItem;
+                }
+                set
+                {
+                    _DItem = value;
+                    Template.lb_name.text = _DItem.Config != null ? _DItem.Config.Name : "";
+                    Template.lb_count.text = string.Format("{0}", _DItem.Produce);
+                }
+            }
         }
 
         public override void InitModel()
@@ -103,7 +118,11 @@ namespace Assets.Scripts.UI.Windows
             var time =DataManagers.GamePlayerManager.Singleton.TimeToProduce;
             lb_timeLimit.text = string.Format(LanguageManager.Singleton["PRODUCE_TIME"], 
                 Mathf.Floor((float)time.TotalMinutes),time.Seconds );
-
+            produces.Sort((r, l) => {
+                if (r.ID > l.ID) return 1;
+                if (r.ID == l.ID) return 0;
+                return -1;
+            });
             ItemGridTableManager.Count = produces.Count;
             int index = 0;
             foreach(var i in ItemGridTableManager)
@@ -115,11 +134,55 @@ namespace Assets.Scripts.UI.Windows
                 index++;
             }
             var havePeopleProduces = produces.Where(t => DataManagers.GamePlayerManager.Singleton.GetProducePeople(t.ID) > 0).ToList();
-            RewardItemGridTableManager.Count = havePeopleProduces.Count;
+            var itemProduces = new Dictionary<int,DisplayItem>();
+            foreach(var i in havePeopleProduces)
+            {
+                var rewards = DataManagers.PlayerItemManager.SplitFormatItemData(i.RewardItems);
+                var requires = DataManagers.PlayerItemManager.SplitFormatItemData(i.CostItems);
+
+                foreach(var r in rewards)
+                {
+                    var peopleNum = DataManagers.GamePlayerManager.Singleton.GetProducePeople(i.ID);
+                    if(!itemProduces.ContainsKey(r[0]))
+                    {
+                        itemProduces.Add(r[0], new DisplayItem
+                        {
+                            Produce = r[1] * peopleNum,
+                            Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(r[0])
+                        });
+                    }
+                    else
+                    {
+                        itemProduces[r[0]].Produce += r[1] * peopleNum;
+                    }
+                }
+
+                foreach(var r in requires)
+                {
+                    var peopleNum = DataManagers.GamePlayerManager.Singleton.GetProducePeople(i.ID);
+                    if (!itemProduces.ContainsKey(r[0]))
+                    {
+                        itemProduces.Add(r[0], new DisplayItem
+                        {
+                            Produce = -r[1] * peopleNum,
+                            Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(r[0])
+                        });
+                    }
+                    else
+                    {
+                        itemProduces[r[0]].Produce -= r[1] * peopleNum;
+                    }
+                }
+
+            }
+
+            var displayItems = itemProduces.Values.ToList();
+            RewardItemGridTableManager.Count = displayItems.Count;
             index = 0;
             foreach(var i in RewardItemGridTableManager)
             {
-                i.Model.Config = havePeopleProduces[index];
+                i.Model.DItem = displayItems[index];
+                i.Model.SetDrag(displayItems.Count >= 6);
                 index++;
             }
         }
@@ -135,5 +198,11 @@ namespace Assets.Scripts.UI.Windows
             DataManagers.GamePlayerManager.Singleton.CalPeopleOnProduce(item.Config.ID, 1);
             OnUpdateUIData();
         }
+    }
+
+    public class DisplayItem
+    {
+        public ItemConfig Config { set; get; }
+        public int Produce { set; get; }
     }
 }

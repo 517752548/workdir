@@ -22,4 +22,8 @@
   <LanguageKey Key="PRODUCE_TIME">收获时间:{0}:{1:00}</LanguageKey>
   <LanguageKey Key="NO_PEOPLE_FREE">无空闲村民</LanguageKey>
   <LanguageKey Key="PEOPLE_NAME">村民:</LanguageKey>
+  
+  
+  <LanguageKey Key="UI_GOTOEX_PACKAGE_LB">包裹:</LanguageKey>
+  <LanguageKey Key="UI_GOTOEX_ARMY_LB">军队:</LanguageKey>
 </ArrayOfLanguageKey>

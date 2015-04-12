@@ -16,6 +16,32 @@ namespace ExcelConfig
 {
 
     /// <summary>
+    /// 军队升级表
+    /// </summary>
+    [ConfigFile("ArmySizeConfig.json","ArmySizeConfig")]
+    public class ArmySizeConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 需求道具
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String RequireItems { set; get; }
+        
+        /// <summary>
+        /// 军队上限
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int ArmyMaxSize { set; get; }
+
+    }
+
+    /// <summary>
     /// 制作表
     /// </summary>
     [ConfigFile("MakeConfig.json","MakeConfig")]
@@ -294,6 +320,32 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(4)]
         public float CdTime { set; get; }
+
+    }
+
+    /// <summary>
+    /// 背包上限表
+    /// </summary>
+    [ConfigFile("PackageSizeConfig.json","PackageSizeConfig")]
+    public class PackageSizeConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 需求材料
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String RequireItems { set; get; }
+        
+        /// <summary>
+        /// 背包上限
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int PackageSizeMax { set; get; }
 
     }
 

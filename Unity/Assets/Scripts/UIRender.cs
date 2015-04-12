@@ -34,6 +34,8 @@ public class UIRender : MonoBehaviour, Assets.Scripts.UI.IUIRender, Assets.Scrip
     public Camera UICamera;
     [SerializeField]
     public Transform UIRoot;
+    [SerializeField]
+    public UITexture BackgroundTexutre;
 
     [SerializeField]
     public Transform UITipPanel;

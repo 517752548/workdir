@@ -15,6 +15,14 @@ namespace Assets.Scripts.UI
         Hide,
         Hiding
     }
+
+    public enum ShowModel
+    {
+        Normal,
+        Dialog,
+        Children
+    }
+
     public interface IUIRender
     {
         void Render(GameObject uiRoot);
@@ -58,6 +66,7 @@ namespace Assets.Scripts.UI
         public virtual void OnPreScecondUpdate() { }
         public void ShowWindow()
         {
+            Model = ShowModel.Normal;
             OnShow();
             AfterShow();
             this.Root.SetActive(true);
@@ -65,11 +74,29 @@ namespace Assets.Scripts.UI
         }
         public void ShowAsChildWindow(UIWindow window)
         {
+            parent = window;
+            if (parent!=null)
+            {
+                parent.PositionShowOrHide(false);
+            }
             ShowWindow();
+            Model = ShowModel.Children;
         }
         public void ShowAsDialogWindow(bool showMask)
         {
             ShowWindow();
+            Model = ShowModel.Dialog;
+        }
+
+        private UIWindow parent;
+        private void PositionShowOrHide(bool isShow)
+        {
+            var anchers = this.Root.transform.GetComponentsInChildren<UIAnchor>();
+            foreach(var i in anchers)
+            {
+                i.enabled = isShow;
+            }
+            this.Root.transform.localPosition = isShow ? Vector3.zero : new Vector3(-100000, 0, 0);   
         }
         
         public void HideWindow() 
@@ -81,10 +108,17 @@ namespace Assets.Scripts.UI
                 this.Root.SetActive(false);
             State = WindowStates.Hide;
 
+            if(Model == ShowModel.Children)
+            {
+                if (parent != null)
+                    parent.PositionShowOrHide(true);
+                parent = null;
+            }
         }
 
         public WindowStates State { private set; get; }
 
+        public ShowModel Model { private set; get; }
 
         public string Key { get; set; }
 
