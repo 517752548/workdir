@@ -2,7 +2,7 @@ package Proto;
 
 enum UserType
 {
-   Normal = 1;
+   Normal = 1; 
    Default = 2;
 }
 

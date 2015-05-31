@@ -94,7 +94,6 @@ public class GameMap : MonoBehaviour {
         {
             PosX = (int)CurrentGrid.x,
             PosY = (int)CurrentGrid.y,
-            ConfigID = -1
         };
         CurrentMap.Grids.Add(CurrentSelectMapGrid);
     }

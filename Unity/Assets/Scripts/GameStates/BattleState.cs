@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.GameStates
 {
-    public class BattleState:Appliaction.GameState
+    public class BattleState:App.GameState
     {
         private Proto.Army player;
         private Proto.Army monster;
@@ -20,9 +20,11 @@ namespace Assets.Scripts.GameStates
         public override void OnEnter()
         {
             base.OnEnter();
-            State = new Combat.Battle.States.BattleState(player, monster);
             UI.UIControllor.Singleton.ShowOrHideUIBackground(false);
             UI.UIControllor.Singleton.HideAllUI();
+            State = new Combat.Battle.States.BattleState(player, monster);
+            State.OnEnter();
+
         }
 
         public override void OnTick()

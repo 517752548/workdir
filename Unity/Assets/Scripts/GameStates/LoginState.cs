@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.GameStates
 {
-    public class LoginState : Appliaction.GameState
+    public class LoginState : App.GameState
     {
         public override void OnEnter()
         {

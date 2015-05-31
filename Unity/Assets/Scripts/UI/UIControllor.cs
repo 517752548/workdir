@@ -20,7 +20,7 @@ namespace Assets.Scripts.UI
             var uiReander = UIManager.Singleton.Render as UIRender;
             if (uiReander == null) return;
             if (uiReander.BackgroundTexutre == null) return;
-            uiReander.BackgroundTexutre.enabled = flag;
+            uiReander.BackgroundTexutre.gameObject.SetActive ( flag);
         }
     }
 }

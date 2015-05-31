@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.GameStates
 {
-    public class ExploreState:Appliaction.GameState
+    public class ExploreState:App.GameState
     {
         public override void OnEnter()
         {
@@ -19,7 +19,7 @@ namespace Assets.Scripts.GameStates
 
         public ExploreState(int mapID)
         {
-
+            
         }
     }
 }

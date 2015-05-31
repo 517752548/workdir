@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Appliaction;
+﻿using Assets.Scripts.App;
 using Assets.Scripts.UI;
 using ExcelConfig;
 using org.vxwo.csharp.json;

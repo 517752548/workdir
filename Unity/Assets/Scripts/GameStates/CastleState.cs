@@ -6,14 +6,17 @@ using System.Text;
 
 namespace Assets.Scripts.GameStates
 {
-    class CastleState:Appliaction.GameState
+    class CastleState:App.GameState
     {
         public override void OnEnter()
         {
             base.OnEnter();
+            
+            
             UI.UIControllor.Singleton.ShowOrHideUIBackground(true);
             var ui = UI.UIManager.Singleton.CreateOrShowWindow<UI.Windows.UICastlePanel>();
             ui.ShowWindow();
+
         }
 
         public override void OnExit()
