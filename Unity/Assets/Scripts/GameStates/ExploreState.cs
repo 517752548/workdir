@@ -17,7 +17,9 @@ namespace Assets.Scripts.GameStates
 
             Map = GameObject.FindObjectOfType<GameMap>();
             TargetPos = new Vector2(Map.CurrentMap.Height / 2, Map.CurrentMap.Width / 2);
-            Map.LookAt(TargetPos);
+            Map.LookAt(TargetPos, true); 
+            Map.SetZone(4,true);
+            
         }
 
         private Vector2 TargetPos;
@@ -72,8 +74,14 @@ namespace Assets.Scripts.GameStates
                 return;
             }
 
+            OnChange(TargetPos);
             Map.LookAt(TargetPos);
            // Debug.Log("Target:" + TargetPos);
+        }
+
+        public void OnChange(Vector2 target)
+        {
+
         }
     }
 }

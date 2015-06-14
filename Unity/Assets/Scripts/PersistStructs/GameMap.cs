@@ -18,10 +18,12 @@ public class GameMap : MonoBehaviour {
         MapCamera.orthographicSize = Mathf.Lerp(MapCamera.orthographicSize, targetZone, Time.deltaTime * 4);
     }
 
-    public void LookAt(Vector2 grid)
+    public void LookAt(Vector2 grid, bool nodelay = false)
     {
-        var center =(Vector3)grid+new Vector3(0,0,-20);
+        var center = (Vector3)grid + new Vector3(0, 0, -20);
         TargetPos = center;
+        if (nodelay)
+            MapCamera.transform.position = TargetPos;
     }
 
     public void SetTarget(float zone)
@@ -36,6 +38,15 @@ public class GameMap : MonoBehaviour {
 
     [SerializeField]
     public Camera MapCamera;
+
+    public void SetZone(float zone,bool noDelay = false)
+    {
+        targetZone = zone;
+        if(noDelay)
+        {
+            MapCamera.orthographicSize = targetZone;
+        }
+    }
 
 #if UNITY_EDITOR
     public void SetWH(int w, int h)
