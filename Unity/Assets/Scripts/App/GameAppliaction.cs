@@ -3,6 +3,7 @@ using Assets.Scripts.GameStates;
 using ExcelConfig;
 using org.vxwo.csharp.json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace Assets.Scripts.App
 {
     public class GameAppliaction:Tools.XSingleton<GameAppliaction>,ExcelConfig.IConfigLoader
     {
-        public void Start()
+        public void Start(IRuner runer)
         {
             //初始化配置
             var excelConfig = new ExcelToJSONConfigManager(this);
@@ -29,7 +30,12 @@ namespace Assets.Scripts.App
             Debug.Log(LanguageManager.Singleton["APP_NAME"]);
             //进入游戏
             JoinCastle();
+
+            Runner = runer;
+            Runner.DoRun(Run());
         }
+
+        public IRuner Runner { private set; get; }
 
         private List<IPresist> prisit;
 
@@ -70,7 +76,8 @@ namespace Assets.Scripts.App
         public GameState Current { private set; get; }
 
         public void ChangeState(GameState target) {
-            if (Current != null) Current.OnExit();
+            if (Current != null) 
+                Current.OnExit();
             Current = target;
             Current.OnEnter();
         }
@@ -97,6 +104,7 @@ namespace Assets.Scripts.App
         /// </summary>
         public void JoinCastle() 
         {
+            Application.LoadLevel("Castle");
             var state = new CastleState();
             ChangeState(state);
         }
@@ -104,9 +112,20 @@ namespace Assets.Scripts.App
         /// <summary>
         /// 开始探索
         /// </summary>
-        public void GoToExplore(int configID) {
-            
-            var state = new ExploreState(configID);
+        public void GoToExplore(int configID)
+        {
+            var r = DoGoToExplore(configID);
+            works.Enqueue(r);
+        }
+
+        private IEnumerator DoGoToExplore(int configID)
+        {
+            var map = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.MapConfig>(configID);
+            var run = Application.LoadLevelAsync(map.MapName);
+            while (!run.isDone)
+                yield return null;
+            yield return null;
+            var state = new ExploreState(map);
             ChangeState(state);
         }
 
@@ -150,5 +169,33 @@ namespace Assets.Scripts.App
 
             return null;
         }
+
+        public void OnTap(TapGesture gesture)
+        {
+            if (Current == null) return;
+            Current.OnTap(gesture.Position);
+        }
+
+        public Queue<IEnumerator> works = new Queue<IEnumerator>();
+
+        public IEnumerator Run()
+        {
+           
+            while(true)
+            {
+                while (works.Count > 0)
+                {
+                    var w = works.Dequeue();
+                    while (w.MoveNext())
+                        yield return null;
+                }
+                yield return null;
+            }
+        }
+    }
+
+    public interface IRuner
+    {
+        void DoRun(IEnumerator r);
     }
 }

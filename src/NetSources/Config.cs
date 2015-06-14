@@ -126,6 +126,26 @@ namespace ExcelConfig
     }
 
     /// <summary>
+    /// 地图
+    /// </summary>
+    [ConfigFile("MapConfig.json","MapConfig")]
+    public class MapConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 地图资源名称
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String MapName { set; get; }
+
+    }
+
+    /// <summary>
     /// 士兵表
     /// </summary>
     [ConfigFile("SoldierConfig.json","SoldierConfig")]

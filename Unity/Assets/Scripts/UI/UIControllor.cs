@@ -17,10 +17,7 @@ namespace Assets.Scripts.UI
 
         public void ShowOrHideUIBackground(bool flag)
         {
-            var uiReander = UIManager.Singleton.Render as UIRender;
-            if (uiReander == null) return;
-            if (uiReander.BackgroundTexutre == null) return;
-            uiReander.BackgroundTexutre.gameObject.SetActive ( flag);
+            UIManager.Singleton.Render.ShowOrHideBack(flag);
         }
     }
 }

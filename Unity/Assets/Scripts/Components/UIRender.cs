@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using Assets.Scripts.Tools;
 public class UIRender : MonoBehaviour, Assets.Scripts.UI.IUIRender, Assets.Scripts.UI.ITipRender
 {
 
@@ -35,7 +35,7 @@ public class UIRender : MonoBehaviour, Assets.Scripts.UI.IUIRender, Assets.Scrip
     [SerializeField]
     public Transform UIRoot;
     [SerializeField]
-    public Transform BackgroundTexutre;
+    public Transform Background;
 
     [SerializeField]
     public Transform UITipPanel;
@@ -54,5 +54,12 @@ public class UIRender : MonoBehaviour, Assets.Scripts.UI.IUIRender, Assets.Scrip
         tip.transform.localRotation = Quaternion.identity;
         tip.transform.localScale = Vector3.one;
         tip.transform.localPosition = Vector3.zero;
+    }
+
+
+    public void ShowOrHideBack(bool show)
+    {
+        if (Background == null) return;
+        Background.ActiveSelfObject(show);
     }
 }

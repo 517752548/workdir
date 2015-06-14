@@ -37,5 +37,31 @@ namespace Assets.Scripts.Tools
             if (value >= 100) return true;
             return _randomer.Next(0, 100) >= value;
         }
+
+        public static int RandPro(int[] pro)
+        {
+            int count = 0;
+            foreach(var i in pro)
+            {
+                if (i >= 0)
+                    count += i;
+                else
+                    GameDebug.LogError("have error rand pro:"+i);
+            }
+
+            var result = RandomMinAndMax(0, count);
+            int last = 0, cur = 0;
+            for(var i =0;i<pro.Length;i++)
+            {
+                last = cur;
+                cur += pro[i];
+                if (last >= result && cur > result)
+                    return i;
+            }
+
+            GameDebug.LogError("Input error");
+            return 0;
+            
+        }
     }
 }

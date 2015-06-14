@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Scripts.App
 {
@@ -12,5 +13,7 @@ namespace Assets.Scripts.App
         public virtual void OnExit() { }
 
         public virtual void OnTick() { }
+
+        public virtual void OnTap(Vector2 pox) { }
     }
 }

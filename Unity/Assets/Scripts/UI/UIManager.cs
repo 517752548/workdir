@@ -26,6 +26,7 @@ namespace Assets.Scripts.UI
     public interface IUIRender
     {
         void Render(GameObject uiRoot);
+        void ShowOrHideBack(bool show);
     }
 
     public class UIWindowAttribute : Attribute

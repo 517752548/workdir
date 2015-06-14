@@ -8,15 +8,16 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class GameMainUpdater :MonoBehaviour
+    public class GameMainUpdater : MonoBehaviour,IRuner
     {
         void Awake()
         {
 
         }
 
-        void Update() {
-            if(Input.GetKey(KeyCode.Escape))
+        void Update()
+        {
+            if (Input.GetKey(KeyCode.Escape))
             {
                 Application.Quit();
                 return;
@@ -26,7 +27,7 @@ namespace Assets.Scripts
 
         void Start()
         {
-            GameAppliaction.Singleton.Start();
+            GameAppliaction.Singleton.Start(this);
         }
 
         void LateUpdate()
@@ -34,7 +35,7 @@ namespace Assets.Scripts
             GameAppliaction.Singleton.LateUpdate();
         }
 
-        void FixedUpdate() 
+        void FixedUpdate()
         {
             GameAppliaction.Singleton.FixedUpdate();
         }
@@ -52,19 +53,19 @@ namespace Assets.Scripts
             GameAppliaction.Singleton.Exit();
         }
 
-        public int ExploreID = -1;
+        public int ExploreID = 1;
 
 
         private string GM = string.Empty;
         void OnGUI()
         {
-            
+
             int line = 1;
-            if(GUI.Button(new Rect(10,Screen.height-(line++ *30), 120,25 ),"GoToBattle"))
+            if (GUI.Button(new Rect(10, Screen.height - (line++ * 30), 120, 25), "GoToBattle"))
             {
                 GameAppliaction.Singleton.BeginBattle();
             }
-            if (GUI.Button(new Rect(10, Screen.height -( line++ * 30), 120, 25), "GoToExplore"))
+            if (GUI.Button(new Rect(10, Screen.height - (line++ * 30), 120, 25), "GoToExplore"))
             {
                 GameAppliaction.Singleton.GoToExplore(ExploreID);
             }
@@ -80,14 +81,22 @@ namespace Assets.Scripts
             var rect = new Rect(10, Screen.height - (line++ * 30), 120, 25);
 
             GM = GUI.TextField(rect, GM);
-            rect.Set(rect.xMin+120, rect.yMin, rect.width, rect.height);
-            if(GUI.Button(rect,"GMSubmit"))
+            rect.Set(rect.xMin + 120, rect.yMin, rect.width, rect.height);
+            if (GUI.Button(rect, "GMSubmit"))
             {
                 //处理GM命令
                 Assets.Scripts.DataManagers.GMCommTool.Singleton.ExecuteGMComm(GM);
             }
         }
 
+        void OnGameTap(TapGesture tap)
+        {
+            GameAppliaction.Singleton.OnTap(tap);
+        }
 
+        public void DoRun(System.Collections.IEnumerator r)
+        {
+            this.StartCoroutine(r);
+        }
     }
 }

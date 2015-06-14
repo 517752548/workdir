@@ -34,5 +34,5 @@ namespace Assets.Scripts.PersistStructs
         PK =3
     }
 
-    
+
 }
