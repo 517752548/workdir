@@ -123,7 +123,7 @@ namespace Assets.Scripts.App
         private IEnumerator DoGoToExplore(int configID)
         {
             var map = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.MapConfig>(configID);
-            var run = Application.LoadLevelAsync(map.MapName);
+            var run = Application.LoadLevelAsync(map.MapResName);
             while (!run.isDone)
                 yield return null;
             yield return null;

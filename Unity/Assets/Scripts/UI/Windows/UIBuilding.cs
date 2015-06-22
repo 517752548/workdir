@@ -38,7 +38,7 @@ namespace Assets.Scripts.UI.Windows
                     Template.lb_buildName.text = Build.Config.Name;
                     if (value.NextLevelConfig != null)
                     {
-                        var needs = DataManagers.PlayerItemManager.SplitFormatItemData(Build.NextLevelConfig.LevelUpRequire);
+                        var needs = DataManagers.PlayerItemManager.SplitFormatItemData(Build.NextLevelConfig.CostItems);
                         var needItems = needs.Select(t => new
                         {
                             Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(t[0]),
@@ -68,7 +68,7 @@ namespace Assets.Scripts.UI.Windows
                 if (drag != null)
                     drag.enabled = p;
             }
-        }
+        } 
 
         public override void InitModel()
         {
@@ -104,11 +104,7 @@ namespace Assets.Scripts.UI.Windows
                     level = buildData.Level;
                 }
 
-                build.LevelConfig = ExcelToJSONConfigManager.Current.FirstConfig<BuildingConfig>(t =>
-                {
-                    if (t.Level == level && t.BuildingId == i.ID) return true;
-                    return false;
-                });
+             
 
                 build.NextLevelConfig = ExcelToJSONConfigManager.Current.FirstConfig<BuildingConfig>(t =>
                 {
@@ -119,7 +115,7 @@ namespace Assets.Scripts.UI.Windows
             }
 
             list.Sort((l, r) => {
-                if (l.LevelConfig != null) return -1;
+                if (l.Config != null) return -1;
                 if (l.Config.ID > r.Config.ID) return 1;
                 if (l.Config.ID == r.Config.ID) return 0;
                 return -1;
@@ -155,7 +151,7 @@ namespace Assets.Scripts.UI.Windows
     public class UIBuildData
     {
         public BuildingConfig Config { set; get; }
-        public BuildingLevelConfig LevelConfig { set; get; }
-        public BuildingLevelConfig NextLevelConfig { set; get; }
+
+        public BuildingConfig NextLevelConfig { set; get; }
     }
 }

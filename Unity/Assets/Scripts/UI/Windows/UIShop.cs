@@ -21,10 +21,10 @@ namespace Assets.Scripts.UI.Windows
                 });
             }
 
-            public Action<ShopConfig> OnBtClick;
+            public Action<StoreDataConfig> OnBtClick;
 
-            private ExcelConfig.ShopConfig _Config { get; set; }
-            public ExcelConfig.ShopConfig Config
+            private StoreDataConfig _Config { get; set; }
+            public StoreDataConfig Config
             {
                 get
                 {
@@ -33,14 +33,14 @@ namespace Assets.Scripts.UI.Windows
                 set {
                     _Config = value;
                     
-                    var itemRequire = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(_Config.RequireItem);
-                    var itemReward = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(_Config.Item);
-                    this.Template.lb_itemName.text = itemReward.Name;
-                    this.Template.lb_NeedItems.text = 
-                        LanguageManager.Singleton[
-                        DataManagers.PlayerItemManager.Singleton.GetItemCount(itemRequire.ID)>= Config.RequireNum? 
-                        "UIShop_Require_Item_Not_Enough":"UIShop_Require_Item_Enough"]  
-                        +string.Format(LanguageManager.Singleton["UIShop_Require_Item"], itemRequire.Name, _Config.RequireNum);
+                    //var itemRequire = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(_Config.RequireItem);
+                    //var itemReward = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(_Config.Item);
+                    //this.Template.lb_itemName.text = itemReward.Name;
+                    //this.Template.lb_NeedItems.text = 
+                    //    LanguageManager.Singleton[
+                    //    DataManagers.PlayerItemManager.Singleton.GetItemCount(itemRequire.ID)>= Config.RequireNum? 
+                    //    "UIShop_Require_Item_Not_Enough":"UIShop_Require_Item_Enough"]  
+                    //    +string.Format(LanguageManager.Singleton["UIShop_Require_Item"], itemRequire.Name, _Config.RequireNum);
                 }
             }
 
@@ -66,7 +66,7 @@ namespace Assets.Scripts.UI.Windows
         public override void OnUpdateUIData()
         {
             base.OnUpdateUIData();
-            var items = ExcelToJSONConfigManager.Current.GetConfigs<ShopConfig>();
+            var items = ExcelToJSONConfigManager.Current.GetConfigs<StoreDataConfig>();
             int index = 0;
             this.ItemGridTableManager.Count = items.Length;
             foreach(var i in this.ItemGridTableManager)
@@ -78,7 +78,7 @@ namespace Assets.Scripts.UI.Windows
             } 
         }
 
-        public void BuyItem(ShopConfig config)
+        public void BuyItem(StoreDataConfig config)
         {
             //doBy
             DataManagers.PlayerItemManager.Singleton.BuyItem(config);

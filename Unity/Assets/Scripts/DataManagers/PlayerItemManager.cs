@@ -116,31 +116,32 @@ namespace Assets.Scripts.DataManagers
             return this._items.Values.Where(t=>t.Num>0).ToList();
         }
 
-       /* internal bool BuyItem(ShopConfig config)
+        internal bool BuyItem(ExcelConfig.StoreDataConfig config)
         {
-            var require = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(config.RequireItem);
-            var buy = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(config.Item);
-            if(require==null)
-            {
-                Debug.LogError(string.Format("Item:{0} not exists!", config.RequireItem));
-                return false;
-            }
-            var haveCount = GetItemCount(require.ID);
-            if(haveCount>= config.RequireNum)
-            {
-                CalItem(config.RequireItem, config.RequireNum);
-                AddItem(config.Item, 1);
-                UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["REWARD_ITEM"], buy.Name, 1));
-                return true;
-            }
-            else
-            {
-                UI.UITipDrawer.Singleton.DrawNotify(
-                    string.Format(LanguageManager.Singleton["BUY_ITEM_NO_ENOUGH"],require.Name,config.RequireNum));
-                return false;
-            }
+            return false;
+            //var require = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(config.Sold_price);
+            //var buy = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(config.Item);
+            //if(require==null)
+            //{
+            //    Debug.LogError(string.Format("Item:{0} not exists!", config.RequireItem));
+            //    return false;
+            //}
+            //var haveCount = GetItemCount(require.ID);
+            //if(haveCount>= config.RequireNum)
+            //{
+            //    CalItem(config.RequireItem, config.RequireNum);
+            //    AddItem(config.Item, 1);
+            //    UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["REWARD_ITEM"], buy.Name, 1));
+            //    return true;
+            //}
+            //else
+            //{
+            //    UI.UITipDrawer.Singleton.DrawNotify(
+            //        string.Format(LanguageManager.Singleton["BUY_ITEM_NO_ENOUGH"],require.Name,config.RequireNum));
+            //    return false;
+            //}
         }
-        */
+        
         internal bool MakeItem(ItemConfig config)
         {
             var needs = DataManagers.PlayerItemManager.SplitFormatItemData(config.Pars1);

@@ -32,8 +32,8 @@ namespace Assets.Scripts.UI.Windows
                 set
                 {
                     _config = value;
-                    var needs = DataManagers.PlayerItemManager.SplitFormatItemData(Config.RequireItems);
-                    var rewards = DataManagers.PlayerItemManager.SplitFormatItemData(Config.RewardItems);
+                    var needs = DataManagers.PlayerItemManager.SplitFormatItemData(Config.Pars1);
+                    var rewards = DataManagers.PlayerItemManager.SplitFormatItemData(string.Format("{0}:1",value.ID));
                     var needItems = needs.Select(t => new ItemData
                     {
                         Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(t[0]),

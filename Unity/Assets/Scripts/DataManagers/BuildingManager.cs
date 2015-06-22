@@ -47,15 +47,11 @@ namespace Assets.Scripts.DataManagers
         public bool ConstructBuild(int entry, int level)
         {
             var build = ExcelToJSONConfigManager.Current.GetConfigByID<BuildingConfig>(entry);
-            var levelConfig = ExcelToJSONConfigManager.Current.FirstConfig<BuildingLevelConfig>((t) => {
-                if (t.BuildID == entry && t.Level == level) return true;
-                return false;
-            });
-            if(build ==null || levelConfig ==null)
+            if(build ==null )
             {
                 return false; //MaxLevel
             }
-            var needs = PlayerItemManager.SplitFormatItemData( levelConfig.LevelUpRequire);
+            var needs = PlayerItemManager.SplitFormatItemData(build.CostItems);
             bool have = true;
             var sb = new StringBuilder();
             sb.Append(LanguageManager.Singleton["NOT_ENOUGHT"]);
@@ -88,7 +84,7 @@ namespace Assets.Scripts.DataManagers
                 }else{
                     _ConstructBuildings.Add(entry, new PlayerBuild{ BuildID = entry, Level = level});
                 }
-                BuildEvent(levelConfig);
+                BuildEvent(build);
             }
             else
             {

@@ -122,18 +122,19 @@ namespace Assets.Scripts.DataManagers
         }
         public List<Proto.Item> CallFunByID(int id)
         {
-            var result = new List<Proto.Item>();
-            var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.FunctionConfig>(id);
-            if (config != null)
-            {
-                var produces = PlayerItemManager.SplitFormatItemData(config.Produce);
-                foreach (var i in produces)
-                {
-                    Proto.Item item = PlayerItemManager.Singleton.AddItem(i[0], i[1]);
-                    result.Add(item);
-                }
-            }
-            return result;
+            return null;
+            //var result = new List<Proto.Item>();
+            //var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.FunctionConfig>(id);
+            //if (config != null)
+            //{
+            //    var produces = PlayerItemManager.SplitFormatItemData(config.Produce);
+            //    foreach (var i in produces)
+            //    {
+            //        Proto.Item item = PlayerItemManager.Singleton.AddItem(i[0], i[1]);
+            //        result.Add(item);
+            //    }
+            //}
+            //return result;
         }
         //public ExcelConfig.ProduceLevelUpConfig CurrentLevel { private set; get; }
         internal float CallProduceGold()

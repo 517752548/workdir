@@ -24,10 +24,10 @@ namespace Assets.Scripts.UI.Windows
                     switch (Data.Type)
                     {
                         case ArmyData.OpType.LevelUP:
-                            Template.lb_skill.text = string.Format(LanguageManager.Singleton["SOLDIER_SKILL"], Data.Soldier.Config.SkillName);
-                            Template.lb_hp.text = string.Format(LanguageManager.Singleton["SOLDIER_HP"], Data.Soldier.Config.HPMax);
-                            Template.lb_damage.text = string.Format(LanguageManager.Singleton["SOLDIER_DAMAGE"], Data.Soldier.Config.Damage);
-                            Template.lb_speed.text = string.Format(LanguageManager.Singleton["SOLDIER_SPEED"], Data.Soldier.Config.AttackSpeed);
+                            //Template.lb_skill.text = string.Format(LanguageManager.Singleton["SOLDIER_SKILL"], Data.Soldier.Config.SkillName);
+                            //Template.lb_hp.text = string.Format(LanguageManager.Singleton["SOLDIER_HP"], Data.Soldier.Config.HPMax);
+                            //Template.lb_damage.text = string.Format(LanguageManager.Singleton["SOLDIER_DAMAGE"], Data.Soldier.Config.Damage);
+                            //Template.lb_speed.text = string.Format(LanguageManager.Singleton["SOLDIER_SPEED"], Data.Soldier.Config.AttackSpeed);
                             Template.lb_armyName.text = string.Format(LanguageManager.Singleton["SOLDIER_NAME"],
                                                     Data.Soldier.Config.Name, Data.Soldier.Number);
                             break;
@@ -117,8 +117,8 @@ namespace Assets.Scripts.UI.Windows
             int id = model.Data.Type == ArmyData.OpType.Train? -1: model.Data.Soldier.SoldierID;
             //¥¶¿Ìƒ¨»œ -1
             var levelUpSoldiers = ExcelToJSONConfigManager.Current
-                .GetConfigs<SoldierLevelUpConfig>((t) => {
-                    if (t.OldSoldierID == id) return true;
+                .GetConfigs<MonsterLvlUpConfig>((t) => {
+                    if (t.OldMonster == id) return true;
                     return false;
                 });
             

@@ -86,6 +86,68 @@ namespace ExcelConfig
     }
 
     /// <summary>
+    /// 地图内黑店
+    /// </summary>
+    [ConfigFile("SecretStoreConfig.json","SecretStoreConfig")]
+    public class SecretStoreConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 黑店名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 商店编号
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int Store_id { set; get; }
+        
+        /// <summary>
+        /// 商店所属地图
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String Belong_map { set; get; }
+        
+        /// <summary>
+        /// 商品id
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int item_id { set; get; }
+        
+        /// <summary>
+        /// 商品名称
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public String item_name { set; get; }
+        
+        /// <summary>
+        /// 购买货币类型
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public int current_type { set; get; }
+        
+        /// <summary>
+        /// 购买价格
+        /// </summary>
+        [ExcelConfigColIndex(7)]
+        public int Sold_price { set; get; }
+        
+        /// <summary>
+        /// 购买堆叠数
+        /// </summary>
+        [ExcelConfigColIndex(8)]
+        public int Purchase_pile { set; get; }
+        
+        /// <summary>
+        /// 最大购买次数
+        /// </summary>
+        [ExcelConfigColIndex(9)]
+        public int Max_purchase_times { set; get; }
+
+    }
+
+    /// <summary>
     /// 地图子表
     /// </summary>
     [ConfigFile("SubMapConfig.json","SubMapConfig")]
@@ -166,81 +228,87 @@ namespace ExcelConfig
         public String Name { set; get; }
         
         /// <summary>
-        /// 进图条件
+        /// 地图关卡资源名
         /// </summary>
         [ExcelConfigColIndex(2)]
+        public String MapResName { set; get; }
+        
+        /// <summary>
+        /// 进图条件
+        /// </summary>
+        [ExcelConfigColIndex(3)]
         public int OpenCondtion { set; get; }
         
         /// <summary>
         /// 条件参数
         /// </summary>
-        [ExcelConfigColIndex(3)]
+        [ExcelConfigColIndex(4)]
         public String OpenParams { set; get; }
         
         /// <summary>
         /// 解锁方式
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(5)]
         public int UnlockMode { set; get; }
         
         /// <summary>
         /// 解锁参数
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(6)]
         public String UnlockParams { set; get; }
         
         /// <summary>
         /// 是否开放
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(7)]
         public int IsOpen { set; get; }
         
         /// <summary>
         /// 地图刷新周期
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(8)]
         public int RefreshTicks { set; get; }
         
         /// <summary>
         /// 成就点
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(9)]
         public int Point { set; get; }
         
         /// <summary>
         /// 地图探索层数
         /// </summary>
-        [ExcelConfigColIndex(9)]
+        [ExcelConfigColIndex(10)]
         public int MapLevel { set; get; }
         
         /// <summary>
         /// 从属关系
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(11)]
         public String MapGroup { set; get; }
         
         /// <summary>
         /// 随机战斗库
         /// </summary>
-        [ExcelConfigColIndex(11)]
+        [ExcelConfigColIndex(12)]
         public String RandomBattle { set; get; }
         
         /// <summary>
         /// 随机战斗触发概率
         /// </summary>
-        [ExcelConfigColIndex(12)]
+        [ExcelConfigColIndex(13)]
         public int RandomPro { set; get; }
         
         /// <summary>
         /// 地图完整探索度
         /// </summary>
-        [ExcelConfigColIndex(13)]
+        [ExcelConfigColIndex(14)]
         public int CompletePoint { set; get; }
         
         /// <summary>
         /// 背景音乐
         /// </summary>
-        [ExcelConfigColIndex(14)]
+        [ExcelConfigColIndex(15)]
         public String BackgroudMusic { set; get; }
 
     }
@@ -386,6 +454,24 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(8)]
         public String CostItems { set; get; }
+        
+        /// <summary>
+        /// 解锁类型
+        /// </summary>
+        [ExcelConfigColIndex(9)]
+        public int UnlockType { set; get; }
+        
+        /// <summary>
+        /// 解锁参数
+        /// </summary>
+        [ExcelConfigColIndex(10)]
+        public String UnlockParms1 { set; get; }
+        
+        /// <summary>
+        /// 解锁参数2
+        /// </summary>
+        [ExcelConfigColIndex(11)]
+        public String UnlockParms2 { set; get; }
 
     }
 
@@ -816,6 +902,56 @@ namespace ExcelConfig
     }
 
     /// <summary>
+    /// 货郎
+    /// </summary>
+    [ConfigFile("StoreDataConfig.json","StoreDataConfig")]
+    public class StoreDataConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 物品名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 出售价格
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int Sold_price { set; get; }
+        
+        /// <summary>
+        /// 物品解锁条件类
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int Unlock_type { set; get; }
+        
+        /// <summary>
+        /// 解锁参数1
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int Unlock_para1 { set; get; }
+        
+        /// <summary>
+        /// 解锁参数2
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int Unlock_para2 { set; get; }
+        
+        /// <summary>
+        /// 解锁参数3
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public int Unlock_para3 { set; get; }
+        
+        /// <summary>
+        /// 解锁参数4
+        /// </summary>
+        [ExcelConfigColIndex(7)]
+        public int Unlock_para4 { set; get; }
+
+    }
+
+    /// <summary>
     /// 资源产量表
     /// </summary>
     [ConfigFile("ResourcesProduceConfig.json","ResourcesProduceConfig")]
@@ -918,6 +1054,50 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(11)]
         public String Pars5 { set; get; }
+
+    }
+
+    /// <summary>
+    /// 钻石商城
+    /// </summary>
+    [ConfigFile("DimondStoreConfig.json","DimondStoreConfig")]
+    public class DimondStoreConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 物品名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 商品识别码
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String ItemKey { set; get; }
+        
+        /// <summary>
+        /// 购买价格
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int Sold_price { set; get; }
+        
+        /// <summary>
+        /// 是否打折
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int Is_reduce { set; get; }
+        
+        /// <summary>
+        /// 折扣比例
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public String Reduce_percent { set; get; }
+        
+        /// <summary>
+        /// 折扣持续周期
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public String Last_time { set; get; }
 
     }
 
