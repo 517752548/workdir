@@ -22,8 +22,8 @@ namespace Assets.Scripts.UI.Windows
                 });
             }
 
-            private MakeConfig _config;
-            public MakeConfig Config
+            private ItemConfig _config;
+            public ItemConfig Config
             {
                 get
                 {
@@ -63,7 +63,7 @@ namespace Assets.Scripts.UI.Windows
                 }
             }
 
-            public Action<MakeConfig> OnMake;
+            public Action<ItemConfig> OnMake;
 
             internal void SetDrag(bool p)
             {
@@ -97,7 +97,7 @@ namespace Assets.Scripts.UI.Windows
         public override void OnUpdateUIData()
         {
             base.OnUpdateUIData();
-            var makes = ExcelToJSONConfigManager.Current.GetConfigs<MakeConfig>();
+            var makes = ExcelToJSONConfigManager.Current.GetConfigs<ItemConfig>();
             int index = 0;
             ItemGridTableManager.Count = makes.Length;
             foreach(var i in ItemGridTableManager)
@@ -109,7 +109,7 @@ namespace Assets.Scripts.UI.Windows
             }
         }
 
-        private void OnMake(MakeConfig config)
+        private void OnMake(ExcelConfig.ItemConfig config)
         {
 
             DataManagers.PlayerItemManager.Singleton.MakeItem(config);

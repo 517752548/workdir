@@ -10,7 +10,7 @@ namespace Assets.Scripts.Combat.Battle.Elements
     public class BattleSoldier
     {
         public Proto.Soldier Soldier { set; get; }
-        public ExcelConfig.SoldierConfig Config { set; get; }
+        public ExcelConfig.MonsterConfig Config { set; get; }
         public float AttackCdTime { set; get; }
     }
     public class BattleArmy :GObject
@@ -24,12 +24,12 @@ namespace Assets.Scripts.Combat.Battle.Elements
             {
                 var so = new BattleSoldier {
                   AttackCdTime = 0,
-                  Config = ExcelToJSONConfigManager.Current.GetConfigByID<SoldierConfig>(i.ConfigID),
+                  Config = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(i.ConfigID),
                   Soldier = i
                 };
 
                 Soldiers.Add(so);
-                HP += (so.Config.HPMax * i.Num);
+                HP += (so.Config.Hp * i.Num);
             }
 
             MaxHP = HP;

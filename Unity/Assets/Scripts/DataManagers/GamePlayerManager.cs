@@ -135,27 +135,16 @@ namespace Assets.Scripts.DataManagers
             }
             return result;
         }
-        public ExcelConfig.ProduceLevelUpConfig CurrentLevel { private set; get; }
+        //public ExcelConfig.ProduceLevelUpConfig CurrentLevel { private set; get; }
         internal float CallProduceGold()
         {
-            if (CurrentLevel == null)
-            {
-                var produceLevel = DataManagers.GamePlayerManager.Singleton[DataManagers.PlayDataKeys.PRODUCE_LEVEL];
-                if (produceLevel <= 0)
-                {
-                    this[DataManagers.PlayDataKeys.PRODUCE_LEVEL] = 1;
-                    produceLevel = 1;
-
-                }
-                var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ProduceLevelUpConfig>(produceLevel);
-                CurrentLevel = config;
-            }
-            var items = CallFunByID(CurrentLevel.FunctionID);
-            PlayerItemManager.Singleton.NotifyReward(items);
-            AddProduceTimes(1);
+            return 0;
+            //var items = CallFunByID(CurrentLevel.FunctionID);
+            //PlayerItemManager.Singleton.NotifyReward(items);
+            //AddProduceTimes(1);
             //refresh all ui
-            UI.UIManager.Singleton.OnUpdateUIData();
-            return CurrentLevel == null ? 0f : CurrentLevel.CdTime;
+            //UI.UIManager.Singleton.OnUpdateUIData();
+            //return CurrentLevel == null ? 0f : CurrentLevel.CdTime;
         }
         private void AddProduceTimes(int time)
         {
@@ -207,7 +196,7 @@ namespace Assets.Scripts.DataManagers
         {
             get
             {
-                var timeTickForProduce = TimeSpan.FromSeconds(GameAppliaction.Singleton.ConstValues.RESOURCES_PRODUCE_TIME);
+                var timeTickForProduce = TimeSpan.FromSeconds(10);//GameAppliaction.Singleton.ConstValues.RESOURCES_PRODUCE_TIME);
                 var time = DateTime.UtcNow;
                 var lastTime = TimeZero + TimeSpan.FromSeconds(this[PlayDataKeys.PRODUCE_TIME]);
                 if (lastTime > time) return TimeSpan.FromSeconds(0);

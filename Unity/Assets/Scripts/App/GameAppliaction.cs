@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.DataManagers;
 using Assets.Scripts.GameStates;
+using Assets.Scripts.Tools;
 using ExcelConfig;
 using org.vxwo.csharp.json;
 using System;
@@ -39,13 +40,14 @@ namespace Assets.Scripts.App
 
         private List<IPresist> prisit;
 
-        private ConstValuesConfig _ConstValues;
-        public ConstValuesConfig ConstValues
+        private ConstValues _ConstValues;
+        public ConstValues ConstValues
         {
             get
             {
                 if (_ConstValues == null)
-                    _ConstValues = ExcelToJSONConfigManager.Current.FirstConfig<ConstValuesConfig>((item) => { return true; });
+                    _ConstValues = new ConstValues();
+                   // _ConstValues = ExcelToJSONConfigManager.Current.FirstConfig<ConstValuesConfig>((item) => { return true; });
                 return _ConstValues;
             }
         }

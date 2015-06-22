@@ -116,7 +116,7 @@ namespace Assets.Scripts.DataManagers
             return this._items.Values.Where(t=>t.Num>0).ToList();
         }
 
-        internal bool BuyItem(ShopConfig config)
+       /* internal bool BuyItem(ShopConfig config)
         {
             var require = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(config.RequireItem);
             var buy = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(config.Item);
@@ -140,11 +140,11 @@ namespace Assets.Scripts.DataManagers
                 return false;
             }
         }
-
-        internal bool MakeItem(MakeConfig config)
+        */
+        internal bool MakeItem(ItemConfig config)
         {
-            var needs = DataManagers.PlayerItemManager.SplitFormatItemData(config.RequireItems);
-            var rewards = DataManagers.PlayerItemManager.SplitFormatItemData(config.RewardItems);
+            var needs = DataManagers.PlayerItemManager.SplitFormatItemData(config.Pars1);
+            var rewards = DataManagers.PlayerItemManager.SplitFormatItemData(string.Format("{0}:1",config.ID));
             var needItems = needs.Select(t => new 
             {
                 Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(t[0]),

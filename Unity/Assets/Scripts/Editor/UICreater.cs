@@ -9,7 +9,7 @@ using Assets.Scripts.Tools;
 
 public class UICreater : EditorWindow
 {
-    [MenuItem("UI/InitLanguageFile")]
+    [MenuItem("GAME/UI/INIT_LANGUAGE_FILE")]
     public static void CreateLanguage()
     {
         if (!EditorUtility.DisplayDialog("创建", "创建将覆盖默认的语言文件", "OK", "Cancel"))
@@ -21,7 +21,13 @@ public class UICreater : EditorWindow
         File.WriteAllText(file, xml, XmlParser.UTF8);
     }
 
-    [MenuItem("UI/AutoGenWindow")]
+    [MenuItem("GAME/GEN_CONST_VALUES")]
+    public static void GenConstValues()
+    {
+
+    }
+
+    [MenuItem("GAME/UI/AUTO_GEN_WINDOWS_CODE")]
     public static void OpenEditor()
     {
         if (_ui == null)

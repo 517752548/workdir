@@ -98,17 +98,17 @@ namespace Assets.Scripts.DataManagers
             return have;
         }
 
-        private bool BuildEvent(BuildingLevelConfig levelConfig)
+        private bool BuildEvent(BuildingConfig levelConfig)
         {
             //ADD_PEOPLE
             //PRODUCE
-            switch(levelConfig.LevelUpEvent)
+            switch(levelConfig.ConstructEvent)
             {
                 case "ADD_PEOPLE":
-                    GamePlayerManager.Singleton[PlayDataKeys.PEOPLE_COUNT] += Convert.ToInt32(levelConfig.LevelUpParams);
+                    //GamePlayerManager.Singleton[PlayDataKeys.PEOPLE_COUNT] += Convert.ToInt32(levelConfig.LevelUpParams);
                     break;
                 case "PRODUCE":
-                    GamePlayerManager.Singleton.OpenProduceById(Convert.ToInt32(levelConfig.LevelUpParams));
+                    //GamePlayerManager.Singleton.OpenProduceById(Convert.ToInt32(levelConfig.LevelUpParams));
                     break;
             }
 
@@ -148,33 +148,18 @@ namespace Assets.Scripts.DataManagers
                 return _Config;
             }
         }
-        private ExcelConfig.BuildingLevelConfig _LevelConfig;
-        [JsonIgnore]
-        public ExcelConfig.BuildingLevelConfig LevelConfig
-        {
-            get
-            {
-                if (_LevelConfig == null)
-                {
-                    _LevelConfig = ExcelConfig.ExcelToJSONConfigManager.Current.FirstConfig<ExcelConfig.BuildingLevelConfig>(t =>
-                    {
-                        return t.BuildID == BuildID && t.Level == Level;
-                    });
-                }
-                return _LevelConfig;
-            }
-        }
 
-        private ExcelConfig.BuildingLevelConfig _NextLevelConfig;
+
+        private BuildingConfig _NextLevelConfig;
         [JsonIgnore]
-        public ExcelConfig.BuildingLevelConfig NextLevelConfig
+        public BuildingConfig NextLevelConfig
         {
             get
             {
                 if (_NextLevelConfig == null) {
-                    _NextLevelConfig = ExcelConfig.ExcelToJSONConfigManager.Current.FirstConfig<ExcelConfig.BuildingLevelConfig>(t =>
+                    _NextLevelConfig = ExcelConfig.ExcelToJSONConfigManager.Current.FirstConfig<BuildingConfig>(t =>
                     {
-                        return t.BuildID == BuildID && t.Level == Level+1;
+                        return t.BuildingId == t.BuildingId && t.Level == Level+1;
                     });
                 }
                 return _NextLevelConfig;

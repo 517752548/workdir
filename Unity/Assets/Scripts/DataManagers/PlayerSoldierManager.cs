@@ -56,17 +56,17 @@ namespace Assets.Scripts.DataManagers
             return s.Number;
         }
 
-        public bool TrainSoldier(SoldierLevelUpConfig trainConfig)
+        public bool TrainSoldier(MonsterLvlUpConfig trainConfig)
         {
             //不存在
-            var soldierConfig = ExcelToJSONConfigManager.Current.GetConfigByID<SoldierConfig>(trainConfig.NewSoldierID);
+            var soldierConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(trainConfig.LateMonster);
             if (soldierConfig == null) return false;
 
-            var needSoldier = trainConfig.OldSoldierID;
-            var needResources = PlayerItemManager.SplitFormatItemData(trainConfig.NeedItem);
-            if (trainConfig.OldSoldierID > 0)
+            var needSoldier = trainConfig.OldMonster;
+            var needResources = PlayerItemManager.SplitFormatItemData(trainConfig.CostItems);
+            if (trainConfig.OldMonster > 0)
             {
-                if (this.GetSoldierNum(trainConfig.OldSoldierID) < 1)
+                if (this.GetSoldierNum(trainConfig.OldMonster) < 1)
                 {
                     //按理不能进入
                     return false;
@@ -97,22 +97,22 @@ namespace Assets.Scripts.DataManagers
                 {
                     PlayerItemManager.Singleton.CalItem(i[0], i[1]);
                 }
-                if (trainConfig.OldSoldierID > 0)
+                if (trainConfig.OldMonster > 0)
                 {
-                    this[trainConfig.OldSoldierID].Number -= 1;
+                    this[trainConfig.OldMonster].Number -= 1;
                 }
 
-                var newSoldier = this[trainConfig.NewSoldierID];
+                var newSoldier = this[trainConfig.LateMonster];
                 if (newSoldier != null)
                     newSoldier.Number += 1;
                 else
                 {
-                    this._Soldiers.Add(trainConfig.NewSoldierID,
+                    this._Soldiers.Add(trainConfig.LateMonster,
                         new PlayerSoldierData
                         {
                             DeadNum = 0,
                             Number = 1,
-                            SoldierID = trainConfig.NewSoldierID
+                            SoldierID = trainConfig.LateMonster
                         }
                         );
                 }
@@ -156,11 +156,11 @@ namespace Assets.Scripts.DataManagers
         public int DeadNum { set; get; }
 
         [JsonIgnore]
-        public SoldierConfig Config
+        public MonsterConfig Config
         {
             get
             {
-                return ExcelToJSONConfigManager.Current.GetConfigByID<SoldierConfig>(SoldierID);
+                return ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(SoldierID);
             }
         }
     }

@@ -38,6 +38,13 @@ namespace Assets.Scripts.Tools
             return _randomer.Next(0, 100) >= value;
         }
 
+        public static bool Probability10000(int value)
+        {
+            if (value <= 0) return false;
+            if (value >= 10000) return true;
+            return _randomer.Next(0, 10000) >= value;
+        }
+
         public static int RandPro(int[] pro)
         {
             int count = 0;

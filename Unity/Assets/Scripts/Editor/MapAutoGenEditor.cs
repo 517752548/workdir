@@ -8,8 +8,8 @@ using Assets.Scripts.Tools;
 
 public class MapAutoGenEditor:EditorWindow
 {
-    
-    [MenuItem("Map/AutoGenEditor")]
+
+    [MenuItem("GAME/MAP/AUTO_GEN_MAP")]
     public static void ShowMapEditor() 
     {
         if (_editor == null)

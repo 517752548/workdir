@@ -104,14 +104,15 @@ namespace Assets.Scripts.UI.Windows
                     level = buildData.Level;
                 }
 
-                build.LevelConfig = ExcelToJSONConfigManager.Current.FirstConfig<BuildingLevelConfig>(t => {
-                    if (t.Level == level && t.BuildID == i.ID) return true;
+                build.LevelConfig = ExcelToJSONConfigManager.Current.FirstConfig<BuildingConfig>(t =>
+                {
+                    if (t.Level == level && t.BuildingId == i.ID) return true;
                     return false;
                 });
 
-                build.NextLevelConfig = ExcelToJSONConfigManager.Current.FirstConfig<BuildingLevelConfig>(t =>
+                build.NextLevelConfig = ExcelToJSONConfigManager.Current.FirstConfig<BuildingConfig>(t =>
                 {
-                    if (t.Level == level+1 && t.BuildID == i.ID) return true;
+                    if (t.Level == level + 1 && t.BuildingId == i.ID) return true;
                     return false;
                 });
                 list.Add(build);
