@@ -114,6 +114,18 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(4)]
         public int RequireGold { set; get; }
+        
+        /// <summary>
+        /// 解锁条件
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int UnlockType { set; get; }
+        
+        /// <summary>
+        /// 解锁参数
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public String UnlockPars1 { set; get; }
 
     }
 
