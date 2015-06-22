@@ -86,6 +86,38 @@ namespace ExcelConfig
     }
 
     /// <summary>
+    /// 制作表
+    /// </summary>
+    [ConfigFile("MakeConfig.json","MakeConfig")]
+    public class MakeConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 需要道具
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String RequireItems { set; get; }
+        
+        /// <summary>
+        /// 获得道具
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String RewardItems { set; get; }
+        
+        /// <summary>
+        /// 需要金币
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int RequireGold { set; get; }
+
+    }
+
+    /// <summary>
     /// 地图内黑店
     /// </summary>
     [ConfigFile("SecretStoreConfig.json","SecretStoreConfig")]
