@@ -830,6 +830,50 @@ namespace ExcelConfig
     }
 
     /// <summary>
+    /// 招募表
+    /// </summary>
+    [ConfigFile("HeroConfig.jason","HeroConfig")]
+    public class HeroConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 招募兵种ID
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int recruit_id { set; get; }
+        
+        /// <summary>
+        /// 招募货币类型
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int recruit_current_type { set; get; }
+        
+        /// <summary>
+        /// 招募价格
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int recruit_price { set; get; }
+        
+        /// <summary>
+        /// 招募条件
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int recruit_condition { set; get; }
+        
+        /// <summary>
+        /// 参数
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public String recruit_para { set; get; }
+        
+        /// <summary>
+        /// 条件文本说明
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public String recruit_des { set; get; }
+
+    }
+
+    /// <summary>
     /// 掉落
     /// </summary>
     [ConfigFile("DropConfig.json","DropConfig")]
