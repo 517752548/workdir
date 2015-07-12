@@ -217,7 +217,7 @@ namespace Assets.Scripts.UI
             OnUpdateUIData(typeof(T).Name);
         }
 
-        public T CreateOrShowWindow<T>() where T: UIWindow, new ()
+        public T CreateOrGetWindow<T>() where T: UIWindow, new ()
         {
             var key = typeof(T).Name;
             T window;

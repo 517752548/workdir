@@ -14,8 +14,8 @@ namespace Assets.Scripts.Combat.Battle.Actions
         { }
         public override void DoAction()
         {
-
-            App.GameAppliaction.Singleton.GoToExplore(-1);
+            //GOTo Explore
+            App.GameAppliaction.Singleton.GoToExplore(-1); 
             //ShowBattle result 
             UI.UITipDrawer.Singleton.DrawNotify(string.Format("BattleEnd"));
             //throw new NotImplementedException();

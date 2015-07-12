@@ -131,15 +131,15 @@ namespace Assets.Scripts.DataManagers
         [JsonName("L")]
         public int Level { set; get; }
 
-        private ExcelConfig.BuildingConfig _Config { set; get; }
+        private BuildingConfig _Config { set; get; }
         [JsonIgnore]
-        public ExcelConfig.BuildingConfig Config
+        public BuildingConfig Config
         {
             get
             {
                 if (_Config == null)
                 {
-                    _Config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.BuildingConfig>(BuildID);
+                    _Config = ExcelToJSONConfigManager.Current.GetConfigByID<BuildingConfig>(BuildID);
                 }
                 return _Config;
             }

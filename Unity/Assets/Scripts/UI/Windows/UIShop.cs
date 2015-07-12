@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.Tools;
 using ExcelConfig;
+using Proto;
+
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -15,79 +17,102 @@ namespace Assets.Scripts.UI.Windows
             public override void InitModel()
             {
                 //todo
-                this.Template.bt_item.OnMouseClick((s, e) => {
-                    if (OnBtClick == null) return;
-                    OnBtClick(this.Config);
+                Template.bt_info.OnMouseClick((s, e) => {
+                    if (OnInfoClick == null) return;
+                    OnInfoClick(this);
+                });
+
+                Template.Bt_itemName.OnMouseClick((s, e) => {
+                    if (OnClick == null) return;
+                    OnClick(this);
                 });
             }
 
-            public Action<StoreDataConfig> OnBtClick;
+            public Action<ItemGridTableModel> OnInfoClick;
+            public Action<ItemGridTableModel> OnClick;
 
-            private StoreDataConfig _Config { get; set; }
+            public ItemConfig ItemConfig { private set; get; }
+            private StoreDataConfig _Config;
             public StoreDataConfig Config
             {
+                set
+                {
+                    _Config = value;
+                    var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(_Config.ID);
+                    ItemConfig = item;
+                    if (item == null) return;
+                    Template.Bt_itemName.Text(item.Name);
+                    Template.lb_cost.text = string.Format(LanguageManager.Singleton["UIShop_Model_Cost"], _Config.Sold_price);
+                   
+                }
                 get
                 {
                     return _Config;
                 }
-                set {
-                    _Config = value;
-                    
-                    //var itemRequire = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(_Config.RequireItem);
-                    //var itemReward = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(_Config.Item);
-                    //this.Template.lb_itemName.text = itemReward.Name;
-                    //this.Template.lb_NeedItems.text = 
-                    //    LanguageManager.Singleton[
-                    //    DataManagers.PlayerItemManager.Singleton.GetItemCount(itemRequire.ID)>= Config.RequireNum? 
-                    //    "UIShop_Require_Item_Not_Enough":"UIShop_Require_Item_Enough"]  
-                    //    +string.Format(LanguageManager.Singleton["UIShop_Require_Item"], itemRequire.Name, _Config.RequireNum);
-                }
-            }
-
-            public void SetDrag(bool flag)
-            {
-                var dragComp = this.Item.Root.GetComponent<UIDragScrollView>();
-                if (dragComp == null) return;
-                dragComp.enabled = flag;
             }
         }
 
         public override void InitModel()
         {
             base.InitModel();
-            this.bt_left.OnMouseClick((s, e) => {
-                this.HideWindow();
-                var ui = UIManager.Singleton.CreateOrShowWindow<UICastlePanel>();
-                ui.ShowWindow();
+            //Write Code here
+            bt_close.OnMouseClick((s, e) => {
+                HideWindow();
             });
-            this.bt_right.ActiveSelfObject(false);
-        }
-
-        public override void OnUpdateUIData()
-        {
-            base.OnUpdateUIData();
-            var items = ExcelToJSONConfigManager.Current.GetConfigs<StoreDataConfig>();
-            int index = 0;
-            this.ItemGridTableManager.Count = items.Length;
-            foreach(var i in this.ItemGridTableManager)
-            {
-                i.Model.Config = items[index];
-                i.Model.OnBtClick = BuyItem;
-                i.Model.SetDrag(items.Length >= 10);
-                index++;
-            } 
-        }
-
-        public void BuyItem(StoreDataConfig config)
-        {
-            //doBy
-            DataManagers.PlayerItemManager.Singleton.BuyItem(config);
-            OnUpdateUIData();
         }
         public override void OnShow()
         {
             base.OnShow();
-            OnUpdateUIData();
+            //¥¶¿Ì
+            var shopItems = ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.StoreDataConfig>(
+                (item) =>
+                {
+                    #region Condition
+                    var unlockType = (StoreUnlockType)item.Unlock_type;
+                    switch (unlockType)
+                    {
+                        case StoreUnlockType.None:
+                            return true;
+                        case StoreUnlockType.BuildGetTargetLevel:
+                            var builds = Tools.UtilityTool.SplitKeyValues(item.Unlock_para1);
+                            foreach (var i in builds)
+                            {
+                                var build = DataManagers.BuildingManager.Singleton[i.Key];
+                                if (build == null) return false;
+                                if (build.Level < i.Value) return false;
+                            }
+                            return true;
+                        case StoreUnlockType.ExploreGetTarget:
+                            int explore = 0;
+                            if (!int.TryParse(item.Unlock_para1, out explore)) return false;
+                            if (DataManagers.GamePlayerManager.Singleton[DataManagers.PlayDataKeys.EXPLORE_VALUE] < explore) return false;
+                            return true;
+                    }
+                    return true;
+                    #endregion
+                });
+
+            ItemGridTableManager.Count = shopItems.Length;
+            for (var i = 0; i < ItemGridTableManager.Count; i++)
+            {
+                ItemGridTableManager[i].Model.Config = shopItems[i];
+                ItemGridTableManager[i].Model.OnInfoClick = OnInfoClick;
+                ItemGridTableManager[i].Model.OnClick = OnClick;
+            }
+        }
+
+        private void OnClick(ItemGridTableModel obj)
+        {
+            //throw new NotImplementedException();
+            if (DataManagers.PlayerItemManager.Singleton.BuyItem(obj.Config))
+            {
+                return;
+            }
+        }
+
+        private void OnInfoClick(ItemGridTableModel obj)
+        {
+             
         }
         public override void OnHide()
         {

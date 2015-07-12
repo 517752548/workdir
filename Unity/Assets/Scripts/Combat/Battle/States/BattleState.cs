@@ -8,19 +8,20 @@ namespace Assets.Scripts.Combat.Battle.States
 {
     public class BattleState :GState
     {
-        public BattleState(Proto.Army player, Proto.Army monster)
+        public BattleState(int battleGroupID)
         {
             var perception = new BattlePerception(this);
             this.Perception = perception;
 
+            var battle = new Elements.Battle(new Controllors.BattleControllor(this.Perception),battleGroupID);
             var controllor = new Controllors.ArmyControllor(this.Perception);
-            var playerArmy = new Elements.BattleArmy(controllor, player);
-            var monsterArmy = new Elements.BattleArmy(controllor, monster);
+            //var playerArmy = new Elements.BattleArmy(controllor, player);
+            //var monsterArmy = new Elements.BattleArmy(controllor, monster);
 
-            AddElement(playerArmy);
-            AddElement(monsterArmy);
+            //AddElement(playerArmy);
+            //AddElement(monsterArmy);
 
-            var battle = new Elements.Battle(new Controllors.BattleControllor(Perception));
+            //var battle = new Elements.Battle(new Controllors.BattleControllor(Perception));
             AddElement(battle);
         }
         public override void OnEnter()

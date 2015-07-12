@@ -58,5 +58,19 @@ namespace Assets.Scripts.Tools
             button.SetState(disable ? UIButton.State.Disabled : UIButtonColor.State.Normal, true);
             return button;
         }
+
+        public static void Text(this UIButton uiButton,string text)
+        {
+            var label = uiButton.transform.FindChild<UILabel>("Label");
+            if (label == null) return;
+            label.text = text;
+        }
+
+        public static string Text(this UIButton uiButton)
+        {
+            var label = uiButton.transform.FindChild<UILabel>("Label");
+            if (label == null) return string.Empty;
+            return label.text;
+        }
     }
 }

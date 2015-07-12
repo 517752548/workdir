@@ -78,7 +78,7 @@ namespace Assets.Scripts.UI.Windows
             base.InitModel();
               this.bt_left.OnMouseClick((s, e) => {
                 this.HideWindow();
-                var ui = UIManager.Singleton.CreateOrShowWindow<UICastlePanel>();
+                var ui = UIManager.Singleton.CreateOrGetWindow<UICastlePanel>();
                 ui.ShowWindow();
             });
             this.bt_right.ActiveSelfObject(false);

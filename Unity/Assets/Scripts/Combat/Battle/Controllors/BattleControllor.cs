@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Assets.Scripts.Combat.Battle.Controllors
 {
-    class BattleControllor :GControllor
+    public class BattleControllor :GControllor
     {
         public BattleControllor(GPerception per):base(per)
         { }

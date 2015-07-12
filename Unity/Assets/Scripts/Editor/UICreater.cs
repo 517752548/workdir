@@ -317,13 +317,14 @@ namespace Assets.Scripts.UI.Windows
             }
             else
             {
-                if (!dic.ContainsKey(ui.name))
+                var trans = root.transform;
+                if (!dic.ContainsKey(trans.name))
                 {
-                    dic.Add(ui.name, ui.GetType().Name);
+                    dic.Add(trans.name, trans.GetType().Name);
                 }
                 else
                 {
-                    Debug.LogError("name is exists !!-> Name:" + ui.name);
+                    Debug.LogError("name is exists !!-> Name:" + trans.name);
                 }
             }
         }

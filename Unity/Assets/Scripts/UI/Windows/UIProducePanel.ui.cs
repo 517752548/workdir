@@ -13,65 +13,50 @@ namespace Assets.Scripts.UI.Windows
         public class ItemGridTableTemplate : TableItemTemplate
         {
             public ItemGridTableTemplate(){}
-            public UILabel Label;
-            public UILabel lb_cal;
-            public UILabel lb_add;
-            public UILabel lb_num;
-
-            public override void InitTemplate()
-            {
-                Label = FindChild<UILabel>("Label");
-                lb_cal = FindChild<UILabel>("lb_cal");
-                lb_add = FindChild<UILabel>("lb_add");
-                lb_num = FindChild<UILabel>("lb_num");
-
-            }
-        }
-        public class RewardItemGridTableTemplate : TableItemTemplate
-        {
-            public RewardItemGridTableTemplate(){}
+            public UIButton bt_item;
             public UILabel lb_name;
-            public UILabel lb_count;
+            public UIButton bt_add;
+            public UIButton bt_cal;
+            public UILabel Label;
 
             public override void InitTemplate()
             {
+                bt_item = FindChild<UIButton>("bt_item");
                 lb_name = FindChild<UILabel>("lb_name");
-                lb_count = FindChild<UILabel>("lb_count");
+                bt_add = FindChild<UIButton>("bt_add");
+                bt_cal = FindChild<UIButton>("bt_cal");
+                Label = FindChild<UILabel>("Label");
 
             }
         }
 
 
-        public UIButton bt_left;
-        public UIButton bt_right;
-        public UIButton bt_produce;
-        public UILabel lb_time;
-        public UILabel lb_name_lb;
-        public UILabel lb_people;
+        public UILabel lb_info;
+        public UILabel lb_title;
+        public UIPanel PackageView;
         public UIGrid ItemGrid;
-        public UIGrid RewardItemGrid;
-        public UILabel lb_timeLimit;
+        public UILabel lb_worker;
+        public UILabel lb_reward_time;
+        public UILabel lb_reward_list;
+        public UIButton bt_close;
 
 
         public UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>> ItemGridTableManager = new UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>>();
-        public UITableManager<AutoGenTableItem<RewardItemGridTableTemplate, RewardItemGridTableModel>> RewardItemGridTableManager = new UITableManager<AutoGenTableItem<RewardItemGridTableTemplate, RewardItemGridTableModel>>();
 
 
         public override void InitTemplate()
         {
             base.InitTemplate();
-            bt_left = FindChild<UIButton>("bt_left");
-            bt_right = FindChild<UIButton>("bt_right");
-            bt_produce = FindChild<UIButton>("bt_produce");
-            lb_time = FindChild<UILabel>("lb_time");
-            lb_name_lb = FindChild<UILabel>("lb_name_lb");
-            lb_people = FindChild<UILabel>("lb_people");
+            lb_info = FindChild<UILabel>("lb_info");
+            lb_title = FindChild<UILabel>("lb_title");
+            PackageView = FindChild<UIPanel>("PackageView");
             ItemGrid = FindChild<UIGrid>("ItemGrid");
-            RewardItemGrid = FindChild<UIGrid>("RewardItemGrid");
-            lb_timeLimit = FindChild<UILabel>("lb_timeLimit");
+            lb_worker = FindChild<UILabel>("lb_worker");
+            lb_reward_time = FindChild<UILabel>("lb_reward_time");
+            lb_reward_list = FindChild<UILabel>("lb_reward_list");
+            bt_close = FindChild<UIButton>("bt_close");
 
             ItemGridTableManager.InitFromGrid(ItemGrid);
-            RewardItemGridTableManager.InitFromGrid(RewardItemGrid);
 
         }       
     }

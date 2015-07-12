@@ -550,57 +550,63 @@ namespace ExcelConfig
         public int Type { set; get; }
         
         /// <summary>
-        /// 生命
+        /// 兵星
         /// </summary>
         [ExcelConfigColIndex(5)]
+        public int Star { set; get; }
+        
+        /// <summary>
+        /// 生命
+        /// </summary>
+        [ExcelConfigColIndex(6)]
         public int Hp { set; get; }
         
         /// <summary>
         /// 攻击
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(7)]
         public int Damage { set; get; }
         
         /// <summary>
         /// 命中率
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(8)]
         public float Hit { set; get; }
         
         /// <summary>
         /// 闪避率
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(9)]
         public float Dodge { set; get; }
         
         /// <summary>
         /// 速度
         /// </summary>
-        [ExcelConfigColIndex(9)]
+        [ExcelConfigColIndex(10)]
         public int Speed { set; get; }
         
         /// <summary>
         /// 克制关系暴击
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(11)]
         public float CrtPro { set; get; }
         
         /// <summary>
         /// 暴击倍率
         /// </summary>
-        [ExcelConfigColIndex(11)]
+        [ExcelConfigColIndex(12)]
         public float Mult { set; get; }
         
         /// <summary>
         /// 技能ID
         /// </summary>
-        [ExcelConfigColIndex(12)]
+        [ExcelConfigColIndex(13)]
         public int SkillID { set; get; }
         
         /// <summary>
         /// 掉落方案ID
         /// </summary>
-        [ExcelConfigColIndex(13)]
+        [ExcelConfigColIndex(14)]
         public int DropID { set; get; }
 
     }
@@ -1017,25 +1023,25 @@ namespace ExcelConfig
         /// 解锁参数1
         /// </summary>
         [ExcelConfigColIndex(4)]
-        public int Unlock_para1 { set; get; }
+        public String Unlock_para1 { set; get; }
         
         /// <summary>
         /// 解锁参数2
         /// </summary>
         [ExcelConfigColIndex(5)]
-        public int Unlock_para2 { set; get; }
+        public String Unlock_para2 { set; get; }
         
         /// <summary>
         /// 解锁参数3
         /// </summary>
         [ExcelConfigColIndex(6)]
-        public int Unlock_para3 { set; get; }
+        public String Unlock_para3 { set; get; }
         
         /// <summary>
         /// 解锁参数4
         /// </summary>
         [ExcelConfigColIndex(7)]
-        public int Unlock_para4 { set; get; }
+        public String Unlock_para4 { set; get; }
 
     }
 

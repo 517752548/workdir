@@ -22,7 +22,7 @@ namespace Assets.Scripts.GameStates
             base.OnEnter();
             UI.UIControllor.Singleton.ShowOrHideUIBackground(false);
             UI.UIControllor.Singleton.HideAllUI();
-            State = new Combat.Battle.States.BattleState(player, monster);
+            State = new Combat.Battle.States.BattleState(1);
             State.OnEnter();
 
         }

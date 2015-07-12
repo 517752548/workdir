@@ -17,6 +17,7 @@ namespace Assets.Scripts.DataManagers
         PRODUCE_TIME =4,//上次计算时间
         PACKAGE_SIZE =5,//背包大小
         TEAM_SIZE =6,//队伍上线
+        EXPLORE_VALUE = 7,  //探索度
     }
     public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
     {

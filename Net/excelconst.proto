@@ -1,0 +1,112 @@
+package Proto;
+//地图事件
+enum MapEventType
+{ 
+   BronPos = 1; //出生点
+   ReLivePos =2;//复活点
+   PKEnterPos =3;//竞技场入口
+   ScrectShopPos = 4;//地图黑店
+   ChestPos =5;//神秘宝藏
+   RechargePos =6 ;//驿站补给点
+   BattlePos = 7;//固定战斗点
+   RandomChestPos = 8;//宝箱散落点
+   GoldPos = 9;//金矿
+   RandomEvnetPos=10;//随机事件点
+   GoToNextLvlPos =11;//下层传送点
+   GoHomePos =12;//回城点
+}
+//道具类型
+enum ItemType
+{
+   Achievement = 1;//成就
+   Materials = 2;//材料
+   Diagram =3 ;//图纸
+   RecallScroll = 4;//回城
+   Indenture = 5;//佣兵卖身契
+   Book = 6;//天赋书
+   GoldPackage = 7;//金币包
+   Chest = 8;//保险
+   Cost = 9 ;//补给类
+   ChestKey = 10;//保险钥匙
+   TimeToUse = 11;//时效性
+   Tools = 12 ;//功能性扩展道具
+}
+//建筑类型
+enum BuildingType
+{
+   Crop =1 ;//农田
+   House =2 ;//民居
+   Food=3;//面点铺
+   Wood =4;//木材厂
+   Clothing = 5;//绸缎厂
+   Ming =6;//矿窑
+   Explore = 7;//演武厅
+}
+
+enum SkillDamageType
+{
+   Cure =1 ;//治疗
+   Damage = 2;//伤害
+}
+
+enum SkillTargetType
+{
+   Owner = 1;//自己
+   OwnerTeam =2;//友方
+   Enemy =3 ;//敌方
+}
+
+enum SkillEffectTaget 
+{
+   Owner = 1;//自己
+   OwnerTeam =2;//友方
+   Enemy =3 ;//敌方
+}
+
+enum SkillEffectType
+{
+   Dot = 1; //持续伤害
+   ReduceDamage =2 ;//减少攻击
+   Giddy =3;//眩晕
+   SuckBlood=4;//吸血
+   AddDef = 5;//护盾
+}
+
+enum AchievementEventType
+{
+    GoldCost = 1;//盘缠消耗到指定量
+	BuildLevel = 2 ;//建筑到指定等级
+	AllBuildLevel =3;//指定组建筑到指定等级
+	Explore = 4;//探索度到指定数
+	ArmyLevel = 5;//兵种进化到指定等级
+	PlaySkill = 6;//获得指定天
+	CostFood = 7;//消耗干粮达指定数量
+	KillBoss = 8;//杀死boss
+	ShareGame = 9;//分享
+	KillMonster = 10 ;//杀死指定怪物数
+	EnterMap = 11;//进入神秘地图
+	OpenChest =12;//开启指定数量宝箱
+	DefenceEnemy =13;//成功抵御入侵
+}
+
+enum RandomEventTickType
+{ 
+   WhenLoginGame = 1;//登陆游戏
+   FixTime = 2;//固定时间刷新触发
+   FixEvent = 3 ;//固定事件
+}
+
+enum PlaySkillType
+{
+   NOFristCD = 1 ;//首轮技能无cd
+   ExploreCostLower =2 ;//探索消耗降低
+   ExploreViewDis =3;//探索可见范围增加
+   AttAppend = 4;//修正属性
+}
+
+enum StoreUnlockType
+{
+   None = -1; //无需解锁
+   BuildGetTargetLevel = 1; //指定建筑达到指定等级解锁
+   ExploreGetTarget =2;//指定地图达到指定探索度解锁
+}
