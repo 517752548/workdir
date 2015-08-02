@@ -65,6 +65,11 @@ namespace Assets.Scripts.Tools
             }
             return list;
         }
+
+        public static int ConvertToInt(string id)
+        {
+            return Convert.ToInt32(id);
+        }
     }
 
     /// <summary>

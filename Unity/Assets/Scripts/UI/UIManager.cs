@@ -29,6 +29,11 @@ namespace Assets.Scripts.UI
         void ShowOrHideBack(bool show);
     }
 
+    public interface IEffect
+    {
+        bool ShowEffect();
+        bool HideEffect();
+    }
     public class UIWindowAttribute : Attribute
     {
         public UIWindowAttribute(string resources)
@@ -42,13 +47,15 @@ namespace Assets.Scripts.UI
     public class UIWindow
     {
         private GameObject Root { set; get; }
-
         public void Init(GameObject root)
         {
+            WindowEffect = root.GetComponent<IEffect>();
             State = WindowStates.Normal;
             Root = root;
             OnCreate();
         }
+
+        private IEffect WindowEffect;
         public bool CanDestoryWhenHide { set; get; }
         public T FindChild<T>(string name) where T : Component
         {
@@ -62,59 +69,99 @@ namespace Assets.Scripts.UI
         public virtual void OnLanguage() { }
         public virtual void OnUpdateUIData() { }
         public virtual void OnLateUpdate() { }
-        public virtual void OnUpdate() { }
-
+        public virtual void OnUpdate()
+        {
+            if (WindowEffect == null) return;
+            switch (State)
+            {
+                case WindowStates.Hiding:
+                    if (WindowEffect.HideEffect())
+                    {
+                        DoHide();
+                    }
+                    break;
+                case WindowStates.Showing:
+                    if (WindowEffect.ShowEffect())
+                    {
+                        DoShow();
+                    }
+                    break;
+            }
+        }
         public virtual void OnPreScecondUpdate() { }
         public void ShowWindow()
         {
-            Model = ShowModel.Normal;
+            this.Depth = UIManager.Singleton.MaxDepth + 1;
+            this.Root.SetActive(true);
+            NGUITools.AddWidgetCollider(this.Root);
+            if (WindowEffect != null)
+            {
+                State = WindowStates.Showing;
+            }
+            else
+            {
+                DoShow();
+            }
+        }
+        private void DoShow()
+        {
+
             OnShow();
             AfterShow();
-            this.Root.SetActive(true);
             State = WindowStates.Show;
         }
         public void ShowAsChildWindow(UIWindow window)
         {
+            Model = ShowModel.Children;
             parent = window;
-            if (parent!=null)
+            if (parent != null)
             {
                 parent.PositionShowOrHide(false);
             }
             ShowWindow();
-            Model = ShowModel.Children;
+            
         }
         public void ShowAsDialogWindow(bool showMask)
         {
-            ShowWindow();
             Model = ShowModel.Dialog;
+            ShowWindow();           
         }
 
         private UIWindow parent;
         private void PositionShowOrHide(bool isShow)
         {
             var anchers = this.Root.transform.GetComponentsInChildren<UIAnchor>();
-            foreach(var i in anchers)
+            foreach (var i in anchers)
             {
                 i.enabled = isShow;
             }
-            this.Root.transform.localPosition = isShow ? Vector3.zero : new Vector3(-100000, 0, 0);   
+            this.Root.transform.localPosition = isShow ? Vector3.zero : new Vector3(-100000, 0, 0);
         }
-        
-        public void HideWindow() 
+
+        public void HideWindow()
         {
-            OnHide();
-            AfterHide();
-
-            if (!CanDestoryWhenHide)
-                this.Root.SetActive(false);
-            State = WindowStates.Hide;
-
-            if(Model == ShowModel.Children)
+            if (Model == ShowModel.Children)
             {
                 if (parent != null)
                     parent.PositionShowOrHide(true);
                 parent = null;
             }
+            if (WindowEffect != null)
+            {
+                State = WindowStates.Hiding;
+            }
+            else
+            {
+                DoHide();
+            }
+        }
+        private void DoHide()
+        {
+            OnHide();
+            AfterHide();
+            if (!CanDestoryWhenHide)
+                this.Root.SetActive(false);
+            State = WindowStates.Hide;
         }
 
         public WindowStates State { private set; get; }
@@ -130,6 +177,43 @@ namespace Assets.Scripts.UI
         }
 
         public virtual void OnDestory() { }
+
+        public int Depth
+        {
+            get
+            {
+                var uiPanels = this.Root.transform.FindAllChilds<UIPanel>();
+                int depth = 0;
+                foreach (var i in uiPanels)
+                {
+                    if (i.depth > depth)
+                    {
+                        depth = i.depth;
+                    }
+                }
+                return depth;
+            }
+            set
+            {
+                var rootPanel = this.Root.GetComponent<UIPanel>();
+                if (rootPanel == null) return;
+                var rootDepth = rootPanel.depth;
+
+                var uiPanels = this.Root.transform.FindAllChilds<UIPanel>();
+                foreach (var i in uiPanels)
+                {
+                    i.depth = (i.depth - rootDepth) + value;
+                }
+            }
+        }
+
+        public bool IsVisable
+        {
+            get
+            {
+                return State == WindowStates.Showing || State == WindowStates.Hiding || State == WindowStates.Show;
+            }
+        }
     }
 
 
@@ -137,7 +221,22 @@ namespace Assets.Scripts.UI
     {
         public IUIRender Render { private set; get; }
 
-        
+        public int MaxDepth
+        {
+            get
+            {
+                int depth = 0;
+                foreach (var i in _windows)
+                {
+                    if (!i.Value.IsVisable) continue;
+                    var t = i.Value.Depth;
+                    if (t > depth)
+                        depth = t;
+                }
+                return depth;
+            }
+        }
+
         private Dictionary<string, UIWindow> _windows { set; get; }
 
         public void Init(IUIRender render)
@@ -151,7 +250,7 @@ namespace Assets.Scripts.UI
         {
             foreach(var i in _windows)
             {
-                if(i.Value.State == WindowStates.Hiding || i.Value.State == WindowStates.Show || i.Value.State == WindowStates.Showing )
+                if(i.Value.IsVisable )
                     i.Value.OnUpdate();
             }
 
@@ -160,7 +259,7 @@ namespace Assets.Scripts.UI
                 lastTime = Time.time;
                 foreach (var i in _windows)
                 {
-                    if (i.Value.State == WindowStates.Hiding || i.Value.State == WindowStates.Show || i.Value.State == WindowStates.Showing)
+                    if (i.Value.State == WindowStates.Show)
                         i.Value.OnPreScecondUpdate();
                 }
             }
@@ -252,7 +351,6 @@ namespace Assets.Scripts.UI
             else
                 return default(T);
         }
-
 
        
         public delegate bool FindContion<T>(T item) where T : UIWindow;

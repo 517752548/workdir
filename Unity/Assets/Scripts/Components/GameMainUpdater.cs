@@ -12,7 +12,8 @@ namespace Assets.Scripts
     {
         void Awake()
         {
-
+            GM = PlayerPrefs.GetString("GM");
+            GM = GM == null ? "" : GM;
         }
 
         void Update()
@@ -86,6 +87,7 @@ namespace Assets.Scripts
             {
                 //处理GM命令
                 Assets.Scripts.DataManagers.GMCommTool.Singleton.ExecuteGMComm(GM);
+                PlayerPrefs.SetString("GM", GM);
             }
         }
 

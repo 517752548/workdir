@@ -110,3 +110,11 @@ enum StoreUnlockType
    BuildGetTargetLevel = 1; //指定建筑达到指定等级解锁
    ExploreGetTarget =2;//指定地图达到指定探索度解锁
 }
+
+enum EmployCondtionType
+{
+   None = -1;
+   CompleteMap=1;//通关副本   （1|2|3）
+   GetAchievement =2;//获得成就（1|2|3）
+   GetItem =3;//获得道具 （1：1|2：3|3：1）
+}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,11 +26,19 @@ namespace Assets.Scripts.DataManagers
                         PlayerItemManager.Singleton.AddItem(i.ID, makeCount);
                     }
                     break;
-
+                case "openui":
+                    var ui = args[1];
+                    var typeUI = typeof(UIManager).Assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(UIWindow))).FirstOrDefault(t => t.Name == ui);
+                    var type = typeof(UIManager);
+                    var method = type.GetMethod("CreateOrGetWindow");
+                    var w= method.MakeGenericMethod(typeUI).Invoke(UIManager.Singleton,null) as UIWindow;
+                    w.ShowWindow();
+                    break;
             }
 
             UI.UIManager.Singleton.OnUpdateUIData();
             Debug.Log(comm);
+            
         }
     }
 }

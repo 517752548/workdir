@@ -251,6 +251,27 @@ namespace Assets.Scripts.DataManagers
             var data = GetProduceStateByID(id);
             return data == null ? 0 : data.PeopleNum;
         }
+
+        /// <summary>
+        /// 获得指定成就
+        /// </summary>
+        /// <param name="achievementID"></param>
+        /// <returns></returns>
+        internal bool HaveGetAchievement(List<int> achievementID)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// 是否通过地图/完成探索
+        /// </summary>
+        /// <param name="mapID"></param>
+        /// <returns></returns>
+        internal bool CompleteMap(List<int> mapID)
+        {
+            return true;
+        }
+
     }
     public class ProducePrisitData
     {

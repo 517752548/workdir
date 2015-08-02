@@ -34,6 +34,33 @@ namespace Assets.Scripts.Tools
                 return child.GetComponent<T>();
         }
 
+        /// <summary>
+        /// 获取所有子元素
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="trans"></param>
+        /// <returns></returns>
+        public static List<T> FindAllChilds<T>(this Transform trans) where T:Component
+        {
+            var list = new List<T>();
+            GetAllChilds(trans, ref list);
+            return list;
+        }
+
+
+        private static void GetAllChilds<T>(Transform trans,ref List<T> list) where T:Component
+        {
+            var t = trans.GetComponent<T>();
+            if(t!=null)
+            {
+                list.Add(t);
+            }
+            for(var i=0;i<trans.childCount;i++)
+            {
+                GetAllChilds(trans.GetChild(i), ref list);
+            }
+        }
+
         public static UIMouseClick OnMouseClick(this Component comp, EventHandler<UIEventArgs> handler)
         {
             return OnMouseClick(comp, handler, null);

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.Tools;
 using ExcelConfig;
+using Proto;
+using Assets.Scripts.DataManagers;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -27,6 +29,7 @@ namespace Assets.Scripts.UI.Windows
             {
                 var monster = ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.MonsterConfig>(heroConfig.recruit_id);
                 Monster = monster;
+                if (monster == null) return;
                 var skillName = string.Empty;
                 var skill = ExcelToJSONConfigManager.Current.GetConfigByID<SkillConfig>(monster.SkillID);
                 if (skill != null)
@@ -44,6 +47,7 @@ namespace Assets.Scripts.UI.Windows
         public override void InitModel()
         {
             base.InitModel();
+            ItemGridTableManager.Cached = false;
             //Write Code here
             bt_close.OnMouseClick((s, e) =>
             {
@@ -54,6 +58,21 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShow();
             var heros = ExcelToJSONConfigManager.Current.GetConfigs<HeroConfig>((hero) => {
+                var conditionType = (EmployCondtionType)hero.recruit_condition;
+                switch(conditionType)
+                {
+                    case EmployCondtionType.CompleteMap:
+                        return GamePlayerManager.Singleton.CompleteMap(UtilityTool.SplitIDS(hero.recruit_para));
+                    case EmployCondtionType.GetAchievement:
+                        return GamePlayerManager.Singleton.HaveGetAchievement(UtilityTool.SplitIDS(hero.recruit_para));
+                    case EmployCondtionType.GetItem:
+                        var keyValues = UtilityTool.SplitKeyValues(hero.recruit_para);
+                        foreach(var i in keyValues)
+                        {
+                            if (PlayerItemManager.Singleton.GetItemCount(i.Key) < i.Value) return false;
+                        }
+                        return true;    
+                }
                 return true;
             });
             ItemGridTableManager.Count = heros.Length;

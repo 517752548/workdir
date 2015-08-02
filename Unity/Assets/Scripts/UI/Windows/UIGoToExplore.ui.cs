@@ -10,55 +10,32 @@ namespace Assets.Scripts.UI.Windows
     [UIWindow("UIGoToExplore")]
     partial class UIGoToExplore : UIAutoGenWindow
     {
-        public class ItemGridTableTemplate : TableItemTemplate
-        {
-            public ItemGridTableTemplate(){}
-            public UILabel Label;
-            public UILabel lb_cal;
-            public UILabel lb_add;
-            public UILabel lb_num;
-
-            public override void InitTemplate()
-            {
-                Label = FindChild<UILabel>("Label");
-                lb_cal = FindChild<UILabel>("lb_cal");
-                lb_add = FindChild<UILabel>("lb_add");
-                lb_num = FindChild<UILabel>("lb_num");
-
-            }
-        }
 
 
-        public UIButton bt_left;
-        public UIButton bt_right;
-        public UILabel lb_package_size_lb;
-        public UILabel lb_package_size;
-        public UILabel lb_army_size_lb;
-        public UILabel lb_army_size;
+        public UILabel lb_title;
+        public UIButton bt_close;
+        public UIButton bt_armySet;
+        public UIButton bt_armySetinfo;
+        public UIButton bt_heroSet;
+        public UIButton bt_heroSetinfo;
         public UIButton bt_go;
-        public UIButton bt_achievement;
-        public UIButton bt_rank;
-        public UIGrid ItemGrid;
+        public UIButton bt_goinfo;
 
 
-        public UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>> ItemGridTableManager = new UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>>();
 
 
         public override void InitTemplate()
         {
             base.InitTemplate();
-            bt_left = FindChild<UIButton>("bt_left");
-            bt_right = FindChild<UIButton>("bt_right");
-            lb_package_size_lb = FindChild<UILabel>("lb_package_size_lb");
-            lb_package_size = FindChild<UILabel>("lb_package_size");
-            lb_army_size_lb = FindChild<UILabel>("lb_army_size_lb");
-            lb_army_size = FindChild<UILabel>("lb_army_size");
+            lb_title = FindChild<UILabel>("lb_title");
+            bt_close = FindChild<UIButton>("bt_close");
+            bt_armySet = FindChild<UIButton>("bt_armySet");
+            bt_armySetinfo = FindChild<UIButton>("bt_armySetinfo");
+            bt_heroSet = FindChild<UIButton>("bt_heroSet");
+            bt_heroSetinfo = FindChild<UIButton>("bt_heroSetinfo");
             bt_go = FindChild<UIButton>("bt_go");
-            bt_achievement = FindChild<UIButton>("bt_achievement");
-            bt_rank = FindChild<UIButton>("bt_rank");
-            ItemGrid = FindChild<UIGrid>("ItemGrid");
+            bt_goinfo = FindChild<UIButton>("bt_goinfo");
 
-            ItemGridTableManager.InitFromGrid(ItemGrid);
 
         }       
     }

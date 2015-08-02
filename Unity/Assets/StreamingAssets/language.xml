@@ -35,4 +35,7 @@
   <LanguageKey Key="UITavern_hp">血量:{0:N0}</LanguageKey>  
   <LanguageKey Key="UITavern_speed">速度:{0:N0}</LanguageKey>  
   <LanguageKey Key="UITavern_skill">技能:{0}</LanguageKey>
+  
+   <LanguageKey Key="UI_Setting_version">版本 {0}.{1}.{2}</LanguageKey>
+  
 </ArrayOfLanguageKey>

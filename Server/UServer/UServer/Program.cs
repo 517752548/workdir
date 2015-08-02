@@ -11,8 +11,9 @@ namespace UServer
     {
         static void Main(string[] args)
         {
+
             server = new GameServerAppliaction();
-            server.Start();
+            server.Start(Convert.ToInt32(args[0]));
 
             mainThread = new Thread(new ThreadStart(Worker));
             IsRunning = true;
@@ -20,7 +21,7 @@ namespace UServer
             mainThread.Start();
             while(true)
             {
-                Thread.Sleep(1);
+                Thread.Sleep(10);
             }
         }
 

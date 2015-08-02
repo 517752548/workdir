@@ -22,6 +22,7 @@ namespace Assets.Scripts.UI.Windows
         public UIButton bt_battle;
         public UIButton bt_Package;
         public UIButton bt_bar;
+        public Transform Title;
         public UILabel lb_title;
         public UISprite character1;
         public UISprite character2;
@@ -44,6 +45,7 @@ namespace Assets.Scripts.UI.Windows
             bt_battle = FindChild<UIButton>("bt_battle");
             bt_Package = FindChild<UIButton>("bt_Package");
             bt_bar = FindChild<UIButton>("bt_bar");
+            Title = FindChild<Transform>("Title");
             lb_title = FindChild<UILabel>("lb_title");
             character1 = FindChild<UISprite>("character1");
             character2 = FindChild<UISprite>("character2");

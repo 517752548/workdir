@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.Tools;
-using ExcelConfig;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -15,111 +14,73 @@ namespace Assets.Scripts.UI.Windows
             public override void InitModel()
             {
                 //todo
-                this.Template.bt_item.OnMouseClick((s, e) => 
-                {
-                    if (OnMake == null) return;
-                    OnMake(this.Config);
+            }
+        }
+        public class TypeItemGridTableModel : TableItemModel<TypeItemGridTableTemplate>
+        {
+            public TypeItemGridTableModel(){}
+            public override void InitModel()
+            {
+                //todo
+                Template.Bt_itemName.OnMouseClick((s, e) => {
+                    if (OnClick == null) return;
+                    OnClick(this);
                 });
             }
 
-            private ItemConfig _config;
-            public ItemConfig Config
-            {
-                get
-                {
-                    return _config;
-                }
-                set
-                {
-                    _config = value;
-                    var needs = DataManagers.PlayerItemManager.SplitFormatItemData(Config.Pars1);
-                    var rewards = DataManagers.PlayerItemManager.SplitFormatItemData(string.Format("{0}:1",value.ID));
-                    var needItems = needs.Select(t => new ItemData
-                    {
-                        Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(t[0]),
-                        Num = t[1]
-                    }).ToList();
-                    var rewardItems = rewards.Select(t => new ItemData
-                    {
-                        Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(t[0]),
-                        Num = t[1]
-                    }).ToList();
-
-                    if(rewardItems.Count>0)
-                    {
-                        this.Template.lb_itemName.text = 
-                            string.Format("{0}*{1}",rewardItems[0].Config.Name, rewardItems[0].Num);
-                    }
-                    if(needItems.Count>0)
-                    {
-                        var sb = new StringBuilder();
-                        foreach(var i in needItems)
-                        {
-                            sb.Append(string.Format("{0} *{1} ",i.Config.Name,i.Num));
-                        }
-                        this.Template.lb_NeedItems.text = sb.ToString();
-                    }
-
-                }
-            }
-
-            public Action<ItemConfig> OnMake;
-
-            internal void SetDrag(bool p)
-            {
-                var drag = this.Item.Root.GetComponent<UIDragScrollView>();
-                if (drag != null)
-                    drag.enabled = p;
-            }
+            public Action<TypeItemGridTableModel> OnClick;
         }
 
+        public enum ShowTypeName
+        {
+            Types,
+            Info
+        }
+
+        private ShowTypeName CurrentType = ShowTypeName.Types;
         public override void InitModel()
         {
             base.InitModel();
-              this.bt_left.OnMouseClick((s, e) => {
-                this.HideWindow();
-                var ui = UIManager.Singleton.CreateOrGetWindow<UICastlePanel>();
-                ui.ShowWindow();
+            //Write Code here
+            bt_close.OnMouseClick((s, e) => {
+                 if(CurrentType == ShowTypeName.Info)
+                 {
+                     ShowTypes();
+                 }
+                 else { HideWindow(); }
             });
-            this.bt_right.ActiveSelfObject(false);
         }
-
         public override void OnShow()
         {
             base.OnShow();
-            OnUpdateUIData();
+            ShowTypes();
+        }
+
+        private void ShowTypes()
+        {
+            CurrentType = ShowTypeName.Types;
+            PackageTypeView.ActiveSelfObject(true);
+            PackageView.ActiveSelfObject(false);
+            TypeItemGridTableManager.Count = 3;
+            foreach (var i in TypeItemGridTableManager)
+            {
+                i.Model.OnClick = OnClick;
+            }
+        }
+        private void OnClick(TypeItemGridTableModel obj)
+        {
+            ShowType(0);
         }
         public override void OnHide()
         {
             base.OnHide();
         }
-
-        public override void OnUpdateUIData()
+        public void ShowType(int type)
         {
-            base.OnUpdateUIData();
-            var makes = ExcelToJSONConfigManager.Current.GetConfigs<ItemConfig>();
-            int index = 0;
-            ItemGridTableManager.Count = makes.Length;
-            foreach(var i in ItemGridTableManager)
-            {
-                i.Model.Config = makes[index];
-                i.Model.OnMake = OnMake;
-                i.Model.SetDrag(makes.Length > 10);
-                index++;
-            }
-        }
-
-        private void OnMake(ExcelConfig.ItemConfig config)
-        {
-
-            DataManagers.PlayerItemManager.Singleton.MakeItem(config);
-        }
-
-        public class ItemData
-        {
-            public ItemConfig Config { set; get; }
-
-            public int Num { set; get; }
+            CurrentType = ShowTypeName.Info;
+            PackageTypeView.ActiveSelfObject(false);
+            PackageView.ActiveSelfObject(true);
+            ItemGridTableManager.Count = 5;
         }
     }
 }

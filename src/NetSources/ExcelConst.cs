@@ -319,4 +319,24 @@ namespace Proto
         ExploreGetTarget=2,
 
     }
+    public enum EmployCondtionType
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        None=-1,
+        /// <summary>
+        /// ͨ�ظ���   ��1|2|3��
+        /// </summary>
+        CompleteMap=1,
+        /// <summary>
+        /// ��óɾͣ�1|2|3��
+        /// </summary>
+        GetAchievement=2,
+        /// <summary>
+        /// ��õ��� ��1��1|2��3|3��1��
+        /// </summary>
+        GetItem=3,
+
+    }
 }

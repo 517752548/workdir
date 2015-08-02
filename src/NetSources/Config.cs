@@ -838,7 +838,7 @@ namespace ExcelConfig
     /// <summary>
     /// 招募表
     /// </summary>
-    [ConfigFile("HeroConfig.jason","HeroConfig")]
+    [ConfigFile("HeroConfig.json","HeroConfig")]
     public class HeroConfig:JSONConfigBase    {
         
         /// <summary>

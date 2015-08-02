@@ -133,6 +133,7 @@ namespace ExcelOut
                     #region Read row
                     for (var i = 3; i < ds.Tables[0].Rows.Count; i++)
                     {
+                        if (ds.Tables[0].Rows[i][1] == null) continue;
                         var row = dataTable.NewRow();
                         for (var col = 1; col < ds.Tables[0].Columns.Count && col<dataTable.Columns.Count+1 ; col++)
                         {
