@@ -147,7 +147,13 @@ namespace Assets.Scripts.UI.Windows
             base.InitTemplate();
 [FieldFinds]
 [InitTables]
-        }       
+        }
+        public static [ClassName] Show()
+        {
+            var ui = UIManager.Singleton.CreateOrGetWindow<[ClassName]>();
+            ui.ShowWindow();
+            return ui;
+        }
     }
 }";
     private static string tableModelClass =

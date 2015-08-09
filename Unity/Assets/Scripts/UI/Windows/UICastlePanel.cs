@@ -40,13 +40,21 @@ namespace Assets.Scripts.UI.Windows
             });
 
             bt_Coin.OnMouseClick((s, e) => {
-                var ui = UIManager.Singleton.CreateOrGetWindow<UIPayment>();
+                var ui = UIManager.Singleton.CreateOrGetWindow<UIPaymentShop>();
                 ui.ShowWindow();
             });
 
             bt_battle.OnMouseClick((s, e) => {
                 var ui = UIManager.Singleton.CreateOrGetWindow<UIGoToExplore>();
                 ui.ShowWindow();
+            });
+
+            bt_contruct.OnMouseClick((s, e) => {
+                UIStructureBuilding.Show();
+            });
+
+            bt_train.OnMouseClick((s, e) => {
+                UIArmyHouse.Show();
             });
         }
         public override void OnShow()
@@ -57,5 +65,6 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnHide();
         }
+
     }
 }

@@ -19,7 +19,8 @@ namespace Assets.Scripts.GameStates
             TargetPos = new Vector2(Map.CurrentMap.Height / 2, Map.CurrentMap.Width / 2);
             Map.LookAt(TargetPos, true); 
             Map.SetZone(4,true);
-            
+
+            UI.Windows.UIExplore.Show();
         }
 
         private Vector2 TargetPos;

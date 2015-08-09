@@ -36,6 +36,11 @@
   <LanguageKey Key="UITavern_speed">速度:{0:N0}</LanguageKey>  
   <LanguageKey Key="UITavern_skill">技能:{0}</LanguageKey>
   
-   <LanguageKey Key="UI_Setting_version">版本 {0}.{1}.{2}</LanguageKey>
+  <LanguageKey Key="UI_Setting_version">版本 {0}.{1}.{2}</LanguageKey>
   
+  
+  <LanguageKey Key="UI_Payment_pay">购买</LanguageKey> 
+  <LanguageKey Key="UI_Payment_paymessage">消耗{0}元，购买{1}宝石？\n（点击黑背景取消）</LanguageKey>  
+  <LanguageKey Key="UI_PaymenShop_bt_buy">购买</LanguageKey> 
+  <LanguageKey Key="UI_PaymenShop_buy_item">消耗{1:N0}钻石购买{0}？\n（点击黑背景取消）</LanguageKey>
 </ArrayOfLanguageKey>

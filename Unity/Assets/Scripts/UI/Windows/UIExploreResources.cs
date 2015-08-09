@@ -6,34 +6,30 @@ using Assets.Scripts.Tools;
 
 namespace Assets.Scripts.UI.Windows
 {
-    partial class UIGoToExplore
+    partial class UIExploreResources
     {
+        public class ItemGridTableModel : TableItemModel<ItemGridTableTemplate>
+        {
+            public ItemGridTableModel(){}
+            public override void InitModel()
+            {
+                //todo
+            }
+        }
 
         public override void InitModel()
         {
             base.InitModel();
             bt_close.OnMouseClick((s, e) => {
-                HideWindow();
-            });
 
-            bt_heroSet.OnMouseClick((s, e) => {
-                var ui = UIManager.Singleton.CreateOrGetWindow<UIBattleHero>();
-                ui.ShowWindow();
-            });
-
-            this.bt_armySet.OnMouseClick((s, e) => {
-                UIExploreResources.Show();
+                this.HideWindow();
             });
             //Write Code here
-
-            bt_go.OnMouseClick((s, e) => {
-                App.GameAppliaction.Singleton.GoToExplore(1);
-            });
         }
         public override void OnShow()
         {
             base.OnShow();
-            
+            this.ItemGridTableManager.Count = 20;
         }
         public override void OnHide()
         {

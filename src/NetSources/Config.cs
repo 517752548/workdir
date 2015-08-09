@@ -786,51 +786,57 @@ namespace ExcelConfig
         public String Effect { set; get; }
         
         /// <summary>
-        /// 输出类型
+        /// 技能cd
         /// </summary>
         [ExcelConfigColIndex(4)]
-        public int DamageType { set; get; }
+        public float SkillCd { set; get; }
         
         /// <summary>
-        /// 输出目标
+        /// 主要效果类型
         /// </summary>
         [ExcelConfigColIndex(5)]
-        public int SkillTarget { set; get; }
+        public int MainEffectType { set; get; }
         
         /// <summary>
-        /// 技能系数
+        /// 主要效果目标
         /// </summary>
         [ExcelConfigColIndex(6)]
-        public float SkillRate { set; get; }
+        public int MainEffectTarget { set; get; }
         
         /// <summary>
-        /// 状态效果
+        /// 主要效果数值
         /// </summary>
         [ExcelConfigColIndex(7)]
-        public int TargetEffectCategory { set; get; }
+        public int MainEffectNumber { set; get; }
         
         /// <summary>
-        /// 状态效果目标
+        /// 附加效果类型
         /// </summary>
         [ExcelConfigColIndex(8)]
-        public int EffectTarget { set; get; }
+        public int StatusType { set; get; }
         
         /// <summary>
-        /// 效果参数1
+        /// 附加效果目标
         /// </summary>
         [ExcelConfigColIndex(9)]
+        public int StatusTarget { set; get; }
+        
+        /// <summary>
+        /// 附加效果参数1
+        /// </summary>
+        [ExcelConfigColIndex(10)]
         public String Pars1 { set; get; }
         
         /// <summary>
-        /// 效果参数2
+        /// 附加效果参数2
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(11)]
         public String Pars2 { set; get; }
         
         /// <summary>
-        /// 效果参数3
+        /// 附加效果参数3
         /// </summary>
-        [ExcelConfigColIndex(11)]
+        [ExcelConfigColIndex(12)]
         public String Pars3 { set; get; }
 
     }

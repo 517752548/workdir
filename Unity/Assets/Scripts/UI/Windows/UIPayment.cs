@@ -14,7 +14,12 @@ namespace Assets.Scripts.UI.Windows
             public override void InitModel()
             {
                 //todo
+                Template.Bt_itemName.OnMouseClick((s, e) => {
+                    if (OnClick == null) return;
+                    OnClick(this);
+                });
             }
+            public Action<ItemGridTableModel> OnClick;
         }
 
         public override void InitModel()
@@ -29,6 +34,24 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShow();
             ItemGridTableManager.Count = 5;
+            foreach(var i in ItemGridTableManager)
+            {
+                i.Model.OnClick = OnClick;
+            }
+        }
+
+        private void OnClick(ItemGridTableModel obj)
+        {
+            last = obj;
+            UIMessageBox.ShowMessage(LanguageManager.Singleton["UI_Payment_pay"], 
+                string.Format(LanguageManager.Singleton["UI_Payment_paymessage"],6,100), OnBuy, null);
+        }
+
+        private ItemGridTableModel last;
+
+        private void OnBuy()
+        {
+            UITipDrawer.Singleton.DrawNotify("Buy OK");
         }
         public override void OnHide()
         {

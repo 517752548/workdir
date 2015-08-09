@@ -19,7 +19,7 @@ namespace Assets.Scripts
                 if (values == null) InitLanauage();
                 string value;
                 if (values.TryGetValue(key, out value))
-                    return value;
+                    return value.Replace("\\n","\n");
                 return key;
             }
         }
