@@ -16,6 +16,32 @@ namespace ExcelConfig
 {
 
     /// <summary>
+    /// 钻石商城
+    /// </summary>
+    [ConfigFile("ChargInfoConfig.json","ChargInfoConfig")]
+    public class ChargInfoConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 充值金额
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int ChargNum { set; get; }
+        
+        /// <summary>
+        /// 平台钻石兑换
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int BaseDiamondCharge { set; get; }
+        
+        /// <summary>
+        /// 游戏内折返钻石
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int IapReward { set; get; }
+
+    }
+
+    /// <summary>
     /// 怪物类型表
     /// </summary>
     [ConfigFile("MonsterCategoryConfig.json","MonsterCategoryConfig")]
@@ -126,6 +152,38 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(6)]
         public String UnlockPars1 { set; get; }
+        
+        /// <summary>
+        /// 类别
+        /// </summary>
+        [ExcelConfigColIndex(7)]
+        public int Category { set; get; }
+
+    }
+
+    /// <summary>
+    /// 制作类别
+    /// </summary>
+    [ConfigFile("MakeCategoryConfig.json","MakeCategoryConfig")]
+    public class MakeCategoryConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 多语言Key
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String LanguageKey { set; get; }
+        
+        /// <summary>
+        /// 说明
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String Description { set; get; }
 
     }
 

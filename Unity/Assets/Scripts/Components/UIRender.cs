@@ -22,6 +22,16 @@ public class UIRender : MonoBehaviour, Assets.Scripts.UI.IUIRender, Assets.Scrip
 
         Assets.Scripts.UI.UITipManager.Singleton.OnLateUpdate();
         Assets.Scripts.UI.UIManager.Singleton.OnLateUpdate();
+
+        if (delayTime > 0)
+        {
+            if (Time.time > delayTime)
+            {
+                if (MessageLable != null)
+                    MessageLable.text = string.Empty;
+                delayTime = -1f;
+            }
+        }
     }
     void Awake()
     {
@@ -35,7 +45,10 @@ public class UIRender : MonoBehaviour, Assets.Scripts.UI.IUIRender, Assets.Scrip
     [SerializeField]
     public Transform UIRoot;
     [SerializeField]
-    public Transform Background;
+    public UILabel MessageLable;
+
+    [SerializeField]
+    public Transform MessagePanel;
 
     [SerializeField]
     public Transform UITipPanel;
@@ -57,9 +70,31 @@ public class UIRender : MonoBehaviour, Assets.Scripts.UI.IUIRender, Assets.Scrip
     }
 
 
-    public void ShowOrHideBack(bool show)
+    private float delayTime = 0f;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="time">-1 always show</param>
+    public void ShowMessage(string text,float time = 10f)
     {
-        if (Background == null) return;
-        Background.ActiveSelfObject(show);
+        if (MessageLable == null) return;
+        MessageLable.text = text;
+        if (time > 0)
+        {
+            delayTime = Time.time + time;
+        }
+        else
+        {
+            delayTime = -1f;
+        }
+    }
+
+
+    public void ShowOrHideMessage(bool show)
+    {
+        if (MessagePanel == null) return;
+        MessagePanel.ActiveSelfObject(show);
     }
 }

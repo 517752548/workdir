@@ -15,9 +15,17 @@ namespace Assets.Scripts.UI
             });
         }
 
-        public void ShowOrHideUIBackground(bool flag)
+
+        internal void ShowMessage(string msg, float delayTime=-1f)
         {
-            UIManager.Singleton.Render.ShowOrHideBack(flag);
+            var uirender = UIManager.Singleton.Render;
+            uirender.ShowMessage(msg, delayTime);
+        }
+
+        public void ShowOrHideMessage(bool show)
+        {
+            var uirender = UIManager.Singleton.Render;
+            uirender.ShowOrHideMessage( show);
         }
     }
 }

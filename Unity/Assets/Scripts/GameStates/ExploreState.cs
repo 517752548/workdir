@@ -13,8 +13,6 @@ namespace Assets.Scripts.GameStates
         {
             base.OnEnter();
             UI.UIControllor.Singleton.HideAllUI();
-            UI.UIControllor.Singleton.ShowOrHideUIBackground(false);
-
             Map = GameObject.FindObjectOfType<GameMap>();
             TargetPos = new Vector2(Map.CurrentMap.Height / 2, Map.CurrentMap.Width / 2);
             Map.LookAt(TargetPos, true); 

@@ -26,7 +26,8 @@ namespace Assets.Scripts.UI
     public interface IUIRender
     {
         void Render(GameObject uiRoot);
-        void ShowOrHideBack(bool show);
+        void ShowMessage(string message,float delayTime);
+        void ShowOrHideMessage(bool show);
     }
 
     public interface IEffect
@@ -110,11 +111,11 @@ namespace Assets.Scripts.UI
             AfterShow();
             State = WindowStates.Show;
         }
-        public void ShowAsChildWindow(UIWindow window)
+        public void ShowAsChildWindow(UIWindow window,bool hideParent = true)
         {
             Model = ShowModel.Children;
             parent = window;
-            if (parent != null)
+            if (parent != null && hideParent)
             {
                 parent.PositionShowOrHide(false);
             }

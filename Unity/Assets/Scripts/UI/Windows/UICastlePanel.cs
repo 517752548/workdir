@@ -56,6 +56,13 @@ namespace Assets.Scripts.UI.Windows
             bt_train.OnMouseClick((s, e) => {
                 UIArmyHouse.Show();
             });
+
+            bt_Package.OnMouseClick((s, e) => {
+                var ui = UIManager.Singleton.CreateOrGetWindow<UIBag>();
+                ui.ShowAsChildWindow(this,false);
+            });
+
+            
         }
         public override void OnShow()
         {

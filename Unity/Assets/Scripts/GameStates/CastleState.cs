@@ -12,8 +12,6 @@ namespace Assets.Scripts.GameStates
         {
             base.OnEnter();
             
-            
-            UI.UIControllor.Singleton.ShowOrHideUIBackground(true);
             var ui = UI.UIManager.Singleton.CreateOrGetWindow<UI.Windows.UICastlePanel>();
             ui.ShowWindow();
 
