@@ -33,6 +33,7 @@ namespace Assets.Scripts.UI.Windows
         public override void OnShow()
         {
             base.OnShow();
+            
             ItemGridTableManager.Count = 5;
             foreach(var i in ItemGridTableManager)
             {

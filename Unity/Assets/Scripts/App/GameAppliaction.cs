@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.DataManagers;
+﻿using Assets.Scripts.Components;
+using Assets.Scripts.DataManagers;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.Tools;
 using ExcelConfig;
@@ -34,6 +35,8 @@ namespace Assets.Scripts.App
 
             Runner = runer;
             Runner.DoRun(Run());
+
+            
         }
 
         public IRuner Runner { private set; get; }

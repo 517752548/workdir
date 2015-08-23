@@ -19,6 +19,10 @@ namespace Assets.Scripts.UI.Windows
                 //todo
                 startTable = new UITableManager<UITableItem>();
                 startTable.InitFromGrid(this.Template.StartGrid);
+                this.Item.Root.OnMouseClick((s, e) => {
+                    if (OnClick == null) return;
+                    OnClick(this);
+                });
             }
 
             private UITableManager<UITableItem> startTable;
@@ -42,6 +46,8 @@ namespace Assets.Scripts.UI.Windows
                 Template.lb_name.text = monster.Name;
                 startTable.Count = monster.Star;
             }
+
+            public Action<ItemGridTableModel> OnClick;
         }
 
         public override void InitModel()
