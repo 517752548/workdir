@@ -88,6 +88,12 @@ namespace Assets.Scripts.DataManagers
             Tools.PresistTool.SaveJson(items, _ITEM_SAVE_FILE_);
         }
 
+        public void Reset()
+        {
+            _items.Clear();
+            Presist();
+        }
+
         internal Proto.Item AddItem(int itemID, int diff)
         {
             var item = this[itemID];
@@ -201,6 +207,9 @@ namespace Assets.Scripts.DataManagers
             //throw new NotImplementedException();
         }
 
+
+
+      
     }
 
     public class PlayerGameItem 

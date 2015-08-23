@@ -20,6 +20,7 @@ namespace Assets.Scripts.GameStates
         public override void OnEnter()
         {
             base.OnEnter();
+            UI.UIControllor.Singleton.ShowOrHideMessage(false);
             UI.UIControllor.Singleton.ShowMessage(string.Empty,-1f);
             UI.UIControllor.Singleton.HideAllUI();
             State = new Combat.Battle.States.BattleState(1);

@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Tools;
-public class UIRender : MonoBehaviour, Assets.Scripts.UI.IUIRender, Assets.Scripts.UI.ITipRender
+using Assets.Scripts.UI;
+public class UIRender :
+    MonoBehaviour,
+    IUIRender, 
+    ITipRender
 {
 
     // Use this for initialization
     void Start()
     {
-        
+        //when start
     }
 
     // Update is called once per frame
@@ -33,6 +37,7 @@ public class UIRender : MonoBehaviour, Assets.Scripts.UI.IUIRender, Assets.Scrip
             }
         }
     }
+
     void Awake()
     {
         Assets.Scripts.UI.UIManager.Singleton.Init(this);

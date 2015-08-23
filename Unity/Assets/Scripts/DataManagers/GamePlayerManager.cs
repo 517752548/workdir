@@ -91,6 +91,14 @@ namespace Assets.Scripts.DataManagers
             GameAppliaction.Singleton.SaveFile(PLAYER_PRODUCE_OPEN, produceJson, false);
         }
 
+
+        public void Reset()
+        {
+            PlayerData.Clear();
+            ProduceOpenState.Clear();
+            Presist();
+        }
+
         public List<ExcelConfig.ResourcesProduceConfig> OpenProduceConfigs()
         {
             var configs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.ResourcesProduceConfig>();
@@ -271,6 +279,8 @@ namespace Assets.Scripts.DataManagers
         {
             return true;
         }
+
+
 
     }
     public class ProducePrisitData

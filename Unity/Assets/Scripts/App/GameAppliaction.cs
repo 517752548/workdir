@@ -39,6 +39,18 @@ namespace Assets.Scripts.App
             
         }
 
+        public void Reset()
+        {
+            foreach (var i in prisit)
+            {
+                i.Reset();
+            }
+
+            DoLogin();
+        }
+
+
+
         public IRuner Runner { private set; get; }
 
         private List<IPresist> prisit;
@@ -101,6 +113,12 @@ namespace Assets.Scripts.App
             player.Soldiers.Add(new Proto.Soldier {  ConfigID = 1, Num =10});
             monster.Soldiers.Add(new Proto.Soldier { Num = 10, ConfigID = 2 });
             var state = new GameStates.BattleState(player, monster);
+            ChangeState(state);
+        }
+
+        public void DoLogin()
+        {
+            var state = new LoginState();
             ChangeState(state);
         }
 

@@ -37,7 +37,7 @@ namespace Assets.Scripts.Tools
                     GameDebug.LogError("Not found Key of ':' in " + i);
                     continue;
                 }
-                var keyValue = i.Split('|');
+                var keyValue = i.Split(':');
                 if(keyValue.Length ==2)
                 {
                     int key = 0;

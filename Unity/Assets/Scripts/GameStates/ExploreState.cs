@@ -12,6 +12,7 @@ namespace Assets.Scripts.GameStates
         public override void OnEnter()
         {
             base.OnEnter();
+            UI.UIControllor.Singleton.ShowOrHideMessage(false);
             UI.UIControllor.Singleton.HideAllUI();
             Map = GameObject.FindObjectOfType<GameMap>();
             TargetPos = new Vector2(Map.CurrentMap.Height / 2, Map.CurrentMap.Width / 2);

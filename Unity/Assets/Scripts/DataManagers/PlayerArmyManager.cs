@@ -35,6 +35,12 @@ namespace Assets.Scripts.DataManagers
         {
             //throw new NotImplementedException();
         }
+
+
+        public void Reset()
+        {
+           // throw new NotImplementedException();
+        }
     }
 
     public class ArmyTeam

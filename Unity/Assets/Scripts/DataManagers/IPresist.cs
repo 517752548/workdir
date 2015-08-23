@@ -9,5 +9,6 @@ namespace Assets.Scripts.DataManagers
     {
         void Presist();
         void Load();
+        void Reset();
     }
 }

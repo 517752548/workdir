@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.Tools;
+using ExcelConfig;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -11,13 +12,68 @@ namespace Assets.Scripts.UI.Windows
         #region 制作条目
         public class ItemGridTableModel : TableItemModel<ItemGridTableTemplate>
         {
-            public ItemGridTableModel(){}
+            public ItemGridTableModel() { }
             public override void InitModel()
             {
                 //todo
+
+                Template.bt_info.OnMouseClick((s, e) => {
+                    if (_MakeConfig == null) return;
+                    var sb = new StringBuilder();
+                    sb.Append(LanguageManager.Singleton["UIMake_Cost_Title"]);
+                    if (_MakeConfig.RequireGold > 0)
+                    {
+                        sb.Append(string.Format(LanguageManager.Singleton["UIMake_Cost_gold"], _MakeConfig.RequireGold));
+                    }
+                    var costItems = UtilityTool.SplitKeyValues(_MakeConfig.RequireItems);
+                    foreach (var i in costItems)
+                    {
+                        var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
+                        if (item == null) continue;
+                        sb.Append(string.Format(LanguageManager.Singleton["UIMake_Cost_Item"], item.Name, i.Value));
+                    }
+
+                    sb.Append(LanguageManager.Singleton["UIMake_Reward_Title"]);
+                    var rewardItem = UtilityTool.SplitKeyValues(_MakeConfig.RewardItems);
+                    foreach (var i in rewardItem)
+                    {
+                        var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
+                        if (item == null) continue;
+                        sb.Append(string.Format(LanguageManager.Singleton["UIMake_Cost_Item"], item.Name, i.Value));
+                    }
+
+                    UIControllor.Singleton.ShowMessage(sb.ToString(), 10);
+                });
             }
 
-            public ExcelConfig.MakeConfig MakeConfig { get; set; }
+            private ExcelConfig.MakeConfig _MakeConfig;
+
+            public ExcelConfig.MakeConfig MakeConfig
+            {
+                get
+                {
+                    return _MakeConfig;
+                }
+                set
+                {
+                    _MakeConfig = value;
+                    Template.Bt_itemName.Text(_MakeConfig.Name);
+                    var sb = new StringBuilder();
+                    var items = UtilityTool.SplitKeyValues(_MakeConfig.RequireItems);
+                    if(_MakeConfig.RequireGold>0)
+                    {
+                        sb.Append(string.Format(LanguageManager.Singleton["UIMake_Cost_gold"], _MakeConfig.RequireGold));
+                    }
+                    foreach (var i in items)
+                    {
+                        var item = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
+                        if (item == null) continue;
+                        sb.Append(string.Format(LanguageManager.Singleton["UIMake_Cost_Item"],item.Name,i.Value));
+                    }
+
+                    Template.lb_cost.text = sb.ToString();
+                }
+            }
         }
         #endregion
 
@@ -35,6 +91,9 @@ namespace Assets.Scripts.UI.Windows
 
                 Template.bt_info.OnMouseClick((s, e) => {
                     if (this.Category == null) return;
+
+
+
                     UIControllor.Singleton.ShowMessage(this.Category.Description,10f);
                 });
             }

@@ -122,6 +122,14 @@ namespace Assets.Scripts.DataManagers
                 return null;
             }
         }
+
+
+        public void Reset()
+        {
+            _ConstructBuildings.Clear();
+            Presist();
+        }
+
     }
 
     public class PlayerBuild
@@ -162,4 +170,6 @@ namespace Assets.Scripts.DataManagers
             }
         }
     }
+
+    
 }

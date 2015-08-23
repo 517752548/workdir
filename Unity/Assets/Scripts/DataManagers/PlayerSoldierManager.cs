@@ -17,6 +17,11 @@ namespace Assets.Scripts.DataManagers
             var list = _Soldiers.Values.ToList();
             Tools.PresistTool.SaveJson(list, _SOLDIER_FILE);
         }
+        public void Reset()
+        {
+            _Soldiers.Clear();
+            Presist();
+        }
 
         public void Load()
         {
@@ -142,6 +147,9 @@ namespace Assets.Scripts.DataManagers
                 return _Soldiers.Where(t => t.Value.Number > 0).Select(t => t.Value).ToList();
             }
         }
+
+
+      
     }
 
     public class PlayerSoldierData

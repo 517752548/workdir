@@ -33,7 +33,7 @@ namespace Assets.Scripts.UI.Windows
         public override void OnShow()
         {
             base.OnShow();
-            
+            UIControllor.Singleton.ShowOrHideMessage(false);
             ItemGridTableManager.Count = 5;
             foreach(var i in ItemGridTableManager)
             {
@@ -53,10 +53,12 @@ namespace Assets.Scripts.UI.Windows
         private void OnBuy()
         {
             UITipDrawer.Singleton.DrawNotify("Buy OK");
+            
         }
         public override void OnHide()
         {
             base.OnHide();
+            UIControllor.Singleton.ShowOrHideMessage(true);
         }
     }
 }
