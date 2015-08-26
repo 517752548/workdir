@@ -564,7 +564,7 @@ namespace ExcelConfig
         public int UnlockType { set; get; }
         
         /// <summary>
-        /// 解锁参数
+        /// 解锁参数1
         /// </summary>
         [ExcelConfigColIndex(10)]
         public String UnlockParms1 { set; get; }
@@ -574,6 +574,12 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(11)]
         public String UnlockParms2 { set; get; }
+        
+        /// <summary>
+        /// 建筑描述
+        /// </summary>
+        [ExcelConfigColIndex(12)]
+        public String Describe { set; get; }
 
     }
 
