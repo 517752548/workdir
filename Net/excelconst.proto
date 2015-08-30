@@ -58,9 +58,8 @@ enum SkillTargetType
 
 enum SkillEffectTaget 
 {
-   Owner = 1;//自己
-   OwnerTeam =2;//友方
-   Enemy =3 ;//敌方
+   OwnerTeam =1;//友方
+   Enemy =2 ;//敌方
 }
 
 enum SkillEffectType

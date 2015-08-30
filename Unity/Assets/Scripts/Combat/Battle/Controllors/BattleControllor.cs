@@ -13,8 +13,10 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 
         public override GAction GetAction(GObject current)
         {
-            var battle = current as Elements.Battle;
+            
+            var battle = current as Elements.BattleEl;
             var per = Perception as States.BattlePerception;
+            battle.TickEffect();
             if(per.HaveDeadArmy())
             {
                 return new Actions.EndBattleAction(current, Perception);

@@ -13,7 +13,7 @@ namespace Assets.Scripts.Combat.Battle.States
             var perception = new BattlePerception(this);
             this.Perception = perception;
 
-            var battle = new Elements.Battle(new Controllors.BattleControllor(this.Perception),battleGroupID);
+            var battle = new Elements.BattleEl(new Controllors.BattleControllor(this.Perception),battleGroupID);
             var controllor = new Controllors.ArmyControllor(this.Perception);
             //var playerArmy = new Elements.BattleArmy(controllor, player);
             //var monsterArmy = new Elements.BattleArmy(controllor, monster);

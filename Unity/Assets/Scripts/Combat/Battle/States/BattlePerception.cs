@@ -40,5 +40,12 @@ namespace Assets.Scripts.Combat.Battle.States
             });
             return enemy;
         }
+
+        internal BattleEl GetBattle()
+        {
+            BattleEl el =null;
+            State.Each<BattleEl>((item) => { el = item; return true; });
+            return el;
+        }
     }
 }
