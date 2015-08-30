@@ -31,7 +31,6 @@ namespace Assets.Scripts.UI.Windows
         }
 
 
-        public UILabel lb_info;
         public UILabel lb_title;
         public UIPanel PackageView;
         public UIGrid ItemGrid;
@@ -47,7 +46,6 @@ namespace Assets.Scripts.UI.Windows
         public override void InitTemplate()
         {
             base.InitTemplate();
-            lb_info = FindChild<UILabel>("lb_info");
             lb_title = FindChild<UILabel>("lb_title");
             PackageView = FindChild<UIPanel>("PackageView");
             ItemGrid = FindChild<UIGrid>("ItemGrid");
@@ -58,6 +56,12 @@ namespace Assets.Scripts.UI.Windows
 
             ItemGridTableManager.InitFromGrid(ItemGrid);
 
-        }       
+        }
+        public static UIProducePanel Show()
+        {
+            var ui = UIManager.Singleton.CreateOrGetWindow<UIProducePanel>();
+            ui.ShowWindow();
+            return ui;
+        }
     }
 }
