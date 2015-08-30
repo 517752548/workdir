@@ -34,11 +34,27 @@ namespace Assets.Scripts.DataManagers
                     var w= method.MakeGenericMethod(typeUI).Invoke(UIManager.Singleton,null) as UIWindow;
                     w.ShowWindow();
                     break;
+                case "iammaster":
+                    int masterNum = 100000;
+                    var mitemconfigs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.ItemConfig>();
+                    foreach (var i in mitemconfigs)
+                    {
+                        PlayerItemManager.Singleton.AddItem(i.ID, masterNum);
+                    }
+                    GamePlayerManager.Singleton.AddGold(masterNum);
+                    GamePlayerManager.Singleton.AddCoin(masterNum);
+                    break;
+                case "reset":
+                    App.GameAppliaction.Singleton.ResetPlayData();
+                    
+                    break;
+
             }
 
-            UI.UIManager.Singleton.OnUpdateUIData();
-            Debug.Log(comm);
-            
+            UI.UIManager.Singleton.UpdateUIData();
+            Debug.Log(comm); 
         }
+
+       
     }
 }

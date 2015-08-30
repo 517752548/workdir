@@ -16,8 +16,14 @@ namespace Assets.Scripts.UI.Windows
             public override void InitModel()
             {
                 //todo
-
-                Template.bt_info.OnMouseClick((s, e) => {
+                Template.Bt_itemName.OnMouseClick((s, e) =>
+                {
+                    if (this.OnClick == null) return;
+                    this.OnClick(this);
+                });
+                Template.bt_info.OnMouseClick((s, e) =>
+                {
+                    #region Message
                     if (_MakeConfig == null) return;
                     var sb = new StringBuilder();
                     sb.Append(LanguageManager.Singleton["UIMake_Cost_Title"]);
@@ -43,9 +49,13 @@ namespace Assets.Scripts.UI.Windows
                     }
 
                     UIControllor.Singleton.ShowMessage(sb.ToString(), 10);
+
+                    #endregion
                 });
             }
 
+
+            public Action<ItemGridTableModel> OnClick;
             private ExcelConfig.MakeConfig _MakeConfig;
 
             public ExcelConfig.MakeConfig MakeConfig
@@ -175,7 +185,16 @@ namespace Assets.Scripts.UI.Windows
             foreach (var i in ItemGridTableManager)
             {
                 i.Model.MakeConfig = makeConfigs[index];
+                i.Model.OnClick = OnMakeItemClick;
                 index++;
+            }
+        }
+
+        private void OnMakeItemClick(ItemGridTableModel obj)
+        {
+            if (DataManagers.PlayerItemManager.Singleton.MakeItem(obj.MakeConfig))
+            {
+                UIManager.Singleton.UpdateUIData();
             }
         }
     }

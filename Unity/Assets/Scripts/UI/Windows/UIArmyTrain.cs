@@ -132,7 +132,7 @@ namespace Assets.Scripts.UI.Windows
             //test
             if (DataManagers.PlayerSoldierManager.Singleton.TrainSoldier(Tools.GRandomer.RandomArray(levelUpSoldiers)))
             {
-                UI.UIManager.Singleton.OnUpdateUIData();
+                UI.UIManager.Singleton.UpdateUIData();
             }
         }
 

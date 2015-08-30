@@ -100,7 +100,7 @@ namespace Assets.Scripts.DataManagers
             {
                 foreach (var i in needResources)
                 {
-                    PlayerItemManager.Singleton.CalItem(i[0], i[1]);
+                    PlayerItemManager.Singleton.SubItem(i[0], i[1]);
                 }
                 if (trainConfig.OldMonster > 0)
                 {

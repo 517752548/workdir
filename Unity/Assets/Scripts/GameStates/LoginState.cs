@@ -10,6 +10,8 @@ namespace Assets.Scripts.GameStates
         public override void OnEnter()
         {
             base.OnEnter();
+            UI.UIControllor.Singleton.HideAllUI();
+            App.GameAppliaction.Singleton.JoinCastle();
         }
 
         public override void OnExit()

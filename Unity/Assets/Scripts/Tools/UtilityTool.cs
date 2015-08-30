@@ -28,8 +28,10 @@ namespace Assets.Scripts.Tools
 
         public static List<SplitKeyValue> SplitKeyValues(string inputs)
         {
-            var strs = inputs.Split('|');
             var list = new List<SplitKeyValue>();
+            if (string.IsNullOrEmpty(inputs)) return list;
+
+            var strs = inputs.Split('|');
             foreach(var i in  strs)
             {
                 if(i.IndexOf(':')==-1)

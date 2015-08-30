@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.DataManagers
 {
-    public class PlayerItemManager : Tools.XSingleton<PlayerItemManager>,IPresist
+    public class PlayerItemManager : Tools.XSingleton<PlayerItemManager>, IPresist
     {
 
         public PlayerItemManager()
@@ -29,6 +29,7 @@ namespace Assets.Scripts.DataManagers
             }
         }
 
+        [System.Obsolete]
         public static List<int[]> SplitFormatItemData(string format)
         {
             if (format == "-") return new List<int[]>();
@@ -68,18 +69,24 @@ namespace Assets.Scripts.DataManagers
 
         }
 
-        public int CalItem(int entry,int calValue)
+        /// <summary>
+        /// 消耗道具
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <param name="calValue"></param>
+        /// <returns></returns>
+        public int SubItem(int entry, int calValue)
         {
-          
+            if (calValue < 0) return -1;
             PlayerGameItem item;
-            if(_items.TryGetValue(entry,out item))
+            if (_items.TryGetValue(entry, out item))
             {
                 if (calValue <= 0) return item.Num;
                 item.Num -= calValue;
                 return item.Num;
             }
 
-            return 0;
+            return -1;
         }
 
         public void Presist()
@@ -97,7 +104,7 @@ namespace Assets.Scripts.DataManagers
         internal Proto.Item AddItem(int itemID, int diff)
         {
             var item = this[itemID];
-            if(diff<=0) return null;
+            if (diff <= 0) return null;
             var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(itemID);
             if (item == null)
             {
@@ -119,7 +126,7 @@ namespace Assets.Scripts.DataManagers
 
         internal List<PlayerGameItem> GetAllItems()
         {
-            return this._items.Values.Where(t=>t.Num>0).ToList();
+            return this._items.Values.Where(t => t.Num > 0).ToList();
         }
 
         internal bool BuyItem(ExcelConfig.StoreDataConfig config)
@@ -147,25 +154,33 @@ namespace Assets.Scripts.DataManagers
             //    return false;
             //}
         }
-        
-        internal bool MakeItem(ItemConfig config)
+
+        internal bool MakeItem(MakeConfig config)
         {
-            var needs = DataManagers.PlayerItemManager.SplitFormatItemData(config.Pars1);
-            var rewards = DataManagers.PlayerItemManager.SplitFormatItemData(string.Format("{0}:1",config.ID));
-            var needItems = needs.Select(t => new 
+            var needs = Tools.UtilityTool.SplitKeyValues(config.RequireItems);
+            var rewards = Tools.UtilityTool.SplitKeyValues(config.RewardItems);
+            var needItems = needs.Select(t => new
             {
-                Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(t[0]),
-                Num = t[1]
+                Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(t.Key),
+                Num = t.Value
             }).ToList();
-            var rewardItems = rewards.Select(t => new 
+            var rewardItems = rewards.Select(t => new
             {
-                Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(t[0]),
-                Num = t[1]
+                Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(t.Key),
+                Num = t.Value
             }).ToList();
 
-            ItemConfig notEnought =null;
- 
-            foreach(var i in needItems)
+            int gold = GamePlayerManager.Singleton.Gold;
+
+            if (gold < config.RequireGold)
+            {
+                UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["MAKE_NOT_ENOUGHT_GOLD"]);
+                return false;
+            }
+
+            ItemConfig notEnought = null;
+
+            foreach (var i in needItems)
             {
                 if (i.Num > GetItemCount(i.Config.ID))
                 {
@@ -174,20 +189,21 @@ namespace Assets.Scripts.DataManagers
                 }
             }
             //不够
-            if (notEnought != null) 
+            if (notEnought != null)
             {
                 UITipDrawer.Singleton.DrawNotify(
-                    string.Format(LanguageManager.Singleton["MAKE_NOT_ENOUGHT"],notEnought.Name));
+                    string.Format(LanguageManager.Singleton["MAKE_NOT_ENOUGHT"], notEnought.Name));
                 return false;
             }
             else
             {
-                foreach(var i in needItems)
+                foreach (var i in needItems)
                 {
-                    CalItem(i.Config.ID, i.Num);
+                    SubItem(i.Config.ID, i.Num);
                 }
 
-                foreach(var i in rewardItems)
+                GamePlayerManager.Singleton.SubGold(config.RequireGold);
+                foreach (var i in rewardItems)
                 {
                     AddItem(i.Config.ID, i.Num);
                     UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["REWARD_ITEM"], i.Config.Name, i.Num));
@@ -207,9 +223,6 @@ namespace Assets.Scripts.DataManagers
             //throw new NotImplementedException();
         }
 
-
-
-      
     }
 
     public class PlayerGameItem 

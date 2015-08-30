@@ -180,6 +180,7 @@ namespace Assets.Scripts.UI
         public void DrawNotify(string notify)
         {
             UITipManager.Singleton.DrawNotify(notify);
+            GameDebug.Log(notify);
         }
     }
 }

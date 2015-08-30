@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
 <ArrayOfLanguageKey xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <LanguageKey Key="APP_NAME">高老庄</LanguageKey>
+  <LanguageKey Key="APP_NUM_FORMAT">{0:N0}</LanguageKey>
+  
   <LanguageKey Key="REWARD_ITEM">{0} +{1}</LanguageKey>
   <LanguageKey Key="UIShop_Require_Item_Enough">[000000]</LanguageKey>
   <LanguageKey Key="UIShop_Require_Item_Not_Enough">[00ff00]</LanguageKey>
@@ -18,12 +20,15 @@
   <LanguageKey Key="SOLDIER_SPEED">速度:{0:0}</LanguageKey>
   <LanguageKey Key="MAX_LEVEL_SOLDIER">终极兵种无法训练</LanguageKey>
   <LanguageKey Key="SOLDIER_NAME">{0}*{1}</LanguageKey>
-  <LanguageKey Key="PRODUCE_PEOPLE">{0}/{1}</LanguageKey> 
-  <LanguageKey Key="PRODUCE_TIME">收获时间:{0}:{1:00}</LanguageKey>
+
   <LanguageKey Key="NO_PEOPLE_FREE">无空闲村民</LanguageKey>
   <LanguageKey Key="PEOPLE_NAME">村民:</LanguageKey>
-  
-  
+  <LanguageKey Key="PRODUCE_ITEM">{0} {1}</LanguageKey>
+  <LanguageKey Key="MAKE_NOT_ENOUGHT_GOLD">金币不够.</LanguageKey>
+  <LanguageKey Key="Build_NOT_ENOUGHT_GOLD">金币不够.</LanguageKey>
+  <LanguageKey Key="Build_event_add_companion">可出战人数{0}</LanguageKey>  
+  <LanguageKey Key="Build_event_open_produce">可以生产{0}</LanguageKey> 
+  <LanguageKey Key="Build_event_add_people">您的工匠数增加到了{0}</LanguageKey>     
   <LanguageKey Key="UI_GOTOEX_PACKAGE_LB">包裹:</LanguageKey>
   <LanguageKey Key="UI_GOTOEX_ARMY_LB">军队:</LanguageKey> 
   
@@ -48,9 +53,16 @@
   <LanguageKey Key="UIStructureBuilding_Cost_Title">建造消耗：</LanguageKey>
   <LanguageKey Key="UIStructureBuilding_Cost_Item">{0} *{1} </LanguageKey> 
   <LanguageKey Key="UIStructureBuilding_Cost_Gold">金币 *{0}</LanguageKey> 
+  <LanguageKey Key="UIStructureBuilding_Cost_None">无</LanguageKey> 
+    <LanguageKey Key="UIStructureBuilding_Cost_MaxLevel">最大等级</LanguageKey> 
+  <LanguageKey Key="UIStructureBuilding_Build_Success">成功升级建筑{0}到{1}</LanguageKey> 
   
   <LanguageKey Key="UIMake_Cost_Title">制造消耗：\n</LanguageKey>
   <LanguageKey Key="UIMake_Cost_Item">{0} *{1} </LanguageKey> 
   <LanguageKey Key="UIMake_Cost_gold">金币 *{0} </LanguageKey> 
   <LanguageKey Key="UIMake_Reward_Title">\n获得：\n</LanguageKey>
+  
+  
+  <LanguageKey Key="UIProduce_worker">工匠：{0}/{1}</LanguageKey>
+  <LanguageKey Key="PRODUCE_TIME">收获时间:{0}:{1:00}</LanguageKey>
 </ArrayOfLanguageKey>

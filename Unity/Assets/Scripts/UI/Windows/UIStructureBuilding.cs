@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.Tools;
 using ExcelConfig;
+using Assets.Scripts.DataManagers;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -11,66 +12,66 @@ namespace Assets.Scripts.UI.Windows
     {
         public class ItemGridTableModel : TableItemModel<ItemGridTableTemplate>
         {
-            public ItemGridTableModel(){}
+            public ItemGridTableModel() { }
             public override void InitModel()
             {
                 //todo
-                this.Template.bt_info.OnMouseClick((s, e) => {
+                this.Template.bt_info.OnMouseClick((s, e) =>
+                {
+                    if (!need) return;
+                    if (Build == null) return;
+                    UIControllor.Singleton.ShowMessage(LanguageManager.ReplaceEc(Build.Config.Describe), 10);
+                });
 
-                    if (Config == null) return;
-                    var sb = new StringBuilder();
-                    sb.AppendLine(LanguageManager.Singleton["UIStructureBuilding_Cost_Title"]);
-                    if (Config.CostGold > 0)
-                    {
-                        sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Gold"], Config.CostGold));
-                    }
-                    var costItems = UtilityTool.SplitKeyValues(Config.CostItems);
-                    foreach (var i in costItems)
-                    {
-                        var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
-                        if (item == null) continue;
-                        sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Item"], item.Name,i.Value));
-                    }
-
-                    UIControllor.Singleton.ShowMessage(sb.ToString(), 10);
+                this.Template.Bt_itemName.OnMouseClick((s, e) =>
+                {
+                    if (OnClick == null) return;
+                    OnClick(this);
                 });
             }
-            public BuildingConfig Config { private set; get; }
-            internal bool SetBuild(List<BuildingConfig> list, int level)
+            public PlayerBuild Build { private set; get; }
+            internal bool SetBuild(PlayerBuild build)
             {
-                Config = null;
-                foreach (var i in list)
-                {
-                    if (i.Level == level)
-                    {
-                        Config = i;
-                    }
-                }
-                if (Config == null) return false;
-
-                Template.Bt_itemName.Text(Config.Name);
+                Build = build;
+                if (Build == null) return false;
+                var nextConfig = DataManagers.BuildingManager.Singleton.GetConfig(Build.BuildID, build.Level + 1);
+                Template.Bt_itemName.Text(Build.Config.Name + (Build.Level > 0 ? " " + Build.Level : ""));
                 var sb = new StringBuilder();
-                if (Config.CostGold > 0)
+                if (Build.Config.CostGold > 0)
                 {
-                    sb.AppendLine(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Gold"], Config.CostGold));
+                    sb.AppendLine(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Gold"], Build.Config.CostGold));
                 }
-                var costItems = UtilityTool.SplitKeyValues(Config.CostItems);
+                var costItems = UtilityTool.SplitKeyValues(Build.Config.CostItems);
                 foreach (var i in costItems)
                 {
                     var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
                     if (item == null) continue;
                     sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Item"], item.Name, i.Value));
                 }
-                Template.lb_cost.text = sb.ToString();
+                var require = sb.ToString();
+                need = !string.IsNullOrEmpty(Build.Config.Describe);
+                Template.lb_cost.text =
+                   (nextConfig == null ? LanguageManager.Singleton["UIStructureBuilding_Cost_MaxLevel"] : (string.IsNullOrEmpty(require) ?
+                    LanguageManager.Singleton["UIStructureBuilding_Cost_None"] : require));
                 return true;
             }
+
+            public Action<ItemGridTableModel> OnClick;
+            public void SetDrag(bool canDrag)
+            {
+                var d = this.Item.Root.GetComponent<UIDragScrollView>();
+                d.enabled = canDrag;
+            }
+            private bool need = false;
+
         }
 
         public override void InitModel()
         {
             base.InitModel();
             //Write Code here
-            bt_close.OnMouseClick((s, e) => {
+            bt_close.OnMouseClick((s, e) =>
+            {
                 HideWindow();
             });
         }
@@ -78,31 +79,43 @@ namespace Assets.Scripts.UI.Windows
         public override void OnShow()
         {
             base.OnShow();
-            var buildingConfigs = ExcelToJSONConfigManager.Current.GetConfigs<BuildingConfig>();
-            var buidingIDs = new Dictionary<int, List<BuildingConfig>>();
-            foreach (var i in buildingConfigs)
+
+            OnUpdateUIData();
+        }
+
+        public override void OnUpdateUIData()
+        {
+            base.OnUpdateUIData();
+            var dic = new HashSet<int>();
+            var builds = ExcelToJSONConfigManager.Current.GetConfigs<BuildingConfig>();
+
+            foreach (var i in builds)
             {
-                if (!buidingIDs.ContainsKey(i.BuildingId))
-                {
-                    buidingIDs.Add(i.BuildingId, new List<BuildingConfig> { i});
-                }
-                else
-                {
-                    buidingIDs[i.BuildingId].Add(i);
-                }
+                if (dic.Contains(i.BuildingId)) continue;
+                dic.Add(i.BuildingId);
             }
 
-            ItemGridTableManager.Count =  buidingIDs.Count;
-            int index =0;
-            foreach (var i in buidingIDs)
+            //var buildingConfigs = DataManagers.BuildingManager.Singleton.GetConstructBuildingsList();
+            ItemGridTableManager.Count = dic.Count;
+            int index = 0;
+            foreach (var b in dic)
             {
-                var isBuild = DataManagers.BuildingManager.Singleton.IsBuild(i.Key);
-                int level = isBuild ? DataManagers.BuildingManager.Singleton[i.Key].Level : 1;
-                ItemGridTableManager[index].Model.SetBuild(i.Value, level);
+                var i = DataManagers.BuildingManager.Singleton[b];
+
+                ItemGridTableManager[index].Model.SetBuild(i);
+                ItemGridTableManager[index].Model.SetDrag(dic.Count >= 8);
+                ItemGridTableManager[index].Model.OnClick = OnClickItem;
                 index++;
             }
         }
 
+        private void OnClickItem(ItemGridTableModel obj)
+        {
+            if (DataManagers.BuildingManager.Singleton.ConstructBuild(obj.Build.BuildID, obj.Build.Level+1))
+            {
+                UIManager.Singleton.UpdateUIData();
+            }
+        }
 
         public override void OnHide()
         {

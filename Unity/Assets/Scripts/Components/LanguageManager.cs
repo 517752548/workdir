@@ -19,7 +19,7 @@ namespace Assets.Scripts
                 if (values == null) InitLanauage();
                 string value;
                 if (values.TryGetValue(key, out value))
-                    return value.Replace("\\n","\n");
+                    return ReplaceEc(value);
                 return key;
             }
         }
@@ -37,6 +37,11 @@ namespace Assets.Scripts
                 }
                 values.Add(i.Key, i.Value);
             }
+        }
+
+        public static string ReplaceEc(string str)
+        {
+            return str.Replace("\\n", "\n");
         }
     }
 

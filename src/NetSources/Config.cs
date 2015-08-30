@@ -490,16 +490,10 @@ namespace ExcelConfig
     public class ConstAttConfig:JSONConfigBase    {
         
         /// <summary>
-        /// 名称
+        /// 计算时间单位毫秒
         /// </summary>
         [ExcelConfigColIndex(1)]
-        public String Name { set; get; }
-        
-        /// <summary>
-        /// 值
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public int Value { set; get; }
+        public int ProduceRewardTick { set; get; }
 
     }
 
@@ -580,6 +574,12 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(12)]
         public String Describe { set; get; }
+        
+        /// <summary>
+        /// 升级后提示
+        /// </summary>
+        [ExcelConfigColIndex(13)]
+        public String BuildSuccessMessage { set; get; }
 
     }
 

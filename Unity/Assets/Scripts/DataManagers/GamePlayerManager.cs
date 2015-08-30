@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.App;
+using Assets.Scripts.UI;
 using ExcelConfig;
 using org.vxwo.csharp.json;
 using System;
@@ -18,6 +19,8 @@ namespace Assets.Scripts.DataManagers
         PACKAGE_SIZE =5,//背包大小
         TEAM_SIZE =6,//队伍上线
         EXPLORE_VALUE = 7,  //探索度
+        PLAYER_GOLD =8 ,//金币
+        PLAYER_COIN=9,//钻石
     }
     public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
     {
@@ -99,6 +102,29 @@ namespace Assets.Scripts.DataManagers
             Presist();
         }
 
+        #region 生产相关
+
+        public int People
+        {
+            get
+            {
+                return Mathf.Max(0, this[PlayDataKeys.PEOPLE_COUNT]);
+            }
+        }
+
+        public int BusyPeople
+        {
+            get
+            {
+                var busy = 0;
+                foreach (var i in ProduceOpenState)
+                {
+                    busy += i.Value.PeopleNum;
+                }
+                return busy;
+            }
+        }
+
         public List<ExcelConfig.ResourcesProduceConfig> OpenProduceConfigs()
         {
             var configs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.ResourcesProduceConfig>();
@@ -126,26 +152,21 @@ namespace Assets.Scripts.DataManagers
             {
                 this.ProduceOpenState.Add(id, new ProducePrisitData { IsOpen = true, PeopleNum = 0, ProduceID = id });
             }
+
+            var name = string.Empty;
+
+            var config = ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ResourcesProduceConfig>(id);
+            if (config != null)
+            {
+                name = config.Name;
+            }
+            UITipDrawer.Singleton.DrawNotify(
+                string.Format(LanguageManager.Singleton["Build_event_open_produce"]
+                , name));
             //保存
             Presist();
         }
-        public List<Proto.Item> CallFunByID(int id)
-        {
-            return null;
-            //var result = new List<Proto.Item>();
-            //var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.FunctionConfig>(id);
-            //if (config != null)
-            //{
-            //    var produces = PlayerItemManager.SplitFormatItemData(config.Produce);
-            //    foreach (var i in produces)
-            //    {
-            //        Proto.Item item = PlayerItemManager.Singleton.AddItem(i[0], i[1]);
-            //        result.Add(item);
-            //    }
-            //}
-            //return result;
-        }
-        //public ExcelConfig.ProduceLevelUpConfig CurrentLevel { private set; get; }
+
         internal float CallProduceGold()
         {
             return 0;
@@ -156,6 +177,7 @@ namespace Assets.Scripts.DataManagers
             //UI.UIManager.Singleton.OnUpdateUIData();
             //return CurrentLevel == null ? 0f : CurrentLevel.CdTime;
         }
+
         private void AddProduceTimes(int time)
         {
             var currentTime = this[PlayDataKeys.PRODUCE_CLICK_TIMES];
@@ -174,12 +196,12 @@ namespace Assets.Scripts.DataManagers
                 if (!i.Value.IsOpen || i.Value.PeopleNum <= 0) continue;
                 var produce = ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ResourcesProduceConfig>(i.Value.ProduceID);
                 if (produce == null) continue;
-                var requires = PlayerItemManager.SplitFormatItemData(produce.CostItems);
-                var rewards = PlayerItemManager.SplitFormatItemData(produce.RewardItems);
+                var requires = Tools.UtilityTool.SplitKeyValues(produce.CostItems);
+                var rewards = Tools.UtilityTool.SplitKeyValues(produce.RewardItems);
                 var engough = true;
                 foreach (var r in requires)
                 {
-                    if (PlayerItemManager.Singleton.GetItemCount(r[0]) < (r[1] * i.Value.PeopleNum))
+                    if (PlayerItemManager.Singleton.GetItemCount(r.Key) < (r.Value * i.Value.PeopleNum))
                     {
                         engough = false;
                         break;
@@ -189,24 +211,27 @@ namespace Assets.Scripts.DataManagers
                 if (!engough) continue;
                 foreach (var r in requires)
                 {
-                    PlayerItemManager.Singleton.CalItem(r[0], (r[1] * i.Value.PeopleNum));
+                    PlayerItemManager.Singleton.SubItem(r.Key, (r.Value * i.Value.PeopleNum));
                 }
                 foreach (var r in rewards)
                 {
-                    var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(r[0]);
+                    var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(r.Key);
                     if (config == null) continue;
-                    var item = PlayerItemManager.Singleton.AddItem(r[0], r[1] * i.Value.PeopleNum);
-                    UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["REWARD_ITEM"], config.Name, item.Diff)); ;
+                    var item = PlayerItemManager.Singleton.AddItem(r.Key, r.Value * i.Value.PeopleNum);
+                    if (GameAppliaction.Singleton.Current is GameStates.CastleState)
+                        UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["REWARD_ITEM"], config.Name, item.Diff));
                 }
-
             }
+
+            UIManager.Singleton.UpdateUIData<UI.Windows.UICastlePanel>();
             return true;
         }
+
         public TimeSpan TimeToProduce
         {
             get
             {
-                var timeTickForProduce = TimeSpan.FromSeconds(10);//GameAppliaction.Singleton.ConstValues.RESOURCES_PRODUCE_TIME);
+                var timeTickForProduce =TimeSpan.FromMilliseconds(GameAppliaction.Singleton.ConstValues.ProduceRewardTick);
                 var time = DateTime.UtcNow;
                 var lastTime = TimeZero + TimeSpan.FromSeconds(this[PlayDataKeys.PRODUCE_TIME]);
                 if (lastTime > time) return TimeSpan.FromSeconds(0);
@@ -214,15 +239,6 @@ namespace Assets.Scripts.DataManagers
             }
         }
 
-        internal int CalInWorkPeople()
-        {
-            int p = 0;
-            foreach (var i in ProduceOpenState)
-            {
-                p += i.Value.PeopleNum;
-            }
-            return p;
-        }
 
         internal ProducePrisitData GetProduceStateByID(int id)
         {
@@ -243,7 +259,7 @@ namespace Assets.Scripts.DataManagers
         internal void AddPeopleOnProduce(int id, int num)
         {
             var people = this[PlayDataKeys.PEOPLE_COUNT];
-            var inwork = CalInWorkPeople();
+            var inwork = BusyPeople;
             if (people <= inwork)
             {
                 UI.UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["NO_PEOPLE_FREE"]);
@@ -258,6 +274,25 @@ namespace Assets.Scripts.DataManagers
         {
             var data = GetProduceStateByID(id);
             return data == null ? 0 : data.PeopleNum;
+        }
+
+        #endregion
+
+        public List<Proto.Item> CallFunByID(int id)
+        {
+            return null;
+            //var result = new List<Proto.Item>();
+            //var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.FunctionConfig>(id);
+            //if (config != null)
+            //{
+            //    var produces = PlayerItemManager.SplitFormatItemData(config.Produce);
+            //    foreach (var i in produces)
+            //    {
+            //        Proto.Item item = PlayerItemManager.Singleton.AddItem(i[0], i[1]);
+            //        result.Add(item);
+            //    }
+            //}
+            //return result;
         }
 
         /// <summary>
@@ -281,8 +316,88 @@ namespace Assets.Scripts.DataManagers
         }
 
 
+        #region 金币
+        /// <summary>
+        /// 消耗金币
+        /// </summary>
+        /// <param name="cost"></param>
+        /// <returns></returns>
+        internal int SubGold(int cost)
+        {
+            if (cost < 0) return this.Gold;
+            Gold = Gold - cost;
+            return Gold;
+        }
+        /// <summary>
+        /// 添加金币
+        /// </summary>
+        /// <param name="add"></param>
+        /// <returns></returns>
+        internal int AddGold(int add)
+        {
+            if (add < 0) return this.Gold;
+            Gold = Gold + add;
+            return Gold;
+        }
+
+        public int Gold
+        {
+            get
+            {
+                var v = this[PlayDataKeys.PLAYER_GOLD];
+                if (v <= 0) return 0;
+                return v;
+            }
+
+            private set
+            {
+                this[PlayDataKeys.PLAYER_GOLD] = value;
+            }
+        }
+        #endregion
+
+        #region Coin
+        /// <summary>
+        /// 消耗金币
+        /// </summary>
+        /// <param name="cost"></param>
+        /// <returns></returns>
+        internal int SubCoin(int cost)
+        {
+            if (cost < 0) return this.Coin;
+            Coin = Coin - cost;
+            return Coin;
+        }
+        /// <summary>
+        /// 添加金币
+        /// </summary>
+        /// <param name="add"></param>
+        /// <returns></returns>
+        internal int AddCoin(int add)
+        {
+            if (add < 0) return this.Coin;
+            Coin = Coin + add;
+            return Coin;
+        }
+
+        public int Coin
+        {
+            get
+            {
+                var v = this[PlayDataKeys.PLAYER_COIN];
+                if (v <= 0) return 0;
+                return v;
+            }
+
+            private set
+            {
+                this[PlayDataKeys.PLAYER_COIN] = value;
+            }
+        }
+        #endregion
 
     }
+
     public class ProducePrisitData
     {
         [JsonName("P")]

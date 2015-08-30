@@ -1,1 +1,1 @@
-[{"ID":1,"Name":"RandomStepLimit","Value":1},{"ID":2,"Name":"ViewDistance","Value":1}]
+[{"ID":1,"ProduceRewardTick":30000},{"ID":0,"ProduceRewardTick":0},{"ID":0,"ProduceRewardTick":0}]

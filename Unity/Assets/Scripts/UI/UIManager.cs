@@ -296,7 +296,7 @@ namespace Assets.Scripts.UI
                 }
             }
         }
-        public void OnUpdateUIData()
+        public void UpdateUIData()
         {
             foreach (var i in _windows)
             {
@@ -304,7 +304,8 @@ namespace Assets.Scripts.UI
                     i.Value.OnUpdateUIData();
             }
         }
-        public void OnUpdateUIData(params string[] keys)
+
+        private void UpdateUIData(params string[] keys)
         {
             foreach(var i in keys)
             {
@@ -315,9 +316,9 @@ namespace Assets.Scripts.UI
             }
         }
 
-        public void OnUpdateUIData<T>() where T : UIWindow
+        public void UpdateUIData<T>() where T : UIWindow
         {
-            OnUpdateUIData(typeof(T).Name);
+            UpdateUIData(typeof(T).Name);
         }
 
         public T CreateOrGetWindow<T>() where T: UIWindow, new ()

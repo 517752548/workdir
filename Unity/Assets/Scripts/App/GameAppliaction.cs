@@ -39,7 +39,7 @@ namespace Assets.Scripts.App
             
         }
 
-        public void Reset()
+        public void ResetPlayData()
         {
             foreach (var i in prisit)
             {
@@ -55,15 +55,12 @@ namespace Assets.Scripts.App
 
         private List<IPresist> prisit;
 
-        private ConstValues _ConstValues;
-        public ConstValues ConstValues
+        public ConstAttConfig ConstValues
         {
             get
             {
-                if (_ConstValues == null)
-                    _ConstValues = new ConstValues();
-                   // _ConstValues = ExcelToJSONConfigManager.Current.FirstConfig<ConstValuesConfig>((item) => { return true; });
-                return _ConstValues;
+
+                return ExcelToJSONConfigManager.Current.GetConfigByID<ConstAttConfig>(1);
             }
         }
 
@@ -165,7 +162,6 @@ namespace Assets.Scripts.App
         }
         public void ReloadConfig()
         {
-            _ConstValues = null;
             new ExcelToJSONConfigManager(this);
         }
 

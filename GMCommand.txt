@@ -1,3 +1,4 @@
 makeitem 1 100 //创建道具 1 100个  OK
 makeallitem 100 //创建所有道具为100个  OK
 setplayerdata 1 10 //设置玩家数据
+iammaster 添加所有资源包括游戏中的金币和砖石

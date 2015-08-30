@@ -10,10 +10,31 @@ namespace Assets.Scripts.UI.Windows
     {
         public class GridTableModel : TableItemModel<GridTableTemplate>
         {
-            public GridTableModel(){}
+            public GridTableModel() { }
             public override void InitModel()
             {
                 //todo
+            }
+
+            private DataManagers.PlayerGameItem _GameItem;
+            public DataManagers.PlayerGameItem GameItem
+            {
+                get
+                {
+                    return _GameItem;
+                }
+                set
+                {
+                    _GameItem = value;
+                    Template.lb_name.text = value.Config.Name;
+                    Template.lv_num.text = string.Format(string.Format(LanguageManager.Singleton["APP_NUM_FORMAT"], value.Num));
+                }
+            }
+
+            public void SetDrag(bool canDrag)
+            {
+               var d = this.Item.Root.GetComponent<UIDragScrollView>();
+               d.enabled = canDrag;
             }
         }
 
@@ -21,15 +42,32 @@ namespace Assets.Scripts.UI.Windows
         {
             base.InitModel();
             //Write Code here
-            bt_close.OnMouseClick((s, e) => {
+            bt_close.OnMouseClick((s, e) =>
+            {
                 HideWindow();
             });
         }
+
         public override void OnShow()
         {
             base.OnShow();
-            this.GridTableManager.Count = 5;
+            OnUpdateUIData();
         }
+
+        public override void OnUpdateUIData()
+        {
+            base.OnUpdateUIData();
+            var allItem = DataManagers.PlayerItemManager.Singleton.GetAllItems();
+            this.GridTableManager.Count = allItem.Count;
+            int index = 0;
+            foreach (var i in GridTableManager)
+            {
+                i.Model.GameItem = allItem[index];
+                i.Model.SetDrag(allItem.Count >= 12);
+                index++;
+            }
+        }
+
         public override void OnHide()
         {
             base.OnHide();
