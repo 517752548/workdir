@@ -132,6 +132,7 @@ namespace Assets.Scripts.UI.Windows
                 foreach (var c in cost)
                 {
                     var p = DataManagers.GamePlayerManager.Singleton.GetProducePeople(i.ID) * c.Value;
+                    if (p == 0) continue;
                     if(items.ContainsKey(c.Key))
                     {
                         items[c.Key] -= p;
@@ -144,6 +145,7 @@ namespace Assets.Scripts.UI.Windows
                 foreach (var c in reward)
                 {
                     var p = DataManagers.GamePlayerManager.Singleton.GetProducePeople(i.ID) * c.Value;
+                    if (p == 0) continue;
                     if (items.ContainsKey(c.Key))
                     {
                         items[c.Key] += p;
@@ -155,11 +157,13 @@ namespace Assets.Scripts.UI.Windows
                 }
             }
             var listID = items.Keys.ToList();
+            
             listID.Sort((l, r) => {
                 if (l > r) return 1;
                 if (l == r) return 0; return -1;
             });
 
+            
             foreach (var i in listID)
             { 
                 var name = string.Empty;
