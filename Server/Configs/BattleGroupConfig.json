@@ -1,1 +1,1 @@
-[{"ID":1,"Name":"hero1","BattleCount":0,"BattleIds":""},{"ID":2,"Name":"hero2","BattleCount":0,"BattleIds":""}]
+[{"ID":1,"Name":"hero1","BattleCount":3,"BattleIds":"1|2|3"},{"ID":2,"Name":"hero2","BattleCount":3,"BattleIds":"1|2|3"}]

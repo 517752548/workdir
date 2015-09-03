@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Combat.Simulate;
 using Assets.Scripts.Tools;
 using ExcelConfig;
+using Proto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,12 @@ namespace Assets.Scripts.Combat.Battle.Elements
     }
     public class BattleSoldier
     {
+        public BattleSoldier(Soldier soldier)
+        {
+            Config = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(soldier.ConfigID);
+            SkillConfig = ExcelToJSONConfigManager.Current.GetConfigByID<SkillConfig>(Config.SkillID);
+            AttackCdTime = 0;
+        }
         public Proto.Soldier Soldier { set; get; }
         public ExcelConfig.MonsterConfig Config { set; get; }
         public float AttackCdTime { set; get; }
@@ -32,13 +39,7 @@ namespace Assets.Scripts.Combat.Battle.Elements
             HP = 0;
             foreach (var i in Army.Soldiers)
             {
-                var so = new BattleSoldier
-                {
-                    AttackCdTime = 0,
-                    Config = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(i.ConfigID),
-                    Soldier = i
-                };
-
+                var so = new BattleSoldier(i);
                 Soldiers.Add(so);
                 HP += (so.Config.Hp * i.Num);
             }
@@ -78,7 +79,8 @@ namespace Assets.Scripts.Combat.Battle.Elements
             else
             {
                 //先打护盾
-                if (AppendHP > 0) {
+                if (AppendHP > 0)
+                {
                     AppendHP += hp;
                     //如果还>0 
                     if (AppendHP >= 0) return false;
@@ -86,7 +88,11 @@ namespace Assets.Scripts.Combat.Battle.Elements
                 }
                 HP += hp;
                 if (HP <= 0) HP = 0;
-                return HP == 0;
+
+                var isdead = HP == 0;
+                if (isdead)
+                    this.Enable = false;
+                return isdead;
             }
         }
         public bool IsDead { get { return HP == 0; } }
@@ -173,8 +179,6 @@ namespace Assets.Scripts.Combat.Battle.Elements
 
         public int ReduceDamage { get; set; }
     }
-
-
 
     public class DamageResult
     {

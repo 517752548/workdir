@@ -174,17 +174,13 @@ namespace Proto
     public enum SkillEffectTaget
     {
         /// <summary>
-        /// �Լ�
-        /// </summary>
-        Owner=1,
-        /// <summary>
         /// �ѷ�
         /// </summary>
-        OwnerTeam=2,
+        OwnerTeam=1,
         /// <summary>
         /// �з�
         /// </summary>
-        Enemy=3,
+        Enemy=2,
 
     }
     public enum SkillEffectType

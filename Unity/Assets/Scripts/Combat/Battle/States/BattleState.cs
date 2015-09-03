@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Combat.Simulate;
+using Proto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +14,7 @@ namespace Assets.Scripts.Combat.Battle.States
             var perception = new BattlePerception(this);
             this.Perception = perception;
 
-            var battle = new Elements.BattleEl(new Controllors.BattleControllor(this.Perception),battleGroupID);
-            var controllor = new Controllors.ArmyControllor(this.Perception);
-            //var playerArmy = new Elements.BattleArmy(controllor, player);
-            //var monsterArmy = new Elements.BattleArmy(controllor, monster);
-
-            //AddElement(playerArmy);
-            //AddElement(monsterArmy);
-
-            //var battle = new Elements.Battle(new Controllors.BattleControllor(Perception));
+            var battle = new Elements.BattleEl(new Controllors.BattleControllor(this.Perception), battleGroupID);
             AddElement(battle);
         }
         public override void OnEnter()

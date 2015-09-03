@@ -83,5 +83,12 @@ namespace Assets.Scripts.GameStates
         {
             //
         }
+
+        public void StartBattle(int battlegroup)
+        {
+
+        }
+
+        public Combat.Battle.States.BattleState BState { private set; get; }
     }
 }

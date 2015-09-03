@@ -10,9 +10,8 @@ namespace Assets.Scripts.Combat.Battle.Elements
     public class BattleEl : GObject
     {
 
-        public BattleEl(Controllors.BattleControllor battleControllor) : base(battleControllor) { }
         public BattleEl(Controllors.BattleControllor battleControllor, int battleGroupID)
-            : this(battleControllor)
+            : base(battleControllor)
         {
             // TODO: Complete member initialization
             var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.BattleGroupConfig>(battleGroupID);
@@ -24,6 +23,8 @@ namespace Assets.Scripts.Combat.Battle.Elements
                 });
             BattleGroup = config;
             Battles = listBattle;
+            State = BattleStateType.NOStart;
+            BattleIndex++;
         }
 
         public ExcelConfig.BattleGroupConfig BattleGroup { private set; get; }
@@ -33,7 +34,7 @@ namespace Assets.Scripts.Combat.Battle.Elements
 
         private List<BattleEffect> Bufs = new List<BattleEffect>();
 
-
+        public int BattleIndex { set; get; }
 
         private void AddBuf(BattleEffect buf)
         {
@@ -84,6 +85,16 @@ namespace Assets.Scripts.Combat.Battle.Elements
         }
 
         private Queue<BattleEffect> _deeeffect = new Queue<BattleEffect>();
+
+        public BattleStateType State { set; get; }
+    }
+
+    public enum BattleStateType
+    {
+         NOStart, //开始
+         Battling, //开始了
+         WaitDialog,//等待对话
+         End//战斗结束
     }
 
     public abstract class BattleEffect

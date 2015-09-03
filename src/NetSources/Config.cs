@@ -635,13 +635,13 @@ namespace ExcelConfig
         /// 命中率
         /// </summary>
         [ExcelConfigColIndex(8)]
-        public float Hit { set; get; }
+        public int Hit { set; get; }
         
         /// <summary>
         /// 闪避率
         /// </summary>
         [ExcelConfigColIndex(9)]
-        public float Dodge { set; get; }
+        public int Dodge { set; get; }
         
         /// <summary>
         /// 速度
@@ -653,7 +653,7 @@ namespace ExcelConfig
         /// 克制关系暴击
         /// </summary>
         [ExcelConfigColIndex(11)]
-        public float CrtPro { set; get; }
+        public int CrtPro { set; get; }
         
         /// <summary>
         /// 暴击倍率

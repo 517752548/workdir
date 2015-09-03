@@ -35,9 +35,11 @@ namespace Assets.Scripts.Combat.Battle.Actions
             {
                 case SkillEffectTaget.Enemy:
                     target = Enemy;
+                    GameDebug.LogDebug("Target:Enemy!");
                     break;
                 case SkillEffectTaget.OwnerTeam:
                     target = this.Obj as BattleArmy;
+                    GameDebug.LogDebug("Target:Owner!");
                     break;
             }
 
@@ -47,9 +49,11 @@ namespace Assets.Scripts.Combat.Battle.Actions
             {
                 case SkillDamageType.Cure:
                     target.CalHp(Soldier.SkillConfig.MainEffectNumber);//加血
+                    GameDebug.LogDebug("Effect:Cure!");
                     break;
                 case SkillDamageType.Damage:
                     result = target.DoAttack(this.Obj as BattleArmy, this.Soldier, -Soldier.SkillConfig.MainEffectNumber);//掉血
+                    GameDebug.LogDebug("Effect:Damage D:" + result.Damage +" Miss:"+result.IsMiss +" dead:"+result.IsDead +" ismult:"+result.Mult);
                     break;
             }
 
@@ -58,9 +62,11 @@ namespace Assets.Scripts.Combat.Battle.Actions
             {
                 case SkillEffectTaget.Enemy:
                     effectTarget = Enemy;
+                    GameDebug.LogDebug("target:enemy!");
                     break;
                 case SkillEffectTaget.OwnerTeam:
                     effectTarget = this.Obj as BattleArmy;
+                    GameDebug.LogDebug("target:owne!");
                     break;
             }
 
@@ -69,8 +75,10 @@ namespace Assets.Scripts.Combat.Battle.Actions
                 case SkillEffectType.AddDef:
                     //加护盾
                     effectTarget.AddAppendHP(Tools.UtilityTool.ConvertToInt( Soldier.SkillConfig.Pars1));
+                    GameDebug.LogDebug("Adddef: num !"+Soldier.SkillConfig.Pars1);
                     break;
                 case SkillEffectType.Dot:
+                    GameDebug.LogDebug("dot: num !" + Soldier.SkillConfig.Pars1 +" " +Soldier.SkillConfig.Pars2 +" " +Soldier.SkillConfig.Pars3 );
                     battle.DoDotEffect(Obj as BattleArmy, target, this.Soldier,
                         Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars2), 
                         Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars3), 
@@ -79,28 +87,18 @@ namespace Assets.Scripts.Combat.Battle.Actions
                 case SkillEffectType.Giddy:
                     //眩晕
                     battle.DoGiddyEeffect(Obj as BattleArmy, Soldier,target, Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1));
+                    GameDebug.LogDebug("giddy: num !" + Soldier.SkillConfig.Pars1);
                     break;
                 case SkillEffectType.ReduceDamage:
-
+                    GameDebug.LogDebug("ReduceDamage: num !" + Soldier.SkillConfig.Pars1);
                     battle.DoReduceDamage(Obj as BattleArmy, Soldier, target, Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1), Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars2));
                     break;
                 case SkillEffectType.SuckBlood:
+                    GameDebug.LogDebug("SuckBlood: num !" + Soldier.SkillConfig.Pars1);
                     target.CalHp(Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1));//加血
                     break;
             }
 
-            if (result == null) return;
-
-           
-
-            //Debug.Log(cur.Camp.ToString() +" Attack "+Enemy.Camp +" damage "+ damage +" hp="+ Enemy.HP+" Time="+Time.time);
-            UI.UITipDrawer.Singleton.DrawNotify(
-                cur.Camp.ToString() + " Attack " + Enemy.Camp + " damage " + result.Damage + " hp=" + Enemy.HP + " Time=" + Time.time);
-
-            if (result.IsDead)
-                UI.UITipDrawer.Singleton.DrawNotify(Enemy.Camp.ToString() + "Dead");
-
-            //throw new NotImplementedException();
         }
 
         //战斗计算在这里

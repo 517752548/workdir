@@ -30,5 +30,12 @@ namespace Assets.Scripts
         {
             Debug.LogException(ex);
         }
+
+        public static void LogDebug(object obj)
+        {
+#if DEBUG
+            LogWarning(obj);
+#endif
+        }
     }
 }

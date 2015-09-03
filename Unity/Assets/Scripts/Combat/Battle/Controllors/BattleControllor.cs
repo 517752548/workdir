@@ -13,15 +13,46 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 
         public override GAction GetAction(GObject current)
         {
-            
+
             var battle = current as Elements.BattleEl;
             var per = Perception as States.BattlePerception;
             battle.TickEffect();
-            if(per.HaveDeadArmy())
+
+            switch (battle.State)
             {
-                return new Actions.EndBattleAction(current, Perception);
+                case Elements.BattleStateType.NOStart:
+                    return new Actions.StartBattleAction(current, per);
+                case Elements.BattleStateType.Battling:
+                    if (per.HaveDeadArmy())
+                    {
+                        if (per.PlayerDead())
+                        {   //玩家死亡
+                            return new Actions.EndBattleAction(current, Perception);
+                        }
+                        else
+                        {
+                            if (battle.BattleIndex >= battle.Battles.Length)
+                            {
+                                return new Actions.EndBattleAction(current, per);
+                            }
+                            else
+                            {
+                                //创建
+                                return new Actions.AddMonsterAction(current, per, battle.Battles[battle.BattleIndex]);
+                            }
+                        }
+                    }
+                    return GAction.Empty;
+                case Elements.BattleStateType.WaitDialog: //等待UI信号
+                    if (UI.UIControllor.Singleton.IsShowBattleDialog)
+                        return GAction.Empty;
+                    //是否
+                    battle.State = Elements.BattleStateType.Battling;
+                    return GAction.Empty;
+                default:
+                    return GAction.Empty;
             }
-            return GAction.Empty;
+
         }
 
         

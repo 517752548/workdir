@@ -27,5 +27,13 @@ namespace Assets.Scripts.UI
             var uirender = UIManager.Singleton.Render;
             uirender.ShowOrHideMessage( show);
         }
+
+        internal void ShowBattleDialog(ExcelConfig.BattleConfig battleConfig)
+        {
+            IsShowBattleDialog = false;
+            UITipDrawer.Singleton.DrawNotify(battleConfig.Dialog);
+        }
+
+        public bool IsShowBattleDialog = false;
     }
 }
