@@ -41,8 +41,12 @@ namespace Assets.Scripts.UI.Windows
                     var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(_Config.ID);
                     ItemConfig = item;
                     if (item == null) return;
+                    var Color = _Config.Sold_price <= DataManagers.GamePlayerManager.Singleton.Gold ?
+                        LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
                     Template.Bt_itemName.Text(item.Name);
-                    Template.lb_cost.text = string.Format(LanguageManager.Singleton["UIShop_Model_Cost"], _Config.Sold_price);
+                    Template.lb_cost.text = string.Format(LanguageManager.Singleton["UIShop_Model_Cost"], 
+                        string.Format(Color,
+                        _Config.Sold_price));
                    
                 }
                 get
@@ -64,6 +68,12 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShow();
             //´¦Àí
+            OnUpdateUIData();
+        }
+
+        public override void OnUpdateUIData()
+        {
+            base.OnUpdateUIData(); 
             var shopItems = ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.StoreDataConfig>(
                 (item) =>
                 {
@@ -103,16 +113,15 @@ namespace Assets.Scripts.UI.Windows
 
         private void OnClick(ItemGridTableModel obj)
         {
-            //throw new NotImplementedException();
             if (DataManagers.PlayerItemManager.Singleton.BuyItem(obj.Config))
             {
-                return;
+                UIManager.Singleton.UpdateUIData();
             }
         }
 
         private void OnInfoClick(ItemGridTableModel obj)
         {
-             
+            UIControllor.Singleton.ShowMessage(obj.ItemConfig.Desription);
         }
         public override void OnHide()
         {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using ExcelConfig;
 using Assets.Scripts.UI;
+using Proto;
 
 namespace Assets.Scripts.DataManagers
 {
@@ -60,12 +61,29 @@ namespace Assets.Scripts.DataManagers
             {
                 return false; //MaxLevel
             }
-            var needs = Tools.UtilityTool.SplitKeyValues(build.CostItems);
+
+            //UI_Struct_Need_Build
+
+            switch ((BuildingUnlockType)old.UnlockType)
+            {
+                case BuildingUnlockType.NeedBuild:
+                    var needBuildID = Tools.UtilityTool.ConvertToInt(old.UnlockParms1);
+                    var needbuildConfig = ExcelToJSONConfigManager.Current.GetConfigByID<BuildingConfig>(needBuildID);
+                    if (!HaveBuild(needbuildConfig.BuildingId, needbuildConfig.Level))
+                    {
+                        UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["UI_Struct_Need_Build"],
+                            needbuildConfig.Name, needbuildConfig.Level+1));
+                        return false;
+                    }
+                    break;
+            }
+
+            var needs = Tools.UtilityTool.SplitKeyValues(old.CostItems);
             bool have = true;
             var sb = new StringBuilder();
             sb.Append(LanguageManager.Singleton["NOT_ENOUGHT"]);
             var gold = GamePlayerManager.Singleton.Gold;
-            if (gold < build.CostGold)
+            if (gold < old.CostGold)
             {
                 UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["Build_NOT_ENOUGHT_GOLD"]);
                 return false;
@@ -93,7 +111,9 @@ namespace Assets.Scripts.DataManagers
                 {
                     PlayerItemManager.Singleton.SubItem(i.Key, i.Value);
                 }
-                GamePlayerManager.Singleton.SubGold(build.CostGold);
+
+                if (old.CostGold > 0)
+                GamePlayerManager.Singleton.SubGold(old.CostGold);
                 AddOrlevelUPBuild(build.BuildingId, level);
                 BuildEvent(old);
             }
@@ -134,16 +154,18 @@ namespace Assets.Scripts.DataManagers
             //PRODUCE
             switch (levelConfig.ConstructEvent)
             {
+                case "unlock_material":
                 case "unlock_material_1":
                 case "unlock_material_2":
                 case "unlock_material_3":
                 case "unlock_material_4":
                 case "unlock_material_5":
                 case "product_wheat": //生产道具 
+                case "supply_up":
                     GamePlayerManager.Singleton.OpenProduceById(Tools.UtilityTool.ConvertToInt(levelConfig.Pars1));
                     break;
                 case "add_companion": //设置出战人数
-                    GamePlayerManager.Singleton[PlayDataKeys.TEAM_SIZE] = Tools.UtilityTool.ConvertToInt(levelConfig.Pars1);
+                    GamePlayerManager.Singleton.SetTeamSize(Tools.UtilityTool.ConvertToInt(levelConfig.Pars1));
                     UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["Build_event_add_companion"], GamePlayerManager.Singleton[PlayDataKeys.TEAM_SIZE]));
                     break;
                 case "add_population":
@@ -182,6 +204,17 @@ namespace Assets.Scripts.DataManagers
             return build.Level;
         }
 
+        public bool HaveBuild(int buildId, int level)
+        {
+            PlayerBuild buildData;
+            if (_ConstructBuildings.TryGetValue(buildId, out buildData))
+            {
+                return buildData.Level >= level;
+            }
+            return false;
+
+        }
+
         public void Reset()
         {
             _ConstructBuildings.Clear();
@@ -218,13 +251,12 @@ namespace Assets.Scripts.DataManagers
         {
             get
             {
+
                 if (_NextLevelConfig == null)
                 {
-                    if (_Config == null)
-                    {
-                        _Config = BuildingManager.Singleton.GetConfig(BuildID, Level + 1);
-                    }
+                    _NextLevelConfig = BuildingManager.Singleton.GetConfig(BuildID, Level + 1);
                 }
+
                 return _NextLevelConfig;
             }
         }

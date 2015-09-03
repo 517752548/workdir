@@ -28,9 +28,15 @@ namespace Assets.Scripts.UI.Windows
             private UITableManager<UITableItem> startTable;
 
             public MonsterConfig Monster { private set; get; }
-
+            public HeroConfig Hero { private set; get; }
+            public void SetDrag(bool canDrag)
+            {
+                var d = this.Item.Root.GetComponent<UIDragScrollView>();
+                d.enabled = canDrag;
+            }
             internal void SetData(HeroConfig heroConfig)
             {
+                Hero = heroConfig;
                 var monster = ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.MonsterConfig>(heroConfig.recruit_id);
                 Monster = monster;
                 if (monster == null) return;
@@ -47,6 +53,7 @@ namespace Assets.Scripts.UI.Windows
                 startTable.Count = monster.Star;
             }
 
+            
             public Action<ItemGridTableModel> OnClick;
         }
 
@@ -63,32 +70,49 @@ namespace Assets.Scripts.UI.Windows
         public override void OnShow()
         {
             base.OnShow();
-            var heros = ExcelToJSONConfigManager.Current.GetConfigs<HeroConfig>((hero) => {
-                var conditionType = (EmployCondtionType)hero.recruit_condition;
-                switch(conditionType)
+            OnUpdateUIData();
+        }
+
+        public override void OnUpdateUIData()
+        {
+            base.OnUpdateUIData();
+            //Ã»ÓÐÕÐÄ¼µÄÓ¢ÐÛ
+            var heros = ExcelToJSONConfigManager.Current.GetConfigs<HeroConfig>( (hero) =>
                 {
-                    case EmployCondtionType.CompleteMap:
-                        return GamePlayerManager.Singleton.CompleteMap(UtilityTool.SplitIDS(hero.recruit_para));
-                    case EmployCondtionType.GetAchievement:
-                        return GamePlayerManager.Singleton.HaveGetAchievement(UtilityTool.SplitIDS(hero.recruit_para));
-                    case EmployCondtionType.GetItem:
-                        var keyValues = UtilityTool.SplitKeyValues(hero.recruit_para);
-                        foreach(var i in keyValues)
-                        {
-                            if (PlayerItemManager.Singleton.GetItemCount(i.Key) < i.Value) return false;
-                        }
-                        return true;    
-                }
-                return true;
-            });
+                    if( DataManagers.PlayerArmyManager.Singleton.HaveEmployHero(hero)) return false;
+                    return DataManagers.PlayerArmyManager.Singleton.CanEmployHero(hero);
+                });
             ItemGridTableManager.Count = heros.Length;
             int index = 0;
-            foreach(var i in ItemGridTableManager)
+            foreach (var i in ItemGridTableManager)
             {
                 i.Model.SetData(heros[index]);
+                i.Model.SetDrag(heros.Length >= 5);
+                i.Model.OnClick = OnItemClick;
                 index++;
             }
         }
+
+        private void OnItemClick(ItemGridTableModel obj)
+        {
+            var currentType = (EmployCostCurrent)obj.Hero.recruit_current_type;
+
+            var cuurentName = currentType == EmployCostCurrent.Coin?
+                LanguageManager.Singleton["APP_COIN"] : LanguageManager.Singleton["APP_GOLD"];
+
+            UIMessageBox.ShowMessage(LanguageManager.Singleton["BUY_HERO_BT_OK"],
+                string.Format(LanguageManager.Singleton["BUY_HERO_Message"], cuurentName, obj.Hero.recruit_price),
+                () => {
+                    if (DataManagers.PlayerArmyManager.Singleton.BuyHero(obj.Hero))
+                    {
+                        UIManager.Singleton.UpdateUIData();
+                    }
+                },
+                null);
+        }
+
+
+
         public override void OnHide()
         {
             base.OnHide();

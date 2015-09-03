@@ -27,6 +27,7 @@ namespace Assets.Scripts.Combat.Battle.Actions
             Perception.State.AddElement(playerArmy);
             var battle = this.Obj as Battle.Elements.BattleEl;
             battle.State = Elements.BattleStateType.Battling;
+            //SHOW Battle UI 
         }
     }
 }

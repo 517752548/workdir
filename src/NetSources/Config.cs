@@ -76,6 +76,12 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(5)]
         public float DefRate { set; get; }
+        
+        /// <summary>
+        /// 美术资源名称
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public String IconName { set; get; }
 
     }
 
@@ -494,6 +500,48 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(1)]
         public int ProduceRewardTick { set; get; }
+        
+        /// <summary>
+        /// 等级一的黄金参量
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int GoldProduceLvl1 { set; get; }
+        
+        /// <summary>
+        /// cd时间
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int GoldProduceLvl1CD { set; get; }
+        
+        /// <summary>
+        /// 复活道具ID
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int ReliveNeedItem { set; get; }
+        
+        /// <summary>
+        /// 默认开放地图ID
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int DefaultMapID { set; get; }
+        
+        /// <summary>
+        /// 默认的包裹大小
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public int DefaultPackageSize { set; get; }
+        
+        /// <summary>
+        /// 游戏中的干粮道具ID
+        /// </summary>
+        [ExcelConfigColIndex(7)]
+        public int FoodItemID { set; get; }
+        
+        /// <summary>
+        /// 默认可出战英雄
+        /// </summary>
+        [ExcelConfigColIndex(8)]
+        public int DefaultTeamSize { set; get; }
 
     }
 

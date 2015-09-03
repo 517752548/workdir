@@ -2,6 +2,10 @@
 <ArrayOfLanguageKey xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <LanguageKey Key="APP_NAME">高老庄</LanguageKey>
   <LanguageKey Key="APP_NUM_FORMAT">{0:N0}</LanguageKey>
+  <LanguageKey Key="APP_RED">[8B0000]{0}[-]</LanguageKey>
+  <LanguageKey Key="APP_GREEN">{0}</LanguageKey> <!--[006400] 绿色-->
+  <LanguageKey Key="APP_COIN">钻石</LanguageKey> 
+  <LanguageKey Key="APP_GOLD">金币</LanguageKey>
   
   <LanguageKey Key="REWARD_ITEM">{0} +{1}</LanguageKey>
   <LanguageKey Key="UIShop_Require_Item_Enough">[000000]</LanguageKey>
@@ -17,10 +21,12 @@
   <LanguageKey Key="SOLDIER_SKILL">武器:{0}</LanguageKey>
   <LanguageKey Key="SOLDIER_HP">血量:{0:N0}</LanguageKey>
   <LanguageKey Key="SOLDIER_DAMAGE">伤害:{0:N0}</LanguageKey>
-  <LanguageKey Key="SOLDIER_SPEED">速度:{0:0}</LanguageKey>
+  <LanguageKey Key="SOLDIER_SPEED">速度:{0:0}</LanguageKey>	
   <LanguageKey Key="MAX_LEVEL_SOLDIER">终极兵种无法训练</LanguageKey>
   <LanguageKey Key="SOLDIER_NAME">{0}*{1}</LanguageKey>
 
+  <LanguageKey Key="ProduceGoldPreTick">金币 +{0}</LanguageKey>
+	
   <LanguageKey Key="NO_PEOPLE_FREE">无空闲村民</LanguageKey>
   <LanguageKey Key="PEOPLE_NAME">村民:</LanguageKey>
   <LanguageKey Key="PRODUCE_ITEM">{0} {1}</LanguageKey>
@@ -33,8 +39,8 @@
   <LanguageKey Key="UI_GOTOEX_ARMY_LB">军队:</LanguageKey> 
   
   <!--货郎-->
-  <LanguageKey Key="UIShop_Model_Cost">金币 *{0}</LanguageKey>
-  
+  <LanguageKey Key="UIShop_Model_Cost">金币 *{0:N0}</LanguageKey>
+  <LanguageKey Key="COST_GOLD_REWARD_ITEM">消耗金币{0} {1} +{2}</LanguageKey>
   
   <LanguageKey Key="UITavern_Attack">攻击:{0:N0}</LanguageKey> 
   <LanguageKey Key="UITavern_hp">血量:{0:N0}</LanguageKey>  
@@ -52,17 +58,48 @@
   
   <LanguageKey Key="UIStructureBuilding_Cost_Title">建造消耗：</LanguageKey>
   <LanguageKey Key="UIStructureBuilding_Cost_Item">{0} *{1} </LanguageKey> 
-  <LanguageKey Key="UIStructureBuilding_Cost_Gold">金币 *{0}</LanguageKey> 
+  <LanguageKey Key="UIStructureBuilding_Cost_Gold">金币 *{0:N0}</LanguageKey> 
   <LanguageKey Key="UIStructureBuilding_Cost_None">无</LanguageKey> 
-    <LanguageKey Key="UIStructureBuilding_Cost_MaxLevel">最大等级</LanguageKey> 
+  <LanguageKey Key="UIStructureBuilding_Cost_MaxLevel">最大等级</LanguageKey> 
   <LanguageKey Key="UIStructureBuilding_Build_Success">成功升级建筑{0}到{1}</LanguageKey> 
+  <LanguageKey Key="UI_Struct_Need_Build">升级需要{1}级{0}</LanguageKey> 
   
   <LanguageKey Key="UIMake_Cost_Title">制造消耗：\n</LanguageKey>
   <LanguageKey Key="UIMake_Cost_Item">{0} *{1} </LanguageKey> 
-  <LanguageKey Key="UIMake_Cost_gold">金币 *{0} </LanguageKey> 
+  <LanguageKey Key="UIMake_Cost_gold">金币 *{0:N0} </LanguageKey> 
   <LanguageKey Key="UIMake_Reward_Title">\n获得：\n</LanguageKey>
   
   
   <LanguageKey Key="UIProduce_worker">工匠：{0}/{1}</LanguageKey>
   <LanguageKey Key="PRODUCE_TIME">收获时间:{0}:{1:00}</LanguageKey>
+  
+  <LanguageKey Key="BUY_ITEM_NO_ENOUGH_GOLD">金币不够</LanguageKey>
+  
+  <LanguageKey Key="BuyHeroSuccess">成功雇佣{0}</LanguageKey>
+  <LanguageKey Key="BUY_HERO_NOT_ENOUGH_COIN">钻石不足不能招募</LanguageKey>
+  <LanguageKey Key="BUY_HERO_NOT_ENOUGH_GOLD">金币不足不能招募</LanguageKey>
+  <LanguageKey Key="BUY_HERO_BT_OK">招募</LanguageKey>
+  <LanguageKey Key="BUY_HERO_Message">招募消耗{0} *{1}</LanguageKey>
+  
+  <LanguageKey Key="UI_LVLUP_SKILL_NAME">技能:{0}</LanguageKey>
+  <LanguageKey Key="UI_LVLUP_HP">血量:{0}</LanguageKey>
+  <LanguageKey Key="UI_LVLUP_DAMAGE">攻击:{0}</LanguageKey>
+  <LanguageKey Key="UI_LVLUP_Speed">速度:{0}</LanguageKey>
+  <LanguageKey Key="UI_LVLUP_Cost_Item">{0} *{1} </LanguageKey> 
+  <LanguageKey Key="UI_LVLUP_Cost_Gold">金币 *{0:N0}</LanguageKey> 
+  <LanguageKey Key="LVLUP_SUCCESS">将{0} 升级到了{1} </LanguageKey> 
+  <LanguageKey Key="LVLUP_NOT_ENOUGH_GOLD">金币不足 </LanguageKey> 
+  <LanguageKey Key="LVLUP_NOT_ENOUGH_ITEM">{0}不足</LanguageKey>
+  
+  <LanguageKey Key="UI_GOEXPLORE_NO_PLACE">背包空间不足</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NO_FOOD">没有足够的{0}</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_PACKAGE">背包:{0}/{1}</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_TEAM_SIZE">可出战人数:{0}/{1}</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NO_TEAM_PLACE">已经到达最大出战人数上限</LanguageKey>
+  
+  <LanguageKey Key="UI_GOEXPLORE_Relive_Message">消耗{0} 复活{1}</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_Relive_OK">复活</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_Relive_NOT_ENOUGH_ITEM">{0}不足</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_Relive_Success">消耗{0} 使得{1}复活</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NEED_ARMY">起码您也要带个猪出去吧！！！</LanguageKey>
 </ArrayOfLanguageKey>

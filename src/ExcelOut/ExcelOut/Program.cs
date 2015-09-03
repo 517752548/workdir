@@ -15,11 +15,12 @@ namespace ExcelOut
         {
             //args
             // dir: namespace: class: exportJson: exportCs: ex:.xls
-            string dir =string.Empty;
+            string dir = string.Empty;
             string nameSpace = string.Empty;
             string exportJson = string.Empty;
             string exportCs = string.Empty;
             string ex = "*.xlsx";
+            string mode = "needcode";
             #region parmas
             foreach (var i in args)
             {
@@ -27,9 +28,9 @@ namespace ExcelOut
                 {
                     dir = i.Replace("dir:", "");
                 }
-                if(i.StartsWith("namespace:"))
+                if (i.StartsWith("namespace:"))
                 {
-                    nameSpace = i.Replace("namespace:","");
+                    nameSpace = i.Replace("namespace:", "");
                 }
                 if (i.StartsWith("exportJson:"))
                 {
@@ -39,32 +40,36 @@ namespace ExcelOut
                 {
                     exportCs = i.Replace("exportCs:", "");
                 }
-                if(i.StartsWith("ex:"))
+                if (i.StartsWith("ex:"))
                 {
-                   ex= i.Replace("ex:", "");
+                    ex = i.Replace("ex:", "");
+                }
+                if (i.StartsWith("mode:"))
+                {
+                    mode = i.Replace("mode:", "");
                 }
             }
             #endregion
 
-            Console.WriteLine(string.Format("dir:{0} nameSpace:{1}  exportJson:{2} exportCs:{3} ex:{4}",
-                dir, nameSpace, exportJson, exportCs,ex
+            Console.WriteLine(string.Format("dir:{0} nameSpace:{1}  exportJson:{2} exportCs:{3} ex:{4} mode:{5}",
+                dir, nameSpace, exportJson, exportCs, ex, mode
                 ));
 
-            Process(exportCs, dir, ex, exportJson, nameSpace);
+            Process(exportCs, dir, ex, exportJson, nameSpace, mode);
         }
 
-        public static void Process(string exportCs, string dir, string find, string jsonDir, string namesp)
+        public static void Process(string exportCs, string dir, string find, string jsonDir, string namesp, string mode)
         {
 
             if (string.IsNullOrEmpty(exportCs) || string.IsNullOrEmpty(dir)) return;
 
-            var files =  System.IO.Directory.GetFiles(dir,find, System.IO.SearchOption.TopDirectoryOnly) ;
+            var files = System.IO.Directory.GetFiles(dir, find, System.IO.SearchOption.TopDirectoryOnly);
             var outTables = new List<ExcelTable>();
 
             #region readTable and Data
             foreach (var filename in files)
             {
-                Console.WriteLine("gen:"+filename);
+                Console.WriteLine("gen:" + filename);
                 string strCon = string.Format(
                     "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR=NO;IMEX=1;'",
          filename);
@@ -89,7 +94,7 @@ namespace ExcelOut
                     table.ClassName = row[1].ToString();
                     table.FileName = row[2].ToString();
                     table.Description = row[3].ToString();
-                    
+
                     exTables.Add(table);
                 }
                 #endregion
@@ -135,7 +140,7 @@ namespace ExcelOut
                     {
                         if (ds.Tables[0].Rows[i][1] == null) continue;
                         var row = dataTable.NewRow();
-                        for (var col = 1; col < ds.Tables[0].Columns.Count && col<dataTable.Columns.Count+1 ; col++)
+                        for (var col = 1; col < ds.Tables[0].Columns.Count && col < dataTable.Columns.Count + 1; col++)
                         {
                             row[col - 1] = ds.Tables[0].Rows[i][col];
                         }
@@ -155,10 +160,11 @@ namespace ExcelOut
             #endregion
 
             var file = Libs.EX.ExcelTool.GetAllClass(outTables, namesp);
-            System.IO.File.WriteAllText(exportCs, file);
+            if (mode == "needcode")
+                System.IO.File.WriteAllText(exportCs, file);
             Console.WriteLine("导出成功！！");
         }
 
-        
+
     }
 }

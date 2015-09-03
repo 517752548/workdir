@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Assets.Scripts.Tools;
-
+/*
+ * author:xxp
+ */
 namespace Assets.Scripts.UI
 {
+    /// <summary>
+    /// 提供给表格操作时 对表格复制行的抽象定义
+    /// </summary>
     public class UITableItem
     {
         public Transform Root { private set; get; }
@@ -14,11 +19,16 @@ namespace Assets.Scripts.UI
         {
             Root = root;
         }
-        public T FindChild<T>(string name) where T:Component
+        public T FindChild<T>(string name) where T : Component
         {
             return this.Root.FindChild<T>(name);
         }
     }
+    
+    /// <summary>
+    /// 一个简单的表格管理，支持遍历和随意修改表格的行数
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class UITableManager<T> : IEnumerable<T> where T : UITableItem, new()
     {
         public UITableManager()
@@ -147,6 +157,10 @@ namespace Assets.Scripts.UI
             Init(table.transform);
         }
     }
+
+    /// <summary>
+    /// 支持逻辑分离中的模板的抽象
+    /// </summary>
     public abstract class TableItemTemplate
     {
         public virtual void Init(UITableItem item)
@@ -162,6 +176,11 @@ namespace Assets.Scripts.UI
 
         public abstract void InitTemplate();
     }
+    
+    /// <summary>
+    ///支持逻辑分离中的逻辑抽象
+    /// </summary>
+    /// <typeparam name="UITemplate"></typeparam>
     public abstract class TableItemModel<UITemplate> where UITemplate : TableItemTemplate, new()
     {
         public virtual void Init(UITemplate template, UITableItem item)
@@ -174,6 +193,12 @@ namespace Assets.Scripts.UI
         public UITableItem Item { private set; get; }
         public abstract void InitModel();
     }
+
+    /// <summary>
+    /// 自动生成代码中的表格管理
+    /// </summary>
+    /// <typeparam name="UITemplate"></typeparam>
+    /// <typeparam name="UIModel"></typeparam>
     public class AutoGenTableItem<UITemplate, UIModel> : UITableItem
         where UITemplate : TableItemTemplate, new()
         where UIModel : TableItemModel<UITemplate>, new()

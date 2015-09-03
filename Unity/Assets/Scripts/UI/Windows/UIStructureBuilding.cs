@@ -5,6 +5,7 @@ using System.Text;
 using Assets.Scripts.Tools;
 using ExcelConfig;
 using Assets.Scripts.DataManagers;
+using Proto;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -20,7 +21,16 @@ namespace Assets.Scripts.UI.Windows
                 {
                     if (!need) return;
                     if (Build == null) return;
-                    UIControllor.Singleton.ShowMessage(LanguageManager.ReplaceEc(Build.Config.Describe), 10);
+                    var unlock = string.Empty;
+                    switch ((BuildingUnlockType)Build.Config.UnlockType)
+                    { 
+                        case BuildingUnlockType.NeedBuild:
+                            var build = Tools.UtilityTool.ConvertToInt(Build.Config.UnlockParms1);
+                            var buildConfig = ExcelToJSONConfigManager.Current.GetConfigByID<BuildingConfig>(build);
+                            unlock = string.Format(LanguageManager.Singleton["UI_Struct_Need_Build"], buildConfig.Name, buildConfig.Level+1);
+                            break;
+                    }
+                    UIControllor.Singleton.ShowMessage(LanguageManager.ReplaceEc(Build.Config.Describe)+'\n'+unlock, 10);
                 });
 
                 this.Template.Bt_itemName.OnMouseClick((s, e) =>
@@ -34,19 +44,28 @@ namespace Assets.Scripts.UI.Windows
             {
                 Build = build;
                 if (Build == null) return false;
-                var nextConfig = DataManagers.BuildingManager.Singleton.GetConfig(Build.BuildID, build.Level + 1);
+                var nextConfig = build.NextLevelConfig;
                 Template.Bt_itemName.Text(Build.Config.Name + (Build.Level > 0 ? " " + Build.Level : ""));
                 var sb = new StringBuilder();
                 if (Build.Config.CostGold > 0)
                 {
-                    sb.AppendLine(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Gold"], Build.Config.CostGold));
+                    var Color = Build.Config.CostGold <= DataManagers.GamePlayerManager.Singleton.Gold ?
+                      LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
+                    sb.AppendLine(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Gold"], 
+                        string.Format(Color, Build.Config.CostGold)));
                 }
                 var costItems = UtilityTool.SplitKeyValues(Build.Config.CostItems);
                 foreach (var i in costItems)
                 {
                     var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
                     if (item == null) continue;
-                    sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Item"], item.Name, i.Value));
+
+                    var Color = PlayerItemManager.Singleton.GetItemCount(i.Key)>=i.Value ?
+                     LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
+
+                    sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Item"], 
+                        item.Name, 
+                        string.Format(Color,i.Value)));
                 }
                 var require = sb.ToString();
                 need = !string.IsNullOrEmpty(Build.Config.Describe);
@@ -95,15 +114,34 @@ namespace Assets.Scripts.UI.Windows
                 dic.Add(i.BuildingId);
             }
 
-            //var buildingConfigs = DataManagers.BuildingManager.Singleton.GetConstructBuildingsList();
-            ItemGridTableManager.Count = dic.Count;
-            int index = 0;
-            foreach (var b in dic)
+            var list = new List<PlayerBuild>();
+            foreach (var i in dic)
             {
-                var i = DataManagers.BuildingManager.Singleton[b];
+                var build = DataManagers.BuildingManager.Singleton[i];
+                if (build == null) continue;
+                switch ((BuildingUnlockType)build.Config.UnlockType)
+                {
+                    case BuildingUnlockType.NONE: break;
+                    case BuildingUnlockType.NeedBuild:
+                        var buildID = Tools.UtilityTool.ConvertToInt(build.Config.UnlockParms1);
+                        var buildConfig = ExcelToJSONConfigManager.Current.GetConfigByID<BuildingConfig>(buildID);
+                        if (!BuildingManager.Singleton.HaveBuild(buildConfig.BuildingId, buildConfig.Level))
+                            continue;
+                        break;
+                }
+                //if (build.NextLevelConfig == null) continue;
+                list.Add(build);
+            }
+
+            
+            //var buildingConfigs = DataManagers.BuildingManager.Singleton.GetConstructBuildingsList();
+            ItemGridTableManager.Count = list.Count;
+            int index = 0;
+            foreach (var i in list)
+            {
 
                 ItemGridTableManager[index].Model.SetBuild(i);
-                ItemGridTableManager[index].Model.SetDrag(dic.Count >= 8);
+                ItemGridTableManager[index].Model.SetDrag(list.Count >= 8);
                 ItemGridTableManager[index].Model.OnClick = OnClickItem;
                 index++;
             }

@@ -17,10 +17,16 @@ namespace Assets.Scripts.Combat.Battle.Actions
             //GOTo Explore
             //App.GameAppliaction.Singleton.GoToExplore(-1); 
             //ShowBattle result 
+            
+            var per  = Perception as States.BattlePerception;
             UI.UITipDrawer.Singleton.DrawNotify(string.Format("BattleEnd"));
             //throw new NotImplementedException();
             var battle = this.Obj as Elements.BattleEl;
             battle.State = Elements.BattleStateType.End;
+            var state = per.State as States.BattleState;
+            var winner = per.PlayerDead() ? Proto.ArmyCamp.Monster : Proto.ArmyCamp.Player;
+
+            state.End(new States.BattleResult { Winner = winner });
         }
     }
 }

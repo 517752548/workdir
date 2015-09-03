@@ -23,7 +23,6 @@ namespace Assets.Scripts.App
                 PlayerItemManager.Singleton,
                 GamePlayerManager.Singleton,
                 BuildingManager.Singleton,
-                PlayerSoldierManager.Singleton,
                 PlayerArmyManager.Singleton
             };
             foreach (var i in prisit)
@@ -31,12 +30,18 @@ namespace Assets.Scripts.App
             //初始化道具
             Debug.Log(LanguageManager.Singleton["APP_NAME"]);
             //进入游戏
-            JoinCastle();
 
+            var pos = GamePlayerManager.Singleton.CurrentPos;
+            if (pos != null)
+            {
+                GoToExplore(GamePlayerManager.Singleton.CurrentMap);
+            }
+            else
+            {
+                JoinCastle();
+            }
             Runner = runer;
             Runner.DoRun(Run());
-
-            
         }
 
         public void ResetPlayData()
@@ -48,7 +53,6 @@ namespace Assets.Scripts.App
 
             DoLogin();
         }
-
 
 
         public IRuner Runner { private set; get; }

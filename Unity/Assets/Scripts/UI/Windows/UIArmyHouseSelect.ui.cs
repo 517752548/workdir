@@ -21,7 +21,6 @@ namespace Assets.Scripts.UI.Windows
             public UILabel lb_attack;
             public UISprite s_job;
             public UIGrid StartGrid;
-            public UISprite s_tile;
 
             public override void InitTemplate()
             {
@@ -33,7 +32,6 @@ namespace Assets.Scripts.UI.Windows
                 lb_attack = FindChild<UILabel>("lb_attack");
                 s_job = FindChild<UISprite>("s_job");
                 StartGrid = FindChild<UIGrid>("StartGrid");
-                s_tile = FindChild<UISprite>("s_tile");
 
             }
         }

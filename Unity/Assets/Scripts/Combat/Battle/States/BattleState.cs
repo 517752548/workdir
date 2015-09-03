@@ -9,14 +9,17 @@ namespace Assets.Scripts.Combat.Battle.States
 {
     public class BattleState :GState
     {
-        public BattleState(int battleGroupID)
+        public BattleState(int battleGroupID, EndBattleCallBack callBack =null)
         {
+            CallBack = callBack;
             var perception = new BattlePerception(this);
             this.Perception = perception;
-
             var battle = new Elements.BattleEl(new Controllors.BattleControllor(this.Perception), battleGroupID);
             AddElement(battle);
         }
+
+        public EndBattleCallBack CallBack;
+
         public override void OnEnter()
         {
             //throw new NotImplementedException();
@@ -25,5 +28,20 @@ namespace Assets.Scripts.Combat.Battle.States
         {
             //throw new NotImplementedException();
         }
+
+        public void End(BattleResult result)
+        {
+            if (CallBack == null) return;
+            CallBack(result);
+        }
+
+
     }
+
+    public class BattleResult
+    {
+       public ArmyCamp Winner{set;get;}
+    }
+
+    public delegate void EndBattleCallBack(BattleResult result);
 }

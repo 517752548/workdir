@@ -43,6 +43,12 @@ enum BuildingType
    Explore = 7;//演武厅
 }
 
+enum BuildingUnlockType
+{
+    NONE = 1;//无需条件
+	NeedBuild =2;//需要前置
+}
+
 enum SkillDamageType
 {
    Cure =1 ;//治疗
@@ -116,4 +122,10 @@ enum EmployCondtionType
    CompleteMap=1;//通关副本   （1|2|3）
    GetAchievement =2;//获得成就（1|2|3）
    GetItem =3;//获得道具 （1：1|2：3|3：1）
+}
+
+enum EmployCostCurrent
+{
+   Gold = 1 ;//消耗金币
+   Coin =2 ;//消耗钻石
 }

@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.UI
 {
+    /// <summary>
+    /// Tip的资源描述
+    /// </summary>
     public class TipAttribute:Attribute
     {
         public TipAttribute(string name) 
@@ -16,6 +19,9 @@ namespace Assets.Scripts.UI
         public string Name { set; get; }
     }
 
+    /// <summary>
+    /// tip
+    /// </summary>
     public abstract class UITip
     {
         public int Key { set; get; }
@@ -24,11 +30,18 @@ namespace Assets.Scripts.UI
         public bool PreUpdate { set; get; }
         public virtual void OnDraw() { }
     }
+
+    /// <summary>
+    /// 渲染tip的render
+    /// </summary>
     public interface ITipRender
     {
         void RenderTip(GameObject tip);
     }
-
+    
+    /// <summary>
+    ///  tip管理器，支持一个自身命周期的tip管理
+    /// </summary>
     public class UITipManager :Tools.XSingleton<UITipManager>
     {
         private class TipText
@@ -175,12 +188,20 @@ namespace Assets.Scripts.UI
         private Queue<UITip> _delTemp = new Queue<UITip>();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class UITipDrawer : Tools.XSingleton<UITipDrawer>
     {
         public void DrawNotify(string notify)
         {
             UITipManager.Singleton.DrawNotify(notify);
             GameDebug.Log(notify);
+        }
+
+        public void DrawNotify(string format, params object[] pars)
+        {
+            DrawNotify(string.Format(format, pars));
         }
     }
 }

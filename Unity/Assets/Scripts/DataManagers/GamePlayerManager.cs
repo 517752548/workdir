@@ -10,6 +10,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.DataManagers
 {
+    /// <summary>
+    /// 储存玩家信心
+    /// </summary>
     public enum PlayDataKeys
     {
         PRODUCE_LEVEL = 1, //玩家的炼金等级
@@ -21,17 +24,28 @@ namespace Assets.Scripts.DataManagers
         EXPLORE_VALUE = 7,  //探索度
         PLAYER_GOLD =8 ,//金币
         PLAYER_COIN=9,//钻石
+        PLAYER_CURRENT_MAP = 10, //当前地图
+        PLAYER_CURREN_POS = 11,//当前地图所在坐标
+        PLAYER_ARMY_FOOD =12 ,//当前所带食物
     }
+
     public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
     {
+        private const int CELL = 10000;
+
         private static DateTime TimeZero = new DateTime(1970, 1, 1, 0, 0, 0);
         //user data
         public const string PLAYER_DATA_PATH = "_PALYER_DATA_.json";
         //资源生产技术开放
         public const string PLAYER_PRODUCE_OPEN = "_PLAYER_PRODUCE_OPEN.json";
+        //探索过的地图
+        public const string COMPLETE_MAPS = "_PLAYER_MAP_COMPLETED_LIST.json";
+
         private Dictionary<int, int> PlayerData { set; get; }
 
         private Dictionary<int, ProducePrisitData> ProduceOpenState { set; get; }
+
+        private HashSet<int> MapIDs = new HashSet<int>();
 
         public GamePlayerManager()
         {
@@ -81,24 +95,31 @@ namespace Assets.Scripts.DataManagers
                     ProduceOpenState.Add(i.ProduceID, i);
                 }
             }
+            MapIDs.Clear();
+            var mapList = Tools.PresistTool.LoadJson<List<int>>(COMPLETE_MAPS);
+            foreach (var i in mapList)
+            {
+                MapIDs.Add(i);
+            }
         }
 
         public void Presist()
         {
             var list = PlayerData.Select(t => new PlayerData { Key = t.Key, Value = t.Value }).ToList();
-            var json = JsonTool.Serialize(list);
-            GameAppliaction.Singleton.SaveFile(PLAYER_DATA_PATH, json, false);
+            Tools.PresistTool.SaveJson(list,PLAYER_DATA_PATH);
 
             var produceList = ProduceOpenState.Select(t => t.Value).ToList();
-            var produceJson = JsonTool.Serialize(produceList);
-            GameAppliaction.Singleton.SaveFile(PLAYER_PRODUCE_OPEN, produceJson, false);
-        }
+            Tools.PresistTool.SaveJson(produceList,PLAYER_PRODUCE_OPEN);
 
+            var mapList = MapIDs.Select(t => t).ToList();
+            Tools.PresistTool.SaveJson(mapList, COMPLETE_MAPS);
+        }
 
         public void Reset()
         {
             PlayerData.Clear();
             ProduceOpenState.Clear();
+            MapIDs.Clear();
             Presist();
         }
 
@@ -169,13 +190,12 @@ namespace Assets.Scripts.DataManagers
 
         internal float CallProduceGold()
         {
-            return 0;
-            //var items = CallFunByID(CurrentLevel.FunctionID);
-            //PlayerItemManager.Singleton.NotifyReward(items);
-            //AddProduceTimes(1);
-            //refresh all ui
-            //UI.UIManager.Singleton.OnUpdateUIData();
-            //return CurrentLevel == null ? 0f : CurrentLevel.CdTime;
+            var goldProduce =  App.GameAppliaction.Singleton.ConstValues.GoldProduceLvl1;// GetGoldProduce();
+            this.AddGold(goldProduce);
+            UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["ProduceGoldPreTick"], goldProduce));
+            AddProduceTimes(1);
+            UI.UIManager.Singleton.UpdateUIData();
+            return  (float)App.GameAppliaction.Singleton.ConstValues.GoldProduceLvl1CD/1000f;
         }
 
         private void AddProduceTimes(int time)
@@ -239,7 +259,6 @@ namespace Assets.Scripts.DataManagers
             }
         }
 
-
         internal ProducePrisitData GetProduceStateByID(int id)
         {
             ProducePrisitData data;
@@ -278,23 +297,171 @@ namespace Assets.Scripts.DataManagers
 
         #endregion
 
-        public List<Proto.Item> CallFunByID(int id)
+        #region 地图探索相关
+        /// <summary>
+        /// 是否通过地图/完成探索
+        /// </summary>
+        /// <param name="mapID"></param>
+        /// <returns></returns>
+        internal bool CompleteMap(List<int> mapID)
         {
-            return null;
-            //var result = new List<Proto.Item>();
-            //var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.FunctionConfig>(id);
-            //if (config != null)
-            //{
-            //    var produces = PlayerItemManager.SplitFormatItemData(config.Produce);
-            //    foreach (var i in produces)
-            //    {
-            //        Proto.Item item = PlayerItemManager.Singleton.AddItem(i[0], i[1]);
-            //        result.Add(item);
-            //    }
-            //}
-            //return result;
+            foreach (var i in mapID)
+            {
+                if (!MapIDs.Contains(i)) return false;
+            }
+            return true;
         }
 
+        /// <summary>
+        /// 为-1 就是初始化
+        /// </summary>
+        public int CurrentMap
+        {
+            get
+            {
+                var map = this[PlayDataKeys.PLAYER_CURRENT_MAP];
+                //初始化
+
+                if (map == -1)
+                {
+                    return App.GameAppliaction.Singleton.ConstValues.DefaultMapID;
+                }
+                return map;
+            }
+        }
+
+        /// <summary>
+        /// 进入地图
+        /// </summary>
+        /// <param name="map"></param>
+        public void JoinMap(int map)
+        {
+            this[PlayDataKeys.PLAYER_CURRENT_MAP] = map;
+            if (MapIDs.Contains(map)) return;
+            MapIDs.Add(map);
+        }
+
+        public void GoPos(Vector2? target)
+        {
+            //设置为0 
+            if (target == null)
+            {
+                this[PlayDataKeys.PLAYER_CURREN_POS] = -1;
+                return;
+            }
+            var x = (int)target.Value.x;
+            var y = (int)target.Value.y;
+            int index = x + (y * CELL);
+
+            this[PlayDataKeys.PLAYER_CURREN_POS] = index;
+        }
+
+        public Vector2? CurrentPos
+        {
+            get
+            {
+                var index = this[PlayDataKeys.PLAYER_CURREN_POS];
+                if (index == -1)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new Vector2(index % CELL, (index - (index % CELL)) / CELL);
+                }
+            }
+        }
+
+        public int PackageSize
+        {
+            get
+            {
+                var size = this[PlayDataKeys.PACKAGE_SIZE];
+                if (size == -1)
+                {
+                    this[PlayDataKeys.PACKAGE_SIZE] = App.GameAppliaction.Singleton.ConstValues.DefaultPackageSize;
+                    return App.GameAppliaction.Singleton.ConstValues.DefaultPackageSize;
+                }
+                return size;
+            }
+        }
+
+        //添加
+        public bool AddFood(int num)
+        {
+            if ((num + FoodCount) > PackageSize) return false;
+            var foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
+            if (PlayerItemManager.Singleton.GetItemCount(foodEntry) <= num) return false;
+            PlayerItemManager.Singleton.SubItem(foodEntry, num);
+            this[PlayDataKeys.PLAYER_ARMY_FOOD] += num;
+            return true;
+        }
+        //减少
+        public bool SubFood(int num)
+        {
+            if (num > FoodCount) return false;
+            var foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
+            PlayerItemManager.Singleton.AddItem(foodEntry,num);
+            this[PlayDataKeys.PLAYER_ARMY_FOOD] -= num;
+            return true;
+        }
+
+        /// <summary>
+        /// 消耗食物
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public bool CostFood(int num)
+        {
+            if (num > FoodCount)
+            {
+                this[PlayDataKeys.PLAYER_ARMY_FOOD] = 0;
+                return true;
+            }
+            this[PlayDataKeys.PLAYER_ARMY_FOOD] -= num;
+            return false;
+        }
+
+        //当前
+        public int FoodCount
+        {
+            get
+            {
+                var food = this[PlayDataKeys.PLAYER_ARMY_FOOD];
+                if (food < 0)
+                {
+                    this[PlayDataKeys.PLAYER_ARMY_FOOD] = 0;
+                }
+
+                return this[PlayDataKeys.PLAYER_ARMY_FOOD];
+            }
+        }
+
+        /// <summary>
+        /// 当前可出战人数
+        /// </summary>
+        public int TeamSize
+        {
+            get
+            {
+                var size = this[PlayDataKeys.TEAM_SIZE];
+                if (size < App.GameAppliaction.Singleton.ConstValues.DefaultTeamSize)
+                    this[PlayDataKeys.TEAM_SIZE] = App.GameAppliaction.Singleton.ConstValues.DefaultTeamSize;
+                return this[PlayDataKeys.TEAM_SIZE];
+            }
+        }
+
+        /// <summary>
+        /// 设置出战人数
+        /// </summary>
+        /// <param name="size"></param>
+        internal void SetTeamSize(int size)
+        {
+            this[PlayDataKeys.TEAM_SIZE] = size;
+        }
+        #endregion
+
+        #region 成就 
         /// <summary>
         /// 获得指定成就
         /// </summary>
@@ -304,17 +471,7 @@ namespace Assets.Scripts.DataManagers
         {
             return true;
         }
-
-        /// <summary>
-        /// 是否通过地图/完成探索
-        /// </summary>
-        /// <param name="mapID"></param>
-        /// <returns></returns>
-        internal bool CompleteMap(List<int> mapID)
-        {
-            return true;
-        }
-
+        #endregion
 
         #region 金币
         /// <summary>
@@ -396,21 +553,26 @@ namespace Assets.Scripts.DataManagers
         }
         #endregion
 
+
+
+       
     }
 
     public class ProducePrisitData
     {
         [JsonName("P")]
         public int ProduceID { set; get; }
-
         [JsonName("S")]
         public bool IsOpen { set; get; }
         [JsonName("N")]
         public int PeopleNum { set; get; }
     }
+
     public class PlayerData
     {
+        [JsonName("K")]
         public int Key { set; get; }
+        [JsonName("V")]
         public int Value { set; get; }
     }
 }

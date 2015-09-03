@@ -44,6 +44,9 @@ namespace Assets.Scripts.UI.Windows
         public UIGrid toStartGrid;
         public UISprite tojob;
         public UILabel to_des;
+        public UILabel lb_Message;
+        public UIButton bt_ok;
+        public UIButton bt_cancel;
 
 
         public UITableManager<AutoGenTableItem<formStartGridTableTemplate, formStartGridTableModel>> formStartGridTableManager = new UITableManager<AutoGenTableItem<formStartGridTableTemplate, formStartGridTableModel>>();
@@ -67,6 +70,9 @@ namespace Assets.Scripts.UI.Windows
             toStartGrid = FindChild<UIGrid>("toStartGrid");
             tojob = FindChild<UISprite>("tojob");
             to_des = FindChild<UILabel>("to_des");
+            lb_Message = FindChild<UILabel>("lb_Message");
+            bt_ok = FindChild<UIButton>("bt_ok");
+            bt_cancel = FindChild<UIButton>("bt_cancel");
 
             formStartGridTableManager.InitFromGrid(formStartGrid);
             toStartGridTableManager.InitFromGrid(toStartGrid);

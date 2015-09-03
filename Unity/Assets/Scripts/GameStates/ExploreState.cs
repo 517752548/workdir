@@ -1,4 +1,5 @@
-﻿using ExcelConfig;
+﻿using Assets.Scripts.Tools;
+using ExcelConfig;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,14 @@ namespace Assets.Scripts.GameStates
             UI.UIControllor.Singleton.ShowOrHideMessage(false);
             UI.UIControllor.Singleton.HideAllUI();
             Map = GameObject.FindObjectOfType<GameMap>();
-            TargetPos = new Vector2(Map.CurrentMap.Height / 2, Map.CurrentMap.Width / 2);
-            Map.LookAt(TargetPos, true); 
-            Map.SetZone(4,true);
+            var lastPos = DataManagers.GamePlayerManager.Singleton.CurrentPos;
+            if (lastPos == null) //中心点
+                TargetPos = new Vector2(Map.CurrentMap.Height / 2, Map.CurrentMap.Width / 2);
+            else
+                TargetPos = lastPos.Value;
+
+            Map.LookAt(TargetPos, true);
+            Map.SetZone(4, true);
 
             UI.Windows.UIExplore.Show();
         }
@@ -41,6 +47,7 @@ namespace Assets.Scripts.GameStates
         public override void OnTap(Vector2 pox)
         {
             base.OnTap(pox);
+            if (CheckWaiting()) return;
             Debug.Log("V:" + pox);
             var org = new Vector2(Screen.width / 2, Screen.height / 2);
             var distance = Vector2.Distance(org, pox);
@@ -48,17 +55,18 @@ namespace Assets.Scripts.GameStates
             Debug.Log("D:" + d);
             //TargetPos += Vector2.up;
 
-            if(Mathf.Abs(d.x)>0.8)
+            if (Mathf.Abs(d.x) > 0.8)
             {
-                if(d.x>0)
+                if (d.x > 0)
                 {
                     TargetPos += new Vector2(1, 0);
-                }else
+                }
+                else
                 {
                     TargetPos += new Vector2(-1, 0);
                 }
             }
-            else if(Mathf.Abs(d.y)>0.8f)
+            else if (Mathf.Abs(d.y) > 0.8f)
             {
                 if (d.y > 0)
                 {
@@ -74,19 +82,74 @@ namespace Assets.Scripts.GameStates
                 return;
             }
 
-            OnChange(TargetPos);
-            Map.LookAt(TargetPos);
-           // Debug.Log("Target:" + TargetPos);
+            delayChange = Time.time + Map.LookAt(TargetPos);
+            Debug.Log("Target:" + TargetPos);
+        }
+       
+        private float delayChange = -1f;
+        private bool CheckWaiting()
+        {
+            if (delayChange > 0)
+            {
+                if (delayChange < Time.time)
+                {
+                    delayChange = -1f;
+                    OnChange(TargetPos);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        public override void OnTick()
+        {
+            base.OnTick();
+            if (BState != null)
+            {
+                BState.OnTick();
+            }
+            CheckWaiting();
         }
 
         public void OnChange(Vector2 target)
         {
-            //
+            //处理回城
+            if (Map.IsOrgin(target))
+            {
+                DataManagers.GamePlayerManager.Singleton.GoPos(null);//回城的时候
+                App.GameAppliaction.Singleton.JoinCastle();
+            }
+            else
+            {
+
+                if (GRandomer.Probability10000(Config.RandomPro))
+                {
+                    //出发随机事件
+                    var battleID = GRandomer.RandomList(Tools.UtilityTool.SplitIDS(Config.RandomBattle));
+                    StartBattle(battleID, (winner) =>
+                    {
+                        if (winner)
+                            DataManagers.GamePlayerManager.Singleton.GoPos(target);
+                        
+                    });
+                    return;
+                }
+                //记录当前行走点
+
+            }
         }
 
-        public void StartBattle(int battlegroup)
+        public void StartBattle(int battlegroup, Action<bool> callBack)
         {
-
+            BState = new Combat.Battle.States.BattleState(battlegroup, (result) =>
+            {
+                BState = null;
+                callBack(result.Winner == Proto.ArmyCamp.Player);
+                //战斗失败处理
+            });
         }
 
         public Combat.Battle.States.BattleState BState { private set; get; }

@@ -131,28 +131,20 @@ namespace Assets.Scripts.DataManagers
 
         internal bool BuyItem(ExcelConfig.StoreDataConfig config)
         {
-            return false;
-            //var require = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(config.Sold_price);
-            //var buy = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(config.Item);
-            //if(require==null)
-            //{
-            //    Debug.LogError(string.Format("Item:{0} not exists!", config.RequireItem));
-            //    return false;
-            //}
-            //var haveCount = GetItemCount(require.ID);
-            //if(haveCount>= config.RequireNum)
-            //{
-            //    CalItem(config.RequireItem, config.RequireNum);
-            //    AddItem(config.Item, 1);
-            //    UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["REWARD_ITEM"], buy.Name, 1));
-            //    return true;
-            //}
-            //else
-            //{
-            //    UI.UITipDrawer.Singleton.DrawNotify(
-            //        string.Format(LanguageManager.Singleton["BUY_ITEM_NO_ENOUGH"],require.Name,config.RequireNum));
-            //    return false;
-            //}
+            var itemconfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(config.ID);
+            var price = config.Sold_price;
+            var gold = GamePlayerManager.Singleton.Gold;
+            if (gold < price)
+            {
+                UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["BUY_ITEM_NO_ENOUGH_GOLD"]);
+                return false;
+            }
+
+            GamePlayerManager.Singleton.SubGold(price);
+
+            PlayerItemManager.Singleton.AddItem(config.ID, 1);
+            UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["COST_GOLD_REWARD_ITEM"],price, itemconfig.Name, 1));
+            return true;
         }
 
         internal bool MakeItem(MakeConfig config)
@@ -201,8 +193,8 @@ namespace Assets.Scripts.DataManagers
                 {
                     SubItem(i.Config.ID, i.Num);
                 }
-
-                GamePlayerManager.Singleton.SubGold(config.RequireGold);
+                if (config.RequireGold > 0)
+                    GamePlayerManager.Singleton.SubGold(config.RequireGold);
                 foreach (var i in rewardItems)
                 {
                     AddItem(i.Config.ID, i.Num);

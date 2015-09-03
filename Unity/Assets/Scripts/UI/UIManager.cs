@@ -7,34 +7,74 @@ using Assets.Scripts.Tools;
 
 namespace Assets.Scripts.UI
 {
+    /// <summary>
+    /// UI当前状态
+    /// </summary>
     public enum WindowStates
     {
+        /// <summary>
+        /// 默认
+        /// </summary>
         Normal,
+        /// <summary>
+        /// 显示
+        /// </summary>
         Show,
+        /// <summary>
+        /// 播放打开效果
+        /// </summary>
         Showing,
+        /// <summary>
+        /// 已经关闭
+        /// </summary>
         Hide,
+         /// <summary>
+         ///  关闭中
+         /// </summary>
         Hiding
     }
 
+    /// <summary>
+    /// UI打开模式
+    /// </summary>
     public enum ShowModel
     {
+        /// <summary>
+        /// 一般方式
+        /// </summary>
         Normal,
+        /// <summary>
+        /// 互斥模式
+        /// </summary>
         Dialog,
+        /// <summary>
+        /// 子窗体
+        /// </summary>
         Children
     }
 
+    /// <summary>
+    /// UI的渲染
+    /// </summary>
     public interface IUIRender
     {
         void Render(GameObject uiRoot);
-        void ShowMessage(string message,float delayTime);
+        void ShowMessage(string message, float delayTime);
         void ShowOrHideMessage(bool show);
     }
 
+    /// <summary>
+    /// UI的显示和隐藏效果
+    /// </summary>
     public interface IEffect
     {
         bool ShowEffect();
         bool HideEffect();
     }
+
+    /// <summary>
+    /// 描述UI和资源关系
+    /// </summary>
     public class UIWindowAttribute : Attribute
     {
         public UIWindowAttribute(string resources)
@@ -44,7 +84,9 @@ namespace Assets.Scripts.UI
         public string Resource { set; get; }
     }
 
-    //[UIWindow("default")]
+    /// <summary>
+    /// UI中的window父类
+    /// </summary>
     public class UIWindow
     {
         private GameObject Root { set; get; }
@@ -108,12 +150,12 @@ namespace Assets.Scripts.UI
         }
         private void DoShow()
         {
-
+            State = WindowStates.Show;
             OnShow();
             AfterShow();
-            State = WindowStates.Show;
+            
         }
-        public void ShowAsChildWindow(UIWindow window,bool hideParent = true)
+        public void ShowAsChildWindow(UIWindow window, bool hideParent = true)
         {
             Model = ShowModel.Children;
             parent = window;
@@ -122,12 +164,12 @@ namespace Assets.Scripts.UI
                 parent.PositionShowOrHide(false);
             }
             ShowWindow();
-            
+
         }
         public void ShowAsDialogWindow(bool showMask)
         {
             Model = ShowModel.Dialog;
-            ShowWindow();           
+            ShowWindow();
         }
 
         private UIWindow parent;
@@ -161,11 +203,12 @@ namespace Assets.Scripts.UI
         }
         private void DoHide()
         {
+            State = WindowStates.Hide;
             OnHide();
             AfterHide();
             if (!CanDestoryWhenHide)
                 this.Root.SetActive(false);
-            State = WindowStates.Hide;
+            
         }
 
         public WindowStates State { private set; get; }
@@ -220,7 +263,9 @@ namespace Assets.Scripts.UI
         }
     }
 
-
+    /// <summary>
+    /// UI管理者
+    /// </summary>
     public class UIManager : Tools.XSingleton<UIManager>
     {
         public IUIRender Render { private set; get; }
@@ -252,13 +297,13 @@ namespace Assets.Scripts.UI
         private float lastTime = 0f;
         public void OnUpdate()
         {
-            foreach(var i in _windows)
+            foreach (var i in _windows)
             {
-                if(i.Value.IsVisable )
+                if (i.Value.IsVisable)
                     i.Value.OnUpdate();
             }
 
-            if(lastTime+1<Time.time)
+            if (lastTime + 1 < Time.time)
             {
                 lastTime = Time.time;
                 foreach (var i in _windows)
@@ -270,23 +315,24 @@ namespace Assets.Scripts.UI
         }
 
         private Queue<UIWindow> _deletes = new Queue<UIWindow>();
-        public void OnLateUpdate() {
+        public void OnLateUpdate()
+        {
             foreach (var i in _windows)
             {
                 if (i.Value.State == WindowStates.Show)
                 {
                     i.Value.OnLateUpdate();
                 }
-                if(i.Value.State== WindowStates.Hide)
+                if (i.Value.State == WindowStates.Hide)
                 {
-                    if (i.Value.CanDestoryWhenHide) 
+                    if (i.Value.CanDestoryWhenHide)
                     {
                         _deletes.Enqueue(i.Value);
                     }
                 }
             }
 
-            while(_deletes.Count>0)
+            while (_deletes.Count > 0)
             {
                 var ui = _deletes.Dequeue();
                 if (_windows.ContainsKey(ui.Key))
@@ -296,6 +342,10 @@ namespace Assets.Scripts.UI
                 }
             }
         }
+
+        /// <summary>
+        /// 通知UI刷新数据
+        /// </summary>
         public void UpdateUIData()
         {
             foreach (var i in _windows)
@@ -307,7 +357,7 @@ namespace Assets.Scripts.UI
 
         private void UpdateUIData(params string[] keys)
         {
-            foreach(var i in keys)
+            foreach (var i in keys)
             {
                 UIWindow w;
                 if (_windows.TryGetValue(i, out w))
@@ -316,16 +366,25 @@ namespace Assets.Scripts.UI
             }
         }
 
+        /// <summary>
+        /// 通知指定UI刷新数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void UpdateUIData<T>() where T : UIWindow
         {
             UpdateUIData(typeof(T).Name);
         }
 
-        public T CreateOrGetWindow<T>() where T: UIWindow, new ()
+        /// <summary>
+        /// 创建并且返回创建的UI
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T CreateOrGetWindow<T>() where T : UIWindow, new()
         {
             var key = typeof(T).Name;
             T window;
-            if(_windows.ContainsKey(key))
+            if (_windows.ContainsKey(key))
             {
                 window = _windows[key] as T;
             }
@@ -345,7 +404,7 @@ namespace Assets.Scripts.UI
                 var ui = new T();
                 var resourse = Tools.ResourcesManager.Singleton.LoadResources<GameObject>("UI/" + atts[0].Resource);
                 if (resourse == null) return default(T);
-                var uiRoot = GameObject.Instantiate(resourse) as GameObject;             
+                var uiRoot = GameObject.Instantiate(resourse) as GameObject;
                 this.Render.Render(uiRoot);
                 ui.Init(uiRoot);
                 ui.Key = typeof(T).Name;
@@ -357,29 +416,50 @@ namespace Assets.Scripts.UI
                 return default(T);
         }
 
-       
+        /// <summary>
+        /// 提供给UI遍历的委托
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public delegate bool FindContion<T>(T item) where T : UIWindow;
 
-        public void Each<T>(FindContion<T> cond) where T:UIWindow
+        public void Each<T>(FindContion<T> cond) where T : UIWindow
         {
-            foreach(var i in _windows)
+            foreach (var i in _windows)
             {
                 if (i.Value.State != WindowStates.Show) continue;
-                if (!(i.Value is T)) continue; 
+                if (!(i.Value is T)) continue;
                 if (cond(i.Value as T)) break;
             }
         }
 
-        public T GetUIWindow<T>() where T:UIWindow
+        /// <summary>
+        /// 获取UI
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetUIWindow<T>() where T : UIWindow
         {
             var type = typeof(T).Name;
             UIWindow t;
-            if(this._windows.TryGetValue(type,out t))
+            if (this._windows.TryGetValue(type, out t))
             {
                 return t as T;
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 通知所有ui刷新多语言
+        /// </summary>
+        public void LanguageChanaged()
+        {
+
+            foreach (var w in this._windows)
+                if (w.Value.State == WindowStates.Show)
+                    w.Value.OnLanguage();
         }
     }
 }

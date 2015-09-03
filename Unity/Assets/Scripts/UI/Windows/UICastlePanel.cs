@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.Tools;
+using UnityEngine;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -63,7 +64,8 @@ namespace Assets.Scripts.UI.Windows
 
             bt_train.OnMouseClick((s, e) =>
             {
-                UIArmyHouse.Show();
+                UIArmyHouseSelect.Show();
+                //UIArmyHouse.Show();
             });
 
             bt_Package.OnMouseClick((s, e) =>
@@ -72,8 +74,16 @@ namespace Assets.Scripts.UI.Windows
                 ui.ShowAsChildWindow(this, false);
             });
 
+            bt_gold.OnMouseClick((s, e) =>
+            {
+                var cd = DataManagers.GamePlayerManager.Singleton.CallProduceGold();
+                cdTime = Time.time + cd;
+                bt_gold.Disable(true);
+            });
+
 
         }
+        private float cdTime = 0f;
         public override void OnShow()
         {
             base.OnShow();
@@ -85,12 +95,23 @@ namespace Assets.Scripts.UI.Windows
             base.OnHide();
         }
 
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+            if (cdTime > 0) {
+                if (cdTime <= Time.time) {
+                    bt_gold.Disable(false);
+                    cdTime = -1f;
+                }
+            }
+        }
+
 
         public override void OnUpdateUIData()
         {
             base.OnUpdateUIData();
 
-            bt_gold.Text(string.Format(LanguageManager.Singleton["APP_NUM_FORMAT"],DataManagers.GamePlayerManager.Singleton.Gold));
+            bt_gold.Text(string.Format(LanguageManager.Singleton["APP_NUM_FORMAT"], DataManagers.GamePlayerManager.Singleton.Gold));
 
             bt_Coin.Text(string.Format(LanguageManager.Singleton["APP_NUM_FORMAT"], DataManagers.GamePlayerManager.Singleton.Coin));
         }

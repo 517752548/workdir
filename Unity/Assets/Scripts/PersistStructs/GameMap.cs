@@ -18,12 +18,16 @@ public class GameMap : MonoBehaviour {
         MapCamera.orthographicSize = Mathf.Lerp(MapCamera.orthographicSize, targetZone, Time.deltaTime * 4);
     }
 
-    public void LookAt(Vector2 grid, bool nodelay = false)
+    public float LookAt(Vector2 grid, bool nodelay = false)
     {
         var center = (Vector3)grid + new Vector3(0, 0, -20);
         TargetPos = center;
         if (nodelay)
+        {
             MapCamera.transform.position = TargetPos;
+            return 0;
+        }
+        return 0.3f;
     }
 
     public void SetTarget(float zone)
@@ -46,6 +50,12 @@ public class GameMap : MonoBehaviour {
         {
             MapCamera.orthographicSize = targetZone;
         }
+    }
+
+    public bool IsOrgin(Vector2 pos) 
+    {
+        var center = new Vector2(CurrentMap.Width / 2, CurrentMap.Height / 2);
+        return pos == center;
     }
 
 #if UNITY_EDITOR

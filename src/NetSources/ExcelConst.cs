@@ -143,6 +143,18 @@ namespace Proto
         Explore=7,
 
     }
+    public enum BuildingUnlockType
+    {
+        /// <summary>
+        /// ��������
+        /// </summary>
+        NONE=1,
+        /// <summary>
+        /// ��Ҫǰ��
+        /// </summary>
+        NeedBuild=2,
+
+    }
     public enum SkillDamageType
     {
         /// <summary>
@@ -333,6 +345,18 @@ namespace Proto
         /// ��õ��� ��1��1|2��3|3��1��
         /// </summary>
         GetItem=3,
+
+    }
+    public enum EmployCostCurrent
+    {
+        /// <summary>
+        /// ���Ľ��
+        /// </summary>
+        Gold=1,
+        /// <summary>
+        /// ������ʯ
+        /// </summary>
+        Coin=2,
 
     }
 }

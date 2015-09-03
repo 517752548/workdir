@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Assets.Scripts.UI
 {
+    /// <summary>
+    /// UI的控制，处理一些游戏中UI功能操作
+    /// </summary>
     public class UIControllor:Tools.XSingleton<UIControllor>
     {
         public void HideAllUI() 
