@@ -15,7 +15,7 @@ namespace Assets.Scripts.Combat.Simulate
         private static int _index = 0;
         public int Index { private set; get; }
 
-        public GControllor Controllor { private set; get; }
+        public GControllor Controllor {  set; get; }
 
         public bool Enable { set; get; }
 

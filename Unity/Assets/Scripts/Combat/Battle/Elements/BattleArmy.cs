@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Scripts.Combat.Battle.Elements
 {
@@ -27,6 +28,19 @@ namespace Assets.Scripts.Combat.Battle.Elements
         public ExcelConfig.MonsterConfig Config { set; get; }
         public float AttackCdTime { set; get; }
         public ExcelConfig.SkillConfig SkillConfig { set; get; }
+
+        public float LeftTime
+        {
+            get
+            {
+                return Mathf.Max(0, AttackCdTime + CdTimeToFloat() - Time.time);
+            }
+        }
+
+        public float CdTimeToFloat()
+        {
+            return (SkillConfig.SkillCd / 1000f);
+        }
     }
 
     public class BattleArmy : GObject

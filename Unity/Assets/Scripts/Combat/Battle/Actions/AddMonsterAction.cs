@@ -21,24 +21,21 @@ namespace Assets.Scripts.Combat.Battle.Actions
             var battleConfig = BattleID;
             var monster = new Army();
             var battle = this.Obj as Elements.BattleEl;
-
+            var state = this.Perception.State as States.BattleState;
             monster.Camp = ArmyCamp.Monster;
             monster.Soldiers.Add(new Soldier { ConfigID = battleConfig.NpcID, Num = 1 });
-
+            state.Render.ShowBattleName(battleConfig);
             var monsterArmy = new Elements.BattleArmy(controllor, monster);
             Perception.State.AddElement(monsterArmy);
             battle.BattleIndex++;
             if (!string.IsNullOrEmpty(battleConfig.Dialog))
             {
-                UI.UIControllor.Singleton.ShowBattleDialog(battleConfig);
-                //showDialog 
-                battle.State = Elements.BattleStateType.WaitDialog;
+                state.Render.ShowDialog(battleConfig);
+                //UI.UIControllor.Singleton.ShowBattleDialog(battleConfig);
             }
-            else {
-                battle.State = Elements.BattleStateType.Battling;
-            }
+            GameDebug.Log("ADD Monster:" + battleConfig.Name);
 
-            GameDebug.Log("ADD Monster:"+ battleConfig.Name);
+            state.Render.ShowMonster(monsterArmy);
         }
 
         public BattleConfig BattleID { get; set; }

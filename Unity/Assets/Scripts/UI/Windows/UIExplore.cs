@@ -9,7 +9,10 @@ namespace Assets.Scripts.UI.Windows
 {
     partial class UIExplore
     {
-
+        public UIExplore()
+        {
+            NoCollider = true;
+        }
         public override void InitModel()
         {
             base.InitModel();

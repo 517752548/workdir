@@ -9,14 +9,18 @@ namespace Assets.Scripts.Combat.Battle.States
 {
     public class BattleState :GState
     {
-        public BattleState(int battleGroupID, EndBattleCallBack callBack =null)
+        public BattleState(int battleGroupID, IBattleRender render, EndBattleCallBack callBack =null)
         {
+            Render = render;
             CallBack = callBack;
             var perception = new BattlePerception(this);
             this.Perception = perception;
             var battle = new Elements.BattleEl(new Controllors.BattleControllor(this.Perception), battleGroupID);
             AddElement(battle);
+            Render.SetPerception(perception);
         }
+
+        public IBattleRender Render { private set; get; }
 
         public EndBattleCallBack CallBack;
 

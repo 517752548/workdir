@@ -22,11 +22,10 @@ namespace Assets.Scripts.Combat.Battle.Actions
         public BattleSoldier Soldier { private set; get; }
         public override void DoAction()
         {
+            var per = this.Perception as States.BattlePerception;
+            var battle = per.GetBattle();
             var cur = Obj as BattleArmy;
             Soldier.AttackCdTime = Time.time;
-            var per = this.Perception as States.BattlePerception;
-
-            var battle = per.GetBattle();
             var skill = Soldier.SkillConfig.MainEffectType;
             //SkillDamageType
             //SkillEffectTaget

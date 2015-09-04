@@ -18,7 +18,7 @@ namespace Assets.Scripts.Combat.Battle.Controllors
             var per = Perception as States.BattlePerception;
             foreach(var i in army.Soldiers)
             {
-                 if(i.AttackCdTime+(i.SkillConfig.SkillCd/1000f) <Time.time)
+                if (i.LeftTime==0)
                  {
                      var enemy = per.GetEnemy(army);
                      if (enemy == null) continue;

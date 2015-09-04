@@ -62,10 +62,7 @@ namespace Assets.Scripts
         {
 
             int line = 1;
-            if (GUI.Button(new Rect(10, Screen.height - (line++ * 30), 120, 25), "GoToBattle"))
-            {
-                GameAppliaction.Singleton.BeginBattle();
-            }
+           
             if (GUI.Button(new Rect(10, Screen.height - (line++ * 30), 120, 25), "GoToExplore"))
             {
                 GameAppliaction.Singleton.GoToExplore(ExploreID);
@@ -93,6 +90,7 @@ namespace Assets.Scripts
 
         void OnGameTap(TapGesture tap)
         {
+            if (UICamera.hoveredObject) return;
             GameAppliaction.Singleton.OnTap(tap);
         }
 

@@ -131,6 +131,7 @@ namespace Assets.Scripts.UI
                     break;
             }
         }
+        public bool NoCollider = false;
         public virtual void OnPreScecondUpdate() { }
         public void ShowWindow()
         {
@@ -138,7 +139,8 @@ namespace Assets.Scripts.UI
             UIManager.Singleton.Render.ShowMessage(string.Empty, -1f);
             this.Depth = UIManager.Singleton.MaxDepth + 1;
             this.Root.SetActive(true);
-            NGUITools.AddWidgetCollider(this.Root);
+            if (!NoCollider)
+                NGUITools.AddWidgetCollider(this.Root);
             if (WindowEffect != null)
             {
                 State = WindowStates.Showing;

@@ -8,15 +8,16 @@ namespace Assets.Scripts.Combat.Simulate
 {
     public abstract class GState
     {
-        public GState() { _elements = new Dictionary<int, GObject>(); }
+        public GState() { _elements = new Dictionary<int, GObject>(); Enable = false; }
         public GPerception Perception { protected set; get; }
-
+        public bool Enable {  set; get; }
         public abstract void OnEnter();
 
         public abstract void OnExit();
 
         public virtual void OnTick()
         {
+            if (!Enable) return;
             while (_addTemp.Count > 0)
             {
 
@@ -82,6 +83,11 @@ namespace Assets.Scripts.Combat.Simulate
         public void RemoveElement<T>(T el) where T : GObject 
         {
             el.Enable = false;
+        }
+
+        public void Start()
+        {
+            Enable = true;
         }
     }
 }

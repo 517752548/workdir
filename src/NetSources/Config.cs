@@ -854,21 +854,27 @@ namespace ExcelConfig
         public String Dialog { set; get; }
         
         /// <summary>
-        /// NPCID
+        /// 战斗背景
         /// </summary>
         [ExcelConfigColIndex(3)]
+        public String BattleBackground { set; get; }
+        
+        /// <summary>
+        /// NPCID
+        /// </summary>
+        [ExcelConfigColIndex(4)]
         public int NpcID { set; get; }
         
         /// <summary>
         /// 附加奖励
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(5)]
         public int AddtionRewardType { set; get; }
         
         /// <summary>
         /// 参数1
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(6)]
         public String Pars1 { set; get; }
 
     }

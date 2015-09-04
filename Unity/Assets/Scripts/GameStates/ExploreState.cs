@@ -85,7 +85,7 @@ namespace Assets.Scripts.GameStates
             delayChange = Time.time + Map.LookAt(TargetPos);
             Debug.Log("Target:" + TargetPos);
         }
-       
+
         private float delayChange = -1f;
         private bool CheckWaiting()
         {
@@ -133,7 +133,7 @@ namespace Assets.Scripts.GameStates
                     {
                         if (winner)
                             DataManagers.GamePlayerManager.Singleton.GoPos(target);
-                        
+
                     });
                     return;
                 }
@@ -144,12 +144,21 @@ namespace Assets.Scripts.GameStates
 
         public void StartBattle(int battlegroup, Action<bool> callBack)
         {
-            BState = new Combat.Battle.States.BattleState(battlegroup, (result) =>
-            {
-                BState = null;
-                callBack(result.Winner == Proto.ArmyCamp.Player);
-                //战斗失败处理
-            });
+            //showUI 
+            var battleUI = UI.Windows.UIBattle.Show();
+
+            BState = new Combat.Battle.States.BattleState(
+             battlegroup,
+             battleUI,
+             (result) =>
+             {
+                 BState = null;
+                 callBack(result.Winner == Proto.ArmyCamp.Player);
+                 //战斗失败处理
+                 //Hide 
+                 battleUI.HideWindow();
+             });
+            BState.Start();
         }
 
         public Combat.Battle.States.BattleState BState { private set; get; }

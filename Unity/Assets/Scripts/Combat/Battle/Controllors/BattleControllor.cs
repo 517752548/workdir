@@ -43,12 +43,6 @@ namespace Assets.Scripts.Combat.Battle.Controllors
                         }
                     }
                     return GAction.Empty;
-                case Elements.BattleStateType.WaitDialog: //等待UI信号
-                    if (UI.UIControllor.Singleton.IsShowBattleDialog)
-                        return GAction.Empty;
-                    //是否
-                    battle.State = Elements.BattleStateType.Battling;
-                    return GAction.Empty;
                 default:
                     return GAction.Empty;
             }

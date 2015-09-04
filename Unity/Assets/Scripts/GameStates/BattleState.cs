@@ -23,7 +23,7 @@ namespace Assets.Scripts.GameStates
             UI.UIControllor.Singleton.ShowOrHideMessage(false);
             UI.UIControllor.Singleton.ShowMessage(string.Empty,-1f);
             UI.UIControllor.Singleton.HideAllUI();
-            State = new Combat.Battle.States.BattleState(1);
+            State = new Combat.Battle.States.BattleState(1,null);
             State.OnEnter();
 
         }

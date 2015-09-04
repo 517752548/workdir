@@ -31,12 +31,5 @@ namespace Assets.Scripts.UI
             uirender.ShowOrHideMessage( show);
         }
 
-        internal void ShowBattleDialog(ExcelConfig.BattleConfig battleConfig)
-        {
-            IsShowBattleDialog = false;
-            UITipDrawer.Singleton.DrawNotify(battleConfig.Dialog);
-        }
-
-        public bool IsShowBattleDialog = false;
     }
 }

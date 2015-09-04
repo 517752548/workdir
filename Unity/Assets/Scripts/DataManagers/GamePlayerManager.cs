@@ -27,6 +27,7 @@ namespace Assets.Scripts.DataManagers
         PLAYER_CURRENT_MAP = 10, //当前地图
         PLAYER_CURREN_POS = 11,//当前地图所在坐标
         PLAYER_ARMY_FOOD =12 ,//当前所带食物
+        PLAYER_BATTLE_MODE =13 //当前战斗模式
     }
 
     public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
@@ -106,10 +107,10 @@ namespace Assets.Scripts.DataManagers
         public void Presist()
         {
             var list = PlayerData.Select(t => new PlayerData { Key = t.Key, Value = t.Value }).ToList();
-            Tools.PresistTool.SaveJson(list,PLAYER_DATA_PATH);
+            Tools.PresistTool.SaveJson(list, PLAYER_DATA_PATH);
 
             var produceList = ProduceOpenState.Select(t => t.Value).ToList();
-            Tools.PresistTool.SaveJson(produceList,PLAYER_PRODUCE_OPEN);
+            Tools.PresistTool.SaveJson(produceList, PLAYER_PRODUCE_OPEN);
 
             var mapList = MapIDs.Select(t => t).ToList();
             Tools.PresistTool.SaveJson(mapList, COMPLETE_MAPS);
@@ -190,12 +191,12 @@ namespace Assets.Scripts.DataManagers
 
         internal float CallProduceGold()
         {
-            var goldProduce =  App.GameAppliaction.Singleton.ConstValues.GoldProduceLvl1;// GetGoldProduce();
+            var goldProduce = App.GameAppliaction.Singleton.ConstValues.GoldProduceLvl1;// GetGoldProduce();
             this.AddGold(goldProduce);
             UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["ProduceGoldPreTick"], goldProduce));
             AddProduceTimes(1);
             UI.UIManager.Singleton.UpdateUIData();
-            return  (float)App.GameAppliaction.Singleton.ConstValues.GoldProduceLvl1CD/1000f;
+            return (float)App.GameAppliaction.Singleton.ConstValues.GoldProduceLvl1CD / 1000f;
         }
 
         private void AddProduceTimes(int time)
@@ -251,7 +252,7 @@ namespace Assets.Scripts.DataManagers
         {
             get
             {
-                var timeTickForProduce =TimeSpan.FromMilliseconds(GameAppliaction.Singleton.ConstValues.ProduceRewardTick);
+                var timeTickForProduce = TimeSpan.FromMilliseconds(GameAppliaction.Singleton.ConstValues.ProduceRewardTick);
                 var time = DateTime.UtcNow;
                 var lastTime = TimeZero + TimeSpan.FromSeconds(this[PlayDataKeys.PRODUCE_TIME]);
                 if (lastTime > time) return TimeSpan.FromSeconds(0);
@@ -401,7 +402,7 @@ namespace Assets.Scripts.DataManagers
         {
             if (num > FoodCount) return false;
             var foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
-            PlayerItemManager.Singleton.AddItem(foodEntry,num);
+            PlayerItemManager.Singleton.AddItem(foodEntry, num);
             this[PlayDataKeys.PLAYER_ARMY_FOOD] -= num;
             return true;
         }
@@ -461,7 +462,7 @@ namespace Assets.Scripts.DataManagers
         }
         #endregion
 
-        #region 成就 
+        #region 成就
         /// <summary>
         /// 获得指定成就
         /// </summary>
@@ -554,8 +555,25 @@ namespace Assets.Scripts.DataManagers
         #endregion
 
 
+        public BattleControlMode ControlMode
+        {
+            get
+            {
+                if (this[PlayDataKeys.PLAYER_BATTLE_MODE] == (int)BattleControlMode.AUTO) return BattleControlMode.AUTO;
+                return BattleControlMode.AUTO;
+            }
+        }
 
-       
+        public void SetControlMode(BattleControlMode mode)
+        {
+            this[PlayDataKeys.PLAYER_BATTLE_MODE] = (int)mode;
+        }
+    }
+
+    public enum BattleControlMode
+    {
+        AUTO = 0,
+        PLAYER = 1
     }
 
     public class ProducePrisitData

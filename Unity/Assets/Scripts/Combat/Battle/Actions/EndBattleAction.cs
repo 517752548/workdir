@@ -19,7 +19,7 @@ namespace Assets.Scripts.Combat.Battle.Actions
             //ShowBattle result 
             
             var per  = Perception as States.BattlePerception;
-            UI.UITipDrawer.Singleton.DrawNotify(string.Format("BattleEnd"));
+            //UI.UITipDrawer.Singleton.DrawNotify(string.Format("BattleEnd"));
             //throw new NotImplementedException();
             var battle = this.Obj as Elements.BattleEl;
             battle.State = Elements.BattleStateType.End;

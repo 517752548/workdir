@@ -93,7 +93,6 @@ namespace Assets.Scripts.Combat.Battle.Elements
     {
          NOStart, //开始
          Battling, //开始了
-         WaitDialog,//等待对话
          End//战斗结束
     }
 

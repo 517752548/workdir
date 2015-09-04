@@ -7,23 +7,25 @@ using System.Text;
 
 namespace Assets.Scripts.Combat.Battle.States
 {
-    public class BattlePerception :GPerception
+    public class BattlePerception : GPerception
     {
-        public BattlePerception(GState state) : base(state)
+        public BattlePerception(GState state)
+            : base(state)
         { }
 
         public bool HaveDeadArmy()
         {
             bool have = false;
             int count = 0;
-            State.Each<BattleArmy>((el) => { 
-               if(el.IsDead)
-               {
-                   have = true;
-                   return true;
-               }
-               count++;
-               return false;
+            State.Each<BattleArmy>((el) =>
+            {
+                if (el.IsDead)
+                {
+                    have = true;
+                    return true;
+                }
+                count++;
+                return false;
             });
             if (count == 1) return true;
             return have;
@@ -43,13 +45,13 @@ namespace Assets.Scripts.Combat.Battle.States
             });
             return have;
         }
-        
 
         public BattleArmy GetEnemy(BattleArmy el)
         {
-            BattleArmy enemy =null;
-            State.Each<BattleArmy>((item) => {
-                if(item.Camp != el.Camp)
+            BattleArmy enemy = null;
+            State.Each<BattleArmy>((item) =>
+            {
+                if (item.Camp != el.Camp)
                 {
                     enemy = item;
                     return true;
@@ -61,9 +63,33 @@ namespace Assets.Scripts.Combat.Battle.States
 
         internal BattleEl GetBattle()
         {
-            BattleEl el =null;
+            BattleEl el = null;
             State.Each<BattleEl>((item) => { el = item; return true; });
             return el;
+        }
+
+        public void ChangePlayerControllor(bool auto)
+        {
+            BattleArmy player = null;
+            State.Each<BattleArmy>((t) =>
+            {
+                if (t.Army.Camp == Proto.ArmyCamp.Player)
+                {
+                    player = t;
+                    return true;
+                }
+                return false;
+            });
+            GControllor controllor;
+            if (auto) controllor = new Controllors.ArmyControllor(this);
+            else controllor = new Controllors.ArmyPlayerControllor(this);
+
+            player.Controllor = controllor;
+        }
+
+        public void AddHP()
+        { 
+           //
         }
     }
 }
