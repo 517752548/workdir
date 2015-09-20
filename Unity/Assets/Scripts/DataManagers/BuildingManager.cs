@@ -56,18 +56,18 @@ namespace Assets.Scripts.DataManagers
         {
             GameDebug.Log("BuildID:" + buildId + " Level:" + level);
             var build = GetConfig(buildId, level);
-            var old = GetConfig(buildId, level - 1);
-            if (build == null || old == null)
+            //var old = GetConfig(buildId, level - 1);
+            if (build == null )
             {
                 return false; //MaxLevel
             }
 
             //UI_Struct_Need_Build
 
-            switch ((BuildingUnlockType)old.UnlockType)
+            switch ((BuildingUnlockType)build.UnlockType)
             {
                 case BuildingUnlockType.NeedBuild:
-                    var needBuildID = Tools.UtilityTool.ConvertToInt(old.UnlockParms1);
+                    var needBuildID = Tools.UtilityTool.ConvertToInt(build.UnlockParms1);
                     var needbuildConfig = ExcelToJSONConfigManager.Current.GetConfigByID<BuildingConfig>(needBuildID);
                     if (!HaveBuild(needbuildConfig.BuildingId, needbuildConfig.Level))
                     {
@@ -78,12 +78,12 @@ namespace Assets.Scripts.DataManagers
                     break;
             }
 
-            var needs = Tools.UtilityTool.SplitKeyValues(old.CostItems);
+            var needs = Tools.UtilityTool.SplitKeyValues(build.CostItems,build.CostItemCounts);
             bool have = true;
             var sb = new StringBuilder();
             sb.Append(LanguageManager.Singleton["NOT_ENOUGHT"]);
             var gold = GamePlayerManager.Singleton.Gold;
-            if (gold < old.CostGold)
+            if (gold < build.CostGold)
             {
                 UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["Build_NOT_ENOUGHT_GOLD"]);
                 return false;
@@ -112,10 +112,10 @@ namespace Assets.Scripts.DataManagers
                     PlayerItemManager.Singleton.SubItem(i.Key, i.Value);
                 }
 
-                if (old.CostGold > 0)
-                GamePlayerManager.Singleton.SubGold(old.CostGold);
+                if (build.CostGold > 0)
+                    GamePlayerManager.Singleton.SubGold(build.CostGold);
                 AddOrlevelUPBuild(build.BuildingId, level);
-                BuildEvent(old);
+                BuildEvent(build);
             }
             else
             {
@@ -166,11 +166,11 @@ namespace Assets.Scripts.DataManagers
                     break;
                 case "add_companion": //设置出战人数
                     GamePlayerManager.Singleton.SetTeamSize(Tools.UtilityTool.ConvertToInt(levelConfig.Pars1));
-                    UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["Build_event_add_companion"], GamePlayerManager.Singleton[PlayDataKeys.TEAM_SIZE]));
+                    GameDebug.LogDebug(string.Format(LanguageManager.Singleton["Build_event_add_companion"], GamePlayerManager.Singleton[PlayDataKeys.TEAM_SIZE]));
                     break;
                 case "add_population":
                     GamePlayerManager.Singleton[PlayDataKeys.PEOPLE_COUNT] = Tools.UtilityTool.ConvertToInt(levelConfig.Pars1);
-                    UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["Build_event_add_people"], GamePlayerManager.Singleton[PlayDataKeys.PEOPLE_COUNT]));
+                    GameDebug.LogDebug(string.Format(LanguageManager.Singleton["Build_event_add_people"], GamePlayerManager.Singleton[PlayDataKeys.PEOPLE_COUNT]));
                     break;
             }
 
@@ -231,6 +231,22 @@ namespace Assets.Scripts.DataManagers
         public int Level { set { _level = value; _Config = null; _NextLevelConfig = null; } get { return _level; } }
         private int _level;
         private BuildingConfig _Config { set; get; }
+
+        [JsonIgnore]
+        public string Name { get {
+            var next = NextLevelConfig;
+            if (_level == 0) return NextLevelConfig.Name;
+            return Config.Name;
+        } }
+        [JsonIgnore]
+        public string Describe
+        {
+            get
+            {
+                if (_level == 0) return NextLevelConfig.Describe;
+                return Config.Describe;
+            }
+        }
         [JsonIgnore]
         public BuildingConfig Config
         {
@@ -260,5 +276,7 @@ namespace Assets.Scripts.DataManagers
                 return _NextLevelConfig;
             }
         }
+
+        
     }
 }

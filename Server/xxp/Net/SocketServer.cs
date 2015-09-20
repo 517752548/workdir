@@ -162,10 +162,13 @@ namespace XNet.Libs.Net
                         HandleException(nClient, new Exception("Max Receive Size limit"));
                     }
                 }
-                nClient.Socket.BeginReceive(nClient.Buffer, 0,
-                        nClient.Buffer.Length,
-                        SocketFlags.None,
-                        new AsyncCallback(OnDataReceived), nClient);
+                if (nClient.Socket != null)
+                {
+                    nClient.Socket.BeginReceive(nClient.Buffer, 0,
+                            nClient.Buffer.Length,
+                            SocketFlags.None,
+                            new AsyncCallback(OnDataReceived), nClient);
+                }
             }
             catch (Exception ex)
             {

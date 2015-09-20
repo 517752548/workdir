@@ -19,18 +19,19 @@ namespace Assets.Scripts.UI.Windows
                 //todo
                 this.Template.bt_info.OnMouseClick((s, e) =>
                 {
-                    if (!need) return;
                     if (Build == null) return;
+                    var next = Build.NextLevelConfig;
+                    if (next == null) return;
                     var unlock = string.Empty;
-                    switch ((BuildingUnlockType)Build.Config.UnlockType)
+                    switch ((BuildingUnlockType)next.UnlockType)
                     { 
                         case BuildingUnlockType.NeedBuild:
-                            var build = Tools.UtilityTool.ConvertToInt(Build.Config.UnlockParms1);
+                            var build = Tools.UtilityTool.ConvertToInt(next.UnlockParms1);
                             var buildConfig = ExcelToJSONConfigManager.Current.GetConfigByID<BuildingConfig>(build);
-                            unlock = string.Format(LanguageManager.Singleton["UI_Struct_Need_Build"], buildConfig.Name, buildConfig.Level+1);
+                            unlock = string.Format(LanguageManager.Singleton["UI_Struct_Need_Build"], buildConfig.Name, buildConfig.Level);
                             break;
                     }
-                    UIControllor.Singleton.ShowMessage(LanguageManager.ReplaceEc(Build.Config.Describe)+'\n'+unlock, 10);
+                    UIControllor.Singleton.ShowMessage(LanguageManager.ReplaceEc(next.Describe) + '\n' + unlock, 10);
                 });
 
                 this.Template.Bt_itemName.OnMouseClick((s, e) =>
@@ -44,34 +45,42 @@ namespace Assets.Scripts.UI.Windows
             {
                 Build = build;
                 if (Build == null) return false;
+                
                 var nextConfig = build.NextLevelConfig;
-                Template.Bt_itemName.Text(Build.Config.Name + (Build.Level > 0 ? " " + Build.Level : ""));
-                var sb = new StringBuilder();
-                if (Build.Config.CostGold > 0)
+                if (nextConfig != null)
                 {
-                    var Color = Build.Config.CostGold <= DataManagers.GamePlayerManager.Singleton.Gold ?
-                      LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
-                    sb.AppendLine(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Gold"], 
-                        string.Format(Color, Build.Config.CostGold)));
+                    Template.Bt_itemName.Text(Build.Name + (Build.Level > 0 ? " " + Build.Level : ""));
+                    var sb = new StringBuilder();
+                    if (nextConfig.CostGold > 0)
+                    {
+                        var Color = nextConfig.CostGold <= DataManagers.GamePlayerManager.Singleton.Gold ?
+                          LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
+                        sb.AppendLine(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Gold"],
+                            string.Format(Color, nextConfig.CostGold)));
+                    }
+                    var costItems = UtilityTool.SplitKeyValues(nextConfig.CostItems, nextConfig.CostItemCounts);
+                    foreach (var i in costItems)
+                    {
+                        var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
+                        if (item == null) continue;
+
+                        var Color = PlayerItemManager.Singleton.GetItemCount(i.Key) >= i.Value ?
+                         LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
+
+                        sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Item"],
+                            item.Name,
+                            string.Format(Color, i.Value)));
+                    }
+                    var require = sb.ToString();
+                    Template.lb_cost.text =
+                       (nextConfig == null ? LanguageManager.Singleton["UIStructureBuilding_Cost_MaxLevel"] : (string.IsNullOrEmpty(require) ?
+                        LanguageManager.Singleton["UIStructureBuilding_Cost_None"] : require));
                 }
-                var costItems = UtilityTool.SplitKeyValues(Build.Config.CostItems);
-                foreach (var i in costItems)
+                else 
                 {
-                    var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
-                    if (item == null) continue;
-
-                    var Color = PlayerItemManager.Singleton.GetItemCount(i.Key)>=i.Value ?
-                     LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
-
-                    sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Item"], 
-                        item.Name, 
-                        string.Format(Color,i.Value)));
+                    Template.lb_cost.text = LanguageManager.Singleton["UIStructureBuilding_Cost_MaxLevel"];
+                    Template.Bt_itemName.Text(Build.Name + (Build.Level > 0 ? " " + Build.Level : ""));
                 }
-                var require = sb.ToString();
-                need = !string.IsNullOrEmpty(Build.Config.Describe);
-                Template.lb_cost.text =
-                   (nextConfig == null ? LanguageManager.Singleton["UIStructureBuilding_Cost_MaxLevel"] : (string.IsNullOrEmpty(require) ?
-                    LanguageManager.Singleton["UIStructureBuilding_Cost_None"] : require));
                 return true;
             }
 
@@ -81,7 +90,6 @@ namespace Assets.Scripts.UI.Windows
                 var d = this.Item.Root.GetComponent<UIDragScrollView>();
                 d.enabled = canDrag;
             }
-            private bool need = false;
 
         }
 
@@ -119,15 +127,18 @@ namespace Assets.Scripts.UI.Windows
             {
                 var build = DataManagers.BuildingManager.Singleton[i];
                 if (build == null) continue;
-                switch ((BuildingUnlockType)build.Config.UnlockType)
+                if (build.NextLevelConfig != null)
                 {
-                    case BuildingUnlockType.NONE: break;
-                    case BuildingUnlockType.NeedBuild:
-                        var buildID = Tools.UtilityTool.ConvertToInt(build.Config.UnlockParms1);
-                        var buildConfig = ExcelToJSONConfigManager.Current.GetConfigByID<BuildingConfig>(buildID);
-                        if (!BuildingManager.Singleton.HaveBuild(buildConfig.BuildingId, buildConfig.Level))
-                            continue;
-                        break;
+                    switch ((BuildingUnlockType)build.NextLevelConfig.UnlockType)
+                    {
+                        case BuildingUnlockType.NONE: break;
+                        case BuildingUnlockType.NeedBuild:
+                            var buildID = Tools.UtilityTool.ConvertToInt(build.NextLevelConfig.UnlockParms1);
+                            var buildConfig = ExcelToJSONConfigManager.Current.GetConfigByID<BuildingConfig>(buildID);
+                            if (!BuildingManager.Singleton.HaveBuild(buildConfig.BuildingId, buildConfig.Level))
+                                continue;
+                            break;
+                    }
                 }
                 //if (build.NextLevelConfig == null) continue;
                 list.Add(build);

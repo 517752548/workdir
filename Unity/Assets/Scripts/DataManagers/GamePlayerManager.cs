@@ -98,6 +98,7 @@ namespace Assets.Scripts.DataManagers
             }
             MapIDs.Clear();
             var mapList = Tools.PresistTool.LoadJson<List<int>>(COMPLETE_MAPS);
+            if (mapList == null) return;
             foreach (var i in mapList)
             {
                 MapIDs.Add(i);
@@ -182,9 +183,7 @@ namespace Assets.Scripts.DataManagers
             {
                 name = config.Name;
             }
-            UITipDrawer.Singleton.DrawNotify(
-                string.Format(LanguageManager.Singleton["Build_event_open_produce"]
-                , name));
+            GameDebug.LogDebug(string.Format(LanguageManager.Singleton["Build_event_open_produce"], name));
             //保存
             Presist();
         }
@@ -217,8 +216,8 @@ namespace Assets.Scripts.DataManagers
                 if (!i.Value.IsOpen || i.Value.PeopleNum <= 0) continue;
                 var produce = ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ResourcesProduceConfig>(i.Value.ProduceID);
                 if (produce == null) continue;
-                var requires = Tools.UtilityTool.SplitKeyValues(produce.CostItems);
-                var rewards = Tools.UtilityTool.SplitKeyValues(produce.RewardItems);
+                var requires = Tools.UtilityTool.SplitKeyValues(produce.CostItems,produce.CostItemsNumber);
+                var rewards = Tools.UtilityTool.SplitKeyValues(produce.RewardItems,produce.RewardItemsNumber);
                 var engough = true;
                 foreach (var r in requires)
                 {

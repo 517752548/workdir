@@ -31,7 +31,7 @@ namespace Assets.Scripts.UI.Windows
                     {
                         sb.Append(string.Format(LanguageManager.Singleton["UIMake_Cost_gold"], _MakeConfig.RequireGold));
                     }
-                    var costItems = UtilityTool.SplitKeyValues(_MakeConfig.RequireItems);
+                    var costItems = UtilityTool.SplitKeyValues(_MakeConfig.RequireItems,_MakeConfig.RequireItemsNumber);
                     foreach (var i in costItems)
                     {
                         var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
@@ -40,7 +40,7 @@ namespace Assets.Scripts.UI.Windows
                     }
 
                     sb.Append(LanguageManager.Singleton["UIMake_Reward_Title"]);
-                    var rewardItem = UtilityTool.SplitKeyValues(_MakeConfig.RewardItems);
+                    var rewardItem = UtilityTool.SplitKeyValues(_MakeConfig.RewardItems,_MakeConfig.RewardItemsNumber);
                     foreach (var i in rewardItem)
                     {
                         var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
@@ -69,7 +69,7 @@ namespace Assets.Scripts.UI.Windows
                     _MakeConfig = value;
                     Template.Bt_itemName.Text(_MakeConfig.Name);
                     var sb = new StringBuilder();
-                    var items = UtilityTool.SplitKeyValues(_MakeConfig.RequireItems);
+                    var items = UtilityTool.SplitKeyValues(_MakeConfig.RequireItems,_MakeConfig.RequireItemsNumber);
                     if(_MakeConfig.RequireGold>0)
                     {
                         sb.Append(string.Format(LanguageManager.Singleton["UIMake_Cost_gold"], _MakeConfig.RequireGold));
@@ -99,25 +99,11 @@ namespace Assets.Scripts.UI.Windows
                     OnClick(this);
                 });
 
-                Template.bt_info.OnMouseClick((s, e) => {
-                    if (this.Category == null) return;
-
-
-
-                    UIControllor.Singleton.ShowMessage(this.Category.Description,10f);
-                });
+                
             }
 
             public Action<TypeItemGridTableModel> OnClick;
-            private ExcelConfig.MakeCategoryConfig _Category;
-            public ExcelConfig.MakeCategoryConfig Category { get {
-                return _Category;
-            }
-                set {
-                    _Category = value;
-                    Template.Bt_itemName.Text( value.Name);
-                }
-            }
+          
         }
         #endregion
         
@@ -133,53 +119,51 @@ namespace Assets.Scripts.UI.Windows
             base.InitModel();
             //Write Code here
             bt_close.OnMouseClick((s, e) => {
-                 if(CurrentType == ShowTypeName.Info)
-                 {
-                     ShowTypes();
-                 }
-                 else { HideWindow(); }
+                 //if(CurrentType == ShowTypeName.Info)
+                 //{
+                 //    ShowTypes();
+                 //}
+                 //else { HideWindow(); }
+                HideWindow();
             });
         }
         public override void OnShow()
         {
             base.OnShow();
-            ShowTypes();
+            ShowType();
         }
 
         private void ShowTypes()
         {
             CurrentType = ShowTypeName.Types;
-            PackageTypeView.ActiveSelfObject(true);
-            PackageView.ActiveSelfObject(false);
+            //PackageTypeView.ActiveSelfObject(true);
+            //PackageView.ActiveSelfObject(false);
 
-            var configs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.MakeCategoryConfig>();
-            TypeItemGridTableManager.Count = configs.Length;
-            int index = 0;
-            foreach (var i in TypeItemGridTableManager)
-            {
-                i.Model.OnClick = OnClick;
-                i.Model.Category = configs[index];
-                index++;
-            }
+            //var configs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.MakeCategoryConfig>();
+            //TypeItemGridTableManager.Count = configs.Length;
+            //int index = 0;
+            //foreach (var i in TypeItemGridTableManager)
+            //{
+            //    i.Model.OnClick = OnClick;
+            //    i.Model.Category = configs[index];
+            //    index++;
+            //}
         }
         private void OnClick(TypeItemGridTableModel obj)
         {
-            ShowType(obj.Category.ID);
+            //ShowType(obj.Category.ID);
         }
         public override void OnHide()
         {
             base.OnHide();
         }
-        public void ShowType(int type)
+        public void ShowType()
         {
             CurrentType = ShowTypeName.Info;
             PackageTypeView.ActiveSelfObject(false);
             PackageView.ActiveSelfObject(true);
             var makeConfigs = ExcelConfig.ExcelToJSONConfigManager
-                .Current.GetConfigs<ExcelConfig.MakeConfig>((t) => {
-                if (t.Category == type) return true;
-                return false;
-            });
+                .Current.GetConfigs<ExcelConfig.MakeConfig>();
             int index = 0;
             ItemGridTableManager.Count = makeConfigs.Length;
             foreach (var i in ItemGridTableManager)

@@ -2,17 +2,38 @@ import "data.proto";
 import "const.proto";
 package Proto;
 
+//注册游戏服务器
+message RegServer
+{
+   required int32 Port;
+   required string ListenIP;
+   required int32 MaxClient;
+}
+//上传服务器状态
+message ReportServerStatus
+{
+    required int32 CurrentClient;
+	required int32 MaxClient;
+}
 
 message GameSession
 {
     required int32 SessionID;
 	required int32 UserID;
+	required string SessionKey;
+}
+
+message GameUser
+{
+   required int32 UserID;
+   required string Name;
 }
 
 message C2S_Login
 {
    required string Token;//用户名称
    required UserType Type;//用户类型
+
 }
 
 message S2C_Login
@@ -20,16 +41,20 @@ message S2C_Login
    required bool Success;
    required string SessionKey;
    required GameSession Session;
+   repeated GameUser User;
+   required int32 ActiveUserID;
 }
 
 
-message C2S_SaveData
+message C2S_RegUser
 {
    required GameSession Session;
-   required string Json;
+   required string Name;
 }
 
-message S2C_SaveData
+message S2C_RegUser
 {
    required bool Success;
+   required int32 UserID;
+   repeated GameUser Users;
 }

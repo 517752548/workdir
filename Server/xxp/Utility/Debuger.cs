@@ -78,7 +78,7 @@ namespace XNet.Libs.Utility
         public override string ToString()
         {
             return string.Format(
-                 "[{0}]({2}):{1}",Type,Message,LogTime
+                 "[{0}]({2:hh:mm:ss MM/dd}):{1}", Type, Message, LogTime
                 );
         }
     }
@@ -89,6 +89,19 @@ namespace XNet.Libs.Utility
     {
         public override void WriteLog(DebugerLog log)
         {
+            switch(log.Type)
+            {
+                case  LogerType.Debug:
+                case LogerType.Waring:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    break;
+                case LogerType.Error:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    break;
+            }
             Console.WriteLine(log.ToString());
         }
     }

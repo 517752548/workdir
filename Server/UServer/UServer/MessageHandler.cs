@@ -59,7 +59,7 @@ namespace UServer
             foreach (var i in types)
             {
                 if (i.GetInterface("INetMessage")==null) continue;
-                Console.WriteLine("LoadType:" + i.ToString());
+                Debuger.Log("LoadType:" + i.ToString());
                 MessageList.Add(i.Name.GetHashCode(), i);
             }
 
@@ -70,7 +70,7 @@ namespace UServer
                 var attris = i.GetCustomAttributes(typeof(ResponserAttribute), false) as ResponserAttribute[];
                 if (attris==null || attris.Length == 0) return;
                 Responsers.Add(attris[0].MessageType.Name.GetHashCode(), i);
-                Console.WriteLine("Load Response:" + i.ToString());
+                Debuger.Log("Load Response:" + i.ToString());
             }
 
         }

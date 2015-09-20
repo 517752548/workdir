@@ -63,19 +63,6 @@ namespace Assets.Scripts
 
             int line = 1;
            
-            if (GUI.Button(new Rect(10, Screen.height - (line++ * 30), 120, 25), "GoToExplore"))
-            {
-                GameAppliaction.Singleton.GoToExplore(ExploreID);
-            }
-            if (GUI.Button(new Rect(10, Screen.height - (line++ * 30), 120, 25), "GoToCastle"))
-            {
-                GameAppliaction.Singleton.JoinCastle();
-            }
-            if (GUI.Button(new Rect(10, Screen.height - (line++ * 30), 120, 25), "SaveData"))
-            {
-                //will save when exit
-                GameAppliaction.Singleton.Exit();
-            }
             var rect = new Rect(10, Screen.height - (line++ * 30), 120, 25);
 
             GM = GUI.TextField(rect, GM);

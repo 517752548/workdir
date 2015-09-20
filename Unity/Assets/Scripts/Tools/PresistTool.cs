@@ -14,14 +14,14 @@ namespace Assets.Scripts.Tools
             App.GameAppliaction.Singleton.SaveFile(path, json, false);
         }
 
-        public static T LoadJson<T>(string path)
+        public static T LoadJson<T>(string path) where T:new()
         {
             var json = App.GameAppliaction.Singleton.ReadFile(path);
             if(!string.IsNullOrEmpty(json))
             {
                 return JsonTool.Deserialize<T>(json);
             }
-            return default(T);
+            return  new T();
         }
     }
 }

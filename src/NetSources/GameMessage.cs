@@ -7,10 +7,78 @@ using System.Text;
 using System.IO;
 namespace Proto
 {
+    public class RegServer : Proto.ISerializerable
+    {
+        public RegServer()
+        {
+            ListenIP = string.Empty;
+
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Port { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ListenIP { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int MaxClient { set; get; }
+
+        public void ParseFormBinary(BinaryReader reader)
+        {
+            Port = reader.ReadInt32();
+            ListenIP = Encoding.UTF8.GetString(reader.ReadBytes( reader.ReadInt32()));
+            MaxClient = reader.ReadInt32();
+             
+        }
+
+        public void ToBinary(BinaryWriter writer)
+        {
+            writer.Write(Port);
+            var ListenIP_bytes = Encoding.UTF8.GetBytes(ListenIP);writer.Write(ListenIP_bytes.Length);writer.Write(ListenIP_bytes);
+            writer.Write(MaxClient);
+            
+        }
+
+    }
+    public class ReportServerStatus : Proto.ISerializerable
+    {
+        public ReportServerStatus()
+        {
+
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int CurrentClient { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int MaxClient { set; get; }
+
+        public void ParseFormBinary(BinaryReader reader)
+        {
+            CurrentClient = reader.ReadInt32();
+            MaxClient = reader.ReadInt32();
+             
+        }
+
+        public void ToBinary(BinaryWriter writer)
+        {
+            writer.Write(CurrentClient);
+            writer.Write(MaxClient);
+            
+        }
+
+    }
     public class GameSession : Proto.ISerializerable
     {
         public GameSession()
         {
+            SessionKey = string.Empty;
 
         }
         /// <summary>
@@ -21,11 +89,16 @@ namespace Proto
         /// 
         /// </summary>
         public int UserID { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string SessionKey { set; get; }
 
         public void ParseFormBinary(BinaryReader reader)
         {
             SessionID = reader.ReadInt32();
             UserID = reader.ReadInt32();
+            SessionKey = Encoding.UTF8.GetString(reader.ReadBytes( reader.ReadInt32()));
              
         }
 
@@ -33,6 +106,38 @@ namespace Proto
         {
             writer.Write(SessionID);
             writer.Write(UserID);
+            var SessionKey_bytes = Encoding.UTF8.GetBytes(SessionKey);writer.Write(SessionKey_bytes.Length);writer.Write(SessionKey_bytes);
+            
+        }
+
+    }
+    public class GameUser : Proto.ISerializerable
+    {
+        public GameUser()
+        {
+            Name = string.Empty;
+
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int UserID { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Name { set; get; }
+
+        public void ParseFormBinary(BinaryReader reader)
+        {
+            UserID = reader.ReadInt32();
+            Name = Encoding.UTF8.GetString(reader.ReadBytes( reader.ReadInt32()));
+             
+        }
+
+        public void ToBinary(BinaryWriter writer)
+        {
+            writer.Write(UserID);
+            var Name_bytes = Encoding.UTF8.GetBytes(Name);writer.Write(Name_bytes.Length);writer.Write(Name_bytes);
             
         }
 
@@ -74,6 +179,7 @@ namespace Proto
         {
             SessionKey = string.Empty;
 Session = new GameSession();
+            User = new List<GameUser>();
 
         }
         /// <summary>
@@ -88,12 +194,28 @@ Session = new GameSession();
         /// 
         /// </summary>
         public GameSession Session { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<GameUser> User { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int ActiveUserID { set; get; }
 
         public void ParseFormBinary(BinaryReader reader)
         {
             Success = reader.ReadBoolean();
             SessionKey = Encoding.UTF8.GetString(reader.ReadBytes( reader.ReadInt32()));
             Session = new GameSession();Session.ParseFormBinary(reader);
+            int User_Len = reader.ReadInt32();
+            while(User_Len-->0)
+            {
+                GameUser User_Temp = new GameUser();
+                User_Temp = new GameUser();User_Temp.ParseFormBinary(reader);
+                User.Add(User_Temp );
+            }
+            ActiveUserID = reader.ReadInt32();
              
         }
 
@@ -102,16 +224,22 @@ Session = new GameSession();
             writer.Write(Success);
             var SessionKey_bytes = Encoding.UTF8.GetBytes(SessionKey);writer.Write(SessionKey_bytes.Length);writer.Write(SessionKey_bytes);
             Session.ToBinary(writer);
+            writer.Write(User.Count);
+            foreach(var i in User)
+            {
+                i.ToBinary(writer);               
+            }
+            writer.Write(ActiveUserID);
             
         }
 
     }
-    public class C2S_SaveData : Proto.ISerializerable
+    public class C2S_RegUser : Proto.ISerializerable
     {
-        public C2S_SaveData()
+        public C2S_RegUser()
         {
 Session = new GameSession();
-            Json = string.Empty;
+            Name = string.Empty;
 
         }
         /// <summary>
@@ -121,43 +249,66 @@ Session = new GameSession();
         /// <summary>
         /// 
         /// </summary>
-        public string Json { set; get; }
+        public string Name { set; get; }
 
         public void ParseFormBinary(BinaryReader reader)
         {
             Session = new GameSession();Session.ParseFormBinary(reader);
-            Json = Encoding.UTF8.GetString(reader.ReadBytes( reader.ReadInt32()));
+            Name = Encoding.UTF8.GetString(reader.ReadBytes( reader.ReadInt32()));
              
         }
 
         public void ToBinary(BinaryWriter writer)
         {
             Session.ToBinary(writer);
-            var Json_bytes = Encoding.UTF8.GetBytes(Json);writer.Write(Json_bytes.Length);writer.Write(Json_bytes);
+            var Name_bytes = Encoding.UTF8.GetBytes(Name);writer.Write(Name_bytes.Length);writer.Write(Name_bytes);
             
         }
 
     }
-    public class S2C_SaveData : Proto.ISerializerable
+    public class S2C_RegUser : Proto.ISerializerable
     {
-        public S2C_SaveData()
+        public S2C_RegUser()
         {
+            Users = new List<GameUser>();
 
         }
         /// <summary>
         /// 
         /// </summary>
         public bool Success { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int UserID { set; get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<GameUser> Users { set; get; }
 
         public void ParseFormBinary(BinaryReader reader)
         {
             Success = reader.ReadBoolean();
+            UserID = reader.ReadInt32();
+            int Users_Len = reader.ReadInt32();
+            while(Users_Len-->0)
+            {
+                GameUser Users_Temp = new GameUser();
+                Users_Temp = new GameUser();Users_Temp.ParseFormBinary(reader);
+                Users.Add(Users_Temp );
+            }
              
         }
 
         public void ToBinary(BinaryWriter writer)
         {
             writer.Write(Success);
+            writer.Write(UserID);
+            writer.Write(Users.Count);
+            foreach(var i in Users)
+            {
+                i.ToBinary(writer);               
+            }
             
         }
 

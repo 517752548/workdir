@@ -127,8 +127,8 @@ namespace Assets.Scripts.UI.Windows
             list.Clear();
             foreach (var i in allOpenProduce)
             {
-                var cost = Tools.UtilityTool.SplitKeyValues(i.CostItems);
-                var reward = Tools.UtilityTool.SplitKeyValues(i.RewardItems);
+                var cost = Tools.UtilityTool.SplitKeyValues(i.CostItems,i.CostItemsNumber);
+                var reward = Tools.UtilityTool.SplitKeyValues(i.RewardItems,i.RewardItemsNumber);
                 foreach (var c in cost)
                 {
                     var p = DataManagers.GamePlayerManager.Singleton.GetProducePeople(i.ID) * c.Value;

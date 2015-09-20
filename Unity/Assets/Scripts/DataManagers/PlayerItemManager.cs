@@ -149,8 +149,8 @@ namespace Assets.Scripts.DataManagers
 
         internal bool MakeItem(MakeConfig config)
         {
-            var needs = Tools.UtilityTool.SplitKeyValues(config.RequireItems);
-            var rewards = Tools.UtilityTool.SplitKeyValues(config.RewardItems);
+            var needs = Tools.UtilityTool.SplitKeyValues(config.RequireItems,config.RequireItemsNumber);
+            var rewards = Tools.UtilityTool.SplitKeyValues(config.RewardItems,config.RewardItemsNumber);
             var needItems = needs.Select(t => new
             {
                 Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(t.Key),

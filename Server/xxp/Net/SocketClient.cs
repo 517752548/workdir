@@ -158,7 +158,7 @@ namespace XNet.Libs.Net
 				Delay = (tickNow - tickSend);
 				IsPinging = false;
 				if (OnPingCompleted != null) {
-					OnPingCompleted (this, new PingCompletedArgs { Ticks = Delay });
+					OnPingCompleted (this, new PingCompletedArgs { DelayTicks = Delay });
 				}
 				#endregion
 			} else if (message.Class == (byte)MessageClass.Package) {
@@ -409,13 +409,13 @@ namespace XNet.Libs.Net
 		/// <summary>
 		/// ticks
 		/// </summary>
-		public long Ticks { set; get; }
+		public long DelayTicks { set; get; }
 		/// <summary>
 		/// Millisecond
 		/// </summary>
-		public double Millisecond {
+		public double DelayMillisecond {
 			get {
-				return Ticks / TimeSpan.TicksPerMillisecond;
+				return DelayTicks / TimeSpan.TicksPerMillisecond;
 			}
 		}
 	}

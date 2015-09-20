@@ -16,6 +16,8 @@ enum UserType
 enum HandlerNo
 {
    RegServer = 10;//注册服务器
+   ReportStatus = 11;//提交游戏数据
    StopMasterServer = 100;//关闭中心服务器
    MessageHandler = 120;//处理网络消息的handler 
+   
 }

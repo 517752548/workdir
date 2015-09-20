@@ -28,21 +28,21 @@ namespace Assets.Scripts.Tools
         {
             if (value <= 0) return false;
             if (value >= 10) return true;
-            return _randomer.Next(0, 10) >=value;
+            return _randomer.Next(0, 10) <=value;
         }
 
         public static bool Probability100(int value)
         {
             if (value <= 0) return false;
             if (value >= 100) return true;
-            return _randomer.Next(0, 100) >= value;
+            return _randomer.Next(0, 100) <= value;
         }
 
         public static bool Probability10000(int value)
         {
             if (value <= 0) return false;
             if (value >= 10000) return true;
-            return _randomer.Next(0, 10000) >= value;
+            return _randomer.Next(0, 10000) <= value;
         }
 
         public static int RandPro(int[] pro)

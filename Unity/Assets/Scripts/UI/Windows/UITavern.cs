@@ -87,7 +87,7 @@ namespace Assets.Scripts.UI.Windows
             foreach (var i in ItemGridTableManager)
             {
                 i.Model.SetData(heros[index]);
-                i.Model.SetDrag(heros.Length >= 5);
+                i.Model.SetDrag(heros.Length >= 4);
                 i.Model.OnClick = OnItemClick;
                 index++;
             }

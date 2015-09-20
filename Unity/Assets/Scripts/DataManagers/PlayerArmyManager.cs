@@ -41,24 +41,30 @@ namespace Assets.Scripts.DataManagers
 
             Soldiers.Clear();
             var list = Tools.PresistTool.LoadJson<List<PlayerSoldier>>(PLAYER_ARMY_FILE);
+
             foreach (var i in list)
             {
                 Soldiers.Add(i.SoldierID, i.IsAlive);
             }
 
+
             _employSoldier.Clear();
             var employList = Tools.PresistTool.LoadJson<List<int>>(PLAYER_EMPLOY_SOLDIER);
+
             foreach (var i in employList)
             {
                 _employSoldier.Add(i);
             }
-            _explore_team.Clear();
 
-            foreach (var i in Tools.PresistTool.LoadJson<List<int>>(GO_TO_EXPLORE_TEAM))
+            _explore_team.Clear();
+            var exploreList = Tools.PresistTool.LoadJson<List<int>>(GO_TO_EXPLORE_TEAM);
+
+            foreach (var i in exploreList)
             {
                 _explore_team.Add(i);
             }
         }
+       
 
         public void Reset()
         {
@@ -220,7 +226,7 @@ namespace Assets.Scripts.DataManagers
                 }
             }
 
-            var items = Tools.UtilityTool.SplitKeyValues(levelup.CostItems);
+            var items = Tools.UtilityTool.SplitKeyValues(levelup.CostItems,levelup.CostItemsNumber);
             foreach (var i in items)
             {
                 if (PlayerItemManager.Singleton.GetItemCount(i.Key) < i.Value)

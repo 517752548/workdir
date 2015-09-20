@@ -70,10 +70,18 @@ namespace Assets.Scripts.App
 
         public void Exit() 
         {
+            DoSave();
+        }
+
+        private void DoSave()
+        {
             foreach (var i in prisit)
                 i.Presist();
         }
-        public void Pause() { }
+        public void Pause() 
+        {
+            DoSave();
+        }
         public void Ruseme() { }
 
         public void Update() {

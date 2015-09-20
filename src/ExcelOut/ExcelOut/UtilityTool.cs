@@ -117,9 +117,20 @@ using ExcelConfig;
             for (var i = 0; i < data.Rows.Count; i++)
             {
                 var row = new JsonValue();
+                var ig = false;
                 foreach (var col in table.Cols)
                 {
                     var v = data.Rows[i][col.ColIndex];
+                    if (col.Name == "ID")
+                    {
+
+                        if (v is DBNull|| Convert.ToInt32(v) == 0)
+                        {
+                            ig = true;
+                            break;
+                        }
+                    }
+                    
                     switch (col.Type)
                     {
                         case "Int":
@@ -130,6 +141,7 @@ using ExcelConfig;
                             }
                             catch { }
                             row[col.Name] = valInt;
+
                             break;
                         case "Float":
                             var valFloat = 0f;
@@ -148,7 +160,9 @@ using ExcelConfig;
                             break;
                     }
                 }
+                if(!ig)
                 jv.Append(row);
+                //BREAK;
             }
             return JsonWriter.Write(jv);
         }

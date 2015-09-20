@@ -54,6 +54,7 @@
     <Compile Include="ProtoTool.cs" />
     <Compile Include="ResponseHandler.cs" />
     <Compile Include="Responsers\LoginMessageResponser.cs" />
+    <Compile Include="Responsers\RegUserMessageResponser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

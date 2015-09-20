@@ -87,7 +87,7 @@ namespace Assets.Scripts.UI.Windows
                 sb.AppendLine(string.Format(LanguageManager.Singleton["UI_LVLUP_Cost_Gold"],
                     string.Format(Color, levelup.CostGold)));
             }
-            var costItems = UtilityTool.SplitKeyValues(levelup.CostItems);
+            var costItems = UtilityTool.SplitKeyValues(levelup.CostItems,levelup.CostItemsNumber);
             foreach (var i in costItems)
             {
                 var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);

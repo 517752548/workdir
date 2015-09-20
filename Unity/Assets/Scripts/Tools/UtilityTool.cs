@@ -9,12 +9,15 @@ namespace Assets.Scripts.Tools
     {
         public static List<int> SplitIDS(string inputStr)
         {
-            var strs = inputStr.Split('|');
+
+            
             var list = new List<int>();
-            foreach(var i in strs)
+            if (string.IsNullOrEmpty(inputStr)) return list;
+            var strs = inputStr.Split('|');
+            foreach (var i in strs)
             {
                 int id = 0;
-                if(int.TryParse(i,out id))
+                if (int.TryParse(i, out id))
                 {
                     list.Add(id);
                 }
@@ -32,25 +35,26 @@ namespace Assets.Scripts.Tools
             if (string.IsNullOrEmpty(inputs)) return list;
 
             var strs = inputs.Split('|');
-            foreach(var i in  strs)
+            foreach (var i in strs)
             {
-                if(i.IndexOf(':')==-1)
+                var t = i.Replace("：", ":");
+                if (t.IndexOf(':') == -1)
                 {
-                    GameDebug.LogError("Not found Key of ':' in " + i);
+                    GameDebug.LogError("Not found Key of ':' in " + t);
                     continue;
                 }
-                var keyValue = i.Split(':');
-                if(keyValue.Length ==2)
+                var keyValue = t.Split(':');
+                if (keyValue.Length == 2)
                 {
                     int key = 0;
                     int value = 0;
                     SplitKeyValue kv = new SplitKeyValue();
-                    if(!int.TryParse(keyValue[0],out key))
+                    if (!int.TryParse(keyValue[0], out key))
                     {
                         GameDebug.LogError("Can't ParseToInt:" + keyValue[0]);
                         continue;
                     }
-                    if(!int.TryParse(keyValue[1],out value))
+                    if (!int.TryParse(keyValue[1], out value))
                     {
                         GameDebug.LogError("Can't ParseToInt:" + keyValue[1]);
                         continue;
@@ -62,7 +66,7 @@ namespace Assets.Scripts.Tools
                 }
                 else
                 {
-                    GameDebug.LogError("Can't ParseToInt:" + i);
+                    GameDebug.LogError("Can't ParseToInt:" + t);
                 }
             }
             return list;
@@ -71,6 +75,20 @@ namespace Assets.Scripts.Tools
         public static int ConvertToInt(string id)
         {
             return Convert.ToInt32(id);
+        }
+
+        public static List<SplitKeyValue> SplitKeyValues(string keys, string values)
+        {
+            var keyValue = SplitIDS(keys);
+            var vValue = SplitIDS(values);
+            var list = new List<SplitKeyValue>();
+            if (keyValue.Count != vValue.Count) return list;
+            for (var i = 0; i < keyValue.Count; i++)
+            {
+                var v = new SplitKeyValue { Key = keyValue[i], Value = vValue[i] };
+                list.Add(v);
+            }
+            return list;
         }
     }
 

@@ -46,6 +46,10 @@ namespace Proto
         /// </summary>
         RegServer=10,
         /// <summary>
+        /// 提交游戏数据
+        /// </summary>
+        ReportStatus=11,
+        /// <summary>
         /// 关闭中心服务器
         /// </summary>
         StopMasterServer=100,

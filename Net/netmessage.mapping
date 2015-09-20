@@ -1,1 +1,2 @@
 LoginMessage C2S_Login S2C_Login
+RegUserMessage C2S_RegUser S2C_RegUser

@@ -63,7 +63,7 @@ namespace ExcelConfig
         /// 克制效果值
         /// </summary>
         [ExcelConfigColIndex(3)]
-        public float AddRate { set; get; }
+        public int AddRate { set; get; }
         
         /// <summary>
         /// 被克制类别
@@ -78,7 +78,7 @@ namespace ExcelConfig
         public float DefRate { set; get; }
         
         /// <summary>
-        /// 美术资源名称
+        /// 图标
         /// </summary>
         [ExcelConfigColIndex(6)]
         public String IconName { set; get; }
@@ -110,10 +110,16 @@ namespace ExcelConfig
         public int CostGold { set; get; }
         
         /// <summary>
-        /// 进化消耗物品1
+        /// 进化消耗物品
         /// </summary>
         [ExcelConfigColIndex(4)]
         public String CostItems { set; get; }
+        
+        /// <summary>
+        /// 物品消耗数量
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public String CostItemsNumber { set; get; }
 
     }
 
@@ -130,66 +136,46 @@ namespace ExcelConfig
         public String Name { set; get; }
         
         /// <summary>
-        /// 需要道具
+        /// 需要道具ID
         /// </summary>
         [ExcelConfigColIndex(2)]
         public String RequireItems { set; get; }
         
         /// <summary>
-        /// 获得道具
+        /// 需要道具数量
         /// </summary>
         [ExcelConfigColIndex(3)]
+        public String RequireItemsNumber { set; get; }
+        
+        /// <summary>
+        /// 获得道具
+        /// </summary>
+        [ExcelConfigColIndex(4)]
         public String RewardItems { set; get; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public String RewardItemsNumber { set; get; }
         
         /// <summary>
         /// 需要金币
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(6)]
         public int RequireGold { set; get; }
         
         /// <summary>
         /// 解锁条件
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(7)]
         public int UnlockType { set; get; }
         
         /// <summary>
         /// 解锁参数
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(8)]
         public String UnlockPars1 { set; get; }
-        
-        /// <summary>
-        /// 类别
-        /// </summary>
-        [ExcelConfigColIndex(7)]
-        public int Category { set; get; }
-
-    }
-
-    /// <summary>
-    /// 制作类别
-    /// </summary>
-    [ConfigFile("MakeCategoryConfig.json","MakeCategoryConfig")]
-    public class MakeCategoryConfig:JSONConfigBase    {
-        
-        /// <summary>
-        /// 名称
-        /// </summary>
-        [ExcelConfigColIndex(1)]
-        public String Name { set; get; }
-        
-        /// <summary>
-        /// 多语言Key
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public String LanguageKey { set; get; }
-        
-        /// <summary>
-        /// 说明
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public String Description { set; get; }
 
     }
 
@@ -588,45 +574,51 @@ namespace ExcelConfig
         public String Pars2 { set; get; }
         
         /// <summary>
-        /// 升级金币消耗
+        /// 金币消耗
         /// </summary>
         [ExcelConfigColIndex(7)]
         public int CostGold { set; get; }
         
         /// <summary>
-        /// 升级材料消耗
+        /// 建造材料消耗
         /// </summary>
         [ExcelConfigColIndex(8)]
         public String CostItems { set; get; }
         
         /// <summary>
-        /// 解锁类型
+        /// 材料消耗数量
         /// </summary>
         [ExcelConfigColIndex(9)]
+        public String CostItemCounts { set; get; }
+        
+        /// <summary>
+        /// 解锁类型
+        /// </summary>
+        [ExcelConfigColIndex(10)]
         public int UnlockType { set; get; }
         
         /// <summary>
         /// 解锁参数1
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(11)]
         public String UnlockParms1 { set; get; }
         
         /// <summary>
         /// 解锁参数2
         /// </summary>
-        [ExcelConfigColIndex(11)]
+        [ExcelConfigColIndex(12)]
         public String UnlockParms2 { set; get; }
         
         /// <summary>
         /// 建筑描述
         /// </summary>
-        [ExcelConfigColIndex(12)]
+        [ExcelConfigColIndex(13)]
         public String Describe { set; get; }
         
         /// <summary>
         /// 升级后提示
         /// </summary>
-        [ExcelConfigColIndex(13)]
+        [ExcelConfigColIndex(14)]
         public String BuildSuccessMessage { set; get; }
 
     }
@@ -689,13 +681,13 @@ namespace ExcelConfig
         /// 闪避率
         /// </summary>
         [ExcelConfigColIndex(9)]
-        public int Dodge { set; get; }
+        public float Dodge { set; get; }
         
         /// <summary>
         /// 速度
         /// </summary>
         [ExcelConfigColIndex(10)]
-        public int Speed { set; get; }
+        public float Speed { set; get; }
         
         /// <summary>
         /// 克制关系暴击
@@ -707,7 +699,7 @@ namespace ExcelConfig
         /// 暴击倍率
         /// </summary>
         [ExcelConfigColIndex(12)]
-        public float Mult { set; get; }
+        public int Mult { set; get; }
         
         /// <summary>
         /// 技能ID
@@ -854,27 +846,21 @@ namespace ExcelConfig
         public String Dialog { set; get; }
         
         /// <summary>
-        /// 战斗背景
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public String BattleBackground { set; get; }
-        
-        /// <summary>
         /// NPCID
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(3)]
         public int NpcID { set; get; }
         
         /// <summary>
         /// 附加奖励
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(4)]
         public int AddtionRewardType { set; get; }
         
         /// <summary>
         /// 参数1
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(5)]
         public String Pars1 { set; get; }
 
     }
@@ -1182,21 +1168,33 @@ namespace ExcelConfig
         public String Name { set; get; }
         
         /// <summary>
-        /// 单位消耗资源
+        /// 消耗资源ID
         /// </summary>
         [ExcelConfigColIndex(2)]
         public String CostItems { set; get; }
         
         /// <summary>
-        /// 单位收获
+        /// 消耗资源量
         /// </summary>
         [ExcelConfigColIndex(3)]
+        public String CostItemsNumber { set; get; }
+        
+        /// <summary>
+        /// 收获资源ID
+        /// </summary>
+        [ExcelConfigColIndex(4)]
         public String RewardItems { set; get; }
+        
+        /// <summary>
+        /// 收获资源量
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public String RewardItemsNumber { set; get; }
         
         /// <summary>
         /// 说明描述
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(6)]
         public String Description { set; get; }
 
     }
