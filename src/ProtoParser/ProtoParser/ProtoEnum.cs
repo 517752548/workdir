@@ -16,10 +16,13 @@ namespace ProtoParser
     public class ProtoEnum
     {
         public string Name { set; get; }
+
+        public string Node { set; get; }
         public List<ProtoEnumField> Fields { set; get; }
-        public ProtoEnum(string name)
+        public ProtoEnum(string name,string node)
         {
             Name = name;
+            Node = node;
             Fields = new List<ProtoEnumField>();
         }
 

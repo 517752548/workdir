@@ -8,16 +8,26 @@ using ExcelConfig;
 
 namespace Assets.Scripts.UI.Windows
 {
-    partial class UIBattle:IBattleRender
+
+    partial class UIBattle : IBattleRender
     {
+        public class StarGridTableModel : TableItemModel<StarGridTableTemplate>
+        {
+            public StarGridTableModel() { }
+            public override void InitModel()
+            {
+                //todo
+            }
+        }
         public class SkillGridTableModel : TableItemModel<SkillGridTableTemplate>
         {
-            public SkillGridTableModel(){}
+            public SkillGridTableModel() { }
             public override void InitModel()
             {
                 //todo
 
-                Template.Bt_skill.OnMouseClick((s, e) => {
+                Template.Bt_skill.OnMouseClick((s, e) =>
+                {
                     if (OnClick == null) return;
                     OnClick(this);
                 });
@@ -28,11 +38,12 @@ namespace Assets.Scripts.UI.Windows
             public int Index { get; set; }
 
 
-            private  Combat.Battle.Elements.BattleSoldier _Soldier { get; set; }
+            private Combat.Battle.Elements.BattleSoldier _Soldier { get; set; }
             public Combat.Battle.Elements.BattleSoldier Soldier
             {
                 get { return _Soldier; }
-                set {
+                set
+                {
                     _Soldier = value;
                     Template.Bt_skill.Text(value.SkillConfig.Name);
                 }
@@ -44,23 +55,26 @@ namespace Assets.Scripts.UI.Windows
             }
         }
 
+
+
         public override void InitModel()
         {
             base.InitModel();
             //Write Code here
-            bt_battleMode.OnMouseClick((s, e) => {
+            bt_battleMode.OnMouseClick((s, e) =>
+            {
                 var mode = DataManagers.GamePlayerManager.Singleton.ControlMode;
-                var setmode = (mode == DataManagers.BattleControlMode.AUTO)? 
-                    DataManagers.BattleControlMode.PLAYER:
+                var setmode = (mode == DataManagers.BattleControlMode.AUTO) ?
+                    DataManagers.BattleControlMode.PLAYER :
                     DataManagers.BattleControlMode.AUTO;
 
                 DataManagers.GamePlayerManager.Singleton.SetControlMode(setmode);
 
-                bt_battleMode.Text(LanguageManager.Singleton[setmode == DataManagers.BattleControlMode.AUTO ? "BATTLE_AUTO" : "BATTLE_PLAYER"]);
+                //bt_battleMode.Text(LanguageManager.Singleton[setmode == DataManagers.BattleControlMode.AUTO ? "BATTLE_AUTO" : "BATTLE_PLAYER"]);
                 if (this.Per == null) return;
                 this.Per.ChangePlayerControllor(setmode == DataManagers.BattleControlMode.AUTO);
             });
-           
+
         }
         public override void OnShow()
         {
@@ -74,7 +88,7 @@ namespace Assets.Scripts.UI.Windows
         public override void OnUpdateUIData()
         {
             base.OnUpdateUIData();
-           
+
         }
 
         public override void OnUpdate()
@@ -106,7 +120,7 @@ namespace Assets.Scripts.UI.Windows
             Player = player;
             var index = 0;
             SkillGridTableManager.Count = player.Soldiers.Count;
-            foreach(var i in SkillGridTableManager)
+            foreach (var i in SkillGridTableManager)
             {
                 i.Model.Index = index;
                 i.Model.Soldier = player.Soldiers[index];
@@ -131,7 +145,7 @@ namespace Assets.Scripts.UI.Windows
         private Assets.Scripts.Combat.Battle.Elements.BattleArmy Monster;
         private Assets.Scripts.Combat.Battle.Elements.BattleArmy Player;
 
-        private int tapIndex= -1;
+        private int tapIndex = -1;
 
         public int GetTapIndex()
         {
@@ -140,13 +154,13 @@ namespace Assets.Scripts.UI.Windows
 
         public int ReleaseTapIndex()
         {
-            return tapIndex = -1;           
+            return tapIndex = -1;
         }
 
         private BattlePerception Per;
         public void SetPerception(BattlePerception per)
         {
-            Per = per;  
+            Per = per;
         }
 
 
@@ -157,8 +171,8 @@ namespace Assets.Scripts.UI.Windows
         public void ShowDialog(ExcelConfig.BattleConfig battleConfig)
         {
             Per.State.Enable = false;
-            UI.Windows.UIMessageBox.ShowMessage(battleConfig.Name, battleConfig.Dialog, 
-                () => { Per.State.Enable = true; }, 
+            UI.Windows.UIMessageBox.ShowMessage(battleConfig.Name, battleConfig.Dialog,
+                () => { Per.State.Enable = true; },
                 () => { Per.State.Enable = true; });
             //UITipDrawer.Singleton.DrawNotify(battleConfig.Dialog);
         }

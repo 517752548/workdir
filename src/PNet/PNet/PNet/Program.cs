@@ -45,15 +45,24 @@ namespace PNet
                     var line = reader.ReadLine();
                     line = line.Trim();
                     //message class1 class2
-                    var strs = line.Split(" ".ToArray());
-                    if(strs.Length!=3)
+                    var strs = line.Split("\t/ ".ToArray());
+                    var note = string.Empty;
+                    var t = line.Split("//".ToArray());
+                    var sbT = new StringBuilder();
+                    for (var i = 1; i < t.Length; i++)
+                    {
+                        sbT.Append(t[i]);
+                    }
+                    note = sbT.ToString();
+                    if (strs.Length < 3)
                     {
                         Console.WriteLine("Error:" + line);
                     }
                     else
                     {
                         var code = MessageTemplate.Replace("[Name]", strs[0])
-                            .Replace("[Request]", strs[1]).Replace("[Response]", strs[2]);
+                            .Replace("[Request]", strs[1]).Replace("[Response]", strs[2])
+                            .Replace("[NOTE]", note);
                         sb.AppendLine(code);
                     }
                 }
@@ -75,6 +84,9 @@ namespace PNet
 }";
 
         public static string MessageTemplate = @"
+    /// <summary>
+    /// [NOTE]
+    /// </summary>    
     [NetMessage]
     public class [Name] : NetMessage<[Request], [Response]> { }";
     }

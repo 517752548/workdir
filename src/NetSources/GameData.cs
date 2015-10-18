@@ -7,23 +7,29 @@ using System.Text;
 using System.IO;
 namespace Proto
 {
+   /// <summary>
+    /// 阵营
+    /// </summary>
     public enum ArmyCamp
     {
         /// <summary>
-        /// 
+        /// 玩家
         /// </summary>
         Player=1,
         /// <summary>
-        /// 
+        /// 怪物
         /// </summary>
         Monster=2,
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public class Session : Proto.ISerializerable
     {
         public Session()
         {
-            UserName = string.Empty;
+			            UserName = string.Empty;
 
         }
         /// <summary>
@@ -50,18 +56,21 @@ namespace Proto
         }
 
     }
+    /// <summary>
+    /// 道具
+    /// </summary>
     public class Item : Proto.ISerializerable
     {
         public Item()
         {
-
+			
         }
         /// <summary>
-        /// 
+        /// 数量
         /// </summary>
         public int Num { set; get; }
         /// <summary>
-        /// 
+        /// 配表id
         /// </summary>
         public int Entry { set; get; }
         /// <summary>
@@ -86,19 +95,22 @@ namespace Proto
         }
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public class ItemPackage : Proto.ISerializerable
     {
         public ItemPackage()
         {
-            Items = new List<Item>();
+			            Items = new List<Item>();
 
         }
         /// <summary>
-        /// 
+        /// 背包上限
         /// </summary>
         public int CountMax { set; get; }
         /// <summary>
-        /// 
+        /// 当前所有道具
         /// </summary>
         public List<Item> Items { set; get; }
 
@@ -127,18 +139,21 @@ namespace Proto
         }
 
     }
+    /// <summary>
+    /// 士兵
+    /// </summary>
     public class Soldier : Proto.ISerializerable
     {
         public Soldier()
         {
-
+			
         }
         /// <summary>
-        /// 
+        /// 配表id
         /// </summary>
         public int ConfigID { set; get; }
         /// <summary>
-        /// 
+        /// 数量
         /// </summary>
         public int Num { set; get; }
 
@@ -157,19 +172,22 @@ namespace Proto
         }
 
     }
+    /// <summary>
+    /// 军队
+    /// </summary>
     public class Army : Proto.ISerializerable
     {
         public Army()
         {
-            Soldiers = new List<Soldier>();
+			            Soldiers = new List<Soldier>();
 
         }
         /// <summary>
-        /// 
+        /// 士兵
         /// </summary>
         public List<Soldier> Soldiers { set; get; }
         /// <summary>
-        /// 
+        /// 阵营
         /// </summary>
         public ArmyCamp Camp { set; get; }
 

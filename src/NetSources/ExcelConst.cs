@@ -7,326 +7,361 @@ using System.Text;
 using System.IO;
 namespace Proto
 {
+   /// <summary>
+    /// 地图事件
+    /// </summary>
     public enum MapEventType
     {
         /// <summary>
-        /// ������
+        /// 出生点
         /// </summary>
         BronPos=1,
         /// <summary>
-        /// �����
+        /// 复活点
         /// </summary>
         ReLivePos=2,
         /// <summary>
-        /// ���������
+        /// 竞技场入口
         /// </summary>
         PKEnterPos=3,
         /// <summary>
-        /// ��ͼ�ڵ�
+        /// 地图黑店
         /// </summary>
         ScrectShopPos=4,
         /// <summary>
-        /// ���ر���
+        /// 神秘宝藏
         /// </summary>
         ChestPos=5,
         /// <summary>
-        /// ��վ������
+        /// 驿站补给点
         /// </summary>
         RechargePos=6,
         /// <summary>
-        /// �̶�ս����
+        /// 固定战斗点
         /// </summary>
         BattlePos=7,
         /// <summary>
-        /// ����ɢ���
+        /// 宝箱散落点
         /// </summary>
         RandomChestPos=8,
         /// <summary>
-        /// ���
+        /// 金矿
         /// </summary>
         GoldPos=9,
         /// <summary>
-        /// ����¼���
+        /// 随机事件点
         /// </summary>
         RandomEvnetPos=10,
         /// <summary>
-        /// �²㴫�͵�
+        /// 下层传送点
         /// </summary>
         GoToNextLvlPos=11,
         /// <summary>
-        /// �سǵ�
+        /// 回城点
         /// </summary>
         GoHomePos=12,
 
     }
+   /// <summary>
+    /// 道具类型
+    /// </summary>
     public enum ItemType
     {
         /// <summary>
-        /// �ɾ�
+        /// 成就
         /// </summary>
         Achievement=1,
         /// <summary>
-        /// ����
+        /// 材料
         /// </summary>
         Materials=2,
         /// <summary>
-        /// ͼֽ
+        /// 图纸
         /// </summary>
         Diagram=3,
         /// <summary>
-        /// �س�
+        /// 回城
         /// </summary>
         RecallScroll=4,
         /// <summary>
-        /// Ӷ��������
+        /// 佣兵卖身契
         /// </summary>
         Indenture=5,
         /// <summary>
-        /// �츳��
+        /// 天赋书
         /// </summary>
         Book=6,
         /// <summary>
-        /// ��Ұ�
+        /// 金币包
         /// </summary>
         GoldPackage=7,
         /// <summary>
-        /// ����
+        /// 保险
         /// </summary>
         Chest=8,
         /// <summary>
-        /// ������
+        /// 补给类
         /// </summary>
         Cost=9,
         /// <summary>
-        /// ����Կ��
+        /// 保险钥匙
         /// </summary>
         ChestKey=10,
         /// <summary>
-        /// ʱЧ��
+        /// 时效性
         /// </summary>
         TimeToUse=11,
         /// <summary>
-        /// ��������չ����
+        /// 功能性扩展道具
         /// </summary>
         Tools=12,
 
     }
+   /// <summary>
+    /// 建筑类型
+    /// </summary>
     public enum BuildingType
     {
         /// <summary>
-        /// ũ��
+        /// 农田
         /// </summary>
         Crop=1,
         /// <summary>
-        /// ���
+        /// 民居
         /// </summary>
         House=2,
         /// <summary>
-        /// �����
+        /// 面点铺
         /// </summary>
         Food=3,
         /// <summary>
-        /// ľ�ĳ�
+        /// 木材厂
         /// </summary>
         Wood=4,
         /// <summary>
-        /// ��г�
+        /// 绸缎厂
         /// </summary>
         Clothing=5,
         /// <summary>
-        /// ��Ҥ
+        /// 矿窑
         /// </summary>
         Ming=6,
         /// <summary>
-        /// ������
+        /// 演武厅
         /// </summary>
         Explore=7,
 
     }
+   /// <summary>
+    /// 建筑解锁条件
+    /// </summary>
     public enum BuildingUnlockType
     {
         /// <summary>
-        /// ��������
+        /// 无需条件
         /// </summary>
         NONE=1,
         /// <summary>
-        /// ��Ҫǰ��
+        /// 需要前置
         /// </summary>
         NeedBuild=2,
 
     }
+   /// <summary>
+    /// 伤害类型
+    /// </summary>
     public enum SkillDamageType
     {
         /// <summary>
-        /// ����
+        /// 治疗
         /// </summary>
         Cure=1,
         /// <summary>
-        /// �˺�
+        /// 伤害
         /// </summary>
         Damage=2,
 
     }
+   /// <summary>
+    /// 技能目标类型
+    /// </summary>
     public enum SkillTargetType
     {
         /// <summary>
-        /// �Լ�
-        /// </summary>
-        Owner=1,
-        /// <summary>
-        /// �ѷ�
-        /// </summary>
-        OwnerTeam=2,
-        /// <summary>
-        /// �з�
-        /// </summary>
-        Enemy=3,
-
-    }
-    public enum SkillEffectTaget
-    {
-        /// <summary>
-        /// �ѷ�
+        /// 友方
         /// </summary>
         OwnerTeam=1,
         /// <summary>
-        /// �з�
+        /// 敌方
         /// </summary>
         Enemy=2,
 
     }
+   /// <summary>
+    /// 技能效果目标类型
+    /// </summary>
+    public enum SkillEffectTaget
+    {
+        /// <summary>
+        /// 友方
+        /// </summary>
+        OwnerTeam=1,
+        /// <summary>
+        /// 敌方
+        /// </summary>
+        Enemy=2,
+
+    }
+   /// <summary>
+    /// 技能效果类型
+    /// </summary>
     public enum SkillEffectType
     {
         /// <summary>
-        /// �����˺�
+        /// 持续伤害
         /// </summary>
         Dot=1,
         /// <summary>
-        /// ���ٹ���
+        /// 减少攻击
         /// </summary>
         ReduceDamage=2,
         /// <summary>
-        /// ѣ��
+        /// 眩晕
         /// </summary>
         Giddy=3,
         /// <summary>
-        /// ��Ѫ
+        /// 吸血
         /// </summary>
         SuckBlood=4,
         /// <summary>
-        /// ����
+        /// 护盾
         /// </summary>
         AddDef=5,
 
     }
+   /// <summary>
+    /// 成就达成条件类型
+    /// </summary>
     public enum AchievementEventType
     {
         /// <summary>
-        /// �̲����ĵ�ָ����
+        /// 盘缠消耗到指定量
         /// </summary>
         GoldCost=1,
         /// <summary>
-        /// ������ָ���ȼ�
+        /// 建筑到指定等级
         /// </summary>
         BuildLevel=2,
         /// <summary>
-        /// ָ���齨����ָ���ȼ�
+        /// 指定组建筑到指定等级
         /// </summary>
         AllBuildLevel=3,
         /// <summary>
-        /// ̽���ȵ�ָ����
+        /// 探索度到指定数
         /// </summary>
         Explore=4,
         /// <summary>
-        /// ���ֽ�����ָ���ȼ�
+        /// 兵种进化到指定等级
         /// </summary>
         ArmyLevel=5,
         /// <summary>
-        /// ���ָ����
+        /// 获得指定天
         /// </summary>
         PlaySkill=6,
         /// <summary>
-        /// ���ĸ�����ָ������
+        /// 消耗干粮达指定数量
         /// </summary>
         CostFood=7,
         /// <summary>
-        /// ɱ��boss
+        /// 杀死boss
         /// </summary>
         KillBoss=8,
         /// <summary>
-        /// ����
+        /// 分享
         /// </summary>
         ShareGame=9,
         /// <summary>
-        /// ɱ��ָ��������
+        /// 杀死指定怪物数
         /// </summary>
         KillMonster=10,
         /// <summary>
-        /// �������ص�ͼ
+        /// 进入神秘地图
         /// </summary>
         EnterMap=11,
         /// <summary>
-        /// ����ָ����������
+        /// 开启指定数量宝箱
         /// </summary>
         OpenChest=12,
         /// <summary>
-        /// �ɹ���������
+        /// 成功抵御入侵
         /// </summary>
         DefenceEnemy=13,
 
     }
+   /// <summary>
+    /// 随机事件类型
+    /// </summary>
     public enum RandomEventTickType
     {
         /// <summary>
-        /// ��½��Ϸ
+        /// 登陆游戏
         /// </summary>
         WhenLoginGame=1,
         /// <summary>
-        /// �̶�ʱ��ˢ�´���
+        /// 固定时间刷新触发
         /// </summary>
         FixTime=2,
         /// <summary>
-        /// �̶��¼�
+        /// 固定事件
         /// </summary>
         FixEvent=3,
 
     }
+   /// <summary>
+    /// 玩家技能类型
+    /// </summary>
     public enum PlaySkillType
     {
         /// <summary>
-        /// ���ּ�����cd
+        /// 首轮技能无cd
         /// </summary>
         NOFristCD=1,
         /// <summary>
-        /// ̽�����Ľ���
+        /// 探索消耗降低
         /// </summary>
         ExploreCostLower=2,
         /// <summary>
-        /// ̽���ɼ���Χ����
+        /// 探索可见范围增加
         /// </summary>
         ExploreViewDis=3,
         /// <summary>
-        /// ��������
+        /// 修正属性
         /// </summary>
         AttAppend=4,
 
     }
+   /// <summary>
+    /// 商店解锁条件类型
+    /// </summary>
     public enum StoreUnlockType
     {
         /// <summary>
-        /// �������
+        /// 无需解锁
         /// </summary>
         None=-1,
         /// <summary>
-        /// ָ�������ﵽָ���ȼ�����
+        /// 指定建筑达到指定等级解锁
         /// </summary>
         BuildGetTargetLevel=1,
         /// <summary>
-        /// ָ����ͼ�ﵽָ��̽���Ƚ���
+        /// 指定地图达到指定探索度解锁
         /// </summary>
         ExploreGetTarget=2,
 
     }
+   /// <summary>
+    /// 雇佣条件类型
+    /// </summary>
     public enum EmployCondtionType
     {
         /// <summary>
@@ -334,27 +369,30 @@ namespace Proto
         /// </summary>
         None=-1,
         /// <summary>
-        /// ͨ�ظ���   ��1|2|3��
+        /// 通关副本   （1|2|3）
         /// </summary>
         CompleteMap=1,
         /// <summary>
-        /// ��óɾͣ�1|2|3��
+        /// 获得成就（1|2|3）
         /// </summary>
         GetAchievement=2,
         /// <summary>
-        /// ��õ��� ��1��1|2��3|3��1��
+        /// 获得道具 （1：1|2：3|3：1）
         /// </summary>
         GetItem=3,
 
     }
+   /// <summary>
+    /// 雇佣消耗货币类型
+    /// </summary>
     public enum EmployCostCurrent
     {
         /// <summary>
-        /// ���Ľ��
+        /// 消耗金币
         /// </summary>
         Gold=1,
         /// <summary>
-        /// ������ʯ
+        /// 消耗钻石
         /// </summary>
         Coin=2,
 

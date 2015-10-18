@@ -8,9 +8,11 @@ namespace ProtoParser
 {
     public class ProtoStruct
     {
-        public ProtoStruct(string name)
+        public string Node { set; get; }
+        public ProtoStruct(string name,string node)
         {
             Name = name;
+            Node = node;
             Fields = new List<ProtoField>();
         }
         public List<ProtoField> Fields { set; get; }

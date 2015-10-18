@@ -7,23 +7,26 @@ using System.Text;
 using System.IO;
 namespace Proto
 {
+    /// <summary>
+    /// 注册游戏服务器
+    /// </summary>
     public class RegServer : Proto.ISerializerable
     {
         public RegServer()
         {
-            ListenIP = string.Empty;
+			            ListenIP = string.Empty;
 
         }
         /// <summary>
-        /// 
+        /// 端口
         /// </summary>
         public int Port { set; get; }
         /// <summary>
-        /// 
+        /// 监听ip
         /// </summary>
         public string ListenIP { set; get; }
         /// <summary>
-        /// 
+        /// 最大访问数
         /// </summary>
         public int MaxClient { set; get; }
 
@@ -44,18 +47,21 @@ namespace Proto
         }
 
     }
+    /// <summary>
+    /// 上传服务器状态
+    /// </summary>
     public class ReportServerStatus : Proto.ISerializerable
     {
         public ReportServerStatus()
         {
-
+			
         }
         /// <summary>
-        /// 
+        /// 当前访问数
         /// </summary>
         public int CurrentClient { set; get; }
         /// <summary>
-        /// 
+        /// 最大访问数
         /// </summary>
         public int MaxClient { set; get; }
 
@@ -74,15 +80,18 @@ namespace Proto
         }
 
     }
+    /// <summary>
+    /// 游戏中的会话
+    /// </summary>
     public class GameSession : Proto.ISerializerable
     {
         public GameSession()
         {
-            SessionKey = string.Empty;
+			            SessionKey = string.Empty;
 
         }
         /// <summary>
-        /// 
+        /// 会话id
         /// </summary>
         public int SessionID { set; get; }
         /// <summary>
@@ -111,11 +120,14 @@ namespace Proto
         }
 
     }
+    /// <summary>
+    /// 游戏中的玩家
+    /// </summary>
     public class GameUser : Proto.ISerializerable
     {
         public GameUser()
         {
-            Name = string.Empty;
+			            Name = string.Empty;
 
         }
         /// <summary>
@@ -142,19 +154,22 @@ namespace Proto
         }
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public class C2S_Login : Proto.ISerializerable
     {
         public C2S_Login()
         {
-            Token = string.Empty;
+			            Token = string.Empty;
 
         }
         /// <summary>
-        /// 
+        /// 用户名称
         /// </summary>
         public string Token { set; get; }
         /// <summary>
-        /// 
+        /// 用户类型
         /// </summary>
         public UserType Type { set; get; }
 
@@ -173,11 +188,14 @@ namespace Proto
         }
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public class S2C_Login : Proto.ISerializerable
     {
         public S2C_Login()
         {
-            SessionKey = string.Empty;
+			            SessionKey = string.Empty;
 Session = new GameSession();
             User = new List<GameUser>();
 
@@ -234,11 +252,14 @@ Session = new GameSession();
         }
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public class C2S_RegUser : Proto.ISerializerable
     {
         public C2S_RegUser()
         {
-Session = new GameSession();
+			Session = new GameSession();
             Name = string.Empty;
 
         }
@@ -266,11 +287,14 @@ Session = new GameSession();
         }
 
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public class S2C_RegUser : Proto.ISerializerable
     {
         public S2C_RegUser()
         {
-            Users = new List<GameUser>();
+			            Users = new List<GameUser>();
 
         }
         /// <summary>

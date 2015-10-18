@@ -1,28 +1,28 @@
-import "data.proto";
+﻿import "data.proto";
 import "const.proto";
 package Proto;
 
 //注册游戏服务器
-message RegServer
+message RegServer 
 {
-   required int32 Port;
-   required string ListenIP;
-   required int32 MaxClient;
+   required int32 Port;//端口
+   required string ListenIP;//监听ip
+   required int32 MaxClient;//最大访问数
 }
 //上传服务器状态
-message ReportServerStatus
+message ReportServerStatus 
 {
-    required int32 CurrentClient;
-	required int32 MaxClient;
+    required int32 CurrentClient;//当前访问数
+	required int32 MaxClient;//最大访问数
 }
-
-message GameSession
+//游戏中的会话
+message GameSession 
 {
-    required int32 SessionID;
-	required int32 UserID;
+    required int32 SessionID;//会话id
+	required int32 UserID;//
 	required string SessionKey;
 }
-
+//游戏中的玩家
 message GameUser
 {
    required int32 UserID;

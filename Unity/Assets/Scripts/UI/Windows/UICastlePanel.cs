@@ -111,7 +111,7 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnUpdateUIData();
 
-            bt_gold.Text(string.Format(LanguageManager.Singleton["APP_NUM_FORMAT"], DataManagers.GamePlayerManager.Singleton.Gold));
+            this.lb_gold.text=(string.Format(LanguageManager.Singleton["APP_NUM_FORMAT"], DataManagers.GamePlayerManager.Singleton.Gold));
 
             bt_Coin.Text(string.Format(LanguageManager.Singleton["APP_NUM_FORMAT"], DataManagers.GamePlayerManager.Singleton.Coin));
         }

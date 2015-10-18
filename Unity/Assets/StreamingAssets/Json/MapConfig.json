@@ -1,1 +1,1 @@
-[{"ID":1,"Name":"hero1","MapResName":"","OpenCondtion":0,"OpenParams":"","UnlockMode":0,"UnlockParams":"","IsOpen":0,"RefreshTicks":0,"Point":0,"MapLevel":0,"MapGroup":"","RandomBattle":"","RandomPro":0,"CompletePoint":0,"BackgroudMusic":""}]
+[{"ID":1,"Name":"hero1","MapResName":"map1","OpenCondtion":0,"OpenParams":"","UnlockMode":0,"UnlockParams":"","IsOpen":0,"RefreshTicks":0,"Point":0,"MapLevel":0,"MapGroup":"","RandomBattle":"1|2","RandomPro":0,"CompletePoint":0,"BackgroudMusic":""}]

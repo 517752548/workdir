@@ -1,4 +1,4 @@
-package Proto;
+﻿package Proto;
 message Session
 {
    required string UserName;
@@ -7,35 +7,38 @@ message Session
 
 
 //optional
-
+//道具
 message Item
 {
-   required int32 Num;
-   required int32 Entry;
+   required int32 Num;//数量
+   required int32 Entry;//配表id
    required int32 Diff;   
 }
 
 message ItemPackage
 {
-   required int32 CountMax;//��������
-   repeated Item Items;
+   required int32 CountMax;//背包上限
+   repeated Item Items;//当前所有道具
 }
 
+//士兵
 message Soldier
 {
-    required int32 ConfigID;
-	required int32 Num;
+    required int32 ConfigID;//配表id
+	required int32 Num;//数量 
 }
 
+//阵营
 enum ArmyCamp
 {
-   Player  =1;
-   Monster =2;
+   Player  =1;//玩家
+   Monster =2;//怪物
 }
 
+//军队
 message Army
 {
-  repeated Soldier Soldiers;
-  required ArmyCamp Camp;
+  repeated Soldier Soldiers;//士兵
+  required ArmyCamp Camp;//阵营
 }
 

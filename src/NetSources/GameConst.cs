@@ -7,6 +7,9 @@ using System.Text;
 using System.IO;
 namespace Proto
 {
+   /// <summary>
+    /// 
+    /// </summary>
     public enum GameVersion
     {
         /// <summary>
@@ -27,18 +30,24 @@ namespace Proto
         Resources=0,
 
     }
+   /// <summary>
+    /// 
+    /// </summary>
     public enum UserType
     {
         /// <summary>
-        /// 
+        /// 默认
         /// </summary>
         Normal=1,
         /// <summary>
-        /// 
+        /// 其他
         /// </summary>
         Default=2,
 
     }
+   /// <summary>
+    /// 
+    /// </summary>
     public enum HandlerNo
     {
         /// <summary>

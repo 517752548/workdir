@@ -12,18 +12,19 @@ namespace Assets.Scripts.UI.Windows
     {
 
 
-        public UIButton bt_Coin;
-        public UIButton bt_gold;
         public UIButton bt_contruct;
-        public UIButton bt_market;
         public UIButton bt_make;
         public UIButton bt_train;
         public UIButton bt_produce;
         public UIButton bt_battle;
-        public UIButton bt_Package;
         public UIButton bt_bar;
         public Transform Title;
         public UILabel lb_title;
+        public UIButton bt_market;
+        public UIButton bt_Coin;
+        public UILabel lb_gold;
+        public UIButton bt_gold;
+        public UIButton bt_Package;
         public UISprite character1;
         public UISprite character2;
         public UISprite character3;
@@ -35,24 +36,31 @@ namespace Assets.Scripts.UI.Windows
         public override void InitTemplate()
         {
             base.InitTemplate();
-            bt_Coin = FindChild<UIButton>("bt_Coin");
-            bt_gold = FindChild<UIButton>("bt_gold");
             bt_contruct = FindChild<UIButton>("bt_contruct");
-            bt_market = FindChild<UIButton>("bt_market");
             bt_make = FindChild<UIButton>("bt_make");
             bt_train = FindChild<UIButton>("bt_train");
             bt_produce = FindChild<UIButton>("bt_produce");
             bt_battle = FindChild<UIButton>("bt_battle");
-            bt_Package = FindChild<UIButton>("bt_Package");
             bt_bar = FindChild<UIButton>("bt_bar");
             Title = FindChild<Transform>("Title");
             lb_title = FindChild<UILabel>("lb_title");
+            bt_market = FindChild<UIButton>("bt_market");
+            bt_Coin = FindChild<UIButton>("bt_Coin");
+            lb_gold = FindChild<UILabel>("lb_gold");
+            bt_gold = FindChild<UIButton>("bt_gold");
+            bt_Package = FindChild<UIButton>("bt_Package");
             character1 = FindChild<UISprite>("character1");
             character2 = FindChild<UISprite>("character2");
             character3 = FindChild<UISprite>("character3");
             character4 = FindChild<UISprite>("character4");
 
 
-        }       
+        }
+        public static UICastlePanel Show()
+        {
+            var ui = UIManager.Singleton.CreateOrGetWindow<UICastlePanel>();
+            ui.ShowWindow();
+            return ui;
+        }
     }
 }

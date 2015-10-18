@@ -1,131 +1,130 @@
-package Proto;
-//µØÍ¼ÊÂ¼ş
+ï»¿package Proto;
+//åœ°å›¾äº‹ä»¶
 enum MapEventType
 { 
-   BronPos = 1; //³öÉúµã
-   ReLivePos =2;//¸´»îµã
-   PKEnterPos =3;//¾º¼¼³¡Èë¿Ú
-   ScrectShopPos = 4;//µØÍ¼ºÚµê
-   ChestPos =5;//ÉñÃØ±¦²Ø
-   RechargePos =6 ;//æäÕ¾²¹¸øµã
-   BattlePos = 7;//¹Ì¶¨Õ½¶·µã
-   RandomChestPos = 8;//±¦ÏäÉ¢Âäµã
-   GoldPos = 9;//½ğ¿ó
-   RandomEvnetPos=10;//Ëæ»úÊÂ¼şµã
-   GoToNextLvlPos =11;//ÏÂ²ã´«ËÍµã
-   GoHomePos =12;//»Ø³Çµã
+   BronPos = 1; //å‡ºç”Ÿç‚¹
+   ReLivePos =2;//å¤æ´»ç‚¹
+   PKEnterPos =3;//ç«æŠ€åœºå…¥å£
+   ScrectShopPos = 4;//åœ°å›¾é»‘åº—
+   ChestPos =5;//ç¥ç§˜å®è—
+   RechargePos =6 ;//é©¿ç«™è¡¥ç»™ç‚¹
+   BattlePos = 7;//å›ºå®šæˆ˜æ–—ç‚¹
+   RandomChestPos = 8;//å®ç®±æ•£è½ç‚¹
+   GoldPos = 9;//é‡‘çŸ¿
+   RandomEvnetPos=10;//éšæœºäº‹ä»¶ç‚¹
+   GoToNextLvlPos =11;//ä¸‹å±‚ä¼ é€ç‚¹
+   GoHomePos =12;//å›åŸç‚¹
 }
-//µÀ¾ßÀàĞÍ
+//é“å…·ç±»å‹
 enum ItemType
 {
-   Achievement = 1;//³É¾Í
-   Materials = 2;//²ÄÁÏ
-   Diagram =3 ;//Í¼Ö½
-   RecallScroll = 4;//»Ø³Ç
-   Indenture = 5;//Ó¶±øÂôÉíÆõ
-   Book = 6;//Ìì¸³Êé
-   GoldPackage = 7;//½ğ±Ò°ü
-   Chest = 8;//±£ÏÕ
-   Cost = 9 ;//²¹¸øÀà
-   ChestKey = 10;//±£ÏÕÔ¿³×
-   TimeToUse = 11;//Ê±Ğ§ĞÔ
-   Tools = 12 ;//¹¦ÄÜĞÔÀ©Õ¹µÀ¾ß
+   Achievement = 1;//æˆå°±
+   Materials = 2;//ææ–™
+   Diagram =3 ;//å›¾çº¸
+   RecallScroll = 4;//å›åŸ
+   Indenture = 5;//ä½£å…µå–èº«å¥‘
+   Book = 6;//å¤©èµ‹ä¹¦
+   GoldPackage = 7;//é‡‘å¸åŒ…
+   Chest = 8;//ä¿é™©
+   Cost = 9 ;//è¡¥ç»™ç±»
+   ChestKey = 10;//ä¿é™©é’¥åŒ™
+   TimeToUse = 11;//æ—¶æ•ˆæ€§
+   Tools = 12 ;//åŠŸèƒ½æ€§æ‰©å±•é“å…·
 }
-//½¨ÖşÀàĞÍ
+//å»ºç­‘ç±»å‹
 enum BuildingType
 {
-   Crop =1 ;//Å©Ìï
-   House =2 ;//Ãñ¾Ó
-   Food=3;//ÃæµãÆÌ
-   Wood =4;//Ä¾²Ä³§
-   Clothing = 5;//³ñ¶Ğ³§
-   Ming =6;//¿óÒ¤
-   Explore = 7;//ÑİÎäÌü
+   Crop =1 ;//å†œç”°
+   House =2 ;//æ°‘å±…
+   Food=3;//é¢ç‚¹é“º
+   Wood =4;//æœ¨æå‚
+   Clothing = 5;//ç»¸ç¼å‚
+   Ming =6;//çŸ¿çª‘
+   Explore = 7;//æ¼”æ­¦å…
 }
-
+//å»ºç­‘è§£é”æ¡ä»¶
 enum BuildingUnlockType
 {
-    NONE = 1;//ÎŞĞèÌõ¼ş
-	NeedBuild =2;//ĞèÒªÇ°ÖÃ
+    NONE = 1;//æ— éœ€æ¡ä»¶
+	NeedBuild =2;//éœ€è¦å‰ç½®
 }
-
+//ä¼¤å®³ç±»å‹
 enum SkillDamageType
 {
-   Cure =1 ;//ÖÎÁÆ
-   Damage = 2;//ÉËº¦
+   Cure =1 ;//æ²»ç–—
+   Damage = 2;//ä¼¤å®³
 }
-
+//æŠ€èƒ½ç›®æ ‡ç±»å‹
 enum SkillTargetType
 {
-   Owner = 1;//×Ô¼º
-   OwnerTeam =2;//ÓÑ·½
-   Enemy =3 ;//µĞ·½
+   OwnerTeam =1;//å‹æ–¹
+   Enemy =2;//æ•Œæ–¹
 }
-
+//æŠ€èƒ½æ•ˆæœç›®æ ‡ç±»å‹
 enum SkillEffectTaget 
 {
-   OwnerTeam =1;//ÓÑ·½
-   Enemy =2 ;//µĞ·½
+   OwnerTeam =1;//å‹æ–¹
+   Enemy =2 ;//æ•Œæ–¹
 }
-
+//æŠ€èƒ½æ•ˆæœç±»å‹
 enum SkillEffectType
 {
-   Dot = 1; //³ÖĞøÉËº¦
-   ReduceDamage =2 ;//¼õÉÙ¹¥»÷
-   Giddy =3;//Ñ£ÔÎ
-   SuckBlood=4;//ÎüÑª
-   AddDef = 5;//»¤¶Ü
+   Dot = 1; //æŒç»­ä¼¤å®³
+   ReduceDamage =2 ;//å‡å°‘æ”»å‡»
+   Giddy =3;//çœ©æ™•
+   SuckBlood=4;//å¸è¡€
+   AddDef = 5;//æŠ¤ç›¾
 }
-
+//æˆå°±è¾¾æˆæ¡ä»¶ç±»å‹
 enum AchievementEventType
 {
-    GoldCost = 1;//ÅÌ²øÏûºÄµ½Ö¸¶¨Á¿
-	BuildLevel = 2 ;//½¨Öşµ½Ö¸¶¨µÈ¼¶
-	AllBuildLevel =3;//Ö¸¶¨×é½¨Öşµ½Ö¸¶¨µÈ¼¶
-	Explore = 4;//Ì½Ë÷¶Èµ½Ö¸¶¨Êı
-	ArmyLevel = 5;//±øÖÖ½ø»¯µ½Ö¸¶¨µÈ¼¶
-	PlaySkill = 6;//»ñµÃÖ¸¶¨Ìì
-	CostFood = 7;//ÏûºÄ¸ÉÁ¸´ïÖ¸¶¨ÊıÁ¿
-	KillBoss = 8;//É±ËÀboss
-	ShareGame = 9;//·ÖÏí
-	KillMonster = 10 ;//É±ËÀÖ¸¶¨¹ÖÎïÊı
-	EnterMap = 11;//½øÈëÉñÃØµØÍ¼
-	OpenChest =12;//¿ªÆôÖ¸¶¨ÊıÁ¿±¦Ïä
-	DefenceEnemy =13;//³É¹¦µÖÓùÈëÇÖ
+    GoldCost = 1;//ç›˜ç¼ æ¶ˆè€—åˆ°æŒ‡å®šé‡
+	BuildLevel = 2 ;//å»ºç­‘åˆ°æŒ‡å®šç­‰çº§
+	AllBuildLevel =3;//æŒ‡å®šç»„å»ºç­‘åˆ°æŒ‡å®šç­‰çº§
+	Explore = 4;//æ¢ç´¢åº¦åˆ°æŒ‡å®šæ•°
+	ArmyLevel = 5;//å…µç§è¿›åŒ–åˆ°æŒ‡å®šç­‰çº§
+	PlaySkill = 6;//è·å¾—æŒ‡å®šå¤©
+	CostFood = 7;//æ¶ˆè€—å¹²ç²®è¾¾æŒ‡å®šæ•°é‡
+	KillBoss = 8;//æ€æ­»boss
+	ShareGame = 9;//åˆ†äº«
+	KillMonster = 10 ;//æ€æ­»æŒ‡å®šæ€ªç‰©æ•°
+	EnterMap = 11;//è¿›å…¥ç¥ç§˜åœ°å›¾
+	OpenChest =12;//å¼€å¯æŒ‡å®šæ•°é‡å®ç®±
+	DefenceEnemy =13;//æˆåŠŸæŠµå¾¡å…¥ä¾µ
 }
-
+//éšæœºäº‹ä»¶ç±»å‹
 enum RandomEventTickType
 { 
-   WhenLoginGame = 1;//µÇÂ½ÓÎÏ·
-   FixTime = 2;//¹Ì¶¨Ê±¼äË¢ĞÂ´¥·¢
-   FixEvent = 3 ;//¹Ì¶¨ÊÂ¼ş
+   WhenLoginGame = 1;//ç™»é™†æ¸¸æˆ
+   FixTime = 2;//å›ºå®šæ—¶é—´åˆ·æ–°è§¦å‘
+   FixEvent = 3 ;//å›ºå®šäº‹ä»¶
 }
-
+//ç©å®¶æŠ€èƒ½ç±»å‹
 enum PlaySkillType
 {
-   NOFristCD = 1 ;//Ê×ÂÖ¼¼ÄÜÎŞcd
-   ExploreCostLower =2 ;//Ì½Ë÷ÏûºÄ½µµÍ
-   ExploreViewDis =3;//Ì½Ë÷¿É¼û·¶Î§Ôö¼Ó
-   AttAppend = 4;//ĞŞÕıÊôĞÔ
+   NOFristCD = 1 ;//é¦–è½®æŠ€èƒ½æ— cd
+   ExploreCostLower =2 ;//æ¢ç´¢æ¶ˆè€—é™ä½
+   ExploreViewDis =3;//æ¢ç´¢å¯è§èŒƒå›´å¢åŠ 
+   AttAppend = 4;//ä¿®æ­£å±æ€§
 }
-
+//å•†åº—è§£é”æ¡ä»¶ç±»å‹
 enum StoreUnlockType
 {
-   None = -1; //ÎŞĞè½âËø
-   BuildGetTargetLevel = 1; //Ö¸¶¨½¨Öş´ïµ½Ö¸¶¨µÈ¼¶½âËø
-   ExploreGetTarget =2;//Ö¸¶¨µØÍ¼´ïµ½Ö¸¶¨Ì½Ë÷¶È½âËø
+   None = -1; //æ— éœ€è§£é”
+   BuildGetTargetLevel = 1; //æŒ‡å®šå»ºç­‘è¾¾åˆ°æŒ‡å®šç­‰çº§è§£é”
+   ExploreGetTarget =2;//æŒ‡å®šåœ°å›¾è¾¾åˆ°æŒ‡å®šæ¢ç´¢åº¦è§£é”
 }
-
+//é›‡ä½£æ¡ä»¶ç±»å‹
 enum EmployCondtionType
 {
    None = -1;
-   CompleteMap=1;//Í¨¹Ø¸±±¾   £¨1|2|3£©
-   GetAchievement =2;//»ñµÃ³É¾Í£¨1|2|3£©
-   GetItem =3;//»ñµÃµÀ¾ß £¨1£º1|2£º3|3£º1£©
+   CompleteMap=1;//é€šå…³å‰¯æœ¬   ï¼ˆ1|2|3ï¼‰
+   GetAchievement =2;//è·å¾—æˆå°±ï¼ˆ1|2|3ï¼‰
+   GetItem =3;//è·å¾—é“å…· ï¼ˆ1ï¼š1|2ï¼š3|3ï¼š1ï¼‰
 }
-
+//é›‡ä½£æ¶ˆè€—è´§å¸ç±»å‹
 enum EmployCostCurrent
 {
-   Gold = 1 ;//ÏûºÄ½ğ±Ò
-   Coin =2 ;//ÏûºÄ×êÊ¯
+   Gold = 1 ;//æ¶ˆè€—é‡‘å¸
+   Coin =2 ;//æ¶ˆè€—é’»çŸ³
 }

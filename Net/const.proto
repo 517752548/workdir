@@ -1,4 +1,4 @@
-package Proto;
+﻿package Proto;
 
 enum GameVersion
 {
@@ -9,8 +9,8 @@ enum GameVersion
 }
 enum UserType
 {
-   Normal = 1; 
-   Default = 2;
+   Normal = 1; //默认
+   Default = 2;//其他
 }
 
 enum HandlerNo

@@ -17,18 +17,24 @@ namespace ProtoParser
         private HashSet<string> searchenums = new HashSet<string>();
         public string Package = string.Empty;
         private string protoDir = string.Empty;
+        private string Comm = string.Empty;
         public void ReadLine(string line)
         {
             var code = line.Trim();
 
             if (code.StartsWith("{")) return;//开始
-            if (code.StartsWith("/")) return;//注释
+            if (code.StartsWith("/"))
+            {
+                Comm = code.Replace("/", "");
+                return;//注释
+            }
             if (code.StartsWith("}"))//结束
             {
                 CurrentEnum = null;
                 CurrentStruct = null;
                 return;
             }
+            
 
             #region Enum
             if (CurrentEnum != null)
@@ -52,6 +58,12 @@ namespace ProtoParser
             #endregion
 
             var args = code.Split(" \t\\;".ToArray());
+            //Console.WriteLine(code);
+            var notes = code.Split("//".ToArray());
+            var tempFieldSb = new StringBuilder();
+            for (var i = 1; i < notes.Length; i++)
+                tempFieldSb.Append(notes[i].Trim());
+            //Console.WriteLine(tempFieldSb.ToString());
             switch (args[0])
             {
                 case "package":
@@ -62,11 +74,11 @@ namespace ProtoParser
                     LoadEnumTypes(importFile);
                     break;
                 case "message":
-                    CurrentStruct = new ProtoStruct(args[1]);
+                    CurrentStruct = new ProtoStruct(args[1], Comm);
                     Structs.Add(CurrentStruct);
                     break;
                 case "enum":
-                    CurrentEnum = new ProtoEnum(args[1]);
+                    CurrentEnum = new ProtoEnum(args[1],  Comm);
                     Enums.Add(CurrentEnum);
                     break;
                 case "optional":
@@ -75,10 +87,6 @@ namespace ProtoParser
                     var fieldType = args[1];
                     var fieldName = args[2].Split("\t\\;".ToArray())[0].Trim();
                     var fieldNote = string.Empty;
-                    var tempFieldSb = new StringBuilder();
-                    var notes = code.Split("\\".ToArray());
-                    for (var i = 1; i < notes.Length; i++)
-                        tempFieldSb.Append(notes[i].Trim());
                     fieldNote = tempFieldSb.ToString();
                     if (CurrentStruct == null) throw new Exception("解析错误:" + code);
                     CurrentStruct.AddField(new ProtoField
@@ -90,6 +98,7 @@ namespace ProtoParser
                     });
                     break;
             }
+            Comm = string.Empty;
         }
         private void LoadEnumTypes(string importFile)
         {
@@ -132,7 +141,7 @@ namespace ProtoParser
             var path = Path.Combine(protoDir, file);
             var name = Path.GetFileName(path);
             LoadEnumTypes(name);
-            using (var reader = new StreamReader(path))
+            using (var reader = new StreamReader(path,Encoding.UTF8))
             {
                 while (!reader.EndOfStream)
                 {
@@ -174,9 +183,14 @@ namespace [NAMESPACE]
         }
 
 
+
         private string GenEnumCsCode(ProtoEnum en)
         {
-            var template = @"    public enum [NAME]
+            var template =
+                @"   /// <summary>
+    /// [NODE]
+    /// </summary>
+    public enum [NAME]
     {
 [FIELDS]
     }";
@@ -199,19 +213,21 @@ namespace [NAMESPACE]
                 sb.AppendLine(templateField);
             }
 
-            return template.Replace("[NAME]", en.Name).Replace("[FIELDS]",sb.ToString());
+            return template.Replace("[NAME]", en.Name).Replace("[FIELDS]",sb.ToString()).Replace("[NODE]",en.Node);
         }
         private string GenStructCsCode(ProtoStruct cstruct)
         {
-
             
             #region template
             var template =
-@"    public class [NAME] : Proto.ISerializerable
+@"    /// <summary>
+    /// [NODE]
+    /// </summary>
+    public class [NAME] : Proto.ISerializerable
     {
         public [NAME]()
         {
-[INITS]
+			[INITS]
         }
 [FIELDS]
         public void ParseFormBinary(BinaryReader reader)
@@ -272,7 +288,8 @@ namespace [NAMESPACE]
             return structCode.Replace("[INITS]", sbInits.ToString())
                 .Replace("[FIELDS]",sbFields.ToString())
                 .Replace("[BRS]",sbBr.ToString())
-                .Replace("[BWS]",sbBw.ToString());
+                .Replace("[BWS]",sbBw.ToString())
+                .Replace("[NODE]",cstruct.Node);
         }
 
         #region genread
