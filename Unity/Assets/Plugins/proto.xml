@@ -1114,6 +1114,11 @@
             地图事件
             </summary>
         </member>
+        <member name="F:Proto.MapEventType.None">
+            <summary>
+            默认
+            </summary>
+        </member>
         <member name="F:Proto.MapEventType.BronPos">
             <summary>
             出生点
@@ -1177,6 +1182,11 @@
         <member name="T:Proto.ItemType">
             <summary>
             道具类型
+            </summary>
+        </member>
+        <member name="F:Proto.ItemType.None">
+            <summary>
+            默认
             </summary>
         </member>
         <member name="F:Proto.ItemType.Achievement">

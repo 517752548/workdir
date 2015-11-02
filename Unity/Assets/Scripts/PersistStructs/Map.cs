@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,18 +22,11 @@ namespace Assets.Scripts.PersistStructs
     {
         public int PosX;
         public int PosY;
-        public TypeOfValue Type;
+        public MapEventType Type;
         public string Json;
         public int ConfigID;
     }
 
-    public enum TypeOfValue
-    {
-        None,
-        BattleType =1,
-        House =2, 
-        PK =3
-    }
 
 
 }

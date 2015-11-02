@@ -40,6 +40,7 @@ namespace Assets.Scripts.GameStates
         public ExploreState(MapConfig map)
         {
             Config = map;
+            SubMapConfigs = ExcelToJSONConfigManager.Current.GetConfigs<SubMapConfig>((t) => { return t.MapID == map.ID; });
         }
 
         public MapConfig Config { private set; get; }
@@ -114,6 +115,11 @@ namespace Assets.Scripts.GameStates
             CheckWaiting();
         }
 
+        /// <summary>
+        /// configs of pos
+        /// </summary>
+        public SubMapConfig[] SubMapConfigs { private set; get; }
+        
         public void OnChange(Vector2 target)
         {
             //处理回城
@@ -125,6 +131,9 @@ namespace Assets.Scripts.GameStates
             else
             {
 
+                
+
+                //received the onchange event
                 if (GRandomer.Probability10000(Config.RandomPro))
                 {
                     //出发随机事件

@@ -77,6 +77,11 @@ public class MapAutoGenEditor:EditorWindow
                             var render = grid.GetComponent<SpriteRenderer>();
                             var srpite = AssetDatabase.LoadAssetAtPath(AssetDatabase.GetAssetPath(texture.Texture), typeof(Sprite));
                             render.sprite = srpite as Sprite;
+                            var pos =grid.AddComponent<MapPosition>();
+                            pos.X = w;
+                            pos.Y = h;
+
+                            
                             //  render.sprite. = texture.Texture;
                         }
                     }

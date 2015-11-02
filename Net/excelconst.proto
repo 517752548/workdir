@@ -2,6 +2,7 @@
 //地图事件
 enum MapEventType
 { 
+   None = 0; //默认
    BronPos = 1; //出生点
    ReLivePos =2;//复活点
    PKEnterPos =3;//竞技场入口
@@ -18,6 +19,7 @@ enum MapEventType
 //道具类型
 enum ItemType
 {
+   None = 0;//默认
    Achievement = 1;//成就
    Materials = 2;//材料
    Diagram =3 ;//图纸

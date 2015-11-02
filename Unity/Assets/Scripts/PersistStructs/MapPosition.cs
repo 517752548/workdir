@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,4 +10,13 @@ public class MapPosition :MonoBehaviour
     public int X;
     [SerializeField]
     public int Y;
+    [SerializeField]
+    public MapEventType DataType = MapEventType.None;
+
+    public void Start()
+    {
+        Map = GameObject.FindObjectOfType<GameMap>();
+    }
+    
+    public GameMap Map;
 }

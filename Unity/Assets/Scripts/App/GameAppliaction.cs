@@ -23,7 +23,8 @@ namespace Assets.Scripts.App
                 PlayerItemManager.Singleton,
                 GamePlayerManager.Singleton,
                 BuildingManager.Singleton,
-                PlayerArmyManager.Singleton
+                PlayerArmyManager.Singleton,
+                PlayerMapManager.Singleton
             };
             foreach (var i in prisit)
                 i.Load();

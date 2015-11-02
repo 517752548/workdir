@@ -13,6 +13,10 @@ namespace Proto
     public enum MapEventType
     {
         /// <summary>
+        /// 默认
+        /// </summary>
+        None=0,
+        /// <summary>
         /// 出生点
         /// </summary>
         BronPos=1,
@@ -67,6 +71,10 @@ namespace Proto
     /// </summary>
     public enum ItemType
     {
+        /// <summary>
+        /// 默认
+        /// </summary>
+        None=0,
         /// <summary>
         /// 成就
         /// </summary>

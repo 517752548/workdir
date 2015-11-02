@@ -251,7 +251,7 @@ namespace ExcelConfig
         /// 子地图ID
         /// </summary>
         [ExcelConfigColIndex(1)]
-        public String MapID { set; get; }
+        public int MapID { set; get; }
         
         /// <summary>
         /// 事件节点名称

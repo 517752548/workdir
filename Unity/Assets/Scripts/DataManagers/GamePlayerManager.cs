@@ -48,6 +48,26 @@ namespace Assets.Scripts.DataManagers
 
         private HashSet<int> MapIDs = new HashSet<int>();
 
+        /// <summary>
+        /// 从x，y到index
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static int PosXYToIndex(int x,int y)
+        {
+            return x + y * CELL;
+        }
+
+        /// <summary>
+        /// 从index 到x，y
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public static Vector2 IndexToPos(int index)
+        {
+            return new Vector2(index % CELL, (index - (index % CELL)) / CELL);
+        }
         public GamePlayerManager()
         {
             PlayerData = new Dictionary<int, int>();
@@ -341,6 +361,13 @@ namespace Assets.Scripts.DataManagers
             MapIDs.Add(map);
         }
 
+
+        /// <summary>
+        /// record the last pos 
+        /// if input null goto orgin pos.
+        /// else record
+        /// </summary>
+        /// <param name="target"></param>
         public void GoPos(Vector2? target)
         {
             //设置为0 
@@ -351,7 +378,8 @@ namespace Assets.Scripts.DataManagers
             }
             var x = (int)target.Value.x;
             var y = (int)target.Value.y;
-            int index = x + (y * CELL);
+            int index =  PosXYToIndex(x,y);
+
 
             this[PlayDataKeys.PLAYER_CURREN_POS] = index;
         }
@@ -367,7 +395,7 @@ namespace Assets.Scripts.DataManagers
                 }
                 else
                 {
-                    return new Vector2(index % CELL, (index - (index % CELL)) / CELL);
+                    return IndexToPos(index);
                 }
             }
         }
