@@ -22,7 +22,7 @@ public class MapAutoGenEditor:EditorWindow
     public List<ResourceGridTexture> GridSprites;
     private bool needAdd = false;
 
-    private Vector2 size = new Vector2(64, 64);
+    private Vector2 size = new Vector2(4, 4);
     private Vector2 gridPlexSize = new Vector2(64, 64);
 
     /// <summary>
