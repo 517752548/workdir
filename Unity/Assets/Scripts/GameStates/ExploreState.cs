@@ -10,23 +10,32 @@ namespace Assets.Scripts.GameStates
 {
     public class ExploreState : App.GameState
     {
+
+        public const string PLAY_RES = "PlayerMap";
+
         public override void OnEnter()
         {
             base.OnEnter();
             UI.UIControllor.Singleton.ShowOrHideMessage(false);
             UI.UIControllor.Singleton.HideAllUI();
             Map = GameObject.FindObjectOfType<GameMap>();
+            Map.InitForExploreState();
+
             var lastPos = DataManagers.GamePlayerManager.Singleton.CurrentPos;
             if (lastPos == null) //中心点
-                TargetPos = new Vector2(Map.CurrentMap.Height / 2, Map.CurrentMap.Width / 2);
+                TargetPos = Map.Orgin;
             else
                 TargetPos = lastPos.Value;
 
             Map.LookAt(TargetPos, true);
             Map.SetZone(4, true);
 
+            player = GameObject.Instantiate<GameObject>(ResourcesManager.Singleton.LoadResources<GameObject>(PLAY_RES));
+            lastPos = targetPosPlayer = player.transform.position = Map.GetPositionOfGrid(TargetPos);
             UI.Windows.UIExplore.Show();
         }
+
+        private GameObject player;
 
         private Vector2 TargetPos;
 
@@ -45,6 +54,8 @@ namespace Assets.Scripts.GameStates
 
         public MapConfig Config { private set; get; }
 
+        private Vector3 lastPos;
+
         public override void OnTap(Vector2 pox)
         {
             base.OnTap(pox);
@@ -55,7 +66,7 @@ namespace Assets.Scripts.GameStates
             var d = (pox - org).normalized;
             Debug.Log("D:" + d);
             //TargetPos += Vector2.up;
-
+            lastPos = TargetPos;
             if (Mathf.Abs(d.x) > 0.8)
             {
                 if (d.x > 0)
@@ -84,6 +95,7 @@ namespace Assets.Scripts.GameStates
             }
 
             delayChange = Time.time + Map.LookAt(TargetPos);
+            targetPosPlayer = Map.GetPositionOfGrid(TargetPos);
             Debug.Log("Target:" + TargetPos);
         }
 
@@ -105,6 +117,8 @@ namespace Assets.Scripts.GameStates
             return false;
         }
 
+        private Vector3 targetPosPlayer;
+
         public override void OnTick()
         {
             base.OnTick();
@@ -113,26 +127,26 @@ namespace Assets.Scripts.GameStates
                 BState.OnTick();
             }
             CheckWaiting();
+            player.transform.position = Vector3.Lerp(player.transform.position, targetPosPlayer, 20);
         }
 
         /// <summary>
         /// configs of pos
         /// </summary>
         public SubMapConfig[] SubMapConfigs { private set; get; }
+
+        
         
         public void OnChange(Vector2 target)
         {
             //处理回城
             if (Map.IsOrgin(target))
             {
-                DataManagers.GamePlayerManager.Singleton.GoPos(null);//回城的时候
+                RecordPos(null);//回城的时候
                 App.GameAppliaction.Singleton.JoinCastle();
             }
             else
             {
-
-                
-
                 //received the onchange event
                 if (GRandomer.Probability10000(Config.RandomPro))
                 {
@@ -141,14 +155,31 @@ namespace Assets.Scripts.GameStates
                     StartBattle(battleID, (winner) =>
                     {
                         if (winner)
-                            DataManagers.GamePlayerManager.Singleton.GoPos(target);
-
+                        {
+                            RecordPos(target);
+                        }
+                        else {
+                            GoBack();
+                        }
                     });
                     return;
                 }
                 //记录当前行走点
 
+                RecordPos(target);
             }
+        }
+
+
+        private void GoBack()
+        {
+            TargetPos = lastPos ;
+            player.transform.position = targetPosPlayer = Map.GetPositionOfGrid(lastPos);
+        }
+
+        private void RecordPos(Vector2? target)
+        {
+            DataManagers.GamePlayerManager.Singleton.GoPos(target);
         }
 
         public void StartBattle(int battlegroup, Action<bool> callBack)

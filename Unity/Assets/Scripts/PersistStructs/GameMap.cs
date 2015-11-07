@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Assets.Scripts.PersistStructs;
+using System.Collections.Generic;
+using Assets.Scripts.DataManagers;
 
 [ExecuteInEditMode]
+[RequireComponent(typeof(BoxCollider))]
 public class GameMap : MonoBehaviour {
 
 	// Use this for initialization
@@ -20,7 +23,8 @@ public class GameMap : MonoBehaviour {
 
     public float LookAt(Vector2 grid, bool nodelay = false)
     {
-        var center = (Vector3)grid + new Vector3(0, 0, -20);
+        var center = (Vector3)grid * OneGridSize
+            + new Vector3(0, 0, -20);
         TargetPos = center;
         if (nodelay)
         {
@@ -54,19 +58,62 @@ public class GameMap : MonoBehaviour {
 
     public bool IsOrgin(Vector2 pos) 
     {
-        var center = new Vector2(CurrentMap.Width / 2, CurrentMap.Height / 2);
-        return pos == center;
+        if (AllPosition == null) return false;
+        int index = GamePlayerManager.PosXYToIndex((int)pos.x, (int)pos.y);
+        MapPosition posData;
+        if (AllPosition.TryGetValue(index, out posData))
+        {
+            return posData.DataType == Proto.MapEventType.BronPos;
+        }
+        return false;
+    }
+
+    [SerializeField]
+    public float OneGridSize = 1f;
+
+    private Dictionary<int, MapPosition> AllPosition;
+
+    public void InitForExploreState()
+    {
+        var pos = GameObject.FindObjectsOfType<MapPosition>();
+        AllPosition = new Dictionary<int, MapPosition>();
+        foreach (var i in pos)
+        {
+            AllPosition.Add(i.ToIndex(), i);
+
+            if (i.DataType == Proto.MapEventType.None)
+            {
+                var renderer = i.GetComponent<SpriteRenderer>();
+                if (renderer != null)
+                    GameObject.Destroy(renderer);
+            }
+
+            if (i.DataType == Proto.MapEventType.BronPos)
+                Orgin = new Vector2(i.X, i.Y);
+        }
+
+
+    }
+
+    public Vector2 Orgin { get; private set; }
+
+    public Vector3 GetPositionOfGrid(Vector2 grid)
+    {
+        var pos = new Vector3(grid.x * OneGridSize, grid.y * OneGridSize, 0);
+        return pos;
     }
 
 #if UNITY_EDITOR
-    public void SetWH(int w, int h)
+
+    public void SetWH(int w, int h, float gridSize)
     {
         CurrentMap = new Map();
         CurrentMap.Height = w;
         CurrentMap.Width = h;
+        OneGridSize = gridSize;
         var box = this.GetComponent<BoxCollider>();
-        box.size = new Vector3(w, h, 0f);
-        offset = new Vector3((w / 2f), (h / 2f), 0) - new Vector3(0.5f, 0.5f, 0f);
+        box.size = new Vector3(w * gridSize, h * gridSize, 0f);
+        offset = new Vector3((w * gridSize / 2f), (h * gridSize / 2f), 0) - new Vector3(0.5f * gridSize, 0.5f * gridSize, 0f);
         box.center = offset;
         
     }
@@ -83,15 +130,16 @@ public class GameMap : MonoBehaviour {
         {
             for (var z = 0; z < this.CurrentMap.Height; z++)
             {
-                var pos = new Vector3(x, z, 0);
+                var pos = new Vector3(x * OneGridSize, z * OneGridSize, 0);
                 Gizmos.color = Color.white;
-                var rect = new Rect(pos.x, pos.z, 1, 1);
-                Gizmos.DrawWireCube(pos, new Vector3(0.99f, 0.99f, 0));
-
+                Gizmos.DrawWireCube(pos, new Vector3(0.99f * OneGridSize, 0.99f * OneGridSize, 0));
             }
         }
     }
     [HideInInspector]
     public bool ShowGrid = false;
+
 #endif
+
+   
 }

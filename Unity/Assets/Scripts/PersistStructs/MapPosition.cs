@@ -1,4 +1,5 @@
-﻿using Proto;
+﻿using Assets.Scripts.DataManagers;
+using Proto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,14 @@ public class MapPosition :MonoBehaviour
     [SerializeField]
     public MapEventType DataType = MapEventType.None;
 
-    public void Start()
+    public void OnDrawGizmosSelected()
     {
-        Map = GameObject.FindObjectOfType<GameMap>();
+       // Gizmos.color = Color.yellow;
+        //Gizmos.DrawCube(this.transform.position, Vector3.one);
     }
-    
-    public GameMap Map;
+
+    public int ToIndex()
+    {
+        return GamePlayerManager.PosXYToIndex(X, Y);
+    }
 }

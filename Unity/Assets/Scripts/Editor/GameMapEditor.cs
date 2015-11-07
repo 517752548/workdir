@@ -54,6 +54,10 @@ public class GameMapEditor : Editor
         Handles.BeginGUI();
         GUI.Label(new Rect(0, 2, 200, 20), "SHOW Grid",W);
         target.ShowGrid = GUI.Toggle(new Rect(3, 22, 200, 20), target.ShowGrid, "");
+        if (GUI.Button(new Rect(0, 52, 100, 20), "导出",W))
+        {
+            MapAutoGenEditor.ExportJsonTabData();
+        }
         Handles.EndGUI();
     }
 }
