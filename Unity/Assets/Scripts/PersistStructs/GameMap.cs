@@ -103,6 +103,12 @@ public class GameMap : MonoBehaviour {
         return pos;
     }
 
+    internal bool HaveIndex(Vector2 target)
+    {
+        int index = GamePlayerManager.PosXYToIndex((int)target.x, (int)target.y);
+        return AllPosition.ContainsKey(index);
+    }
+
 #if UNITY_EDITOR
 
     public void SetWH(int w, int h, float gridSize)
@@ -140,6 +146,8 @@ public class GameMap : MonoBehaviour {
     public bool ShowGrid = false;
 
 #endif
+
+
 
    
 }
