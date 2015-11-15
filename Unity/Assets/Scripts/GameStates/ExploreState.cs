@@ -139,6 +139,11 @@ namespace Assets.Scripts.GameStates
         
         public void OnChange(Vector2 target)
         {
+
+            if (!Map.HaveIndex(target)) {
+                GoBack();
+                return;
+            }
             //处理回城
             if (Map.IsOrgin(target))
             {
@@ -175,6 +180,7 @@ namespace Assets.Scripts.GameStates
         {
             TargetPos = lastPos ;
             player.transform.position = targetPosPlayer = Map.GetPositionOfGrid(lastPos);
+            Map.LookAt(TargetPos);
         }
 
         private void RecordPos(Vector2? target)
