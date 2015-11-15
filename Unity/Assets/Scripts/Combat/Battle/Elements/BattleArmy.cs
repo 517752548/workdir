@@ -200,6 +200,7 @@ namespace Assets.Scripts.Combat.Battle.Elements
         public int Damage { set; get; }
         public bool IsMiss { set; get; }
         public bool IsDead { set; get; }
+
     }
 }
 

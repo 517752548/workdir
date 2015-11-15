@@ -18,5 +18,7 @@ namespace Assets.Scripts.Combat.Battle.States
         void ShowDialog(ExcelConfig.BattleConfig battleConfig);
 
         void ShowBattleName(ExcelConfig.BattleConfig config);
+
+        void OnAttack(Elements.DamageResult result, Elements.BattleArmy cur);
     }
 }

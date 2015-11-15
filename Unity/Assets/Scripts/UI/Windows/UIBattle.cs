@@ -5,6 +5,8 @@ using System.Text;
 using Assets.Scripts.Tools;
 using Assets.Scripts.Combat.Battle.States;
 using ExcelConfig;
+using Assets.Scripts.Combat.Battle.Elements;
+using UnityEngine;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -178,5 +180,16 @@ namespace Assets.Scripts.UI.Windows
         }
 
 
+
+
+        public void OnAttack(Combat.Battle.Elements.DamageResult result,BattleArmy cur)
+        {
+            if(cur.Camp== Proto.ArmyCamp.Monster)
+            {
+                iTween.shake(MonsterRoot.gameObject, 0.5f, 0, new UnityEngine.Vector3(100, 100, 0));
+                var an = daoguangFX.GetComponent<Animator>();
+                an.SetTrigger("Start");
+            }
+        }
     }
 }
