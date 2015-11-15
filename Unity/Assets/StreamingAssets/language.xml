@@ -39,7 +39,7 @@
   <LanguageKey Key="UI_GOTOEX_ARMY_LB">军队:</LanguageKey> 
   
   <!--货郎-->
-  <LanguageKey Key="UIShop_Model_Cost">金币 *{0:N0}</LanguageKey>
+  <LanguageKey Key="UIShop_Model_Cost">{0:N0}</LanguageKey>
   <LanguageKey Key="COST_GOLD_REWARD_ITEM">消耗金币{0} {1} +{2}</LanguageKey>
   
   <LanguageKey Key="UITavern_Attack">攻击:{0:N0}</LanguageKey> 
