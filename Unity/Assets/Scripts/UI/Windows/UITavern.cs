@@ -19,7 +19,7 @@ namespace Assets.Scripts.UI.Windows
                 //todo
                 startTable = new UITableManager<UITableItem>();
                 startTable.InitFromGrid(this.Template.StartGrid);
-                this.Item.Root.OnMouseClick((s, e) => {
+                this.Template.Bt_Emp.OnMouseClick((s, e) => {
                     if (OnClick == null) return;
                     OnClick(this);
                 });
@@ -55,6 +55,7 @@ namespace Assets.Scripts.UI.Windows
 
             
             public Action<ItemGridTableModel> OnClick;
+            public bool CanEmp { set; get; }
         }
 
         public override void InitModel()

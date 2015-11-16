@@ -15,32 +15,32 @@ namespace Assets.Scripts.UI.Windows
             public ItemGridTableTemplate(){}
             public UITexture icon;
             public UILabel lb_name;
+            public UISprite s_job;
+            public UIGrid StartGrid;
             public UILabel lb_skill;
             public UILabel lb_speed;
             public UILabel lb_hp;
             public UILabel lb_attack;
-            public UISprite s_job;
-            public UIGrid StartGrid;
+            public UISprite s_lock;
+            public UIButton Bt_Emp;
 
             public override void InitTemplate()
             {
                 icon = FindChild<UITexture>("icon");
                 lb_name = FindChild<UILabel>("lb_name");
+                s_job = FindChild<UISprite>("s_job");
+                StartGrid = FindChild<UIGrid>("StartGrid");
                 lb_skill = FindChild<UILabel>("lb_skill");
                 lb_speed = FindChild<UILabel>("lb_speed");
                 lb_hp = FindChild<UILabel>("lb_hp");
                 lb_attack = FindChild<UILabel>("lb_attack");
-                s_job = FindChild<UISprite>("s_job");
-                StartGrid = FindChild<UIGrid>("StartGrid");
+                s_lock = FindChild<UISprite>("s_lock");
+                Bt_Emp = FindChild<UIButton>("Bt_Emp");
 
             }
         }
 
 
-        public UISprite character1;
-        public UISprite character2;
-        public UISprite character3;
-        public UILabel lb_title;
         public UIPanel PackageView;
         public UIGrid ItemGrid;
         public UIButton bt_close;
@@ -52,16 +52,18 @@ namespace Assets.Scripts.UI.Windows
         public override void InitTemplate()
         {
             base.InitTemplate();
-            character1 = FindChild<UISprite>("character1");
-            character2 = FindChild<UISprite>("character2");
-            character3 = FindChild<UISprite>("character3");
-            lb_title = FindChild<UILabel>("lb_title");
             PackageView = FindChild<UIPanel>("PackageView");
             ItemGrid = FindChild<UIGrid>("ItemGrid");
             bt_close = FindChild<UIButton>("bt_close");
 
             ItemGridTableManager.InitFromGrid(ItemGrid);
 
-        }       
+        }
+        public static UITavern Show()
+        {
+            var ui = UIManager.Singleton.CreateOrGetWindow<UITavern>();
+            ui.ShowWindow();
+            return ui;
+        }
     }
 }
