@@ -18,8 +18,9 @@ namespace Assets.Scripts.UI.Windows
         public UIButton bt_produce;
         public UIButton bt_battle;
         public UIButton bt_bar;
-        public Transform Title;
+        public UIPanel Title;
         public UILabel lb_title;
+        public UISprite PlayerIcon;
         public UIButton bt_market;
         public UIButton bt_Coin;
         public UILabel lb_gold;
@@ -42,8 +43,9 @@ namespace Assets.Scripts.UI.Windows
             bt_produce = FindChild<UIButton>("bt_produce");
             bt_battle = FindChild<UIButton>("bt_battle");
             bt_bar = FindChild<UIButton>("bt_bar");
-            Title = FindChild<Transform>("Title");
+            Title = FindChild<UIPanel>("Title");
             lb_title = FindChild<UILabel>("lb_title");
+            PlayerIcon = FindChild<UISprite>("PlayerIcon");
             bt_market = FindChild<UIButton>("bt_market");
             bt_Coin = FindChild<UIButton>("bt_Coin");
             lb_gold = FindChild<UILabel>("lb_gold");

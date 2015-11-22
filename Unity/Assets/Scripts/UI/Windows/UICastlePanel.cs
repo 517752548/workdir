@@ -33,7 +33,7 @@ namespace Assets.Scripts.UI.Windows
                 ui.ShowWindow();
             });
 
-            Title.OnMouseClick((s, e) =>
+            this.PlayerIcon.OnMouseClick((s, e) =>
             {
                 var ui = UIManager.Singleton.CreateOrGetWindow<UISetting>();
                 ui.ShowWindow();

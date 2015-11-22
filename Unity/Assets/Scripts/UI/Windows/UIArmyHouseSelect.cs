@@ -18,7 +18,8 @@ namespace Assets.Scripts.UI.Windows
             public override void InitModel()
             {
                 //todo
-                this.Item.Root.OnMouseClick((s, e) =>
+
+                this.Template.Bt_selected.OnMouseClick((s, e) =>
                 {
                     if (OnClick == null) return;
                     OnClick(this);
@@ -51,7 +52,8 @@ namespace Assets.Scripts.UI.Windows
                
                 startTable.Count = monster.Star;
                 DataManagers.PlayerArmyManager.Singleton.SetJob(Template.s_job, monster);
-                Template.icon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("Icon/" + monster.ResName);
+                DataManagers.PlayerArmyManager.Singleton.SetIcon(Template.icon, monster);
+              
             }
 
             public DataManagers.PlayerSoldier PlayerSoldier
@@ -67,6 +69,12 @@ namespace Assets.Scripts.UI.Windows
             public Action<ItemGridTableModel> OnClick;
 
             public MonsterConfig Monster { get; set; }
+
+            public void SetDrag(bool canDrag)
+            {
+                var d = this.Item.Root.GetComponent<UIDragScrollView>();
+                d.enabled = canDrag;
+            }
         }
 
         public override void InitModel()
@@ -94,6 +102,7 @@ namespace Assets.Scripts.UI.Windows
             {
                 i.Model.PlayerSoldier = allHero[index];
                 i.Model.OnClick = OnClickItem;
+                i.Model.SetDrag(allHero.Count >= 5);
                 index++;
             }
         }

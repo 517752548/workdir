@@ -31,13 +31,15 @@ namespace Assets.Scripts.UI.Windows
         }
 
 
-        public UILabel lb_title;
+        public UISprite BottomInfo;
+        public UILabel lb_bt_title;
+        public UILabel lb_bt_info;
+        public UIButton bt_close;
         public UIPanel PackageView;
         public UIGrid ItemGrid;
         public UILabel lb_worker;
         public UILabel lb_reward_time;
         public UILabel lb_reward_list;
-        public UIButton bt_close;
 
 
         public UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>> ItemGridTableManager = new UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>>();
@@ -46,13 +48,15 @@ namespace Assets.Scripts.UI.Windows
         public override void InitTemplate()
         {
             base.InitTemplate();
-            lb_title = FindChild<UILabel>("lb_title");
+            BottomInfo = FindChild<UISprite>("BottomInfo");
+            lb_bt_title = FindChild<UILabel>("lb_bt_title");
+            lb_bt_info = FindChild<UILabel>("lb_bt_info");
+            bt_close = FindChild<UIButton>("bt_close");
             PackageView = FindChild<UIPanel>("PackageView");
             ItemGrid = FindChild<UIGrid>("ItemGrid");
             lb_worker = FindChild<UILabel>("lb_worker");
             lb_reward_time = FindChild<UILabel>("lb_reward_time");
             lb_reward_list = FindChild<UILabel>("lb_reward_list");
-            bt_close = FindChild<UIButton>("bt_close");
 
             ItemGridTableManager.InitFromGrid(ItemGrid);
 

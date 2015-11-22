@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Scripts.DataManagers
 {
@@ -206,6 +207,10 @@ namespace Assets.Scripts.DataManagers
             formjob.spriteName = monsterCategory.IconName;
         }
 
+        public void SetIcon(UITexture icon, MonsterConfig monster)
+        {
+            icon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("Icon/" + monster.ResName);
+        }
         internal bool LevelUp(PlayerSoldier Soldier)
         {
             if (!Soldiers.ContainsKey(Soldier.SoldierID)) return false;
@@ -310,6 +315,7 @@ namespace Assets.Scripts.DataManagers
         {
             return _explore_team.Contains(soldierID);
         }
+
     }
 
 

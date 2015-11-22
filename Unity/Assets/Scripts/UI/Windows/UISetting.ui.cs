@@ -12,16 +12,15 @@ namespace Assets.Scripts.UI.Windows
     {
 
 
+        public UILabel lb_idName;
+        public UILabel lb_version;
         public UIButton bt_close;
-        public UILabel lb_title;
         public UIButton Bt_shard;
         public UIButton Bt_Achievement;
         public UIButton Bt_Language;
         public UIButton Bt_Reset;
         public UIToggle Bt_Music;
         public UIToggle Bt_MusicEffect;
-        public UILabel lb_idName;
-        public UILabel lb_version;
 
 
 
@@ -29,18 +28,23 @@ namespace Assets.Scripts.UI.Windows
         public override void InitTemplate()
         {
             base.InitTemplate();
+            lb_idName = FindChild<UILabel>("lb_idName");
+            lb_version = FindChild<UILabel>("lb_version");
             bt_close = FindChild<UIButton>("bt_close");
-            lb_title = FindChild<UILabel>("lb_title");
             Bt_shard = FindChild<UIButton>("Bt_shard");
             Bt_Achievement = FindChild<UIButton>("Bt_Achievement");
             Bt_Language = FindChild<UIButton>("Bt_Language");
             Bt_Reset = FindChild<UIButton>("Bt_Reset");
             Bt_Music = FindChild<UIToggle>("Bt_Music");
             Bt_MusicEffect = FindChild<UIToggle>("Bt_MusicEffect");
-            lb_idName = FindChild<UILabel>("lb_idName");
-            lb_version = FindChild<UILabel>("lb_version");
 
 
-        }       
+        }
+        public static UISetting Show()
+        {
+            var ui = UIManager.Singleton.CreateOrGetWindow<UISetting>();
+            ui.ShowWindow();
+            return ui;
+        }
     }
 }

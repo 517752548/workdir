@@ -31,10 +31,12 @@ namespace Assets.Scripts.UI.Windows
                             unlock = string.Format(LanguageManager.Singleton["UI_Struct_Need_Build"], buildConfig.Name, buildConfig.Level);
                             break;
                     }
+
+                    
                     UIControllor.Singleton.ShowMessage(LanguageManager.ReplaceEc(next.Describe) + '\n' + unlock, 10);
                 });
 
-                this.Template.Bt_itemName.OnMouseClick((s, e) =>
+                this.Template.IconBuild.OnMouseClick((s, e) =>
                 {
                     if (OnClick == null) return;
                     OnClick(this);
@@ -49,13 +51,14 @@ namespace Assets.Scripts.UI.Windows
                 var nextConfig = build.NextLevelConfig;
                 if (nextConfig != null)
                 {
-                    Template.Bt_itemName.Text(Build.Name + (Build.Level > 0 ? " " + Build.Level : ""));
+                    Template.lb_name.text=Build.Name ;
+                    Template.lb_lvl.text = (Build.Level > 0 ?""+Build.Level : "0");
                     var sb = new StringBuilder();
                     if (nextConfig.CostGold > 0)
                     {
                         var Color = nextConfig.CostGold <= DataManagers.GamePlayerManager.Singleton.Gold ?
                           LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
-                        sb.AppendLine(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Gold"],
+                        sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Gold"],
                             string.Format(Color, nextConfig.CostGold)));
                     }
                     var costItems = UtilityTool.SplitKeyValues(nextConfig.CostItems, nextConfig.CostItemCounts);
@@ -79,7 +82,8 @@ namespace Assets.Scripts.UI.Windows
                 else 
                 {
                     Template.lb_cost.text = LanguageManager.Singleton["UIStructureBuilding_Cost_MaxLevel"];
-                    Template.Bt_itemName.Text(Build.Name + (Build.Level > 0 ? " " + Build.Level : ""));
+                    Template.lb_name.text = Build.Name;
+                    Template.lb_lvl.text = (Build.Level > 0 ? "" + Build.Level : "0");
                 }
                 return true;
             }
@@ -152,7 +156,7 @@ namespace Assets.Scripts.UI.Windows
             {
 
                 ItemGridTableManager[index].Model.SetBuild(i);
-                ItemGridTableManager[index].Model.SetDrag(list.Count >= 8);
+                ItemGridTableManager[index].Model.SetDrag(list.Count >= 5);
                 ItemGridTableManager[index].Model.OnClick = OnClickItem;
                 index++;
             }

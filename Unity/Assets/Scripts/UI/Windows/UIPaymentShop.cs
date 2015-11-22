@@ -14,7 +14,7 @@ namespace Assets.Scripts.UI.Windows
             public override void InitModel()
             {
                 //todo
-                Template.Bt_itemName.OnMouseClick((s, e) =>
+                this.Item.Root.OnMouseClick((s, e) =>
                 {
                     if (OnItemClick == null) return;
                     OnItemClick(this);
@@ -36,6 +36,12 @@ namespace Assets.Scripts.UI.Windows
                     _Config = value;
                     //_Config.
                 }
+            }
+
+            public void SetDrag(bool canDrag)
+            {
+                var d = this.Item.Root.GetComponent<UIDragScrollView>();
+                d.enabled = canDrag;
             }
         }
 
@@ -62,6 +68,7 @@ namespace Assets.Scripts.UI.Windows
             {
                 i.Model.Config = shopData[index];
                 i.Model.OnItemClick = OnClickBuy;
+                i.Model.SetDrag(shopData.Length >= 7);
                 index++;
             }
         }

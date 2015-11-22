@@ -46,16 +46,25 @@ namespace Assets.Scripts.UI.Windows
                 {
                     skillName = skill.Name;
                 }
+
                 Template.lb_attack.text = string.Format(LanguageManager.Singleton["UITavern_Attack"], monster.Damage);
                 Template.lb_hp.text = string.Format(LanguageManager.Singleton["UITavern_hp"], monster.Hp);
                 Template.lb_skill.text = string.Format(LanguageManager.Singleton["UITavern_skill"], skillName);
                 Template.lb_name.text = monster.Name;
+                DataManagers.PlayerArmyManager.Singleton.SetJob(Template.s_job, monster);
+                DataManagers.PlayerArmyManager.Singleton.SetIcon(Template.icon, monster);
                 startTable.Count = monster.Star;
             }
 
+            public void SetCanEmp(bool can)
+            {
+                Template.s_lock.ActiveSelfObject(!can);
+                Template.Bt_Emp.ActiveSelfObject(can);
+                CanEmp = can;
+            }
             
             public Action<ItemGridTableModel> OnClick;
-            public bool CanEmp { set; get; }
+            public bool CanEmp { private set; get; }
         }
 
         public override void InitModel()
@@ -81,13 +90,28 @@ namespace Assets.Scripts.UI.Windows
             var heros = ExcelToJSONConfigManager.Current.GetConfigs<HeroConfig>( (hero) =>
                 {
                     if( DataManagers.PlayerArmyManager.Singleton.HaveEmployHero(hero)) return false;
-                    return DataManagers.PlayerArmyManager.Singleton.CanEmployHero(hero);
+                    return true;
+                    //return DataManagers.PlayerArmyManager.Singleton.CanEmployHero(hero);
                 });
-            ItemGridTableManager.Count = heros.Length;
+
+            var noEmployHero = heros.Select(t => new
+            {
+                Hero = t,
+                CanEmploy = DataManagers.PlayerArmyManager.Singleton.CanEmployHero(t)
+            })
+                .ToList();
+            noEmployHero.Sort((l, r) => {
+                if (l.CanEmploy == r.CanEmploy) return 0;
+                if (l.CanEmploy) return -1;
+                else return 1;
+            });
+
+            ItemGridTableManager.Count = noEmployHero.Count;
             int index = 0;
             foreach (var i in ItemGridTableManager)
             {
-                i.Model.SetData(heros[index]);
+                i.Model.SetData(noEmployHero[index].Hero);
+                i.Model.SetCanEmp((noEmployHero[index].CanEmploy));
                 i.Model.SetDrag(heros.Length >= 4);
                 i.Model.OnClick = OnItemClick;
                 index++;
@@ -96,20 +120,15 @@ namespace Assets.Scripts.UI.Windows
 
         private void OnItemClick(ItemGridTableModel obj)
         {
-            var currentType = (EmployCostCurrent)obj.Hero.recruit_current_type;
+           
 
-            var cuurentName = currentType == EmployCostCurrent.Coin?
-                LanguageManager.Singleton["APP_COIN"] : LanguageManager.Singleton["APP_GOLD"];
+            UITavernMessageBox.Show(obj.Hero, () => {
+                if (DataManagers.PlayerArmyManager.Singleton.BuyHero(obj.Hero))
+                {
+                    UIManager.Singleton.UpdateUIData();
+                }
+            }, null);
 
-            UIMessageBox.ShowMessage(LanguageManager.Singleton["BUY_HERO_BT_OK"],
-                string.Format(LanguageManager.Singleton["BUY_HERO_Message"], cuurentName, obj.Hero.recruit_price),
-                () => {
-                    if (DataManagers.PlayerArmyManager.Singleton.BuyHero(obj.Hero))
-                    {
-                        UIManager.Singleton.UpdateUIData();
-                    }
-                },
-                null);
         }
 
 

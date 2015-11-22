@@ -20,12 +20,22 @@ namespace Assets.Scripts.UI.Windows
                 });
             }
             public Action<ItemGridTableModel> OnClick;
+            public void SetDrag(bool canDrag)
+            {
+                var d = this.Item.Root.GetComponent<UIDragScrollView>();
+                d.enabled = canDrag;
+            }
         }
+
+        
 
         public override void InitModel()
         {
             base.InitModel();
             bt_close.OnMouseClick((s, e) => {
+                HideWindow();
+            });
+            bt_return.OnMouseClick((s, e) => {
                 HideWindow();
             });
             //Write Code here
@@ -38,6 +48,7 @@ namespace Assets.Scripts.UI.Windows
             foreach(var i in ItemGridTableManager)
             {
                 i.Model.OnClick = OnClick;
+                i.Model.SetDrag(ItemGridTableManager.Count >= 5);
             }
         }
 

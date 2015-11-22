@@ -28,15 +28,23 @@ namespace Assets.Scripts.UI.Windows
                 });
 
                 Template.bt_item.OnMouseClick((s, e) => {
+                    if (OnClickItem == null) return;
 
-                    if (Config == null) return;
-                    UIControllor.Singleton.ShowMessage(LanguageManager.ReplaceEc(Config.Description));
+                    OnClickItem(this);
                 });
+
+                
             }
 
+            public Action<ItemGridTableModel> OnClickItem;
             public Action<ItemGridTableModel> OnClickAdd;
             public Action<ItemGridTableModel> OnClickSub;
 
+            public void SetDrag(bool canDrag)
+            {
+                var d = this.Item.Root.GetComponent<UIDragScrollView>();
+                d.enabled = canDrag;
+            }
             private ExcelConfig.ResourcesProduceConfig _Config { get; set; }
 
             public ExcelConfig.ResourcesProduceConfig Config
@@ -65,6 +73,7 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShow();
             OnUpdateUIData();
+            BottomInfo.ActiveSelfObject(false);
         }
 
         public override void OnUpdateUIData()
@@ -80,6 +89,8 @@ namespace Assets.Scripts.UI.Windows
                 i.Model.Config = allOpenProduce[index];
                 i.Model.OnClickAdd = ClickAdd;
                 i.Model.OnClickSub = ClickSub;
+                i.Model.OnClickItem = ClickItem;
+                i.Model.SetDrag(allOpenProduce.Count >= 7);
                 index++;
             }
             
@@ -114,6 +125,31 @@ namespace Assets.Scripts.UI.Windows
             base.OnHide();
         }
 
+        private float hideTime = 0;
+        public void ClickItem(ItemGridTableModel item)
+        {
+
+            var Config = item.Config;
+            if (Config == null) return;
+            hideTime = Time.time + 5;
+            BottomInfo.ActiveSelfObject(true);
+            lb_bt_title.text = Config.Name;
+            lb_bt_info.text = LanguageManager.ReplaceEc(Config.Description);
+        }
+
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+            if (hideTime > 0)
+            {
+                if (hideTime < Time.time)
+                {
+                    hideTime = -1f;
+                    BottomInfo.ActiveSelfObject(false);
+                }
+
+            }
+        }
         private void ShowState()
         {
             lb_worker.text = string.Format(LanguageManager.Singleton["UIProduce_worker"],

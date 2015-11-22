@@ -13,21 +13,17 @@ namespace Assets.Scripts.UI.Windows
         public class ItemGridTableTemplate : TableItemTemplate
         {
             public ItemGridTableTemplate(){}
-            public UIButton Bt_itemName;
             public UILabel lb_cost;
 
             public override void InitTemplate()
             {
-                Bt_itemName = FindChild<UIButton>("Bt_itemName");
                 lb_cost = FindChild<UILabel>("lb_cost");
 
             }
         }
 
 
-        public UISprite character1;
         public UIButton bt_close;
-        public UILabel lb_title;
         public UIPanel PackageView;
         public UIGrid ItemGrid;
         public UILabel lb_coinValue;
@@ -40,9 +36,7 @@ namespace Assets.Scripts.UI.Windows
         public override void InitTemplate()
         {
             base.InitTemplate();
-            character1 = FindChild<UISprite>("character1");
             bt_close = FindChild<UIButton>("bt_close");
-            lb_title = FindChild<UILabel>("lb_title");
             PackageView = FindChild<UIPanel>("PackageView");
             ItemGrid = FindChild<UIGrid>("ItemGrid");
             lb_coinValue = FindChild<UILabel>("lb_coinValue");

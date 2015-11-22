@@ -29,6 +29,11 @@ namespace Assets.Scripts.Tools
             return list;
         }
 
+        /// <summary>
+        ///  1：2|1：2 to keyvalue [1,2]  [1,2]
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <returns></returns>
         public static List<SplitKeyValue> SplitKeyValues(string inputs)
         {
             var list = new List<SplitKeyValue>();
