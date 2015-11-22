@@ -10,72 +10,53 @@ namespace Assets.Scripts.UI.Windows
     [UIWindow("UIArmyLevelUp")]
     partial class UIArmyLevelUp : UIAutoGenWindow
     {
-        public class formStartGridTableTemplate : TableItemTemplate
+        public class LevelUpGridTableTemplate : TableItemTemplate
         {
-            public formStartGridTableTemplate(){}
+            public LevelUpGridTableTemplate(){}
+            public UILabel lb_hp;
+            public UILabel lb_attack;
+            public UILabel lb_skill;
+            public UILabel lb_speed;
+            public UITexture formicon;
+            public UIGrid formStartGrid;
+            public UISprite formjob;
+            public UILabel fromName;
 
             public override void InitTemplate()
             {
+                lb_hp = FindChild<UILabel>("lb_hp");
+                lb_attack = FindChild<UILabel>("lb_attack");
+                lb_skill = FindChild<UILabel>("lb_skill");
+                lb_speed = FindChild<UILabel>("lb_speed");
+                formicon = FindChild<UITexture>("formicon");
+                formStartGrid = FindChild<UIGrid>("formStartGrid");
+                formjob = FindChild<UISprite>("formjob");
+                fromName = FindChild<UILabel>("fromName");
 
             }
         }
-        public class toStartGridTableTemplate : TableItemTemplate
-        {
-            public toStartGridTableTemplate(){}
-
-            public override void InitTemplate()
-            {
-
-            }
-        }
 
 
-        public UISprite character1;
-        public UISprite character2;
-        public UISprite character3;
-        public UILabel lb_title;
-        public UITexture formicon;
-        public UIGrid formStartGrid;
-        public UISprite formjob;
-        public UILabel fromName;
-        public UILabel from_des;
-        public UILabel toName;
-        public UITexture toicon;
-        public UIGrid toStartGrid;
-        public UISprite tojob;
-        public UILabel to_des;
+        public UIButton bt_close;
         public UILabel lb_Message;
         public UIButton bt_ok;
         public UIButton bt_cancel;
+        public UIGrid LevelUpGrid;
 
 
-        public UITableManager<AutoGenTableItem<formStartGridTableTemplate, formStartGridTableModel>> formStartGridTableManager = new UITableManager<AutoGenTableItem<formStartGridTableTemplate, formStartGridTableModel>>();
-        public UITableManager<AutoGenTableItem<toStartGridTableTemplate, toStartGridTableModel>> toStartGridTableManager = new UITableManager<AutoGenTableItem<toStartGridTableTemplate, toStartGridTableModel>>();
+        public UITableManager<AutoGenTableItem<LevelUpGridTableTemplate, LevelUpGridTableModel>> LevelUpGridTableManager = new UITableManager<AutoGenTableItem<LevelUpGridTableTemplate, LevelUpGridTableModel>>();
 
 
         public override void InitTemplate()
         {
             base.InitTemplate();
-            character1 = FindChild<UISprite>("character1");
-            character2 = FindChild<UISprite>("character2");
-            character3 = FindChild<UISprite>("character3");
-            lb_title = FindChild<UILabel>("lb_title");
-            formicon = FindChild<UITexture>("formicon");
-            formStartGrid = FindChild<UIGrid>("formStartGrid");
-            formjob = FindChild<UISprite>("formjob");
-            fromName = FindChild<UILabel>("fromName");
-            from_des = FindChild<UILabel>("from_des");
-            toName = FindChild<UILabel>("toName");
-            toicon = FindChild<UITexture>("toicon");
-            toStartGrid = FindChild<UIGrid>("toStartGrid");
-            tojob = FindChild<UISprite>("tojob");
-            to_des = FindChild<UILabel>("to_des");
+            bt_close = FindChild<UIButton>("bt_close");
             lb_Message = FindChild<UILabel>("lb_Message");
             bt_ok = FindChild<UIButton>("bt_ok");
             bt_cancel = FindChild<UIButton>("bt_cancel");
+            LevelUpGrid = FindChild<UIGrid>("LevelUpGrid");
 
-            formStartGridTableManager.InitFromGrid(formStartGrid);
-            toStartGridTableManager.InitFromGrid(toStartGrid);
+            LevelUpGridTableManager.InitFromGrid(LevelUpGrid);
 
         }
         public static UIArmyLevelUp Show()

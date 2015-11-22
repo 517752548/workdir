@@ -11,20 +11,48 @@ namespace Assets.Scripts.UI.Windows
 {
     partial class UIArmyLevelUp
     {
-        public class formStartGridTableModel : TableItemModel<formStartGridTableTemplate>
+        public class LevelUpGridTableModel : TableItemModel<LevelUpGridTableTemplate>
         {
-            public formStartGridTableModel() { }
+            public LevelUpGridTableModel() { }
             public override void InitModel()
             {
                 //todo
+                startTable = new UITableManager<UITableItem>();
+                startTable.InitFromGrid(this.Template.formStartGrid);
             }
-        }
-        public class toStartGridTableModel : TableItemModel<toStartGridTableTemplate>
-        {
-            public toStartGridTableModel() { }
-            public override void InitModel()
+
+            private UITableManager<UITableItem> startTable;
+
+            private void SetMonster(MonsterConfig monster)
             {
-                //todo
+                //formStartGridTableManager.Count = monsterOld.Star;
+                //from_des.text = GetInfo(monsterOld);
+                var skillName = string.Empty;
+                var skill = ExcelToJSONConfigManager.Current.GetConfigByID<SkillConfig>(monster.SkillID);
+                if (skill != null)
+                {
+                    skillName = skill.Name;
+                }
+                Template.lb_attack.text = string.Format(LanguageManager.Singleton["UITavern_Attack"], monster.Damage);
+                Template.lb_hp.text = string.Format(LanguageManager.Singleton["UITavern_hp"], monster.Hp);
+                Template.lb_skill.text = string.Format(LanguageManager.Singleton["UITavern_skill"], skillName);
+                Template.fromName.text = monster.Name;
+                DataManagers.PlayerArmyManager.Singleton.SetJob(Template.formjob, monster);
+                DataManagers.PlayerArmyManager.Singleton.SetIcon(Template.formicon, monster);
+                startTable.Count = monster.Star;
+
+            }
+
+            private MonsterConfig _Monster { get; set; }
+            public MonsterConfig Monster
+            {
+                get { return _Monster; }
+                set
+                {
+
+                    _Monster = value;
+                    SetMonster(value);
+                }
             }
         }
 
@@ -41,6 +69,10 @@ namespace Assets.Scripts.UI.Windows
                 {
                     UIManager.Singleton.UpdateUIData();
                 }
+                HideWindow();
+            });
+
+            bt_close.OnMouseClick((s, e) => {
                 HideWindow();
             });
             //Write Code here
@@ -66,18 +98,15 @@ namespace Assets.Scripts.UI.Windows
             var monsterOld = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(levelup.OldMonster);
             var monsterLate = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(levelup.LateMonster);
 
-            formStartGridTableManager.Count = monsterOld.Star;
-            from_des.text = GetInfo(monsterOld);
-            fromName.text = monsterOld.Name;
-            formicon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("Icon/" + monsterOld.ResName);
-            DataManagers.PlayerArmyManager.Singleton.SetJob(formjob, monsterOld);
+            var data = new List<MonsterConfig>() { monsterOld, monsterLate };
 
-            toStartGridTableManager.Count = monsterLate.Star; 
-            to_des.text = GetInfo(monsterLate);
-            toName.text = monsterLate.Name;
-            toicon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("Icon/" +monsterLate.ResName);
-            DataManagers.PlayerArmyManager.Singleton.SetJob(tojob, monsterLate);
-
+            LevelUpGridTableManager.Count = data.Count;
+            int index = 0;
+            foreach (var i in LevelUpGridTableManager)
+            {
+                i.Model.Monster = data[index];
+                index++;
+            }
 
             var sb = new StringBuilder();
             if (levelup.CostGold > 0)
@@ -87,7 +116,7 @@ namespace Assets.Scripts.UI.Windows
                 sb.AppendLine(string.Format(LanguageManager.Singleton["UI_LVLUP_Cost_Gold"],
                     string.Format(Color, levelup.CostGold)));
             }
-            var costItems = UtilityTool.SplitKeyValues(levelup.CostItems,levelup.CostItemsNumber);
+            var costItems = UtilityTool.SplitKeyValues(levelup.CostItems, levelup.CostItemsNumber);
             foreach (var i in costItems)
             {
                 var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
@@ -104,21 +133,6 @@ namespace Assets.Scripts.UI.Windows
             lb_Message.text = sb.ToString();
         }
 
-        private string GetInfo(MonsterConfig monster)
-        {
-            //UI_LVLUP_SKILL_NAME
-            //UI_LVLUP_HP
-            //UI_LVLUP_DAMAGE
-            //UI_LVLUP_Speed
-
-            var skill = ExcelToJSONConfigManager.Current.GetConfigByID<SkillConfig>(monster.SkillID);
-            var sb = new StringBuilder();
-            sb.AppendLine(string.Format(LanguageManager.Singleton["UI_LVLUP_SKILL_NAME"], skill.Name));
-            sb.AppendLine(string.Format(LanguageManager.Singleton["UI_LVLUP_HP"], monster.Hp));
-            sb.AppendLine(string.Format(LanguageManager.Singleton["UI_LVLUP_DAMAGE"], monster.Damage));
-            sb.AppendLine(string.Format(LanguageManager.Singleton["UI_LVLUP_Speed"], monster.Speed));
-            return sb.ToString();
-        }
 
         public override void OnHide()
         {

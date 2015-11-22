@@ -83,13 +83,8 @@
   <LanguageKey Key="BUY_HERO_NOT_ENOUGH_GOLD">金币不足不能招募</LanguageKey>
   
 
-  
-  <LanguageKey Key="UI_LVLUP_SKILL_NAME">技能:{0}</LanguageKey>
-  <LanguageKey Key="UI_LVLUP_HP">血量:{0}</LanguageKey>
-  <LanguageKey Key="UI_LVLUP_DAMAGE">攻击:{0}</LanguageKey>
-  <LanguageKey Key="UI_LVLUP_Speed">速度:{0}</LanguageKey>
-  <LanguageKey Key="UI_LVLUP_Cost_Item">{0} *{1} </LanguageKey> 
-  <LanguageKey Key="UI_LVLUP_Cost_Gold">金币 *{0:N0}</LanguageKey> 
+  <LanguageKey Key="UI_LVLUP_Cost_Item">{0} 	{1} </LanguageKey> 
+  <LanguageKey Key="UI_LVLUP_Cost_Gold">金币 	{0:N0}</LanguageKey> 
   <LanguageKey Key="LVLUP_SUCCESS">将{0} 升级到了{1} </LanguageKey> 
   <LanguageKey Key="LVLUP_NOT_ENOUGH_GOLD">金币不足 </LanguageKey> 
   <LanguageKey Key="LVLUP_NOT_ENOUGH_ITEM">{0}不足</LanguageKey>
