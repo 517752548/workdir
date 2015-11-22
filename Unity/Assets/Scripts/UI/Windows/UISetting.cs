@@ -16,6 +16,10 @@ namespace Assets.Scripts.UI.Windows
             bt_close.OnMouseClick((s, e) => {
                 this.HideWindow();
             });
+
+            Bt_Achievement.OnMouseClick((s, e) => {
+                UIAchievement.Show();
+            });
             //Write Code here
         }
         public override void OnShow()
