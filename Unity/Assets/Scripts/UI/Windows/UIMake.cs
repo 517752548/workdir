@@ -163,7 +163,20 @@ namespace Assets.Scripts.UI.Windows
             PackageTypeView.ActiveSelfObject(false);
             PackageView.ActiveSelfObject(true);
             var makeConfigs = ExcelConfig.ExcelToJSONConfigManager
-                .Current.GetConfigs<ExcelConfig.MakeConfig>();
+                .Current.GetConfigs<ExcelConfig.MakeConfig>()
+                .Where(
+                         (t) =>
+                         {
+                             switch ((Proto.MakeItemUnlockType)t.UnlockType) 
+                             {
+                                 case Proto.MakeItemUnlockType.NONE: return true;
+                                 case Proto.MakeItemUnlockType.NeedScroll:
+                                     int item = Tools.UtilityTool.ConvertToInt(t.UnlockPars1);
+                                     return DataManagers.PlayerItemManager.Singleton.GetItemCount(item) > 0;
+                             }
+                             return false;
+
+                         }).ToArray();
             int index = 0;
             ItemGridTableManager.Count = makeConfigs.Length;
             foreach (var i in ItemGridTableManager)

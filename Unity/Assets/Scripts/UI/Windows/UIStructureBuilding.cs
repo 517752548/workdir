@@ -6,6 +6,7 @@ using Assets.Scripts.Tools;
 using ExcelConfig;
 using Assets.Scripts.DataManagers;
 using Proto;
+using UnityEngine;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -47,12 +48,14 @@ namespace Assets.Scripts.UI.Windows
             {
                 Build = build;
                 if (Build == null) return false;
-                
+
                 var nextConfig = build.NextLevelConfig;
                 if (nextConfig != null)
                 {
-                    Template.lb_name.text=Build.Name ;
-                    Template.lb_lvl.text = (Build.Level > 0 ?""+Build.Level : "0");
+
+                    Template.IconBuild.mainTexture = ResourcesManager.Singleton.LoadResources<Texture2D>("BuildIcons/" + build.NextLevelConfig.Icon);
+                    Template.lb_name.text = Build.Name;
+                    Template.lb_lvl.text = (Build.Level > 0 ? "" + Build.Level : "0");
                     var sb = new StringBuilder();
                     if (nextConfig.CostGold > 0)
                     {
@@ -79,12 +82,19 @@ namespace Assets.Scripts.UI.Windows
                        (nextConfig == null ? LanguageManager.Singleton["UIStructureBuilding_Cost_MaxLevel"] : (string.IsNullOrEmpty(require) ?
                         LanguageManager.Singleton["UIStructureBuilding_Cost_None"] : require));
                 }
-                else 
+                else
                 {
                     Template.lb_cost.text = LanguageManager.Singleton["UIStructureBuilding_Cost_MaxLevel"];
                     Template.lb_name.text = Build.Name;
                     Template.lb_lvl.text = (Build.Level > 0 ? "" + Build.Level : "0");
+
+                    Template.IconBuild.mainTexture = ResourcesManager.Singleton.LoadResources<Texture2D>("BuildIcons/" + build.Config.Icon);
                 }
+
+                var next = Build.NextLevelConfig;
+                var disable =next == null;
+
+                Template.bt_info.ActiveSelfObject(!disable);
                 return true;
             }
 
@@ -142,6 +152,7 @@ namespace Assets.Scripts.UI.Windows
                             if (!BuildingManager.Singleton.HaveBuild(buildConfig.BuildingId, buildConfig.Level))
                                 continue;
                             break;
+                       
                     }
                 }
                 //if (build.NextLevelConfig == null) continue;
@@ -164,7 +175,7 @@ namespace Assets.Scripts.UI.Windows
 
         private void OnClickItem(ItemGridTableModel obj)
         {
-            if (DataManagers.BuildingManager.Singleton.ConstructBuild(obj.Build.BuildID, obj.Build.Level+1))
+            if (DataManagers.BuildingManager.Singleton.ConstructBuild(obj.Build.BuildID, obj.Build.Level + 1))
             {
                 UIManager.Singleton.UpdateUIData();
             }

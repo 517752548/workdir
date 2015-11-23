@@ -550,75 +550,81 @@ namespace ExcelConfig
         public int BuildingId { set; get; }
         
         /// <summary>
-        /// 建筑等级
+        /// 资源图标
         /// </summary>
         [ExcelConfigColIndex(3)]
+        public String Icon { set; get; }
+        
+        /// <summary>
+        /// 建筑等级
+        /// </summary>
+        [ExcelConfigColIndex(4)]
         public int Level { set; get; }
         
         /// <summary>
         /// 升级触发事件
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(5)]
         public String ConstructEvent { set; get; }
         
         /// <summary>
         /// 事件参数1
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(6)]
         public String Pars1 { set; get; }
         
         /// <summary>
         /// 事件参数2
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(7)]
         public String Pars2 { set; get; }
         
         /// <summary>
         /// 金币消耗
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(8)]
         public int CostGold { set; get; }
         
         /// <summary>
         /// 建造材料消耗
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(9)]
         public String CostItems { set; get; }
         
         /// <summary>
         /// 材料消耗数量
         /// </summary>
-        [ExcelConfigColIndex(9)]
+        [ExcelConfigColIndex(10)]
         public String CostItemCounts { set; get; }
         
         /// <summary>
         /// 解锁类型
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(11)]
         public int UnlockType { set; get; }
         
         /// <summary>
         /// 解锁参数1
         /// </summary>
-        [ExcelConfigColIndex(11)]
+        [ExcelConfigColIndex(12)]
         public String UnlockParms1 { set; get; }
         
         /// <summary>
         /// 解锁参数2
         /// </summary>
-        [ExcelConfigColIndex(12)]
+        [ExcelConfigColIndex(13)]
         public String UnlockParms2 { set; get; }
         
         /// <summary>
         /// 建筑描述
         /// </summary>
-        [ExcelConfigColIndex(13)]
+        [ExcelConfigColIndex(14)]
         public String Describe { set; get; }
         
         /// <summary>
         /// 升级后提示
         /// </summary>
-        [ExcelConfigColIndex(14)]
+        [ExcelConfigColIndex(15)]
         public String BuildSuccessMessage { set; get; }
 
     }

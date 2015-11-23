@@ -130,3 +130,9 @@ enum EmployCostCurrent
    Gold = 1 ;//消耗金币
    Coin =2 ;//消耗钻石
 }
+
+enum MakeItemUnlockType
+{
+    NONE = 0;//无需条件
+	NeedScroll =1;//需要蓝图
+}

@@ -405,4 +405,19 @@ namespace Proto
         Coin=2,
 
     }
+   /// <summary>
+    /// 
+    /// </summary>
+    public enum MakeItemUnlockType
+    {
+        /// <summary>
+        /// 无需条件
+        /// </summary>
+        NONE=0,
+        /// <summary>
+        /// 需要蓝图
+        /// </summary>
+        NeedScroll=1,
+
+    }
 }

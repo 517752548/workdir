@@ -73,7 +73,6 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShow();
             OnUpdateUIData();
-            BottomInfo.ActiveSelfObject(false);
         }
 
         public override void OnUpdateUIData()
@@ -131,24 +130,12 @@ namespace Assets.Scripts.UI.Windows
 
             var Config = item.Config;
             if (Config == null) return;
-            hideTime = Time.time + 5;
-            BottomInfo.ActiveSelfObject(true);
-            lb_bt_title.text = Config.Name;
-            lb_bt_info.text = LanguageManager.ReplaceEc(Config.Description);
+            UIControllor.Singleton.ShowMessage( LanguageManager.ReplaceEc(Config.Description),4);
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
-            if (hideTime > 0)
-            {
-                if (hideTime < Time.time)
-                {
-                    hideTime = -1f;
-                    BottomInfo.ActiveSelfObject(false);
-                }
-
-            }
         }
         private void ShowState()
         {
@@ -156,6 +143,10 @@ namespace Assets.Scripts.UI.Windows
                DataManagers.GamePlayerManager.Singleton.People - DataManagers.GamePlayerManager.Singleton.BusyPeople,
                 DataManagers.GamePlayerManager.Singleton.People);
 
+            if (DataManagers.GamePlayerManager.Singleton.People - DataManagers.GamePlayerManager.Singleton.BusyPeople == 0)
+            {
+                UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["BUILD_FRO_MORE_PEOPLE"], -1);
+            }
             var allOpenProduce = DataManagers.GamePlayerManager.Singleton.OpenProduceConfigs();
             var sb = new StringBuilder();
             var items = new Dictionary<int, int>();

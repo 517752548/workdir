@@ -59,6 +59,7 @@ namespace Assets.Scripts.DataManagers
             //var old = GetConfig(buildId, level - 1);
             if (build == null )
             {
+                UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["UIStructureBuilding_Cost_MaxLevel"]);
                 return false; //MaxLevel
             }
 

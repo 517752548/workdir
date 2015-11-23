@@ -434,6 +434,11 @@
             建筑组标识
             </summary>
         </member>
+        <member name="P:ExcelConfig.BuildingConfig.Icon">
+            <summary>
+            资源图标
+            </summary>
+        </member>
         <member name="P:ExcelConfig.BuildingConfig.Level">
             <summary>
             建筑等级
@@ -1552,6 +1557,21 @@
         <member name="F:Proto.EmployCostCurrent.Coin">
             <summary>
             消耗钻石
+            </summary>
+        </member>
+        <member name="T:Proto.MakeItemUnlockType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Proto.MakeItemUnlockType.NONE">
+            <summary>
+            无需条件
+            </summary>
+        </member>
+        <member name="F:Proto.MakeItemUnlockType.NeedScroll">
+            <summary>
+            需要蓝图
             </summary>
         </member>
         <member name="T:Proto.GameVersion">

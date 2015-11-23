@@ -29,6 +29,14 @@ namespace Assets.Scripts.UI.Windows
 
             bt_produce.OnMouseClick((s, e) =>
             {
+
+                if (DataManagers.GamePlayerManager.Singleton.OpenProduceConfigs().Count == 0)
+                {
+                    //NO_BUILD
+                    UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_BUILD"], 3f);
+                    UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["NO_BUILD"]);
+                    return;
+                }
                 var ui = UIManager.Singleton.CreateOrGetWindow<UIProducePanel>();
                 ui.ShowWindow();
             });
@@ -41,18 +49,47 @@ namespace Assets.Scripts.UI.Windows
 
             bt_make.OnMouseClick((s, e) =>
             {
+                var makeConfigs = ExcelConfig.ExcelToJSONConfigManager
+                 .Current.GetConfigs<ExcelConfig.MakeConfig>()
+                 .Where(
+                          (t) =>
+                          {
+                              switch ((Proto.MakeItemUnlockType)t.UnlockType)
+                              {
+                                  case Proto.MakeItemUnlockType.NONE: return true;
+                                  case Proto.MakeItemUnlockType.NeedScroll:
+                                      int item = Tools.UtilityTool.ConvertToInt(t.UnlockPars1);
+                                      return DataManagers.PlayerItemManager.Singleton.GetItemCount(item) > 0;
+                              }
+                              return false;
+
+                          }).ToList() ;
+                if (makeConfigs.Count == 0)
+                {
+                    UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_SCROLL"], 3f);
+                    UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["NO_SCROLL"]);
+                    return;
+                    return;
+                }
                 var ui = UIManager.Singleton.CreateOrGetWindow<UIMake>();
                 ui.ShowWindow();
             });
 
             bt_Coin.OnMouseClick((s, e) =>
             {
-                var ui = UIManager.Singleton.CreateOrGetWindow<UIPaymentShop>();
+                var ui = UIManager.Singleton.CreateOrGetWindow<UIPayment>();
                 ui.ShowWindow();
             });
 
             bt_battle.OnMouseClick((s, e) =>
             {
+                if (DataManagers.PlayerArmyManager.Singleton.GetAllSoldier().Count == 0)
+                {
+                    UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_HERO"], 3f);
+                    UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["NO_HERO"]);
+                    return;
+                }
+
                 var ui = UIManager.Singleton.CreateOrGetWindow<UIGoToExplore>();
                 ui.ShowWindow();
             });
@@ -64,6 +101,12 @@ namespace Assets.Scripts.UI.Windows
 
             bt_train.OnMouseClick((s, e) =>
             {
+                if (DataManagers.PlayerArmyManager.Singleton.GetAllSoldier().Count == 0)
+                {
+                    UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_HERO"],3f);
+                    UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["NO_HERO"]);
+                    return;
+                }
                 UIArmyHouseSelect.Show();
                 //UIArmyHouse.Show();
             });
@@ -79,6 +122,7 @@ namespace Assets.Scripts.UI.Windows
                 var cd = DataManagers.GamePlayerManager.Singleton.CallProduceGold();
                 cdTime = Time.time + cd;
                 bt_gold.Disable(true);
+                iTween.scaleFrom(lb_gold.gameObject, 0.3f, 0, Vector3.one * 1.3f, iTween.EasingType.spring);
             });
 
 
