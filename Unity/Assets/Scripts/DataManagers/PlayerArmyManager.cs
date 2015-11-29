@@ -207,9 +207,24 @@ namespace Assets.Scripts.DataManagers
             formjob.spriteName = monsterCategory.IconName;
         }
 
-        public void SetIcon(UITexture icon, MonsterConfig monster)
+
+        public void SetIcon(UITexture icon, MonsterConfig monster,TypeOfIcon  type = TypeOfIcon.List)
         {
-            icon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("Icon/" + monster.ResName);
+            switch(type)
+            {
+                case TypeOfIcon.List:
+                    icon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("HeroIcon/list/" + monster.ResName);
+                    break;
+                case TypeOfIcon.LvlUp:
+                    icon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("HeroIcon/lvlup/" + monster.ResName);
+                    break;
+                case TypeOfIcon.MainUI:
+                    icon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("HeroIcon/main/" + monster.ResName);
+                    break;
+            }
+
+            icon.MakePixelPerfect();
+            
         }
         internal bool LevelUp(PlayerSoldier Soldier)
         {
@@ -325,5 +340,10 @@ namespace Assets.Scripts.DataManagers
         public int SoldierID { set; get; }
         [JsonName("AL")]
         public bool IsAlive { set; get; }
+    }
+
+    public enum TypeOfIcon
+    {
+        MainUI, List, LvlUp
     }
 }

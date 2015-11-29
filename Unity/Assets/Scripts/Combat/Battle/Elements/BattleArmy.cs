@@ -39,7 +39,7 @@ namespace Assets.Scripts.Combat.Battle.Elements
 
         public float CdTimeToFloat()
         {
-            return (SkillConfig.SkillCd / 1000f);
+            return (SkillConfig.SkillCd / 1f);
         }
     }
 

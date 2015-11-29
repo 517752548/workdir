@@ -23,10 +23,12 @@ namespace Assets.Scripts.UI.Windows
         {
             public SkillGridTableTemplate(){}
             public UIButton Bt_skill;
+            public UISprite job;
 
             public override void InitTemplate()
             {
                 Bt_skill = FindChild<UIButton>("Bt_skill");
+                job = FindChild<UISprite>("job");
 
             }
         }
@@ -43,6 +45,7 @@ namespace Assets.Scripts.UI.Windows
         public UIGrid StarGrid;
         public UITexture Monster_coin;
         public Transform daoguangFX;
+        public Transform zhuahenFx;
         public UITexture battleground;
         public UISlider PlayerHpBar;
         public UIGrid SkillGrid;
@@ -68,6 +71,7 @@ namespace Assets.Scripts.UI.Windows
             StarGrid = FindChild<UIGrid>("StarGrid");
             Monster_coin = FindChild<UITexture>("Monster_coin");
             daoguangFX = FindChild<Transform>("daoguangFX");
+            zhuahenFx = FindChild<Transform>("zhuahenFx");
             battleground = FindChild<UITexture>("battleground");
             PlayerHpBar = FindChild<UISlider>("PlayerHpBar");
             SkillGrid = FindChild<UIGrid>("SkillGrid");

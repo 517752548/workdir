@@ -9,6 +9,14 @@ using UnityEngine;
 
 namespace Assets.Scripts.UI.Windows
 {
+    public class ItemData
+    {
+        public PlayerSoldier Soldier { set; get; }
+
+        public bool IsSelectd { set; get; }
+
+        public MonsterConfig Monster { get; set; }
+    }
     partial class UIGoToExplore
     {
         public class ItemGridTableModel : TableItemModel<ItemGridTableTemplate>
@@ -26,12 +34,12 @@ namespace Assets.Scripts.UI.Windows
                 });
             }
             public Action<ItemGridTableModel> OnClick;
-            public DataManagers.PlayerSoldier _soldier;
+            public ItemData _soldier;
 
-            private void SetHero(PlayerSoldier hero)
+            private void SetHero(ItemData hero)
             {
-                Template.dead.ActiveSelfObject(!hero.IsAlive);
-                var monster = ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.MonsterConfig>(hero.SoldierID);
+                IsSelected = hero.IsSelectd;
+                var monster = ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.MonsterConfig>(hero.Soldier.SoldierID);
                 Monster = monster;
                 if (monster == null) return;
                 var skillName = string.Empty;
@@ -40,16 +48,19 @@ namespace Assets.Scripts.UI.Windows
                 {
                     skillName = skill.Name;
                 }
+
                 Template.lb_attack.text = string.Format(LanguageManager.Singleton["UITavern_Attack"], monster.Damage);
                 Template.lb_hp.text = string.Format(LanguageManager.Singleton["UITavern_hp"], monster.Hp);
                 Template.lb_skill.text = string.Format(LanguageManager.Singleton["UITavern_skill"], skillName);
                 Template.lb_name.text = monster.Name;
-                startTable.Count = monster.Star;
                 DataManagers.PlayerArmyManager.Singleton.SetJob(Template.s_job, monster);
-                Template.icon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("Icon/" + monster.ResName);
+                DataManagers.PlayerArmyManager.Singleton.SetIcon(Template.icon, monster);
+                startTable.Count = monster.Star;
             }
 
-            public DataManagers.PlayerSoldier PlayerSoldier
+
+
+            public ItemData PlayerSoldier
             {
                 get { return _soldier; }
                 set
@@ -69,7 +80,7 @@ namespace Assets.Scripts.UI.Windows
             {
                 set
                 {
-                    Template.Checked.ActiveSelfObject(value);
+                    Template.s_lock.ActiveSelfObject(value);
                     selected = value;
                 }
                 get { return selected; }
@@ -87,11 +98,11 @@ namespace Assets.Scripts.UI.Windows
             bt_go.OnMouseClick((s, e) =>
             {
                 var team = new List<int>();
-                foreach (var i in ItemGridTableManager)
+                foreach (var i in AllHeros)
                 {
-                    if (i.Model.IsSelected)
+                    if (i.IsSelectd)
                     {
-                        team.Add(i.Model.PlayerSoldier.SoldierID);
+                        team.Add(i.Soldier.SoldierID);
                     }
                 }
                 if (team.Count == 0)
@@ -132,8 +143,29 @@ namespace Assets.Scripts.UI.Windows
                     ShowFood();
                 }
             });
+
+            to_xian.OnMouseClick((s, e) => { ClickCategory(Proto.HeroJob.Xian, to_xian); });
+            to_fo.OnMouseClick((s, e) => { ClickCategory(Proto.HeroJob.Fo,to_fo); });
+            to_yao.OnMouseClick((s, e) => { ClickCategory(Proto.HeroJob.Yao,to_yao); });
+            to_ming.OnMouseClick((s, e) => { ClickCategory(Proto.HeroJob.Ming,to_ming); });
+
             //Write Code here
         }
+
+        private void ClickCategory(Proto.HeroJob job,UIToggle cu)
+        {
+            currentJob = job;
+
+            var list = new List<UIToggle>(){ to_fo,to_ming,to_xian, to_yao};
+            foreach(var i in list)
+            {
+                i.transform.FindChild<UISprite>("on").ActiveSelfObject(false);
+            }
+            cu.transform.FindChild<UISprite>("on").ActiveSelfObject(true);
+            ShowCurrent();
+        }
+
+        private Proto.HeroJob currentJob = Proto.HeroJob.Fo;
 
         private void ShowFood()
         {
@@ -145,9 +177,9 @@ namespace Assets.Scripts.UI.Windows
         private void ShowArmyCount()
         {
             var selectCount = 0;
-            foreach (var i in ItemGridTableManager)
+            foreach (var i in  AllHeros)
             {
-                if (i.Model.IsSelected)
+                if (i.IsSelectd)
                     selectCount++;
             }
             lb_herolb.text = string.Format(LanguageManager.Singleton["UI_GOEXPLORE_TEAM_SIZE"],
@@ -158,40 +190,54 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShow();
             OnUpdateUIData();
+            ClickCategory(Proto.HeroJob.Fo, to_fo );
         }
 
+
+        private List<ItemData> AllHeros;
         public override void OnUpdateUIData()
         {
-            base.OnUpdateUIData();            
+            base.OnUpdateUIData();
             var foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(foodEntry);
             lb_food_name.text = config.Name;
-          
-            var allHero = DataManagers.PlayerArmyManager.Singleton.GetAllSoldier();
-            ItemGridTableManager.Count = allHero.Count;
+
+            AllHeros = DataManagers.PlayerArmyManager.Singleton.GetAllSoldier()
+                .Select(t => new ItemData { 
+                    Soldier = t, 
+                    IsSelectd = DataManagers.PlayerArmyManager.Singleton.IsTeam(t.SoldierID),
+                    Monster = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(t.SoldierID)
+                }).ToList();
+
+        }
+
+        private void ShowCurrent()
+        {
+            var current = AllHeros.Where(t => t.Monster.Type == (int)currentJob).ToList();
+            ItemGridTableManager.Count = current.Count;
             int index = 0;
             foreach (var i in ItemGridTableManager)
             {
-                i.Model.PlayerSoldier = allHero[index];
+                i.Model.PlayerSoldier = current[index];
                 i.Model.OnClick = OnClickItem;
-                i.Model.IsSelected = DataManagers.PlayerArmyManager.Singleton.IsTeam(allHero[index].SoldierID);
                 index++;
             }
 
             ShowFood();
             ShowArmyCount();
+
         }
 
         private void OnClickItem(ItemGridTableModel obj)
         {
-            if (!obj.PlayerSoldier.IsAlive)
+            if (!obj.PlayerSoldier.Soldier.IsAlive)
             {
                 var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(App.GameAppliaction.Singleton.ConstValues.ReliveNeedItem);
 
                 UIMessageBox.ShowMessage(LanguageManager.Singleton["UI_GOEXPLORE_Relive_OK"],
                     string.Format(LanguageManager.Singleton["UI_GOEXPLORE_Relive_Message"], config.Name, obj.Monster.Name),
                     () => {
-                        if (DataManagers.PlayerArmyManager.Singleton.Relive(obj.PlayerSoldier.SoldierID))
+                        if (DataManagers.PlayerArmyManager.Singleton.Relive(obj.PlayerSoldier.Soldier.SoldierID))
                         {
                             UIManager.Singleton.UpdateUIData();
                         }
@@ -204,15 +250,16 @@ namespace Assets.Scripts.UI.Windows
 
             if (obj.IsSelected)
             {
-                obj.IsSelected = false;
+               obj.PlayerSoldier.IsSelectd  = false;
+               obj.PlayerSoldier = obj.PlayerSoldier;//
             }
             else
             {
 
                 var selectCount = 0;
-                foreach (var i in ItemGridTableManager)
+                foreach (var i in  AllHeros)
                 {
-                    if (i.Model.IsSelected)
+                    if (i.IsSelectd)
                         selectCount++;
                 }
                 if (selectCount >= DataManagers.GamePlayerManager.Singleton.TeamSize)
@@ -222,7 +269,8 @@ namespace Assets.Scripts.UI.Windows
                     return;
                 }
 
-                obj.IsSelected = true;
+                obj.PlayerSoldier.IsSelectd = true;
+                obj.PlayerSoldier = obj.PlayerSoldier;//
             }
             ShowArmyCount();
 
@@ -233,4 +281,6 @@ namespace Assets.Scripts.UI.Windows
             base.OnHide();
         }
     }
+
+   
 }

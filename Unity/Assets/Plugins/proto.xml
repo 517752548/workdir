@@ -1314,14 +1314,14 @@
             伤害类型
             </summary>
         </member>
-        <member name="F:Proto.SkillDamageType.Cure">
-            <summary>
-            治疗
-            </summary>
-        </member>
         <member name="F:Proto.SkillDamageType.Damage">
             <summary>
             伤害
+            </summary>
+        </member>
+        <member name="F:Proto.SkillDamageType.Cure">
+            <summary>
+            治疗
             </summary>
         </member>
         <member name="T:Proto.SkillTargetType">
@@ -1359,6 +1359,16 @@
             技能效果类型
             </summary>
         </member>
+        <member name="F:Proto.SkillEffectType.Cure">
+            <summary>
+            直接治疗
+            </summary>
+        </member>
+        <member name="F:Proto.SkillEffectType.Hot">
+            <summary>
+            HOT 持续治疗
+            </summary>
+        </member>
         <member name="F:Proto.SkillEffectType.Dot">
             <summary>
             持续伤害
@@ -1372,16 +1382,6 @@
         <member name="F:Proto.SkillEffectType.Giddy">
             <summary>
             眩晕
-            </summary>
-        </member>
-        <member name="F:Proto.SkillEffectType.SuckBlood">
-            <summary>
-            吸血
-            </summary>
-        </member>
-        <member name="F:Proto.SkillEffectType.AddDef">
-            <summary>
-            护盾
             </summary>
         </member>
         <member name="T:Proto.AchievementEventType">
@@ -1572,6 +1572,31 @@
         <member name="F:Proto.MakeItemUnlockType.NeedScroll">
             <summary>
             需要蓝图
+            </summary>
+        </member>
+        <member name="T:Proto.HeroJob">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Proto.HeroJob.Xian">
+            <summary>
+            仙
+            </summary>
+        </member>
+        <member name="F:Proto.HeroJob.Fo">
+            <summary>
+            佛
+            </summary>
+        </member>
+        <member name="F:Proto.HeroJob.Yao">
+            <summary>
+            妖
+            </summary>
+        </member>
+        <member name="F:Proto.HeroJob.Ming">
+            <summary>
+            冥
             </summary>
         </member>
         <member name="T:Proto.GameVersion">

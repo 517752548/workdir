@@ -181,13 +181,13 @@ namespace Proto
     public enum SkillDamageType
     {
         /// <summary>
-        /// 治疗
-        /// </summary>
-        Cure=1,
-        /// <summary>
         /// 伤害
         /// </summary>
-        Damage=2,
+        Damage=1,
+        /// <summary>
+        /// 治疗
+        /// </summary>
+        Cure=2,
 
     }
    /// <summary>
@@ -226,25 +226,25 @@ namespace Proto
     public enum SkillEffectType
     {
         /// <summary>
+        /// 直接治疗
+        /// </summary>
+        Cure=1,
+        /// <summary>
+        /// HOT 持续治疗
+        /// </summary>
+        Hot=2,
+        /// <summary>
         /// 持续伤害
         /// </summary>
-        Dot=1,
+        Dot=3,
         /// <summary>
         /// 减少攻击
         /// </summary>
-        ReduceDamage=2,
+        ReduceDamage=4,
         /// <summary>
         /// 眩晕
         /// </summary>
-        Giddy=3,
-        /// <summary>
-        /// 吸血
-        /// </summary>
-        SuckBlood=4,
-        /// <summary>
-        /// 护盾
-        /// </summary>
-        AddDef=5,
+        Giddy=5,
 
     }
    /// <summary>
@@ -418,6 +418,29 @@ namespace Proto
         /// 需要蓝图
         /// </summary>
         NeedScroll=1,
+
+    }
+   /// <summary>
+    /// 
+    /// </summary>
+    public enum HeroJob
+    {
+        /// <summary>
+        /// 仙
+        /// </summary>
+        Xian=1,
+        /// <summary>
+        /// 佛
+        /// </summary>
+        Fo=4,
+        /// <summary>
+        /// 妖
+        /// </summary>
+        Yao=2,
+        /// <summary>
+        /// 冥
+        /// </summary>
+        Ming=3,
 
     }
 }

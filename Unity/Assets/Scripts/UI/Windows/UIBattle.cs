@@ -48,6 +48,7 @@ namespace Assets.Scripts.UI.Windows
                 {
                     _Soldier = value;
                     Template.Bt_skill.Text(value.SkillConfig.Name);
+                    DataManagers.PlayerArmyManager.Singleton.SetJob(Template.job, value.Config);
                 }
             }
 
@@ -141,6 +142,8 @@ namespace Assets.Scripts.UI.Windows
         {
             Monster = monster;
             lb_monsterName.text = Monster.Soldiers[0].Config.Name;
+            var config = monster.Soldiers[0].Config;
+            DataManagers.PlayerArmyManager.Singleton.SetJob(jobicon, config);
             //throw new NotImplementedException();
         }
 
@@ -186,9 +189,16 @@ namespace Assets.Scripts.UI.Windows
         {
             if(cur.Camp== Proto.ArmyCamp.Monster)
             {
-                iTween.shake(MonsterRoot.gameObject, 0.5f, 0, new UnityEngine.Vector3(100, 100, 0));
+                iTween.shake(MonsterRoot.gameObject, 0.3f, 0, new UnityEngine.Vector3(30, 20, 0));
                 var an = daoguangFX.GetComponent<Animator>();
                 an.SetTrigger("Start");
+                UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["ATTACK_MONSTER"], result.Damage));
+            }
+            else
+            {
+                var an = this.zhuahenFx.GetComponent<Animator>();
+                an.SetTrigger("Start");
+                UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["LOST_HP"], result.Damage));
             }
         }
     }

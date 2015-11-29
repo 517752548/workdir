@@ -71,9 +71,10 @@ namespace Assets.Scripts.Combat.Battle.Actions
 
             switch ((SkillEffectType)Soldier.SkillConfig.StatusType)
             {
-                case SkillEffectType.AddDef:
+                case SkillEffectType.Hot:
                     //加护盾
-                    effectTarget.AddAppendHP(Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1));
+                    //治疗
+                    //effectTarget.AddAppendHP(Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1));
                     GameDebug.LogDebug("Adddef: num !" + Soldier.SkillConfig.Pars1);
                     break;
                 case SkillEffectType.Dot:
@@ -92,7 +93,7 @@ namespace Assets.Scripts.Combat.Battle.Actions
                     GameDebug.LogDebug("ReduceDamage: num !" + Soldier.SkillConfig.Pars1);
                     battle.DoReduceDamage(Obj as BattleArmy, Soldier, target, Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1), Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars2));
                     break;
-                case SkillEffectType.SuckBlood:
+                case SkillEffectType.Cure:
                     GameDebug.LogDebug("SuckBlood: num !" + Soldier.SkillConfig.Pars1);
                     target.CalHp(Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1));//加血
                     break;

@@ -53,8 +53,8 @@ enum BuildingUnlockType
 //伤害类型
 enum SkillDamageType
 {
-   Cure =1 ;//治疗
-   Damage = 2;//伤害
+   Damage = 1;//伤害
+   Cure =2 ;//治疗
 }
 //技能目标类型
 enum SkillTargetType
@@ -71,11 +71,11 @@ enum SkillEffectTaget
 //技能效果类型
 enum SkillEffectType
 {
-   Dot = 1; //持续伤害
-   ReduceDamage =2 ;//减少攻击
-   Giddy =3;//眩晕
-   SuckBlood=4;//吸血
-   AddDef = 5;//护盾
+   Cure =1 ;//直接治疗
+   Hot =2 ;//HOT 持续治疗
+   Dot = 3; //持续伤害
+   ReduceDamage =4 ;//减少攻击
+   Giddy =5;//眩晕
 }
 //成就达成条件类型
 enum AchievementEventType
@@ -135,4 +135,12 @@ enum MakeItemUnlockType
 {
     NONE = 0;//无需条件
 	NeedScroll =1;//需要蓝图
+}
+
+enum HeroJob
+{ 
+    Xian =  1; //仙
+	Fo  =4 ;//佛
+	Yao =2 ;//妖
+	Ming =3;//冥
 }
