@@ -17,6 +17,8 @@ namespace Assets.Scripts.Combat.Battle.Controllors
             var state = per.State as States.BattleState;
             int lastIndex =state.Render.GetTapIndex();
             if (lastIndex < 0) return GAction.Empty;
+            var battle = per.GetBattle();
+            if (battle.State == Elements.BattleStateType.End) return GAction.Empty;
 
             for (var i = 0; i < army.Soldiers.Count; i++)
             {

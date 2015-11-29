@@ -14,8 +14,11 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 
         public override GAction GetAction(GObject current)
         {
+            
             var army = current as Elements.BattleArmy;
             var per = Perception as States.BattlePerception;
+            var battle = per.GetBattle();
+            if (battle.State == Elements.BattleStateType.End) return GAction.Empty;
             foreach(var i in army.Soldiers)
             {
                 if (i.LeftTime<=0)
