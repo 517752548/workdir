@@ -22,7 +22,7 @@ namespace Assets.Scripts.Combat.Battle.Elements
         {
             Config = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(soldier.ConfigID);
             SkillConfig = ExcelToJSONConfigManager.Current.GetConfigByID<SkillConfig>(Config.SkillID);
-            AttackCdTime = 0;
+            AttackCdTime = -1;
         }
         public Proto.Soldier Soldier { set; get; }
         public ExcelConfig.MonsterConfig Config { set; get; }
@@ -33,6 +33,9 @@ namespace Assets.Scripts.Combat.Battle.Elements
         {
             get
             {
+                if (AttackCdTime <= 0)
+                    AttackCdTime = Time.time;
+
                 return Mathf.Max(0, AttackCdTime + CdTimeToFloat() - Time.time);
             }
         }

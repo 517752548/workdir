@@ -82,6 +82,7 @@ namespace Assets.Scripts.UI.Windows
         public override void OnShow()
         {
             base.OnShow();
+            SkillBar.value = 0;
         }
         public override void OnHide()
         {
@@ -187,7 +188,7 @@ namespace Assets.Scripts.UI.Windows
 
         public void OnAttack(Combat.Battle.Elements.DamageResult result,BattleArmy cur)
         {
-            if(cur.Camp== Proto.ArmyCamp.Monster)
+            if(cur.Camp== Proto.ArmyCamp.Player)
             {
                 iTween.shake(MonsterRoot.gameObject, 0.3f, 0, new UnityEngine.Vector3(30, 20, 0));
                 var an = daoguangFX.GetComponent<Animator>();
