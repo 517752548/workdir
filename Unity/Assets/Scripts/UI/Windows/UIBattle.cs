@@ -198,9 +198,11 @@ namespace Assets.Scripts.UI.Windows
 
         public void OnAttack(Combat.Battle.Elements.DamageResult result,BattleArmy cur)
         {
-            if(cur.Camp== Proto.ArmyCamp.Player)
+            if (cur.Camp == Proto.ArmyCamp.Player)
             {
-                iTween.shake(MonsterRoot.gameObject, 0.3f, 0.2f, new UnityEngine.Vector3(30, 20, 0));
+                if (MonsterRoot.GetComponent<iTween>() == null)
+                    iTween.shake(MonsterRoot.gameObject, 0.3f, 0.2f, new UnityEngine.Vector3(30, 20, 0));
+
                 var an = daoguangFX.GetComponent<Animator>();
                 an.SetTrigger("Start");
                 UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["ATTACK_MONSTER"], result.Damage));

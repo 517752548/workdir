@@ -69,7 +69,6 @@ namespace Assets.Scripts.UI.Windows
                     UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_SCROLL"], 3f);
                     UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["NO_SCROLL"]);
                     return;
-                    return;
                 }
                 var ui = UIManager.Singleton.CreateOrGetWindow<UIMake>();
                 ui.ShowWindow();
@@ -155,7 +154,11 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnUpdateUIData();
 
-            this.lb_gold.text=(string.Format(LanguageManager.Singleton["APP_NUM_FORMAT"], DataManagers.GamePlayerManager.Singleton.Gold));
+            var gold = DataManagers.GamePlayerManager.Singleton.Gold>100000?
+                string.Format("{0:0.0}", (DataManagers.GamePlayerManager.Singleton.Gold / 10000)) + "W" : 
+                string.Format("{0:N0}", DataManagers.GamePlayerManager.Singleton.Gold);
+
+            this.lb_gold.text = (string.Format(LanguageManager.Singleton["APP_GOLD_Label"], gold));
 
             bt_Coin.Text(string.Format(LanguageManager.Singleton["APP_NUM_FORMAT"], DataManagers.GamePlayerManager.Singleton.Coin));
         }

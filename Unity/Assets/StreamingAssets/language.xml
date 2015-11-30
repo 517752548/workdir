@@ -6,6 +6,7 @@
   <LanguageKey Key="APP_GREEN">{0}</LanguageKey> <!--[006400] 绿色-->
   <LanguageKey Key="APP_COIN">钻石</LanguageKey> 
   <LanguageKey Key="APP_GOLD">金币</LanguageKey>
+  <LanguageKey Key="APP_GOLD_Label">{0}</LanguageKey>  
   
   
   <LanguageKey Key="NO_SCROLL">获取制造图纸激活制造</LanguageKey>
