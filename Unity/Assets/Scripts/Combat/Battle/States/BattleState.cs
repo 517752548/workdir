@@ -35,10 +35,12 @@ namespace Assets.Scripts.Combat.Battle.States
 
         public void End(BattleResult result)
         {
+            this.Enable = false;
             if (CallBack == null) return;
             CallBack(result);
         }
 
+        
 
     }
 

@@ -8,7 +8,7 @@ namespace Assets.Scripts.Combat.Simulate
 {
     public abstract class GState
     {
-        public GState() { _elements = new Dictionary<int, GObject>(); Enable = false; }
+        public GState() { _elements = new Dictionary<int, GObject>(); Enable = false; NeedEnd = false; }
         public GPerception Perception { protected set; get; }
         public bool Enable {  set; get; }
         public abstract void OnEnter();
@@ -87,7 +87,12 @@ namespace Assets.Scripts.Combat.Simulate
 
         public void Start()
         {
+            if (Enable) return;
             Enable = true;
+            OnEnter();
         }
+
+
+        public bool NeedEnd { set; get; }
     }
 }

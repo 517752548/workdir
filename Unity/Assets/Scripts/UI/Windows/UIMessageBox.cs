@@ -24,6 +24,15 @@ namespace Assets.Scripts.UI.Windows
                     Cancel();
                 HideWindow();
             });
+
+            bt_cancel.OnMouseClick((s, e) =>
+            {
+                if (Cancel != null)
+                    Cancel();
+                HideWindow();
+            });
+
+
             //Write Code here
         }
         public override void OnShow()
@@ -45,7 +54,7 @@ namespace Assets.Scripts.UI.Windows
             ui.OK = clickOK;
             ui.Cancel = clickCancel;
             ui.lb_Message.text = message;
-            ui.bt_ok.Text(ok);
+            ui.lb_Title.text = ok;
         }
     }
 }

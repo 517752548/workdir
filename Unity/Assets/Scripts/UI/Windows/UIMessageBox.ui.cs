@@ -12,9 +12,11 @@ namespace Assets.Scripts.UI.Windows
     {
 
 
+        public UIWidget c_close;
         public UILabel lb_Message;
         public UIButton bt_ok;
-        public UIWidget c_close;
+        public UIButton bt_cancel;
+        public UILabel lb_Title;
 
 
 
@@ -22,11 +24,19 @@ namespace Assets.Scripts.UI.Windows
         public override void InitTemplate()
         {
             base.InitTemplate();
+            c_close = FindChild<UIWidget>("c_close");
             lb_Message = FindChild<UILabel>("lb_Message");
             bt_ok = FindChild<UIButton>("bt_ok");
-            c_close = FindChild<UIWidget>("c_close");
+            bt_cancel = FindChild<UIButton>("bt_cancel");
+            lb_Title = FindChild<UILabel>("lb_Title");
 
 
-        }       
+        }
+        public static UIMessageBox Show()
+        {
+            var ui = UIManager.Singleton.CreateOrGetWindow<UIMessageBox>();
+            ui.ShowWindow();
+            return ui;
+        }
     }
 }

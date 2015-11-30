@@ -76,12 +76,22 @@ namespace Assets.Scripts.UI.Windows
                 //bt_battleMode.Text(LanguageManager.Singleton[setmode == DataManagers.BattleControlMode.AUTO ? "BATTLE_AUTO" : "BATTLE_PLAYER"]);
                 if (this.Per == null) return;
                 this.Per.ChangePlayerControllor(setmode == DataManagers.BattleControlMode.AUTO);
+                //bt_battleMode.Text()
+            });
+
+            bt_close.OnMouseClick((s, e) => {
+
+                this.Per.State.Enable = false;
+                UIMessageBox.ShowMessage(LanguageManager.Singleton["CANCEL_TITLE"], LanguageManager.Singleton["CANCEL_MESSAGE"],
+                    () => { _cancel = true; this.Per.State.Enable = true; }, () => { this.Per.State.Enable = true; });
+               
             });
 
         }
         public override void OnShow()
         {
             base.OnShow();
+            _cancel = false;
             SkillBar.value = 0;
         }
         public override void OnHide()
@@ -190,7 +200,7 @@ namespace Assets.Scripts.UI.Windows
         {
             if(cur.Camp== Proto.ArmyCamp.Player)
             {
-                iTween.shake(MonsterRoot.gameObject, 0.3f, 0, new UnityEngine.Vector3(30, 20, 0));
+                iTween.shake(MonsterRoot.gameObject, 0.3f, 0.2f, new UnityEngine.Vector3(30, 20, 0));
                 var an = daoguangFX.GetComponent<Animator>();
                 an.SetTrigger("Start");
                 UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["ATTACK_MONSTER"], result.Damage));
@@ -201,6 +211,13 @@ namespace Assets.Scripts.UI.Windows
                 an.SetTrigger("Start");
                 UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["LOST_HP"], result.Damage));
             }
+        }
+
+        private bool _cancel = false;
+
+        public bool Cancel
+        {
+            get { return _cancel; }
         }
     }
 }

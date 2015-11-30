@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.GameStates
 {
+    [Obsolete("Only used for test battle logic")]
     public class BattleState:App.GameState
     {
         private Proto.Army player;
@@ -24,7 +25,7 @@ namespace Assets.Scripts.GameStates
             UI.UIControllor.Singleton.ShowMessage(string.Empty,-1f);
             UI.UIControllor.Singleton.HideAllUI();
             State = new Combat.Battle.States.BattleState(1,null);
-            State.OnEnter();
+            State.Start();
 
         }
 

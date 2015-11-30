@@ -183,7 +183,7 @@ namespace Assets.Scripts.UI.Windows
                     }
                 }
             }
-            var listID = items.Keys.ToList();
+            var listID = items.Where(t=>t.Value !=0).Select(t=>t.Key).ToList();
             
             listID.Sort((l, r) => {
                 if (l > r) return 1;

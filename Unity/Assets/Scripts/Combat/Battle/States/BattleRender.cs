@@ -20,5 +20,7 @@ namespace Assets.Scripts.Combat.Battle.States
         void ShowBattleName(ExcelConfig.BattleConfig config);
 
         void OnAttack(Elements.DamageResult result, Elements.BattleArmy cur);
+
+        bool Cancel { get; }
     }
 }

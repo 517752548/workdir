@@ -19,6 +19,12 @@ namespace Assets.Scripts.Combat.Battle.Controllors
             var per = Perception as States.BattlePerception;
             battle.TickEffect();
 
+            var state = per.State as States.BattleState;
+            if(state.Render.Cancel)
+            {
+                 return new Actions.EndBattleAction(current, per) { Winner = Proto.ArmyCamp.Monster };
+            }
+
             switch (battle.State)
             {
                 case Elements.BattleStateType.NOStart:
@@ -47,12 +53,12 @@ namespace Assets.Scripts.Combat.Battle.Controllors
                     if (TimeToEnd > Time.time) return GAction.Empty;
                     if (per.PlayerDead())
                     {   //玩家死亡
-                        return new Actions.EndBattleAction(current, Perception);
+                        return new Actions.EndBattleAction(current, Perception) { Winner = Proto.ArmyCamp.Monster };
                     }
                     else
                     {
 
-                        return new Actions.EndBattleAction(current, per);
+                        return new Actions.EndBattleAction(current, per) { Winner = Proto.ArmyCamp.Player };
                     }
                     
                 default:

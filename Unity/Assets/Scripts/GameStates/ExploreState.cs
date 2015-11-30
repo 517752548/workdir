@@ -125,7 +125,14 @@ namespace Assets.Scripts.GameStates
             if (BState != null)
             {
                 BState.OnTick();
+                if (BState == null) return;
+                if(BState.NeedEnd)
+                {
+                    BState.OnExit();
+                    BState = null;
+                }
             }
+          
             CheckWaiting();
             player.transform.position = Vector3.Lerp(player.transform.position, targetPosPlayer, 20);
         }
@@ -198,7 +205,6 @@ namespace Assets.Scripts.GameStates
              battleUI,
              (result) =>
              {
-                 BState = null;
                  callBack(result.Winner == Proto.ArmyCamp.Player);
                  //战斗失败处理
                  //Hide 

@@ -70,6 +70,11 @@ namespace Assets.Scripts.UI.Windows
                 }
             }
 
+            public void SetDrag(bool canDrag)
+            {
+                var d = this.Item.Root.GetComponent<UIDragScrollView>();
+                d.enabled = canDrag;
+            }
             private UITableManager<UITableItem> startTable;
 
             public MonsterConfig Monster { get; set; }
@@ -190,7 +195,7 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShow();
             OnUpdateUIData();
-            ClickCategory(Proto.HeroJob.Fo, to_fo );
+            ClickCategory(Proto.HeroJob.Xian, to_xian );
         }
 
 
@@ -213,6 +218,7 @@ namespace Assets.Scripts.UI.Windows
 
         private void ShowCurrent()
         {
+            PackageView.GetComponent<UIScrollView>().ResetPosition();
             var current = AllHeros.Where(t => t.Monster.Type == (int)currentJob).ToList();
             ItemGridTableManager.Count = current.Count;
             int index = 0;
@@ -220,6 +226,7 @@ namespace Assets.Scripts.UI.Windows
             {
                 i.Model.PlayerSoldier = current[index];
                 i.Model.OnClick = OnClickItem;
+                i.Model.SetDrag(current.Count >= 3);
                 index++;
             }
 

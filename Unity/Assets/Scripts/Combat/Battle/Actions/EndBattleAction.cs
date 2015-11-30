@@ -12,6 +12,8 @@ namespace Assets.Scripts.Combat.Battle.Actions
         public EndBattleAction(GObject obj, GPerception per)
             :base(obj,per)
         { }
+
+        public Proto.ArmyCamp Winner { set; get; }
         public override void DoAction()
         {
             //GOTo Explore
@@ -24,7 +26,7 @@ namespace Assets.Scripts.Combat.Battle.Actions
             var battle = this.Obj as Elements.BattleEl;
             battle.State = Elements.BattleStateType.End;
             var state = per.State as States.BattleState;
-            var winner = per.PlayerDead() ? Proto.ArmyCamp.Monster : Proto.ArmyCamp.Player;
+            var winner = Winner;
 
             state.End(new States.BattleResult { Winner = winner });
         }
