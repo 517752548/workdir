@@ -155,6 +155,7 @@ namespace Assets.Scripts.UI.Windows
             lb_monsterName.text = Monster.Soldiers[0].Config.Name;
             var config = monster.Soldiers[0].Config;
             DataManagers.PlayerArmyManager.Singleton.SetJob(jobicon, config);
+            lb_lvl_monster.text = string.Format(LanguageManager.Singleton["BATTLE_UI_MONSTER_LVL"], 1);
             //throw new NotImplementedException();
         }
 

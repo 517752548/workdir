@@ -155,7 +155,7 @@ namespace Assets.Scripts.UI.Windows
             base.OnUpdateUIData();
 
             var gold = DataManagers.GamePlayerManager.Singleton.Gold>100000?
-                string.Format("{0:0.0}", (DataManagers.GamePlayerManager.Singleton.Gold / 10000)) + "W" : 
+                string.Format("{0:0.0}", ((float)DataManagers.GamePlayerManager.Singleton.Gold / 10000f)) + "W" : 
                 string.Format("{0:N0}", DataManagers.GamePlayerManager.Singleton.Gold);
 
             this.lb_gold.text = (string.Format(LanguageManager.Singleton["APP_GOLD_Label"], gold));

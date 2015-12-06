@@ -68,8 +68,8 @@ namespace Assets.Scripts.UI.Windows
                 if (DataManagers.PlayerArmyManager.Singleton.LevelUp(Soldier))
                 {
                     UIManager.Singleton.UpdateUIData();
+                    HideWindow();
                 }
-                HideWindow();
             });
 
             bt_close.OnMouseClick((s, e) => {

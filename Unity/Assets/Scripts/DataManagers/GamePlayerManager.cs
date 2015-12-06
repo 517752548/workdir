@@ -18,16 +18,17 @@ namespace Assets.Scripts.DataManagers
         PRODUCE_LEVEL = 1, //玩家的炼金等级
         PRODUCE_CLICK_TIMES = 2,//炼金点击次数
         PEOPLE_COUNT = 3,//当前中的民工数
-        PRODUCE_TIME =4,//上次计算时间
-        PACKAGE_SIZE =5,//背包大小
-        TEAM_SIZE =6,//队伍上线
+        PRODUCE_TIME = 4,//上次计算时间
+        PACKAGE_SIZE = 5,//背包大小
+        TEAM_SIZE = 6,//队伍上线
         EXPLORE_VALUE = 7,  //探索度
-        PLAYER_GOLD =8 ,//金币
-        PLAYER_COIN=9,//钻石
+        PLAYER_GOLD = 8,//金币
+        PLAYER_COIN = 9,//钻石
         PLAYER_CURRENT_MAP = 10, //当前地图
         PLAYER_CURREN_POS = 11,//当前地图所在坐标
-        PLAYER_ARMY_FOOD =12 ,//当前所带食物
-        PLAYER_BATTLE_MODE =13 //当前战斗模式
+        PLAYER_ARMY_FOOD = 12,//当前所带食物
+        PLAYER_BATTLE_MODE = 13, //当前战斗模式
+        PLAYER_ACHIEVEMENT_POINT = 14 //成就点
     }
 
     public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
@@ -42,6 +43,8 @@ namespace Assets.Scripts.DataManagers
         //探索过的地图
         public const string COMPLETE_MAPS = "_PLAYER_MAP_COMPLETED_LIST.json";
 
+        public const string PAYMENT_PATH = "/PaymentData.json";
+
         private Dictionary<int, int> PlayerData { set; get; }
 
         private Dictionary<int, ProducePrisitData> ProduceOpenState { set; get; }
@@ -54,7 +57,7 @@ namespace Assets.Scripts.DataManagers
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static int PosXYToIndex(int x,int y)
+        public static int PosXYToIndex(int x, int y)
         {
             return x + y * CELL;
         }
@@ -236,8 +239,8 @@ namespace Assets.Scripts.DataManagers
                 if (!i.Value.IsOpen || i.Value.PeopleNum <= 0) continue;
                 var produce = ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ResourcesProduceConfig>(i.Value.ProduceID);
                 if (produce == null) continue;
-                var requires = Tools.UtilityTool.SplitKeyValues(produce.CostItems,produce.CostItemsNumber);
-                var rewards = Tools.UtilityTool.SplitKeyValues(produce.RewardItems,produce.RewardItemsNumber);
+                var requires = Tools.UtilityTool.SplitKeyValues(produce.CostItems, produce.CostItemsNumber);
+                var rewards = Tools.UtilityTool.SplitKeyValues(produce.RewardItems, produce.RewardItemsNumber);
                 var engough = true;
                 foreach (var r in requires)
                 {
@@ -378,7 +381,7 @@ namespace Assets.Scripts.DataManagers
             }
             var x = (int)target.Value.x;
             var y = (int)target.Value.y;
-            int index =  PosXYToIndex(x,y);
+            int index = PosXYToIndex(x, y);
 
 
             this[PlayDataKeys.PLAYER_CURREN_POS] = index;
@@ -595,6 +598,39 @@ namespace Assets.Scripts.DataManagers
         {
             this[PlayDataKeys.PLAYER_BATTLE_MODE] = (int)mode;
         }
+
+
+        #region paement
+        public List<PersistStructs.PaymentData> PaymentData
+        {
+            get
+            {
+
+                var json = Tools.Utility.ReadAStringFile(Tools.Utility.GetStreamingAssetByPath(PAYMENT_PATH));
+                if (!string.IsNullOrEmpty(json))
+                {
+                    return JsonTool.Deserialize<List<PersistStructs.PaymentData>>(json);
+                }
+
+                return new List<PersistStructs.PaymentData>();
+            }
+        }
+
+        internal bool DoPayment(PersistStructs.PaymentData paymentData)
+        {
+
+
+#if UNITY_EDITOR
+            this.AddCoin(paymentData.Reward);
+            UIManager.Singleton.UpdateUIData();
+            return true;
+#endif
+            return true;
+
+            //Call Payment
+        }
+
+        #endregion
     }
 
     public enum BattleControlMode

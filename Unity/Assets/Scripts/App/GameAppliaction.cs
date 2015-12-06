@@ -114,16 +114,7 @@ namespace Assets.Scripts.App
         /// </summary>
         public void BeginBattle()
         {
-            var player = new Proto.Army() { 
-             Camp = Proto.ArmyCamp.Player
-            };
-            var monster = new Proto.Army() {
-                Camp = Proto.ArmyCamp.Monster
-            };
-            player.Soldiers.Add(new Proto.Soldier {  ConfigID = 1, Num =10});
-            monster.Soldiers.Add(new Proto.Soldier { Num = 10, ConfigID = 2 });
-            var state = new GameStates.BattleState(player, monster);
-            ChangeState(state);
+
         }
 
         public void DoLogin()

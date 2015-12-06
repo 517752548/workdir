@@ -60,10 +60,11 @@
   
   
   <LanguageKey Key="UI_Payment_pay">购买</LanguageKey> 
-  <LanguageKey Key="UI_Payment_paymessage">消耗{0}元，购买{1}宝石？\n（点击黑背景取消）</LanguageKey>  
+  <LanguageKey Key="UI_Payment_paymessage">{0}</LanguageKey>  
   <LanguageKey Key="UI_PaymenShop_bt_buy">购买</LanguageKey> 
   <LanguageKey Key="UI_PaymenShop_buy_item">消耗{1:N0}钻石购买{0}？\n（点击黑背景取消）</LanguageKey>
-  
+  <LanguageKey Key="UI_Payment_address_Url">论坛地址 www.xsoft.com</LanguageKey>
+  <LanguageKey Key="UI_Payment_address_qq">QQ群 54249636</LanguageKey>
   
   <LanguageKey Key="UIStructureBuilding_Cost_Title">建造消耗：</LanguageKey>
   <LanguageKey Key="UIStructureBuilding_Cost_Item">{0} *{1} </LanguageKey> 
@@ -106,7 +107,8 @@
   <LanguageKey Key="UI_GOEXPLORE_Relive_NOT_ENOUGH_ITEM">{0}不足</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_Relive_Success">消耗{0} 使得{1}复活</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_NEED_ARMY">起码您也要带个猪出去吧！！！</LanguageKey>
-  
+
+  <LanguageKey Key="BATTLE_UI_MONSTER_LVL">LV.{0}</LanguageKey>
   <LanguageKey Key="BATTLE_AUTO">自  动</LanguageKey>
   <LanguageKey Key="BATTLE_PLAYER">手  动</LanguageKey>
   <LanguageKey Key="ATTACK_MONSTER">M:[FF0000]{0}</LanguageKey> 

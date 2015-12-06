@@ -67,12 +67,14 @@ namespace Assets.Scripts.UI
                     _index = 1;
                 _index++;
                 Key = ("KEY_OF_ITEM" + _index).GetHashCode();
-                if (NextTime + 0.5f > Time.time)
-                    StartTime = NextTime + 0.5f;
+                if (NextTime + Tick > Time.time)
+                    StartTime = NextTime + Tick;
                 else
                     StartTime = Time.time;
                 NextTime =  StartTime;
             }
+
+            private const float Tick = 0.3f;
         }
         public void Init(ITipRender render)
         {

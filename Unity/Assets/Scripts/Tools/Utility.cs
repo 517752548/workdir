@@ -35,11 +35,14 @@ namespace Assets.Scripts.Tools
                 {
                     //wait file load completed
                 }
-                file.Content = www.text;
+                if (string.IsNullOrEmpty(www.error))
+                    file.Content = www.text;
             }
             else
-                file.Content = System.IO.File.ReadAllText(filePath, XmlParser.UTF8);
-
+            {
+                if (File.Exists(filePath))
+                    file.Content = System.IO.File.ReadAllText(filePath, XmlParser.UTF8);
+            }
             return file.Content;
         }
         /// <summary>
@@ -58,11 +61,14 @@ namespace Assets.Scripts.Tools
                 {
                     //wait file load completed
                 }
-                file.Content = www.bytes;
+                if (string.IsNullOrEmpty(www.error))
+                    file.Content = www.bytes;
             }
             else
-                file.Content = System.IO.File.ReadAllBytes(filePath);
-
+            {
+                if (File.Exists(filePath))
+                    file.Content = System.IO.File.ReadAllBytes(filePath);
+            }
             return file.Content;
         }
         /// <summary>

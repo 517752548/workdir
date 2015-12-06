@@ -31,6 +31,8 @@ namespace Assets.Scripts.UI.Windows
         public override void OnShow()
         {
             base.OnShow();
+
+            
             ItemGridTableManager.Count = 10;
             foreach(var i in ItemGridTableManager)
             {

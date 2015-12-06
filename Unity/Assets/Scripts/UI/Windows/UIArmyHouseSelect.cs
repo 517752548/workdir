@@ -102,7 +102,7 @@ namespace Assets.Scripts.UI.Windows
             {
                 i.Model.PlayerSoldier = allHero[index];
                 i.Model.OnClick = OnClickItem;
-                i.Model.SetDrag(allHero.Count >= 5);
+                i.Model.SetDrag(allHero.Count >= 4);
                 index++;
             }
         }
