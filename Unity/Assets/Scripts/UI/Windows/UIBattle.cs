@@ -109,23 +109,29 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnUpdate();
             ShowData();
+            
         }
 
         private void ShowData()
         {
             if (Monster != null)
             {
-                HpBar.value = (float)Monster.HP / (float)Monster.MaxHP;
+                targetMonsterHp = (float)Monster.HP / (float)Monster.MaxHP;
+                //HpBar.value = (float)Monster.HP / (float)Monster.MaxHP;
                 SkillBar.value = (Monster.Soldiers[0].CdTimeToFloat() - Monster.Soldiers[0].LeftTime) / Monster.Soldiers[0].CdTimeToFloat();
             }
             if (Player != null)
             {
-                PlayerHpBar.value = (float)Player.HP / (float)Player.MaxHP;
+                targetPlayerHp = (float)Player.HP / (float)Player.MaxHP; 
+                //PlayerHpBar.value = (float)Player.HP / (float)Player.MaxHP;
                 foreach (var i in SkillGridTableManager)
                 {
                     i.Model.Update();
                 }
             }
+
+            HpBar.value = Mathf.Lerp(HpBar.value, targetMonsterHp, Time.deltaTime * 5);
+            PlayerHpBar.value = Mathf.Lerp(PlayerHpBar.value, targetPlayerHp, Time.deltaTime * 5);
         }
 
 
@@ -155,7 +161,7 @@ namespace Assets.Scripts.UI.Windows
             lb_monsterName.text = Monster.Soldiers[0].Config.Name;
             var config = monster.Soldiers[0].Config;
             DataManagers.PlayerArmyManager.Singleton.SetJob(jobicon, config);
-            lb_lvl_monster.text = string.Format(LanguageManager.Singleton["BATTLE_UI_MONSTER_LVL"], 1);
+            this.lb_monster_lvl.text = string.Format(LanguageManager.Singleton["BATTLE_UI_MONSTER_LVL"], config.Level);
             //throw new NotImplementedException();
         }
 
@@ -178,6 +184,8 @@ namespace Assets.Scripts.UI.Windows
         public void SetPerception(BattlePerception per)
         {
             Per = per;
+            var st = per.State as BattleState; ;
+            this.lb_title.text =st.GroupConfig .Name;
         }
 
 
@@ -215,6 +223,9 @@ namespace Assets.Scripts.UI.Windows
                 UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["LOST_HP"], result.Damage));
             }
         }
+
+        private float targetPlayerHp =1f;
+        private float targetMonsterHp = 1f;
 
         private bool _cancel = false;
 

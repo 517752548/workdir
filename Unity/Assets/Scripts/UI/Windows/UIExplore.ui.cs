@@ -13,6 +13,7 @@ namespace Assets.Scripts.UI.Windows
 
 
         public UILabel lb_title;
+        public UIButton bt_close;
 
 
 
@@ -21,6 +22,7 @@ namespace Assets.Scripts.UI.Windows
         {
             base.InitTemplate();
             lb_title = FindChild<UILabel>("lb_title");
+            bt_close = FindChild<UIButton>("bt_close");
 
 
         }

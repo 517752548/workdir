@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Combat.Simulate;
+using ExcelConfig;
 using Proto;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace Assets.Scripts.Combat.Battle.States
 {
     public class BattleState :GState
     {
-        public BattleState(int battleGroupID, IBattleRender render, EndBattleCallBack callBack =null)
+        public BattleState(int battleGroupID, IBattleRender render, EndBattleCallBack callBack = null)
         {
             Render = render;
             CallBack = callBack;
@@ -17,8 +18,11 @@ namespace Assets.Scripts.Combat.Battle.States
             this.Perception = perception;
             var battle = new Elements.BattleEl(new Controllors.BattleControllor(this.Perception), battleGroupID);
             AddElement(battle);
-            Render.SetPerception(perception);
+            GroupConfig = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.BattleGroupConfig>(battleGroupID);
+            Render.SetPerception(Perception as BattlePerception);
         }
+
+        public BattleGroupConfig GroupConfig { private set; get; }
 
         public IBattleRender Render { private set; get; }
 
@@ -26,7 +30,7 @@ namespace Assets.Scripts.Combat.Battle.States
 
         public override void OnEnter()
         {
-            //throw new NotImplementedException();
+          
         }
         public override void OnExit()
         {

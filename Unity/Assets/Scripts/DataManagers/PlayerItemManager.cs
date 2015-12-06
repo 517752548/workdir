@@ -81,9 +81,13 @@ namespace Assets.Scripts.DataManagers
             PlayerGameItem item;
             if (_items.TryGetValue(entry, out item))
             {
-                if (calValue <= 0) return item.Num;
-                item.Num -= calValue;
-                return item.Num;
+                    if (calValue <= 0) return item.Num;
+                    if (item.Num >= calValue)
+                    {
+                        item.Num -= calValue;
+                    }
+                    return item.Num;
+
             }
 
             return -1;

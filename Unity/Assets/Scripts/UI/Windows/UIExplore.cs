@@ -16,6 +16,17 @@ namespace Assets.Scripts.UI.Windows
         public override void InitModel()
         {
             base.InitModel();
+
+            bt_close.OnMouseClick((s, e) => {
+                var state = App.GameAppliaction.Singleton.Current as ExploreState;
+                if (state == null) return;
+                UIMessageBox.ShowMessage(LanguageManager.Singleton["UIEXPLORE_EXIT_TITLE"],
+                    LanguageManager.Singleton["UIEXPLORE_EXIT_MESSGAE"],
+                    () => {
+                        state.JoinCastle(true);
+                    }, null);
+
+            });
             //Write Code here
         }
         public override void OnShow()

@@ -419,6 +419,11 @@
             默认可出战英雄
             </summary>
         </member>
+        <member name="P:ExcelConfig.ConstAttConfig.JoinCastleItemID">
+            <summary>
+            回城卷轴ID
+            </summary>
+        </member>
         <member name="T:ExcelConfig.BuildingConfig">
             <summary>
             建筑表
@@ -512,6 +517,11 @@
         <member name="P:ExcelConfig.MonsterConfig.ResName">
             <summary>
             资源名称
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.MonsterConfig.Level">
+            <summary>
+            等级
             </summary>
         </member>
         <member name="P:ExcelConfig.MonsterConfig.Description">

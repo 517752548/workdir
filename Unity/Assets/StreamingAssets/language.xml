@@ -115,4 +115,10 @@
   <LanguageKey Key="LOST_HP">P:[00FF00]{0}</LanguageKey> 
   <LanguageKey Key="CANCEL_TITLE">退出？</LanguageKey> 
   <LanguageKey Key="CANCEL_MESSAGE">我要逃跑啊!</LanguageKey> 
+  
+  
+  <LanguageKey Key="UIEXPLORE_EXIT_TITLE">回城</LanguageKey> 
+  <LanguageKey Key="UIEXPLORE_EXIT_MESSGAE">回城需要消耗一个回城卷。</LanguageKey> 
+  <LanguageKey Key="JOIN_CASTLE_ITEM_NOT_ENOUGH">{0}不足</LanguageKey>
+  <LanguageKey Key="JOIN_CASTLE_ITEM_COST">消耗一个{0}</LanguageKey>   
 </ArrayOfLanguageKey>

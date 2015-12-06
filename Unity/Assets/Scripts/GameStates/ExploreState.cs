@@ -154,8 +154,7 @@ namespace Assets.Scripts.GameStates
             //处理回城
             if (Map.IsOrgin(target))
             {
-                RecordPos(null);//回城的时候
-                App.GameAppliaction.Singleton.JoinCastle();
+                JoinCastle();
             }
             else
             {
@@ -193,6 +192,27 @@ namespace Assets.Scripts.GameStates
         private void RecordPos(Vector2? target)
         {
             DataManagers.GamePlayerManager.Singleton.GoPos(target);
+        }
+
+        public void JoinCastle(bool useItem = false)
+        {
+            if (useItem)
+            {
+                var itemID = App.GameAppliaction.Singleton.ConstValues.JoinCastleItemID; 
+                var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(itemID);
+                if (DataManagers.PlayerItemManager.Singleton.GetItemCount(itemID) >= 1)
+                {
+                    DataManagers.PlayerItemManager.Singleton.SubItem(itemID, 1);
+                    UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["JOIN_CASTLE_ITEM_COST"], config.Name));
+                }
+                else
+                {
+                    UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["JOIN_CASTLE_ITEM_NOT_ENOUGH"],config.Name));
+                    return;
+                }
+            }
+            RecordPos(null);//回城的时候
+            App.GameAppliaction.Singleton.JoinCastle();
         }
 
         public void StartBattle(int battlegroup, Action<bool> callBack)

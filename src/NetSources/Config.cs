@@ -528,6 +528,12 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(8)]
         public int DefaultTeamSize { set; get; }
+        
+        /// <summary>
+        /// 回城卷轴ID
+        /// </summary>
+        [ExcelConfigColIndex(9)]
+        public int JoinCastleItemID { set; get; }
 
     }
 
@@ -648,75 +654,81 @@ namespace ExcelConfig
         public String ResName { set; get; }
         
         /// <summary>
-        /// NPC描述
+        /// 等级
         /// </summary>
         [ExcelConfigColIndex(3)]
+        public int Level { set; get; }
+        
+        /// <summary>
+        /// NPC描述
+        /// </summary>
+        [ExcelConfigColIndex(4)]
         public String Description { set; get; }
         
         /// <summary>
         /// 兵种类型
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(5)]
         public int Type { set; get; }
         
         /// <summary>
         /// 兵星
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(6)]
         public int Star { set; get; }
         
         /// <summary>
         /// 生命
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(7)]
         public int Hp { set; get; }
         
         /// <summary>
         /// 攻击
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(8)]
         public int Damage { set; get; }
         
         /// <summary>
         /// 命中率
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(9)]
         public int Hit { set; get; }
         
         /// <summary>
         /// 闪避率
         /// </summary>
-        [ExcelConfigColIndex(9)]
+        [ExcelConfigColIndex(10)]
         public float Dodge { set; get; }
         
         /// <summary>
         /// 速度
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(11)]
         public float Speed { set; get; }
         
         /// <summary>
         /// 克制关系暴击
         /// </summary>
-        [ExcelConfigColIndex(11)]
+        [ExcelConfigColIndex(12)]
         public int CrtPro { set; get; }
         
         /// <summary>
         /// 暴击倍率
         /// </summary>
-        [ExcelConfigColIndex(12)]
+        [ExcelConfigColIndex(13)]
         public int Mult { set; get; }
         
         /// <summary>
         /// 技能ID
         /// </summary>
-        [ExcelConfigColIndex(13)]
+        [ExcelConfigColIndex(14)]
         public int SkillID { set; get; }
         
         /// <summary>
         /// 掉落方案ID
         /// </summary>
-        [ExcelConfigColIndex(14)]
+        [ExcelConfigColIndex(15)]
         public int DropID { set; get; }
 
     }
