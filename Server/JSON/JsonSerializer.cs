@@ -80,7 +80,7 @@ namespace org.vxwo.csharp.json
             }
 
             currentDepth--;
-            output.Append('}');
+            output.AppendLine("}");
             currentDepth--;
         }
 

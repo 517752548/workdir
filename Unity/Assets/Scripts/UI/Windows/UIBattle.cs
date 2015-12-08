@@ -49,11 +49,13 @@ namespace Assets.Scripts.UI.Windows
                     _Soldier = value;
                     Template.Bt_skill.Text(value.SkillConfig.Name);
                     DataManagers.PlayerArmyManager.Singleton.SetJob(Template.job, value.Config);
+                    DataManagers.PlayerArmyManager.Singleton.SetIcon(Template.icon, value.Config, DataManagers.TypeOfIcon.BattleMin);
                 }
             }
 
             internal void Update()
             {
+                if (_Soldier == null) return;
                 Template.Bt_skill.Disable(_Soldier.LeftTime > 0);
             }
         }
@@ -161,8 +163,8 @@ namespace Assets.Scripts.UI.Windows
             lb_monsterName.text = Monster.Soldiers[0].Config.Name;
             var config = monster.Soldiers[0].Config;
             DataManagers.PlayerArmyManager.Singleton.SetJob(jobicon, config);
-            this.lb_monster_lvl.text = string.Format(LanguageManager.Singleton["BATTLE_UI_MONSTER_LVL"], config.Level);
-            //throw new NotImplementedException();
+            this.lb_lvl_monster.text = string.Format(LanguageManager.Singleton["BATTLE_UI_MONSTER_LVL"], config.Level);
+            DataManagers.PlayerArmyManager.Singleton.SetIcon(Monster_coin, config, DataManagers.TypeOfIcon.BattleMax);
         }
 
         private Assets.Scripts.Combat.Battle.Elements.BattleArmy Monster;

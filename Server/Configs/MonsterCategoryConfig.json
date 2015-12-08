@@ -1,1 +1,5 @@
-[{"ID":1,"Name":"\u4ED9","AddCategory":2,"AddRate":12500,"DefType":4,"DefRate":9000,"IconName":"xian"},{"ID":2,"Name":"\u5996","AddCategory":3,"AddRate":12500,"DefType":1,"DefRate":9000,"IconName":"ywt2_yao"},{"ID":3,"Name":"\u51A5","AddCategory":4,"AddRate":12500,"DefType":2,"DefRate":9000,"IconName":"ming"},{"ID":4,"Name":"\u4F5B","AddCategory":1,"AddRate":12500,"DefType":3,"DefRate":9000,"IconName":"fo"}]
+[{"ID":1,"Name":"\u4ED9","AddCategory":2,"AddRate":12500,"DefType":4,"DefRate":9000,"IconName":"xian"}
+,{"ID":2,"Name":"\u5996","AddCategory":3,"AddRate":12500,"DefType":1,"DefRate":9000,"IconName":"ywt2_yao"}
+,{"ID":3,"Name":"\u51A5","AddCategory":4,"AddRate":12500,"DefType":2,"DefRate":9000,"IconName":"ming"}
+,{"ID":4,"Name":"\u4F5B","AddCategory":1,"AddRate":12500,"DefType":3,"DefRate":9000,"IconName":"fo"}
+]

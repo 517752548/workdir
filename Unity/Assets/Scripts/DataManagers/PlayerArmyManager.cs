@@ -195,14 +195,6 @@ namespace Assets.Scripts.DataManagers
         /// <param name="monster"></param>
         internal void SetJob(UISprite formjob, MonsterConfig monster)
         {
-            /*
-1	仙
-2	魔
-3	妖
-4	兽
-5	冥
-              */
-
             var monsterCategory = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterCategoryConfig>(monster.Type);
             formjob.spriteName = monsterCategory.IconName;
         }
@@ -210,6 +202,7 @@ namespace Assets.Scripts.DataManagers
 
         public void SetIcon(UITexture icon, MonsterConfig monster,TypeOfIcon  type = TypeOfIcon.List)
         {
+            if (icon == null) { Debug.LogError("Icon is null"); return; }
             switch(type)
             {
                 case TypeOfIcon.List:
@@ -220,6 +213,12 @@ namespace Assets.Scripts.DataManagers
                     break;
                 case TypeOfIcon.MainUI:
                     icon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("HeroIcon/main/" + monster.ResName);
+                    break;
+                case TypeOfIcon.BattleMax:
+                    icon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("HeroIcon/battlemax/" + monster.ResName);
+                    break;
+                case TypeOfIcon.BattleMin:
+                    icon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("HeroIcon/battlemin/" + monster.ResName);
                     break;
             }
 
@@ -344,6 +343,6 @@ namespace Assets.Scripts.DataManagers
 
     public enum TypeOfIcon
     {
-        MainUI, List, LvlUp
+        MainUI, List, LvlUp,BattleMax, BattleMin
     }
 }

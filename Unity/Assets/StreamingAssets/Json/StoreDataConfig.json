@@ -1,1 +1,3 @@
-[{"ID":1,"Name":"hero1","Sold_price":0,"Unlock_type":0,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""},{"ID":2,"Name":"hero2","Sold_price":0,"Unlock_type":0,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}]
+[{"ID":1,"Name":"hero1","Sold_price":0,"Unlock_type":0,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+,{"ID":2,"Name":"hero2","Sold_price":0,"Unlock_type":0,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+]

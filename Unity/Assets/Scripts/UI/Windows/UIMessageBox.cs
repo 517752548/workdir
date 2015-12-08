@@ -47,14 +47,14 @@ namespace Assets.Scripts.UI.Windows
         private Action OK;
         private Action Cancel;
 
-        public static void ShowMessage(string ok, string message, Action clickOK, Action clickCancel)
+        public static void ShowMessage(string title, string message, Action clickOK, Action clickCancel )
         {
             var ui = UIManager.Singleton.CreateOrGetWindow<UIMessageBox>();
             ui.ShowWindow();
             ui.OK = clickOK;
             ui.Cancel = clickCancel;
             ui.lb_Message.text = message;
-            ui.lb_Title.text = ok;
+            ui.lb_Title.text = title;
         }
     }
 }

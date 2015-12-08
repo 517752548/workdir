@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Tools;
+﻿using Assets.Scripts.DataManagers;
+using Assets.Scripts.Tools;
 using ExcelConfig;
 using System;
 using System.Collections.Generic;
@@ -158,6 +159,43 @@ namespace Assets.Scripts.GameStates
             }
             else
             {
+                int index = GamePlayerManager.PosXYToIndex((int)target.x, (int)target.y);
+                foreach (var i in SubMapConfigs)
+                {
+                    var indexs = Tools.UtilityTool.SplitIDS(i.Posistions);
+                    for (var p = 0; p < indexs.Count; p++)
+                    {
+                        if (index == indexs[p])
+                        {
+                            #region haveIndex
+                            switch ((Proto.MapEventType)i.EventType)
+                            {
+                                case Proto.MapEventType.BattlePos:
+                                    var battleGroups = Tools.UtilityTool.SplitIDS(i.Pars1);
+                                    if (battleGroups.Count > p)
+                                    {
+                                        StartBattle(battleGroups[p], (winner) =>
+                                        {
+                                            if (winner)
+                                            {
+                                                RecordPos(target);
+                                            }
+                                            else
+                                            {
+                                                GoBack();
+                                            }
+                                        });
+                                    }
+                                    break;
+                                case Proto.MapEventType.BronPos:
+                                    break;
+                            }
+
+                            #endregion
+                            return;
+                        }
+                    }
+                }
                 //received the onchange event
                 if (GRandomer.Probability10000(Config.RandomPro))
                 {
@@ -217,20 +255,29 @@ namespace Assets.Scripts.GameStates
 
         public void StartBattle(int battlegroup, Action<bool> callBack)
         {
-            //showUI 
-            var battleUI = UI.Windows.UIBattle.Show();
+            var group = ExcelToJSONConfigManager.Current.GetConfigByID<BattleGroupConfig>(battlegroup);
 
-            BState = new Combat.Battle.States.BattleState(
-             battlegroup,
-             battleUI,
-             (result) =>
-             {
-                 callBack(result.Winner == Proto.ArmyCamp.Player);
-                 //战斗失败处理
-                 //Hide 
-                 battleUI.HideWindow();
-             });
-            BState.Start();
+#region OK
+             Action ok = () => {
+                var battleUI = UI.Windows.UIBattle.Show();
+
+                BState = new Combat.Battle.States.BattleState(
+                 battlegroup,
+                 battleUI,
+                 (result) =>
+                 {
+                     callBack(result.Winner == Proto.ArmyCamp.Player);
+                     //战斗失败处理
+                     //Hide 
+                     battleUI.HideWindow();
+                 });
+                BState.Start();
+            };
+#endregion
+             UI.Windows.UIMessageBox.ShowMessage(group.Name, group.battleDiscribtion, ok, () => { callBack(false); });
+            //showUI 
+            //On 
+           
         }
 
         public Combat.Battle.States.BattleState BState { private set; get; }

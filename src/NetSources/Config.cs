@@ -328,7 +328,7 @@ namespace ExcelConfig
         public String MapResName { set; get; }
         
         /// <summary>
-        /// 进图条件
+        /// 过图条件
         /// </summary>
         [ExcelConfigColIndex(3)]
         public int OpenCondtion { set; get; }
@@ -370,39 +370,33 @@ namespace ExcelConfig
         public int Point { set; get; }
         
         /// <summary>
-        /// 地图探索层数
-        /// </summary>
-        [ExcelConfigColIndex(10)]
-        public int MapLevel { set; get; }
-        
-        /// <summary>
         /// 从属关系
         /// </summary>
-        [ExcelConfigColIndex(11)]
+        [ExcelConfigColIndex(10)]
         public String MapGroup { set; get; }
         
         /// <summary>
         /// 随机战斗库
         /// </summary>
-        [ExcelConfigColIndex(12)]
+        [ExcelConfigColIndex(11)]
         public String RandomBattle { set; get; }
         
         /// <summary>
         /// 随机战斗触发概率
         /// </summary>
-        [ExcelConfigColIndex(13)]
+        [ExcelConfigColIndex(12)]
         public int RandomPro { set; get; }
         
         /// <summary>
         /// 地图完整探索度
         /// </summary>
-        [ExcelConfigColIndex(14)]
+        [ExcelConfigColIndex(13)]
         public int CompletePoint { set; get; }
         
         /// <summary>
         /// 背景音乐
         /// </summary>
-        [ExcelConfigColIndex(15)]
+        [ExcelConfigColIndex(14)]
         public String BackgroudMusic { set; get; }
 
     }
@@ -832,15 +826,21 @@ namespace ExcelConfig
         public String Name { set; get; }
         
         /// <summary>
-        /// 战斗次数
+        /// 战斗文本
         /// </summary>
         [ExcelConfigColIndex(2)]
+        public String battleDiscribtion { set; get; }
+        
+        /// <summary>
+        /// 战斗次数
+        /// </summary>
+        [ExcelConfigColIndex(3)]
         public int BattleCount { set; get; }
         
         /// <summary>
         /// 战斗ID
         /// </summary>
-        [ExcelConfigColIndex(3)]
+        [ExcelConfigColIndex(4)]
         public String BattleIds { set; get; }
 
     }

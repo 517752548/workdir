@@ -79,6 +79,7 @@ public class GameMap : MonoBehaviour {
         AllPosition = new Dictionary<int, MapPosition>();
         foreach (var i in pos)
         {
+            if (AllPosition.ContainsKey(i.ToIndex())) continue;
             AllPosition.Add(i.ToIndex(), i);
 
             if (i.DataType == Proto.MapEventType.None)

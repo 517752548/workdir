@@ -256,7 +256,7 @@
         </member>
         <member name="P:ExcelConfig.MapConfig.OpenCondtion">
             <summary>
-            进图条件
+            过图条件
             </summary>
         </member>
         <member name="P:ExcelConfig.MapConfig.OpenParams">
@@ -287,11 +287,6 @@
         <member name="P:ExcelConfig.MapConfig.Point">
             <summary>
             成就点
-            </summary>
-        </member>
-        <member name="P:ExcelConfig.MapConfig.MapLevel">
-            <summary>
-            地图探索层数
             </summary>
         </member>
         <member name="P:ExcelConfig.MapConfig.MapGroup">
@@ -662,6 +657,11 @@
         <member name="P:ExcelConfig.BattleGroupConfig.Name">
             <summary>
             名称
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.BattleGroupConfig.battleDiscribtion">
+            <summary>
+            战斗文本
             </summary>
         </member>
         <member name="P:ExcelConfig.BattleGroupConfig.BattleCount">
