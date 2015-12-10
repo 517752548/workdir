@@ -1,7 +1,7 @@
-[{"ID":1,"MapID":1,"Name":"\u56FA\u5B9A\u6218\u6597","EventType":7,"BattleID":-1,"Posistions":"100018|30019|190009|50004|150004|150009","IsAddExplore":1,"Pars1":"1|2|3|4|5|6","Pars2":"","Pars3":"","Pars4":""}
-,{"ID":2,"MapID":1,"Name":"\u56FA\u5B9A\u6218\u6597","EventType":7,"BattleID":-1,"Posistions":"50014|190001|2|9|190017|50009|150015|30000|16|100004","IsAddExplore":1,"Pars1":"7|8|11|12|13|14|15|16|17|9","Pars2":"","Pars3":"","Pars4":""}
-,{"ID":3,"MapID":1,"Name":"\u51FA\u751F\u70B9","EventType":1,"BattleID":-1,"Posistions":"100009","IsAddExplore":1,"Pars1":"","Pars2":"","Pars3":"","Pars4":""}
-,{"ID":4,"MapID":1,"Name":"\u56DE\u7A0B\u70B9","EventType":12,"BattleID":-1,"Posistions":"100013","IsAddExplore":1,"Pars1":"","Pars2":"","Pars3":"","Pars4":""}
-,{"ID":5,"MapID":1,"Name":"\u8865\u7ED9\u70B9","EventType":6,"BattleID":-1,"Posistions":"130004","IsAddExplore":1,"Pars1":"","Pars2":"","Pars3":"","Pars4":""}
-,{"ID":6,"MapID":1,"Name":"\u968F\u673A\u6218\u6597","EventType":10,"BattleID":-1,"Posistions":"70012|70006|130006|120015|170012","IsAddExplore":1,"Pars1":"3","Pars2":"1","Pars3":"10","Pars4":""}
-]
+[
+{"ID":1,"MapID":1,"Name":"\u56FA\u5B9A\u6218\u6597","EventType":7,"BattleID":-1,"Posistions":"100018|30019|190009|50004|150004|150009","IsAddExplore":1,"Pars1":"1|2|3|4|5|6","Pars2":"","Pars3":"","Pars4":""},
+{"ID":2,"MapID":1,"Name":"\u56FA\u5B9A\u6218\u6597","EventType":7,"BattleID":-1,"Posistions":"50014|190001|2|9|190017|50009|150015|30000|16|100004","IsAddExplore":1,"Pars1":"7|8|11|12|13|14|15|16|17|9","Pars2":"","Pars3":"","Pars4":""},
+{"ID":3,"MapID":1,"Name":"\u51FA\u751F\u70B9","EventType":1,"BattleID":-1,"Posistions":"100009","IsAddExplore":1,"Pars1":"","Pars2":"","Pars3":"","Pars4":""},
+{"ID":4,"MapID":1,"Name":"\u56DE\u7A0B\u70B9","EventType":12,"BattleID":-1,"Posistions":"100013","IsAddExplore":1,"Pars1":"","Pars2":"","Pars3":"","Pars4":""},
+{"ID":5,"MapID":1,"Name":"\u8865\u7ED9\u70B9","EventType":6,"BattleID":-1,"Posistions":"130004","IsAddExplore":1,"Pars1":"","Pars2":"","Pars3":"","Pars4":""},
+{"ID":6,"MapID":1,"Name":"\u968F\u673A\u6218\u6597","EventType":10,"BattleID":-1,"Posistions":"70012|70006|130006|120015|170012","IsAddExplore":1,"Pars1":"3","Pars2":"1","Pars3":"10","Pars4":""}]
