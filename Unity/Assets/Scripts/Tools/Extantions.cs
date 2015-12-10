@@ -60,7 +60,22 @@ namespace Assets.Scripts.Tools
                 GetAllChilds(trans.GetChild(i), ref list);
             }
         }
+        public static UIMousePress OnMousePress(this Component comp, EventHandler<MousePressArgs> handler)
+        {
+            return OnMousePress(comp, handler, null);
+        }
 
+        public static UIMousePress OnMousePress(this Component comp, EventHandler<MousePressArgs> handler, object userState)
+        {
+            UIMousePress press = comp.GetComponent<UIMousePress>(); ;
+            if (press == null)
+            {
+                press = comp.gameObject.AddComponent<UIMousePress>();
+            }
+            press.Press = handler;
+            press.UserState = userState;
+            return press;
+        }
         public static UIMouseClick OnMouseClick(this Component comp, EventHandler<UIEventArgs> handler)
         {
             return OnMouseClick(comp, handler, null);

@@ -46,7 +46,7 @@ namespace Assets.Scripts.Combat.Battle.Controllors
                             }
                         }
                         battle.State =  Elements.BattleStateType.End;
-                        TimeToEnd = Time.time + 0.5f;
+                        TimeToEnd = Time.time + 1.5f;
                     }
                     return GAction.Empty;
                 case Elements.BattleStateType.End:

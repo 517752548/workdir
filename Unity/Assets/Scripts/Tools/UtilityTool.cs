@@ -79,7 +79,13 @@ namespace Assets.Scripts.Tools
 
         public static int ConvertToInt(string id)
         {
-            return Convert.ToInt32(id);
+			int r = 0;
+			if (int.TryParse (id, out r))
+				return r;
+			else {
+				GameDebug.LogError(id+" can't convert to int!");
+			}
+			return r;
         }
 
         public static List<SplitKeyValue> SplitKeyValues(string keys, string values)

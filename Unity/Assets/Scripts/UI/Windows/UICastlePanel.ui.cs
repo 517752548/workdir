@@ -10,6 +10,19 @@ namespace Assets.Scripts.UI.Windows
     [UIWindow("UICastlePanel")]
     partial class UICastlePanel : UIAutoGenWindow
     {
+        public class BagGridTableTemplate : TableItemTemplate
+        {
+            public BagGridTableTemplate(){}
+            public UILabel lb_name;
+            public UILabel lv_num;
+
+            public override void InitTemplate()
+            {
+                lb_name = FindChild<UILabel>("lb_name");
+                lv_num = FindChild<UILabel>("lv_num");
+
+            }
+        }
 
 
         public UIButton bt_contruct;
@@ -18,20 +31,25 @@ namespace Assets.Scripts.UI.Windows
         public UIButton bt_produce;
         public UIButton bt_battle;
         public UIButton bt_bar;
+        public UISprite char1;
+        public UISprite char2;
+        public UISprite char3;
+        public UISprite char4;
         public UIPanel Title;
         public UILabel lb_title;
-        public UISprite PlayerIcon;
+        public UITexture PlayerIcon;
         public UIButton bt_market;
         public UIButton bt_Coin;
         public UILabel lb_gold;
         public UIButton bt_gold;
         public UIButton bt_Package;
-        public UISprite character1;
-        public UISprite character2;
-        public UISprite character3;
-        public UISprite character4;
+        public UISprite s_bagRoot;
+        public UIGrid BagGrid;
+        public UIButton bt_hide;
+        public FingherEvent fingerEvent;
 
 
+        public UITableManager<AutoGenTableItem<BagGridTableTemplate, BagGridTableModel>> BagGridTableManager = new UITableManager<AutoGenTableItem<BagGridTableTemplate, BagGridTableModel>>();
 
 
         public override void InitTemplate()
@@ -43,19 +61,24 @@ namespace Assets.Scripts.UI.Windows
             bt_produce = FindChild<UIButton>("bt_produce");
             bt_battle = FindChild<UIButton>("bt_battle");
             bt_bar = FindChild<UIButton>("bt_bar");
+            char1 = FindChild<UISprite>("char1");
+            char2 = FindChild<UISprite>("char2");
+            char3 = FindChild<UISprite>("char3");
+            char4 = FindChild<UISprite>("char4");
             Title = FindChild<UIPanel>("Title");
             lb_title = FindChild<UILabel>("lb_title");
-            PlayerIcon = FindChild<UISprite>("PlayerIcon");
+            PlayerIcon = FindChild<UITexture>("PlayerIcon");
             bt_market = FindChild<UIButton>("bt_market");
             bt_Coin = FindChild<UIButton>("bt_Coin");
             lb_gold = FindChild<UILabel>("lb_gold");
             bt_gold = FindChild<UIButton>("bt_gold");
             bt_Package = FindChild<UIButton>("bt_Package");
-            character1 = FindChild<UISprite>("character1");
-            character2 = FindChild<UISprite>("character2");
-            character3 = FindChild<UISprite>("character3");
-            character4 = FindChild<UISprite>("character4");
+            s_bagRoot = FindChild<UISprite>("s_bagRoot");
+            BagGrid = FindChild<UIGrid>("BagGrid");
+            bt_hide = FindChild<UIButton>("bt_hide");
+            fingerEvent = FindChild<FingherEvent>("fingerEvent");
 
+            BagGridTableManager.InitFromGrid(BagGrid);
 
         }
         public static UICastlePanel Show()
