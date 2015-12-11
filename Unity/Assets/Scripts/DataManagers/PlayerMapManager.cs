@@ -95,6 +95,25 @@ namespace Assets.Scripts.DataManagers
         }
 
         private HashSet<int> MapIDS { set; get; }
+
+        #region BattleData
+        public bool SaveBattleIndex(int mapID, int index, int battleIndex)
+        {
+            RecordMap(mapID, index, string.Format("{0}", battleIndex));return true;
+        }
+
+        public int GetBattleIndex(int mapID, int index)
+        {
+            int battleIndex = 0;
+            var json = string.Empty;
+            if (ReadMap(mapID, index, out json))
+            {
+                battleIndex = Tools.UtilityTool.ConvertToInt(json);
+            }
+
+            return battleIndex;
+        }
+        #endregion
     }
 
 

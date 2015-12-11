@@ -1,2 +1,2 @@
-[{"ID":1,"ProduceRewardTick":30000,"GoldProduceLvl1":2,"GoldProduceLvl1CD":200,"ReliveNeedItem":1,"DefaultMapID":1,"DefaultPackageSize":20,"FoodItemID":27,"DefaultTeamSize":1,"JoinCastleItemID":112}
-]
+[
+{"ID":1,"ProduceRewardTick":30000,"GoldProduceLvl1":2,"GoldProduceLvl1CD":200,"ReliveNeedItem":1,"DefaultMapID":1,"DefaultPackageSize":20,"FoodItemID":27,"DefaultTeamSize":1,"JoinCastleItemID":112}]

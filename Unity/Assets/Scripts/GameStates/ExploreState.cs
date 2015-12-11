@@ -174,7 +174,7 @@ namespace Assets.Scripts.GameStates
                                     var battleGroups = Tools.UtilityTool.SplitIDS(i.Pars1);
                                     if (battleGroups.Count > p)
                                     {
-                                        StartBattle(battleGroups[p], (winner) =>
+                                        StartBattle(battleGroups[p], index,(winner) =>
                                         {
                                             if (winner)
                                             {
@@ -201,7 +201,7 @@ namespace Assets.Scripts.GameStates
                 {
                     //出发随机事件
                     var battleID = GRandomer.RandomList(Tools.UtilityTool.SplitIDS(Config.RandomBattle));
-                    StartBattle(battleID, (winner) =>
+                    StartBattle(battleID,index, (winner) =>
                     {
                         if (winner)
                         {
@@ -253,9 +253,10 @@ namespace Assets.Scripts.GameStates
             App.GameAppliaction.Singleton.JoinCastle();
         }
 
-        public void StartBattle(int battlegroup, Action<bool> callBack)
+        public void StartBattle(int battlegroup, int index, Action<bool> callBack)
         {
             var group = ExcelToJSONConfigManager.Current.GetConfigByID<BattleGroupConfig>(battlegroup);
+            var battleIndex = DataManagers.PlayerMapManager.Singleton.GetBattleIndex(this.Config.ID, index);
 
 #region OK
              Action ok = () => {
@@ -264,6 +265,7 @@ namespace Assets.Scripts.GameStates
                 BState = new Combat.Battle.States.BattleState(
                  battlegroup,
                  battleUI,
+                 battleIndex,
                  (result) =>
                  {
                      callBack(result.Winner == Proto.ArmyCamp.Player);

@@ -25,7 +25,7 @@ namespace Assets.Scripts.Tools
             }
         }
 
-        public static void Reset()
+        public static void ResetSingle()
         {
             InnerClass.Reset();
         }
