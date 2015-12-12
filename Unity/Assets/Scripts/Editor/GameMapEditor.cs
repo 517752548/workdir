@@ -27,6 +27,8 @@ public class GameMapEditor : Editor
                 {
                     case EventType.MouseDown:
                         //target.OnMouseDown();
+
+                       
                         break;
                 }
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,5 +34,29 @@ public class MapPositionEditor :  Editor
         EditorGUILayout.EndVertical();
     }
 
+
+    public void OnEnable()
+    {
+        if (!IsAuto) return;
+        var target = this.target as MapPosition;
+        target.DataType = current;
+        MapAutoGenEditor.SetType(target);
+    }
+
+    private static Proto.MapEventType current = Proto.MapEventType.BattlePos;
+
+    private static bool IsAuto = false;
+
+    public void OnSceneGUI()
+    {
+        Handles.BeginGUI();
+
+        EditorGUILayout.BeginVertical();
+        current=  (MapEventType)EditorGUILayout.EnumPopup("默认编辑类型",current, GUILayout.Width(300));
+        IsAuto = EditorGUILayout.Toggle("自动改变:", IsAuto, GUILayout.Width(300));
+        EditorGUILayout.EndVertical();
+
+        Handles.EndGUI();
+    }
     private Proto.MapEventType? lastType;
 }
