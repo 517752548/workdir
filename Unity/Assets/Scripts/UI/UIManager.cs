@@ -407,6 +407,7 @@ namespace Assets.Scripts.UI
                 var resourse = Tools.ResourcesManager.Singleton.LoadResources<GameObject>("UI/" + atts[0].Resource);
                 if (resourse == null) return default(T);
                 var uiRoot = GameObject.Instantiate(resourse) as GameObject;
+                uiRoot.name = "_UI_" + atts[0].Resource;
                 this.Render.Render(uiRoot);
                 ui.Init(uiRoot);
                 ui.Key = typeof(T).Name;
