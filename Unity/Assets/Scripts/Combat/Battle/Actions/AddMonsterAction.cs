@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.Tools;
 
 namespace Assets.Scripts.Combat.Battle.Actions
 {
@@ -33,7 +34,16 @@ namespace Assets.Scripts.Combat.Battle.Actions
                 state.Render.ShowDialog(battleConfig);
                 //UI.UIControllor.Singleton.ShowBattleDialog(battleConfig);
             }
-            GameDebug.Log("ADD Monster:" + battleConfig.Name);
+            
+
+            if(App.GameAppliaction.BattleDebug)
+            {
+                GameDebug.Log("ADD Monster:" + battleConfig.Name);
+                var mons = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(battleConfig.NpcID);
+                var skill = ExcelToJSONConfigManager.Current.GetConfigByID<SkillConfig>(mons.SkillID);
+                GameDebug.Log("Monster:" + mons.ToDebugString());
+                GameDebug.Log("MonsterSkill:" + skill.ToDebugString());
+            }
 
             state.Render.ShowMonster(monsterArmy);
         }

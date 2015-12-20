@@ -10,7 +10,7 @@ namespace Assets.Scripts.Combat.Battle.States
 {
     public class BattleState :GState
     {
-        public BattleState(int battleGroupID, IBattleRender render, int battleIndex, EndBattleCallBack callBack = null)
+        public BattleState(int battleGroupID, IBattleRender render, int battleIndex, List<int> solders, EndBattleCallBack callBack = null)
         {
             Render = render;
             CallBack = callBack;
@@ -20,12 +20,14 @@ namespace Assets.Scripts.Combat.Battle.States
             AddElement(battle);
             battle.BattleIndex = battleIndex;
             GroupConfig = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.BattleGroupConfig>(battleGroupID);
+            PlayerSoldiers = solders;
             Render.SetPerception(Perception as BattlePerception);
         }
 
         public BattleGroupConfig GroupConfig { private set; get; }
 
         public IBattleRender Render { private set; get; }
+        public List<int> PlayerSoldiers { get; internal set; }
 
         public EndBattleCallBack CallBack;
 

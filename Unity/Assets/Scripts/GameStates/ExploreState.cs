@@ -261,11 +261,12 @@ namespace Assets.Scripts.GameStates
 #region OK
              Action ok = () => {
                 var battleUI = UI.Windows.UIBattle.Show();
-
-                BState = new Combat.Battle.States.BattleState(
+                var soldiers = DataManagers.PlayerArmyManager.Singleton.GetTeam();
+                 BState = new Combat.Battle.States.BattleState(
                  battlegroup,
                  battleUI,
                  battleIndex,
+                 soldiers,
                  (result) =>
                  {
                      callBack(result.Winner == Proto.ArmyCamp.Player);

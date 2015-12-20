@@ -73,6 +73,9 @@ namespace Assets.Scripts
                 Assets.Scripts.DataManagers.GMCommTool.Singleton.ExecuteGMComm(GM);
                 PlayerPrefs.SetString("GM", GM);
             }
+
+            GameAppliaction.BattleDebug = GUI.Toggle(new Rect(10, Screen.height - (line++ * 30), 120, 25),
+                GameAppliaction.BattleDebug, "Show Battle Log");
         }
 
         void OnGameTap(TapGesture tap)

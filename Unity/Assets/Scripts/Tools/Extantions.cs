@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using ExcelConfig;
 
 namespace Assets.Scripts.Tools
 {
@@ -40,22 +41,20 @@ namespace Assets.Scripts.Tools
         /// <typeparam name="T"></typeparam>
         /// <param name="trans"></param>
         /// <returns></returns>
-        public static List<T> FindAllChilds<T>(this Transform trans) where T:Component
+        public static List<T> FindAllChilds<T>(this Transform trans) where T : Component
         {
             var list = new List<T>();
             GetAllChilds(trans, ref list);
             return list;
         }
-
-
-        private static void GetAllChilds<T>(Transform trans,ref List<T> list) where T:Component
+        private static void GetAllChilds<T>(Transform trans, ref List<T> list) where T : Component
         {
             var t = trans.GetComponent<T>();
-            if(t!=null)
+            if (t != null)
             {
                 list.Add(t);
             }
-            for(var i=0;i<trans.childCount;i++)
+            for (var i = 0; i < trans.childCount; i++)
             {
                 GetAllChilds(trans.GetChild(i), ref list);
             }
@@ -101,7 +100,7 @@ namespace Assets.Scripts.Tools
             return button;
         }
 
-        public static void Text(this UIButton uiButton,string text)
+        public static void Text(this UIButton uiButton, string text)
         {
             var label = uiButton.transform.FindChild<UILabel>("Label");
             if (label == null) return;
@@ -113,6 +112,22 @@ namespace Assets.Scripts.Tools
             var label = uiButton.transform.FindChild<UILabel>("Label");
             if (label == null) return string.Empty;
             return label.text;
+        }
+
+        public static string ToDebugString(this MonsterConfig monster)
+        {
+            string format = "N:{0} L:{1} Res:{2} Damage:{3} Type:{4} Speed:{5} star:{6}";
+
+            return string.Format(format, monster.Name, monster.Level, monster.ResName, monster.Damage, monster.Type, monster.Speed, monster.Star);
+        }
+
+        public static string ToDebugString(this SkillConfig skill)
+        {
+            string format = "N:{0} MType:{1} MNum:{2} MTarget:{9} Par1:{3} par2:{4} par3:{5} CD:{6} Status:{7} StatusTarget:{8}";
+            return string.Format(format, skill.Name, (Proto.SkillDamageType)skill.MainEffectType, 
+                skill.MainEffectNumber, skill.Pars1, skill.Pars2, skill.Pars3, skill.SkillCd, 
+                (Proto.SkillEffectType)skill.StatusType,(Proto.SkillEffectTaget) skill.StatusTarget,
+                (Proto.SkillEffectTaget) skill.MainEffectTarget);
         }
     }
 }

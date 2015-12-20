@@ -10,11 +10,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.App
 {
     public class GameAppliaction:Tools.XSingleton<GameAppliaction>,ExcelConfig.IConfigLoader
     {
+
+        public static bool BattleDebug = false;
+
         public void Start(IRuner runer)
         {
             //初始化配置
@@ -39,7 +43,7 @@ namespace Assets.Scripts.App
             }
             else
             {
-                JoinCastle();
+                  JoinCastle();
             }
             Runner = runer;
             Runner.DoRun(Run());
@@ -112,9 +116,11 @@ namespace Assets.Scripts.App
         /// <summary>
         /// 开始战斗
         /// </summary>
-        public void BeginBattle()
+        public void BeginBattleTest()
         {
-
+            SceneManager.LoadScene("Castle", LoadSceneMode.Single);
+            var battleState = new TestBattleState();
+            ChangeState(battleState);
         }
 
         public void DoLogin()
@@ -128,7 +134,8 @@ namespace Assets.Scripts.App
         /// </summary>
         public void JoinCastle() 
         {
-            Application.LoadLevel("Castle");
+            SceneManager.LoadScene("Castle",LoadSceneMode.Single);
+            //Application.LoadLevel("Castle");
             var state = new CastleState();
             ChangeState(state);
         }
@@ -145,7 +152,7 @@ namespace Assets.Scripts.App
         private IEnumerator DoGoToExplore(int configID)
         {
             var map = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.MapConfig>(configID);
-            var run = Application.LoadLevelAsync(map.MapResName);
+            var run = SceneManager.LoadSceneAsync(map.MapResName);
             while (!run.isDone)
                 yield return null;
             yield return null;
