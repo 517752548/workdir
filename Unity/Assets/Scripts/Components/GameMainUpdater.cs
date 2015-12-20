@@ -56,15 +56,12 @@ namespace Assets.Scripts
 
         public int ExploreID = 1;
 
-
         private string GM = string.Empty;
+
         void OnGUI()
         {
-
             int line = 1;
-           
-            var rect = new Rect(10, Screen.height - (line++ * 30), 120, 25);
-
+            var rect = new Rect(2, Screen.height - (line++ * 20), 120, 20);
             GM = GUI.TextField(rect, GM);
             rect.Set(rect.xMin + 120, rect.yMin, rect.width, rect.height);
             if (GUI.Button(rect, "GMSubmit"))
@@ -74,7 +71,7 @@ namespace Assets.Scripts
                 PlayerPrefs.SetString("GM", GM);
             }
 
-            GameAppliaction.BattleDebug = GUI.Toggle(new Rect(10, Screen.height - (line++ * 30), 120, 25),
+            GameAppliaction.BattleDebug = GUI.Toggle(new Rect(2, Screen.height - (line++ * 20), 120, 20),
                 GameAppliaction.BattleDebug, "Show Battle Log");
         }
 
