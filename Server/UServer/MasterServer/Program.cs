@@ -13,9 +13,13 @@ namespace MasterServer
         static void Main(string[] args)
         {
             //1000 
-            var port = Convert.ToInt32(args[0]);
-            var stopProt = Convert.ToInt32(args[1]);
+			var port = 1200;
+			var stopProt = 1100;
 
+			if (args.Length >= 2) {
+				port = Convert.ToInt32 (args [0]);
+				stopProt = Convert.ToInt32 (args [1]);
+			}
             Server = new XNet.Libs.Net.SocketServer(new XNet.Libs.Net.ConnectionManager(), port);
             HanderManager = new XNet.Libs.Net.DefaultMessageHandlerManager();
             Server.HandlerManager = HanderManager;

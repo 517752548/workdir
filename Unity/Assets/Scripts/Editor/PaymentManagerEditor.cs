@@ -11,6 +11,13 @@ using UnityEngine;
 
 public class PaymentManagerEditor : EditorWindow
 {
+	[MenuItem("GAME/CONFIGS_INIT")]
+	public static void Init_Config()
+	{
+		//var list = new List<Assets.Scripts.AppConfig.KeyValue> ();
+	}
+
+
     [MenuItem("GAME/PAYMENT/SHOW")]
     public static void ShowMapEditor()
     {

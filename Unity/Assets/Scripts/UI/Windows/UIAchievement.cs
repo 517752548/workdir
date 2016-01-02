@@ -32,6 +32,9 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShow();
 
+			var achieves = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.AchievementConfig> ();
+
+
             
             ItemGridTableManager.Count = 10;
             foreach(var i in ItemGridTableManager)

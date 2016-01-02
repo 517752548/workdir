@@ -15,7 +15,7 @@ public class UICreater : EditorWindow
         if (!EditorUtility.DisplayDialog("创建", "创建将覆盖默认的语言文件", "OK", "Cancel"))
             return;
         var list = new List<LanguageKey>();
-        list.Add(new LanguageKey { Key="APP_NAME", Value="三国战斗" });
+        list.Add(new LanguageKey { Key="APP_NAME", Value="appname" });
         var xml = XmlParser.Serialize(list);
         var file = Utility.GetStreamingAssetByPath(LanguageManager._LANGUAGE_);
         File.WriteAllText(file, xml, XmlParser.UTF8);

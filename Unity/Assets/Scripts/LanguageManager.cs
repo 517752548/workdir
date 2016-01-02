@@ -47,7 +47,7 @@ namespace Assets.Scripts
 
     public class LanguageKey
     {
-        [XmlAttribute]
+		[XmlAttributeAttribute("K")]
         public string Key { set; get; }
 
         [XmlText]

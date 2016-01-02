@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -58,11 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\JSON\JSON.csproj">
-      <Project>{60fdf2ef-f0f7-44d8-b19d-799c51d7022c}</Project>
+      <Project>{60FDF2EF-F0F7-44D8-B19D-799C51D7022C}</Project>
       <Name>JSON</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\xxp\XNet.Libs.csproj">
-      <Project>{32ac4539-87a0-4e68-bce8-fea1d8d05062}</Project>
+      <Project>{32AC4539-87A0-4E68-BCE8-FEA1D8D05062}</Project>
       <Name>XNet.Libs</Name>
     </ProjectReference>
   </ItemGroup>

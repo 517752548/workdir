@@ -1,0 +1,14 @@
+﻿<Properties StartupItem="UServer/UServer.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="UServer/Responsers/LoginMessageResponser.cs">
+    <Files>
+      <File FileName="UServer/Program.cs" Line="24" Column="5" />
+      <File FileName="MasterServer/Program.cs" Line="22" Column="5" />
+      <File FileName="UServer/Responsers/LoginMessageResponser.cs" Line="18" Column="54" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

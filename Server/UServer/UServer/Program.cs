@@ -13,14 +13,26 @@ namespace UServer
         static void Main(string[] args)
         {
 
+			var listenIP = "127.0.0.1";
+			var port =1201;
+			var masterServerIP="127.0.0.1";
+			var masterServerPort = 1200;
+			var maxClient = 100;
+
+			if (args.Length > 0) {
+			
+				listenIP = args [0];
+				port = Convert.ToInt32 (args [1]);
+				masterServerIP = args [2];
+				masterServerPort = Convert.ToInt32 (args [3]);
+				maxClient = Convert.ToInt32 (args [4]);
+
+			}
             server = new GameServerAppliaction();
-            var listenIP = args[0];
-            var port = Convert.ToInt32(args[1]);
-            var masterServerIP = args[2];
-            var masterServerProt = Convert.ToInt32(args[3]);
-            var maxClient = Convert.ToInt32(args[4]);
-            Debuger.Log(string.Format("Listen:{3}:{0} MasterServer:{1}:{2} MaxClient:{4}", port, masterServerIP, masterServerProt,listenIP,maxClient));
-            server.Start(listenIP,port,masterServerIP,masterServerProt,maxClient);
+            
+            Debuger.Log(string.Format("Listen:{3}:{0} MasterServer:{1}:{2} MaxClient:{4}",
+				port, masterServerIP, masterServerPort,listenIP,maxClient));
+			server.Start(listenIP,port,masterServerIP,masterServerPort,maxClient);
 
             mainThread = new Thread(new ThreadStart(Worker));
             IsRunning = true;

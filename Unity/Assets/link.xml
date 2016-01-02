@@ -1,0 +1,6 @@
+﻿<linker>
+    <assembly fullname="proto">
+        <type fullname="ExcelConfig" preserve="all"/>
+        <type fullname="Proto" preserve="all"/>
+    </assembly>
+</linker>
