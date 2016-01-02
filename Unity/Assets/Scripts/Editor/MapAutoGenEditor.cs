@@ -18,6 +18,16 @@ public class MapAutoGenEditor:EditorWindow
         _editor.Show();
     }
 
+    [MenuItem("GAME/MAP/REFRESH_ALL_SPRITE")]
+    public static void ResetAllSprite()
+    {
+        var grid = GameObject.FindObjectsOfType<MapPosition>();
+        foreach(var i in grid)
+        {
+            MapAutoGenEditor.SetType(i);
+        }
+    }
+
     [MenuItem("GAME/MAP/EXPORT_MAP_DATA")]
     public static void ExportJsonTabData()
     {

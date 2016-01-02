@@ -200,7 +200,7 @@ namespace Assets.Scripts.DataManagers
         }
 
 
-        public void SetIcon(UITexture icon, MonsterConfig monster,TypeOfIcon  type = TypeOfIcon.List)
+        public void SetIcon(UITexture icon, MonsterConfig monster,TypeOfIcon  type = TypeOfIcon.List, bool makePer = true)
         {
             if (icon == null) { Debug.LogError("Icon is null"); return; }
             switch(type)
@@ -221,7 +221,7 @@ namespace Assets.Scripts.DataManagers
                     icon.mainTexture = Tools.ResourcesManager.Singleton.LoadResources<Texture2D>("HeroIcon/battlemin/" + monster.ResName);
                     break;
             }
-
+            if(makePer)
             icon.MakePixelPerfect();
             
         }
