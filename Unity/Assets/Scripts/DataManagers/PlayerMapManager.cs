@@ -54,7 +54,7 @@ namespace Assets.Scripts.DataManagers
         public const string MAP_FORMAT_STR = "__MAP__{0:0000}.json";
         public const string MAP_LIST_FILE = "__MAP_LIST.json";
 
-        public void RecordMap(int mapID, int index, string json)
+		public void RecordMap(int mapID, int index, bool isOpen, string json)
         {
             MapPresistData map;
             if(_maps.TryGetValue(mapID,out map))
@@ -65,7 +65,7 @@ namespace Assets.Scripts.DataManagers
             else
             {
                 var data = CreateMapPresistData(mapID);
-                data[index] = new MapPosData {  Index = index, Json = json};
+				data[index] = new MapPosData {  Index = index, Json = json, IsOpened = isOpen};
             }
         }
 
@@ -75,14 +75,17 @@ namespace Assets.Scripts.DataManagers
             _maps.Add(mapID, map);
             return map;
         }
-        public bool ReadMap(int mapID, int index, out string json)
+		public bool ReadMap(int mapID, int index, out MapPosData resdata)
         {
-            json = string.Empty;
+			resdata = null;
             MapPresistData map;
             if(_maps.TryGetValue(mapID, out map))
             {
                 var data = map[index];
-                if (data != null) { json = data.Json; return true; }
+                if (data != null) { 
+					resdata = data ; 
+					return true;
+				}
             }
             return false;
         }
@@ -96,24 +99,39 @@ namespace Assets.Scripts.DataManagers
 
         private HashSet<int> MapIDS { set; get; }
 
-        #region BattleData
-        public bool SaveBattleIndex(int mapID, int index, int battleIndex)
-        {
-            RecordMap(mapID, index, string.Format("{0}", battleIndex));return true;
-        }
 
-        public int GetBattleIndex(int mapID, int index)
-        {
-            int battleIndex = 0;
-            var json = string.Empty;
-            if (ReadMap(mapID, index, out json))
-            {
-                battleIndex = Tools.UtilityTool.ConvertToInt(json);
-            }
+		public void OpenClosedIndex(int mapID, int index, GameMap map)
+		{
+			//size ;
+			var size = 1;
+			var current = GamePlayerManager.IndexToPos (index);
 
-            return battleIndex;
-        }
-        #endregion
+			for (int x = -size; x <= size; x++) {
+				for (int y = -size; y <= size; y++) {
+					var pos = new UnityEngine.Vector2 (x+ current.x, y+current.y);
+					if (map.HaveIndex(pos)) {
+						//var recordValue = new MapPosData
+						RecordMap (mapID, 
+							GamePlayerManager.PosXYToIndex ((int)pos.x, (int)pos.y), 
+							true,"");
+
+					}
+				}
+			}
+		}
+
+
+		public bool IsOpen(int mapID,int index)
+		{
+			MapPosData data;
+			if (ReadMap (mapID, index, out data)) {
+			
+				return data.IsOpened;
+			}
+			return false;
+		}
+
+     
     }
 
 
@@ -171,6 +189,8 @@ namespace Assets.Scripts.DataManagers
     public class MapPosData{
         [JsonName("I")]
         public int Index { set; get; }
+		[JsonName("O")]
+		public bool IsOpened{ set; get; }
         [JsonName("V")]
         public string Json { set; get; }
     }

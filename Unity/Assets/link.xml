@@ -1,6 +1,9 @@
-﻿<linker>
+<linker>
     <assembly fullname="proto">
-        <type fullname="ExcelConfig" preserve="all"/>
-        <type fullname="Proto" preserve="all"/>
+        <namespace fullname="ExcelConfig" preserve="all"/>
+        <namespace fullname="Proto" preserve="all"/>
+    </assembly>
+    <assembly fullname="Assembly-CSharp">
+        <namespace fullname="Assets.Scripts" preserve="all"/>
     </assembly>
 </linker>

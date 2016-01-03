@@ -140,6 +140,8 @@ namespace Assets.Scripts.Combat.Battle.Elements
             }
             return (time > StartTime + Durtion) ;
         }
+
+		//public float waitTime = -1f;
     }
 
 

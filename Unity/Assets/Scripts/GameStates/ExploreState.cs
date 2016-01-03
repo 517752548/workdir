@@ -97,7 +97,7 @@ namespace Assets.Scripts.GameStates
 
             delayChange = Time.time + Map.LookAt(TargetPos);
             targetPosPlayer = Map.GetPositionOfGrid(TargetPos);
-            Debug.Log("Target:" + TargetPos);
+			Debug.Log("Target:" + TargetPos +"Time:"+delayChange);
         }
 
         private float delayChange = -1f;
@@ -105,14 +105,15 @@ namespace Assets.Scripts.GameStates
         {
             if (delayChange > 0)
             {
-                if (delayChange < Time.time)
+                if (delayChange <= Time.time)
                 {
                     delayChange = -1f;
                     OnChange(TargetPos);
+					return false;
                 }
                 else
                 {
-                    return false;
+					return true;
                 }
             }
             return false;
@@ -256,7 +257,8 @@ namespace Assets.Scripts.GameStates
         public void StartBattle(int battlegroup, int index, Action<bool> callBack)
         {
             var group = ExcelToJSONConfigManager.Current.GetConfigByID<BattleGroupConfig>(battlegroup);
-            var battleIndex = DataManagers.PlayerMapManager.Singleton.GetBattleIndex(this.Config.ID, index);
+			var battleIndex = 0;
+            //var battleIndex = DataManagers.PlayerMapManager.Singleton.GetBattleIndex(this.Config.ID, index);
 
 #region OK
              Action ok = () => {

@@ -12,6 +12,9 @@ namespace Assets.Scripts.Combat.Battle.Controllors
         public BattleControllor(GPerception per):base(per)
         { }
 
+
+		private bool IsPause = false;
+
         public override GAction GetAction(GObject current)
         {
 
@@ -25,6 +28,8 @@ namespace Assets.Scripts.Combat.Battle.Controllors
                  return new Actions.EndBattleAction(current, per) { Winner = Proto.ArmyCamp.Monster };
             }
 
+
+
             switch (battle.State)
             {
                 case Elements.BattleStateType.NOStart:
@@ -32,19 +37,33 @@ namespace Assets.Scripts.Combat.Battle.Controllors
                 case Elements.BattleStateType.Battling:
                     if (per.HaveDeadArmy())
                     {
-                        if (!per.PlayerDead())
-                        {   //玩家死亡
-                            if (battle.BattleIndex >= battle.Battles.Length)
-                            {
-
-                                //return new Actions.EndBattleAction(current, per);
-                            }
-                            else
-                            {
-                                //创建
-                                return new Actions.AddMonsterAction(current, per, battle.Battles[battle.BattleIndex]);
-                            }
-                        }
+					if (!per.PlayerDead ()) {  
+						if (battle.BattleIndex >= battle.Battles.Length) 
+						{
+							//return new Actions.EndBattleAction(current, per);
+						}
+						else 
+						{
+							//wait for dailog
+							//让刷新暂停 目前没想好办法 先这样
+							if (!IsPause) {
+								IsPause = true;
+								state.WaitForSeconds(1.2f);
+								return GAction.Empty;
+							}
+							//0.5f late call
+							IsPause = false;
+							//创建
+							return new Actions.AddMonsterAction 
+								(current, 
+								per,
+								battle.Battles [battle.BattleIndex]
+								);
+						}
+					} else 
+					{
+						//player
+					}
                         battle.State =  Elements.BattleStateType.End;
                         TimeToEnd = Time.time + 1.5f;
                     }

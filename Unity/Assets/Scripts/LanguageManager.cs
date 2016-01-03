@@ -26,9 +26,11 @@ namespace Assets.Scripts
         public void InitLanauage()
         {
             var file = App.GameAppliaction.Singleton.ReadStreamingFile(_LANGUAGE_);
-            var list = XmlParser.DeSerialize<List<LanguageKey>>(file);
+			var list = new List<LanguageKey> ();
+            list = XmlParser.DeSerialize<List<LanguageKey>>(file);
             values = new Dictionary<string, string>();
-            foreach(var i in list)
+			GameDebug.Log ("Loaded:"+list.Count);
+			foreach(var i in list)
             {
                 if (values.ContainsKey(i.Key))
                 {
@@ -47,7 +49,7 @@ namespace Assets.Scripts
 
     public class LanguageKey
     {
-		[XmlAttributeAttribute("K")]
+		[XmlAttribute]
         public string Key { set; get; }
 
         [XmlText]

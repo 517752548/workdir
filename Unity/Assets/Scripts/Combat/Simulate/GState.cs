@@ -18,7 +18,12 @@ namespace Assets.Scripts.Combat.Simulate
         public virtual void OnTick()
         {
             if (!Enable) return;
-            while (_addTemp.Count > 0)
+			if (waitTime > 0) {
+				if (waitTime > Time.time)
+					return;
+				waitTime = -1;
+			}
+			while (_addTemp.Count > 0)
             {
 
                 var item = _addTemp.Dequeue();
@@ -94,5 +99,12 @@ namespace Assets.Scripts.Combat.Simulate
 
 
         public bool NeedEnd { set; get; }
+
+		private float waitTime = -1f;
+
+		public void WaitForSeconds(float seconds)
+		{
+			waitTime = Time.time + seconds;
+		}
     }
 }

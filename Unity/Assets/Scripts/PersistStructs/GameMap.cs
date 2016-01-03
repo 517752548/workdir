@@ -11,6 +11,10 @@ public class GameMap : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
+		if (MapCamera != null) {
+			MapCamera.clearFlags = CameraClearFlags.Color;
+			MapCamera.backgroundColor = Color.black;
+		}
     }
 	
 	// Update is called once per frame
