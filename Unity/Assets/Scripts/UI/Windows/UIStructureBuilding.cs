@@ -48,7 +48,7 @@ namespace Assets.Scripts.UI.Windows
             {
                 Build = build;
                 if (Build == null) return false;
-
+				bool canBuild = true;
                 var nextConfig = build.NextLevelConfig;
                 if (nextConfig != null)
                 {
@@ -63,6 +63,10 @@ namespace Assets.Scripts.UI.Windows
                           LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
                         sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Gold"],
                             string.Format(Color, nextConfig.CostGold)));
+
+						if (nextConfig.CostGold > DataManagers.GamePlayerManager.Singleton.Gold) {
+							canBuild = false;
+						}
                     }
                     var costItems = UtilityTool.SplitKeyValues(nextConfig.CostItems, nextConfig.CostItemCounts);
                     foreach (var i in costItems)
@@ -72,7 +76,8 @@ namespace Assets.Scripts.UI.Windows
 
                         var Color = PlayerItemManager.Singleton.GetItemCount(i.Key) >= i.Value ?
                          LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
-
+						if (PlayerItemManager.Singleton.GetItemCount (i.Key) < i.Value)
+							canBuild = false;
                         sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Item"],
                             item.Name,
                             string.Format(Color, i.Value)));
@@ -84,6 +89,7 @@ namespace Assets.Scripts.UI.Windows
                 }
                 else
                 {
+					canBuild = false;
                     Template.lb_cost.text = LanguageManager.Singleton["UIStructureBuilding_Cost_MaxLevel"];
                     Template.lb_name.text = Build.Name;
                     Template.lb_lvl.text = (Build.Level > 0 ? "" + Build.Level : "0");
@@ -95,6 +101,12 @@ namespace Assets.Scripts.UI.Windows
                 var disable =next == null;
 
                 Template.bt_info.ActiveSelfObject(!disable);
+				var tween = Template.IconBuild.GetComponent<TweenColor> ();
+				Template.IconBuild.color = new Color (1, 1, 1, 1);
+				//	Color.white;
+				if (tween != null) {
+					tween.enabled = canBuild;
+				}
                 return true;
             }
 

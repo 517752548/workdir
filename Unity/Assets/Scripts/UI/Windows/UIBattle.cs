@@ -210,6 +210,14 @@ namespace Assets.Scripts.UI.Windows
 
         public void OnAttack(Combat.Battle.Elements.DamageResult result,BattleArmy cur)
         {
+			var sounds = new List<string> (){ 
+			    "hit",
+				"hit1",
+				"hit2"
+			};
+
+			SoundManager.Singleton.PlaySound (GRandomer.RandomList (sounds));
+
             if (cur.Camp == Proto.ArmyCamp.Player)
             {
                 if (MonsterRoot.GetComponent<iTween>() == null)

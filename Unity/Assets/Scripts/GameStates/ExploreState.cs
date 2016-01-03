@@ -271,6 +271,7 @@ namespace Assets.Scripts.GameStates
                  soldiers,
                  (result) =>
                  {
+						SoundManager.Singleton.PlaySound("battle_complete");
                      callBack(result.Winner == Proto.ArmyCamp.Player);
                      //战斗失败处理
                      //Hide 

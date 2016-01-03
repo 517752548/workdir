@@ -20,6 +20,15 @@ namespace Assets.Scripts.UI.Windows
             Bt_Achievement.OnMouseClick((s, e) => {
                 UIAchievement.Show();
             });
+
+			Bt_Music.OnMouseClick ((s, e) => {
+				DataManagers.GamePlayerManager.Singleton.MusicState(DataManagers.GamePlayerManager.Singleton.IsMusicOn ? 0:1);
+			});
+
+			Bt_MusicEffect.OnMouseClick ((s, e) => {
+				DataManagers.GamePlayerManager.Singleton.EffectMusicState(DataManagers.GamePlayerManager.Singleton.EffectOn ? 0:1);
+
+			});
             //Write Code here
         }
         public override void OnShow()
@@ -27,6 +36,9 @@ namespace Assets.Scripts.UI.Windows
             base.OnShow();
             lb_version.text = string.Format(LanguageManager.Singleton["UI_Setting_version"],
                 (int)GameVersion.Master, (int)GameVersion.Major, (int)GameVersion.Develop);
+
+			Bt_Music.value = DataManagers.GamePlayerManager.Singleton.IsMusicOn;
+			Bt_MusicEffect.value = DataManagers.GamePlayerManager.Singleton.EffectOn;
         }
         public override void OnHide()
         {

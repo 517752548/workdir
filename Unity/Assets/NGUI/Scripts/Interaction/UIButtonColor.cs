@@ -51,6 +51,8 @@ public class UIButtonColor : UIWidgetContainer
 
 	public float duration = 0.2f;
 
+	public bool enableColor = true;
+
 	[System.NonSerialized] protected Color mStartingColor;
 	[System.NonSerialized] protected Color mDefaultColor;
 	[System.NonSerialized] protected bool mInitDone = false;

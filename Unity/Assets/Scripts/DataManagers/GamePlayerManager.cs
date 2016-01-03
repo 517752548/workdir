@@ -28,8 +28,10 @@ namespace Assets.Scripts.DataManagers
         PLAYER_CURREN_POS = 11,//当前地图所在坐标
         PLAYER_ARMY_FOOD = 12,//当前所带食物
         PLAYER_BATTLE_MODE = 13, //当前战斗模式
-        PLAYER_ACHIEVEMENT_POINT = 14 //成就点
-    }
+        PLAYER_ACHIEVEMENT_POINT = 14, //成就点
+	    MUSIC_OFF = 15,//音乐
+		EFFECT_MUSIC = 16 //音效
+    } 
 
     public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
     {
@@ -599,6 +601,27 @@ namespace Assets.Scripts.DataManagers
             this[PlayDataKeys.PLAYER_BATTLE_MODE] = (int)mode;
         }
 
+		public bool IsMusicOn{
+			get{
+				return	this [PlayDataKeys.MUSIC_OFF] == 1;
+			}
+		}
+
+		public void MusicState(int state)
+		{
+			this [PlayDataKeys.MUSIC_OFF] = state;
+		}
+
+		public bool EffectOn{
+			get{ 
+				return this [PlayDataKeys.EFFECT_MUSIC] == 1;
+			}
+		}
+
+		public void EffectMusicState(int state)
+		{
+			this [PlayDataKeys.EFFECT_MUSIC] = state;
+		}
 
         #region paement
         public List<PersistStructs.PaymentData> PaymentData
