@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEditor;
 using UnityEditor.Callbacks;
+using UnityEditorInternal;
+using UnityEditor.XCodeEditor;
+
 
 public class BuildTools
 {
@@ -15,7 +18,7 @@ public class BuildTools
 			return;
 		}
 
-	
+
 	}
 
 }
