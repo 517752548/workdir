@@ -63,7 +63,7 @@
 			fixed4 frag (v2f IN) : COLOR
 			{ 
 			     float2 cellUV = float2(IN.texcoord.x, IN.texcoord.y);
-			     cellUV.x = cellUV.x +  sin(_Time *(_Speed*_SizeX));
+			     cellUV.x = cellUV.x + sin(_Time *(_Speed*_SizeX));
 			     cellUV.y = cellUV.y + sin(_Time *(_Speed*_SizeY));
 			     if(cellUV.y>1)
 			        cellUV.y = cellUV.y -1;

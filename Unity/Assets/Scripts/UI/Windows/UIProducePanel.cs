@@ -9,6 +9,34 @@ namespace Assets.Scripts.UI.Windows
 {
     partial class UIProducePanel
     {
+		public class ProduceListGridTableModel:TableItemModel<ProduceListGridTableTemplate>
+		{
+
+			public ProduceListGridTableModel()
+			{}
+			public override void InitModel ()
+			{
+				
+			}
+
+			private string _text;
+			public string Text
+			{ 
+				set
+				{
+					_text = value;
+					Template.lb_reward_list.text = _text;
+				} 
+				get{ return _text;} 
+			}
+
+			public  void SetDrag(bool can)
+			{
+				var d = this.Template.lb_reward_list.GetComponent<UIDragScrollView>();
+				d.enabled = can;
+			}
+		}
+
         public class ItemGridTableModel : TableItemModel<ItemGridTableTemplate>
         {
             public ItemGridTableModel() { }
@@ -150,8 +178,8 @@ namespace Assets.Scripts.UI.Windows
             var allOpenProduce = DataManagers.GamePlayerManager.Singleton.OpenProduceConfigs();
             var sb = new StringBuilder();
             var items = new Dictionary<int, int>();
-            var list = lb_reward_list.GetComponent<UITextList>();
-            list.Clear();
+            //var list = lb_reward_list.GetComponent<UITextList>();
+            //list.Clear();
             foreach (var i in allOpenProduce)
             {
                 var cost = Tools.UtilityTool.SplitKeyValues(i.CostItems,i.CostItemsNumber);
@@ -190,15 +218,25 @@ namespace Assets.Scripts.UI.Windows
                 if (l == r) return 0; return -1;
             });
 
-            
+			int lastCout = ProduceListGridTableManager.Count;
+			ProduceListGridTableManager.Count = listID.Count;
+			int index = 0;
             foreach (var i in listID)
             { 
+				
                 var name = string.Empty;
                 var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(i);
                 if (config != null)
                     name = config.Name;
-                list.Add(string.Format(LanguageManager.Singleton["PRODUCE_ITEM"], name, items[i]));
+				ProduceListGridTableManager[index].Model.Text=
+					(string.Format(LanguageManager.Singleton["PRODUCE_ITEM"], name, items[i]));
+				ProduceListGridTableManager [index].Model.SetDrag (listID.Count >= 9);
+
+				index++;
             }
+
+			if (lastCout != ProduceListGridTableManager.Count)
+				this.ListViewS.ResetClip ();
 
         }
     }

@@ -9,6 +9,12 @@ namespace Assets.Scripts.Tools
 {
     public static class Extantions
     {
+
+		public static void ResetClip(this UIPanel panel)
+		{
+			panel.clipOffset = Vector2.zero;
+			panel.transform.localPosition = Vector3.zero;
+		}
         public static void ActiveSelfObject(this Component componet, bool actived)
         {
             componet.gameObject.SetActive(actived);

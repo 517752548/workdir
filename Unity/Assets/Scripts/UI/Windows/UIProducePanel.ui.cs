@@ -29,6 +29,17 @@ namespace Assets.Scripts.UI.Windows
 
             }
         }
+        public class ProduceListGridTableTemplate : TableItemTemplate
+        {
+            public ProduceListGridTableTemplate(){}
+            public UILabel lb_reward_list;
+
+            public override void InitTemplate()
+            {
+                lb_reward_list = FindChild<UILabel>("lb_reward_list");
+
+            }
+        }
 
 
         public UIButton bt_close;
@@ -36,10 +47,12 @@ namespace Assets.Scripts.UI.Windows
         public UIGrid ItemGrid;
         public UILabel lb_worker;
         public UILabel lb_reward_time;
-        public UILabel lb_reward_list;
+        public UIPanel ListViewS;
+        public UIGrid ProduceListGrid;
 
 
         public UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>> ItemGridTableManager = new UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>>();
+        public UITableManager<AutoGenTableItem<ProduceListGridTableTemplate, ProduceListGridTableModel>> ProduceListGridTableManager = new UITableManager<AutoGenTableItem<ProduceListGridTableTemplate, ProduceListGridTableModel>>();
 
 
         public override void InitTemplate()
@@ -50,9 +63,11 @@ namespace Assets.Scripts.UI.Windows
             ItemGrid = FindChild<UIGrid>("ItemGrid");
             lb_worker = FindChild<UILabel>("lb_worker");
             lb_reward_time = FindChild<UILabel>("lb_reward_time");
-            lb_reward_list = FindChild<UILabel>("lb_reward_list");
+            ListViewS = FindChild<UIPanel>("ListViewS");
+            ProduceListGrid = FindChild<UIGrid>("ProduceListGrid");
 
             ItemGridTableManager.InitFromGrid(ItemGrid);
+            ProduceListGridTableManager.InitFromGrid(ProduceListGrid);
 
         }
         public static UIProducePanel Show()

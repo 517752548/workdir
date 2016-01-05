@@ -45,6 +45,7 @@ namespace Assets.Scripts.GameStates
         public override void OnExit()
         {
             base.OnExit();
+			UI.UIControllor.Singleton.HideAllUI ();
         }
 
         public ExploreState(MapConfig map)

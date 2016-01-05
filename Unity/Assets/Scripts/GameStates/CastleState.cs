@@ -11,6 +11,7 @@ namespace Assets.Scripts.GameStates
         public override void OnEnter()
         {
             base.OnEnter();
+			UI.UIControllor.Singleton.HideAllUI ();
             UI.UIControllor.Singleton.ShowOrHideMessage(true);
             var ui = UI.UIManager.Singleton.CreateOrGetWindow<UI.Windows.UICastlePanel>();
             ui.ShowWindow();
