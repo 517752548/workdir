@@ -16,6 +16,7 @@ namespace Assets.Scripts.UI.Windows
             public UILabel lb_cost;
             public UISprite s_bg;
             public UITexture IconBuild;
+            public UISprite LeveCan;
             public UIButton bt_info;
             public UILabel lb_lvl;
             public UILabel lb_name;
@@ -25,6 +26,7 @@ namespace Assets.Scripts.UI.Windows
                 lb_cost = FindChild<UILabel>("lb_cost");
                 s_bg = FindChild<UISprite>("s_bg");
                 IconBuild = FindChild<UITexture>("IconBuild");
+                LeveCan = FindChild<UISprite>("LeveCan");
                 bt_info = FindChild<UIButton>("bt_info");
                 lb_lvl = FindChild<UILabel>("lb_lvl");
                 lb_name = FindChild<UILabel>("lb_name");

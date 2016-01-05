@@ -101,11 +101,11 @@ namespace Assets.Scripts.UI.Windows
                 var disable =next == null;
 
                 Template.bt_info.ActiveSelfObject(!disable);
-				var tween = Template.IconBuild.GetComponent<TweenColor> ();
-				Template.IconBuild.color = new Color (1, 1, 1, 1);
+				//var tween = Template.IconBuild.GetComponent<TweenColor> ();
+				//Template.IconBuild.color = new Color (1, 1, 1, 1);
 				//	Color.white;
-				if (tween != null) {
-					tween.enabled = canBuild;
+				if (Template.LeveCan != null) {
+					Template.LeveCan.ActiveSelfObject( canBuild);
 				}
                 return true;
             }

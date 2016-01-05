@@ -26,8 +26,11 @@ public class FingherEvent : MonoBehaviour
         switch (gesuter.Direction)
         {
             case FingerGestures.SwipeDirection.Left:
+		    case  FingerGestures.SwipeDirection.LowerLeftDiagonal:
+		    //case FingerGestures.SwipeDirection.UpperLeftDiagonal:
                 if (OnLeft != null) OnLeft();
                 break;
+		    case  FingerGestures.SwipeDirection.UpperRightDiagonal:
             case FingerGestures.SwipeDirection.Right:
                 if (OnRight != null) OnRight();
                 break;
