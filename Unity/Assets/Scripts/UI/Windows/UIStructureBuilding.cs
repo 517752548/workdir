@@ -171,6 +171,13 @@ namespace Assets.Scripts.UI.Windows
                 list.Add(build);
             }
 
+			list.Sort ((l, r) => {
+				var canL = CanBuild(l);
+				var canR = CanBuild(r);
+				if(canL && canR) return 0;
+				if(canL) return -1;
+				return 1;
+			});
             
             //var buildingConfigs = DataManagers.BuildingManager.Singleton.GetConstructBuildingsList();
             ItemGridTableManager.Count = list.Count;
@@ -184,6 +191,36 @@ namespace Assets.Scripts.UI.Windows
                 index++;
             }
         }
+
+		private bool CanBuild(PlayerBuild build)
+		{
+			var Build = build;
+			if (Build == null) return false;
+			bool canBuild = true;
+			var nextConfig = build.NextLevelConfig;
+			if (nextConfig != null) {
+				
+				var sb = new StringBuilder ();
+				if (nextConfig.CostGold > 0) {
+					if (nextConfig.CostGold > DataManagers.GamePlayerManager.Singleton.Gold) {
+						canBuild = false;
+					}
+				}
+				var costItems = UtilityTool.SplitKeyValues (nextConfig.CostItems, nextConfig.CostItemCounts);
+				foreach (var i in costItems) {
+					var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (i.Key);
+					if (item == null)
+						continue;
+
+					if (PlayerItemManager.Singleton.GetItemCount (i.Key) < i.Value)
+						canBuild = false;
+
+				}
+			} else {
+				canBuild = false;
+			}	       
+			return canBuild;
+		}
 
         private void OnClickItem(ItemGridTableModel obj)
         {

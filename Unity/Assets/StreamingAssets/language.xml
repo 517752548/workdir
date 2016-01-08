@@ -29,7 +29,7 @@
   <LanguageKey Key="SOLDIER_SPEED">速度:{0:0}</LanguageKey>	
   <LanguageKey Key="MAX_LEVEL_SOLDIER">终极兵种无法训练</LanguageKey>
   <LanguageKey Key="SOLDIER_NAME">{0}*{1}</LanguageKey>
-
+  <LanguageKey Key="ID_EXISTS_ERROR">士兵配置错误！</LanguageKey>
   <LanguageKey Key="ProduceGoldPreTick">金币 +{0}</LanguageKey>
 	
   <LanguageKey Key="BUILD_FRO_MORE_PEOPLE">建造民宿获得更多村民.</LanguageKey>

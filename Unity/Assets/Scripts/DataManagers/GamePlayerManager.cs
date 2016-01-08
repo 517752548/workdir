@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Proto;
 
 namespace Assets.Scripts.DataManagers
 {
@@ -234,40 +235,62 @@ namespace Assets.Scripts.DataManagers
         public bool CalProduce()
         {
             if (TimeToProduce.TotalSeconds > 0) return false;
-            this[PlayDataKeys.PRODUCE_TIME] = (int)(DateTime.UtcNow - TimeZero).TotalSeconds;
-            foreach (var i in ProduceOpenState)
-            {
-                //不存在
-                if (!i.Value.IsOpen || i.Value.PeopleNum <= 0) continue;
-                var produce = ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ResourcesProduceConfig>(i.Value.ProduceID);
-                if (produce == null) continue;
-                var requires = Tools.UtilityTool.SplitKeyValues(produce.CostItems, produce.CostItemsNumber);
-                var rewards = Tools.UtilityTool.SplitKeyValues(produce.RewardItems, produce.RewardItemsNumber);
-                var engough = true;
-                foreach (var r in requires)
-                {
-                    if (PlayerItemManager.Singleton.GetItemCount(r.Key) < (r.Value * i.Value.PeopleNum))
-                    {
-                        engough = false;
-                        break;
-                    }
-                }
-                //不够
-                if (!engough) continue;
-                foreach (var r in requires)
-                {
-                    PlayerItemManager.Singleton.SubItem(r.Key, (r.Value * i.Value.PeopleNum));
-                }
-                foreach (var r in rewards)
-                {
-                    var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(r.Key);
-                    if (config == null) continue;
-                    var item = PlayerItemManager.Singleton.AddItem(r.Key, r.Value * i.Value.PeopleNum);
-                    if (GameAppliaction.Singleton.Current is GameStates.CastleState)
-                        UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["REWARD_ITEM"], config.Name, item.Diff));
-                }
-            }
 
+			var timeTickForProduce = TimeSpan.FromMilliseconds(GameAppliaction.Singleton.ConstValues.ProduceRewardTick);
+
+			var times = Mathf.Abs ((float)TimeToProduce.TotalSeconds) / timeTickForProduce.TotalSeconds;
+
+			this [PlayDataKeys.PRODUCE_TIME] = (int)(DateTime.UtcNow - TimeZero).TotalSeconds;
+
+			var dict = new Dictionary<int, Item> ();
+			if (times > 100)
+				times = 100;
+			
+			for (var t = times; t > 0; t--) {
+				foreach (var i in ProduceOpenState) {
+					//不存在
+					if (!i.Value.IsOpen || i.Value.PeopleNum <= 0)
+						continue;
+					var produce = ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ResourcesProduceConfig> (i.Value.ProduceID);
+					if (produce == null)
+						continue;
+					var requires = Tools.UtilityTool.SplitKeyValues (produce.CostItems, produce.CostItemsNumber);
+					var rewards = Tools.UtilityTool.SplitKeyValues (produce.RewardItems, produce.RewardItemsNumber);
+					var engough = true;
+					foreach (var r in requires) {
+						if (PlayerItemManager.Singleton.GetItemCount (r.Key) < (r.Value * i.Value.PeopleNum)) {
+							engough = false;
+							break;
+						}
+					}
+					//不够
+					if (!engough)
+						continue;
+					foreach (var r in requires) {
+						PlayerItemManager.Singleton.SubItem (r.Key, (r.Value * i.Value.PeopleNum));
+					}
+					foreach (var r in rewards) {
+						var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (r.Key);
+						if (config == null)
+							continue;
+						var item = PlayerItemManager.Singleton.AddItem (r.Key, r.Value * i.Value.PeopleNum);
+						if (dict.ContainsKey (item.Entry))
+						{				
+							dict [item.Entry].Diff += item.Diff;
+						} else {
+							dict.Add (item.Entry, item);
+						}
+					}
+				}
+			}
+
+			foreach (var i in dict) {
+				var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (i.Key);
+				if (GameAppliaction.Singleton.Current is GameStates.CastleState)
+					UI.UITipDrawer.Singleton.DrawNotify (string.Format (LanguageManager.Singleton ["REWARD_ITEM"], 
+						config.Name, i.Value.Diff));
+				
+			}
             UIManager.Singleton.UpdateUIData<UI.Windows.UICastlePanel>();
             return true;
         }

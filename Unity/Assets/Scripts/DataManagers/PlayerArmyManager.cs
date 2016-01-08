@@ -271,7 +271,14 @@ namespace Assets.Scripts.DataManagers
             var monsterOld = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(levelup.OldMonster);
             var monsterLate = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(levelup.LateMonster);
 
+			if (Soldiers.ContainsKey (monsterLate.ID)) {
+			
+				UI.UITipDrawer.Singleton.DrawNotify (LanguageManager.Singleton ["ID_EXISTS_ERROR"]);
+				return false;
+			}
+				
             Soldiers.Remove(Soldier.SoldierID);
+
             Soldiers.Add(monsterLate.ID, Soldier.IsAlive);
 
             UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["LVLUP_SUCCESS"], monsterOld.Name, monsterLate.Name));

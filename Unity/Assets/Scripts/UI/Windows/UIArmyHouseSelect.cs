@@ -53,6 +53,25 @@ namespace Assets.Scripts.UI.Windows
                 startTable.Count = monster.Star;
                 DataManagers.PlayerArmyManager.Singleton.SetJob(Template.s_job, monster);
                 DataManagers.PlayerArmyManager.Singleton.SetIcon(Template.icon, monster);
+				Template.Bt_selected.ActiveSelfObject (true);
+				var levelup = ExcelToJSONConfigManager.Current.FirstConfig<MonsterLvlUpConfig>(t => {
+					return t.OldMonster == PlayerSoldier.SoldierID;
+				});
+
+				if (levelup == null)
+				{
+					Template.Bt_selected.ActiveSelfObject (false);
+					return;
+				}
+
+				var monsterLate = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig> (levelup.LateMonster);
+				if (monsterLate == null)
+				{
+					Template.Bt_selected.ActiveSelfObject (false);
+					//UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["MAX_LEVEL_SOLDIER"]);
+					return;
+				}
+
               
             }
 
@@ -119,6 +138,15 @@ namespace Assets.Scripts.UI.Windows
                 UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["MAX_LEVEL_SOLDIER"]);
                 return;
             }
+
+			var monsterLate = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig> (levelup.LateMonster);
+			if (monsterLate == null)
+			{
+				UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["MAX_LEVEL_SOLDIER"]);
+				return;
+			}
+
+
             UIArmyLevelUp.Show(obj.PlayerSoldier);
         }
 

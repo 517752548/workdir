@@ -18,6 +18,13 @@ namespace Assets.Scripts
 
         void Update()
         {
+			if (lastTime + 1 > Time.time) {
+				pfs++;
+			} else {
+				fps = pfs;
+				pfs = 0;
+				lastTime = Time.time;
+			}
             if (Input.GetKey(KeyCode.Escape))
             {
                 Application.Quit();
@@ -58,6 +65,11 @@ namespace Assets.Scripts
 
         private string GM = string.Empty;
 
+		private float pfs = 0;
+		private float fps = 0;
+		private float lastTime = 0;
+
+
         void OnGUI()
         {
             int line = 1;
@@ -73,6 +85,10 @@ namespace Assets.Scripts
 
             GameAppliaction.BattleDebug = GUI.Toggle(new Rect(2, Screen.height - (line++ * 20), 120, 20),
                 GameAppliaction.BattleDebug, "Show Battle Log");
+
+
+			rect =new Rect(2, Screen.height - (line++ * 20), 120, 20);
+			GUI.Label( rect,string.Format("fps:{0:0} {1:0.00}",fps,1/Time.deltaTime));
         }
 
         void OnGameTap(TapGesture tap)
