@@ -230,13 +230,15 @@ namespace Assets.Scripts.UI.Windows
                     name = config.Name;
 				ProduceListGridTableManager[index].Model.Text=
 					(string.Format(LanguageManager.Singleton["PRODUCE_ITEM"], name, items[i]));
-				ProduceListGridTableManager [index].Model.SetDrag (listID.Count >= 9);
+				ProduceListGridTableManager [index].Model.SetDrag (listID.Count >= 12);
 
 				index++;
             }
 
 			if (lastCout != ProduceListGridTableManager.Count)
 				this.ListViewS.ResetClip ();
+
+			OnPreScecondUpdate ();
 
         }
     }
