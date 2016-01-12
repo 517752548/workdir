@@ -22,11 +22,13 @@ namespace Assets.Scripts.UI.Windows
             });
 
 			Bt_Music.OnMouseClick ((s, e) => {
-				DataManagers.GamePlayerManager.Singleton.MusicState(DataManagers.GamePlayerManager.Singleton.IsMusicOn ? 0:1);
+				DataManagers.GamePlayerManager.Singleton.MusicState(
+					DataManagers.GamePlayerManager.Singleton.IsMusicOn ? 1:0);
 			});
 
 			Bt_MusicEffect.OnMouseClick ((s, e) => {
-				DataManagers.GamePlayerManager.Singleton.EffectMusicState(DataManagers.GamePlayerManager.Singleton.EffectOn ? 0:1);
+				DataManagers.GamePlayerManager.Singleton.EffectMusicState(
+					DataManagers.GamePlayerManager.Singleton.EffectOn ? 1:0);
 
 			});
             //Write Code here

@@ -626,7 +626,7 @@ namespace Assets.Scripts.DataManagers
 
 		public bool IsMusicOn{
 			get{
-				return	this [PlayDataKeys.MUSIC_OFF] == 1;
+				return	this [PlayDataKeys.MUSIC_OFF] == 0;
 			}
 		}
 
@@ -637,7 +637,7 @@ namespace Assets.Scripts.DataManagers
 
 		public bool EffectOn{
 			get{ 
-				return this [PlayDataKeys.EFFECT_MUSIC] == 1;
+				return this [PlayDataKeys.EFFECT_MUSIC] == 0;
 			}
 		}
 
