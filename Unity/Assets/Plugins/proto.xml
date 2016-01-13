@@ -1194,6 +1194,56 @@
             回城点
             </summary>
         </member>
+        <member name="F:Proto.MapEventType.BattlePos2">
+            <summary>
+            固定战斗点
+            </summary>
+        </member>
+        <member name="F:Proto.MapEventType.BattlePos3">
+            <summary>
+            固定战斗点
+            </summary>
+        </member>
+        <member name="F:Proto.MapEventType.BattlePos4">
+            <summary>
+            固定战斗点
+            </summary>
+        </member>
+        <member name="F:Proto.MapEventType.BattlePos5">
+            <summary>
+            固定战斗点
+            </summary>
+        </member>
+        <member name="F:Proto.MapEventType.BattlePos6">
+            <summary>
+            固定战斗点
+            </summary>
+        </member>
+        <member name="F:Proto.MapEventType.BattlePos7">
+            <summary>
+            固定战斗点
+            </summary>
+        </member>
+        <member name="F:Proto.MapEventType.BattlePos8">
+            <summary>
+            固定战斗点
+            </summary>
+        </member>
+        <member name="F:Proto.MapEventType.BattlePos9">
+            <summary>
+            固定战斗点
+            </summary>
+        </member>
+        <member name="F:Proto.MapEventType.BattlePos10">
+            <summary>
+            固定战斗点
+            </summary>
+        </member>
+        <member name="F:Proto.MapEventType.BattlePos11">
+            <summary>
+            固定战斗点
+            </summary>
+        </member>
         <member name="T:Proto.ItemType">
             <summary>
             道具类型
