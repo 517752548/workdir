@@ -100,6 +100,6 @@ public class IAPExample : MonoBehaviour {
 	
 	bool Btn(string msg){
 		GUILayout.Space (100);
-		return 	GUILayout.Button (msg,GUILayout.Width (200),GUILayout.Height(100));
+		return 	GUILayout.Button (msg,GUILayout.Width (100),GUILayout.Height(50));
 	}
 }

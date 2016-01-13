@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.App
 {
@@ -118,7 +118,7 @@ namespace Assets.Scripts.App
         /// </summary>
         public void BeginBattleTest()
         {
-            SceneManager.LoadScene("Castle", LoadSceneMode.Single);
+			Application.LoadLevel ("Castle");//.LoadScene("Castle", LoadSceneMode.Single);
             var battleState = new TestBattleState();
             ChangeState(battleState);
         }
@@ -134,8 +134,8 @@ namespace Assets.Scripts.App
         /// </summary>
         public void JoinCastle() 
         {
-            SceneManager.LoadScene("Castle",LoadSceneMode.Single);
-            //Application.LoadLevel("Castle");
+            //SceneManager.LoadScene("Castle",LoadSceneMode.Single);
+            Application.LoadLevel("Castle");
             var state = new CastleState();
             ChangeState(state);
         }
@@ -152,7 +152,7 @@ namespace Assets.Scripts.App
         private IEnumerator DoGoToExplore(int configID)
         {
             var map = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.MapConfig>(configID);
-            var run = SceneManager.LoadSceneAsync(map.MapResName);
+			var run = Application.LoadLevelAsync (map.MapResName);  //SceneManager.LoadSceneAsync(map.MapResName);
             while (!run.isDone)
                 yield return null;
             yield return null;
