@@ -46,10 +46,12 @@ public class MapTypeSpritesEditorWindow : EditorWindow
     }
 
     public static MapTypeSpritesEditorWindow _editor { get; set; }
-
+	public Vector2 socoll = Vector2.zero;
     public void OnGUI()
     {
         if (data == null) return;
+
+		socoll = EditorGUILayout.BeginScrollView (socoll, GUILayout.Height(500));
         EditorGUILayout.BeginVertical();
         int index = 1;
         EditorGUILayout.BeginHorizontal();
@@ -84,6 +86,7 @@ public class MapTypeSpritesEditorWindow : EditorWindow
             File.WriteAllText(path,json);
         }
         EditorGUILayout.EndVertical();
+		EditorGUILayout.EndScrollView ();
     }
 
     public static List<SAVE_DATA> SaveData

@@ -108,7 +108,7 @@ public class MapAutoGenEditor:EditorWindow
         EditorGUILayout.EndHorizontal();
         if (GUILayout.Button("创建"))
         {
-
+			
             if (GridSprites != null || GridSprites.Count > 0)
             {
                 var root = GameObject.Find(rootname);
