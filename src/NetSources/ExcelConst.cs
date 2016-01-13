@@ -64,6 +64,46 @@ namespace Proto
         /// 回城点
         /// </summary>
         GoHomePos=12,
+        /// <summary>
+        /// 固定战斗点
+        /// </summary>
+        BattlePos2=13,
+        /// <summary>
+        /// 固定战斗点
+        /// </summary>
+        BattlePos3=14,
+        /// <summary>
+        /// 固定战斗点
+        /// </summary>
+        BattlePos4=15,
+        /// <summary>
+        /// 固定战斗点
+        /// </summary>
+        BattlePos5=16,
+        /// <summary>
+        /// 固定战斗点
+        /// </summary>
+        BattlePos6=17,
+        /// <summary>
+        /// 固定战斗点
+        /// </summary>
+        BattlePos7=18,
+        /// <summary>
+        /// 固定战斗点
+        /// </summary>
+        BattlePos8=19,
+        /// <summary>
+        /// 固定战斗点
+        /// </summary>
+        BattlePos9=20,
+        /// <summary>
+        /// 固定战斗点
+        /// </summary>
+        BattlePos10=21,
+        /// <summary>
+        /// 固定战斗点
+        /// </summary>
+        BattlePos11=22,
 
     }
    /// <summary>

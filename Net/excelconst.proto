@@ -15,6 +15,17 @@ enum MapEventType
    RandomEvnetPos=10;//随机事件点
    GoToNextLvlPos =11;//下层传送点
    GoHomePos =12;//回城点
+   BattlePos2 = 13;//固定战斗点
+   BattlePos3 = 14;//固定战斗点
+   BattlePos4 = 15;//固定战斗点
+   BattlePos5 = 16;//固定战斗点
+   BattlePos6 = 17;//固定战斗点
+   BattlePos7 = 18;//固定战斗点
+   BattlePos8 = 19;//固定战斗点
+   BattlePos9 = 20;//固定战斗点
+   BattlePos10 = 21;//固定战斗点
+   BattlePos11 = 22;//固定战斗点
+   
 }
 //道具类型
 enum ItemType
