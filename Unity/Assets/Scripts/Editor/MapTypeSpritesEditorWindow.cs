@@ -51,7 +51,7 @@ public class MapTypeSpritesEditorWindow : EditorWindow
     {
         if (data == null) return;
 
-		socoll = EditorGUILayout.BeginScrollView (socoll, GUILayout.Height(500));
+		socoll = EditorGUILayout.BeginScrollView(socoll, GUILayout.Height(position.height),GUILayout.Width(position.width));
         EditorGUILayout.BeginVertical();
         int index = 1;
         EditorGUILayout.BeginHorizontal();
