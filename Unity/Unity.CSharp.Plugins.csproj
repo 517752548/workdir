@@ -112,6 +112,7 @@
     <Compile Include="Assets\Plugins\iTween.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Map0..txt" />
     <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
     <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
     <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Normal.txt" />
@@ -159,7 +160,6 @@
     <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
     <None Include="Assets\StreamingAssets\language.xml" />
     <None Include="Assets\link.xml" />
-    <None Include="Assets\map1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
