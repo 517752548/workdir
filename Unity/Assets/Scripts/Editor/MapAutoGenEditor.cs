@@ -239,19 +239,17 @@ public class MapAutoGenEditor:EditorWindow
     }
 
     public static void SetType(MapPosition pos)
-    {
-        Sprite sp = MapTypeSpritesEditorWindow.GetSpriteByType(pos.DataType);
-        if (sp != null)
-        {
-            var sprite = pos.gameObject.GetComponent<SpriteRenderer>();
-            if (sprite == null)
-            {
-                sprite = pos.gameObject.AddComponent<SpriteRenderer>();
-            }
-            sprite.sprite = sp;
-            sprite.sortingOrder = 1;
-        }
-    }
+	{
+		EditorApplication.MarkSceneDirty ();
+		Sprite sp = MapTypeSpritesEditorWindow.GetSpriteByType (pos.DataType);
+		var sprite = pos.gameObject.GetComponent<SpriteRenderer> ();
+		if (sprite == null) {
+			sprite = pos.gameObject.AddComponent<SpriteRenderer> ();
+		}
+		sprite.sprite = sp;
+		sprite.sortingOrder = 1;
+        
+	}
 
     public class ResourceGridTexture
     {

@@ -52,10 +52,17 @@ public class MapPositionEditor :  Editor
         Handles.BeginGUI();
 
         EditorGUILayout.BeginVertical();
+		var lst = current;
+		var pos = target as MapPosition;
         current=  (MapEventType)EditorGUILayout.EnumPopup("默认编辑类型",current, GUILayout.Width(300));
+		if (lst != current) 
+		{
+			pos.DataType = current;
+			MapAutoGenEditor.SetType(pos);
+		}
         IsAuto = EditorGUILayout.Toggle("自动改变:", IsAuto, GUILayout.Width(300));
         EditorGUILayout.EndVertical();
-
+		EditorApplication.MarkSceneDirty ();
         Handles.EndGUI();
     }
     private Proto.MapEventType? lastType;

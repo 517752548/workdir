@@ -16,8 +16,17 @@ namespace Assets.Scripts
             GM = GM == null ? "" : GM;
         }
 
+		private  LinkedList<float> frames = new LinkedList<float> ();
+
+
         void Update()
         {
+			frames.AddLast (1 / Time.deltaTime);
+			if (frames.Count > 200) {
+				frames.RemoveFirst ();
+
+			}
+
 			if (lastTime + 1 > Time.time) {
 				pfs++;
 			} else {
@@ -101,5 +110,11 @@ namespace Assets.Scripts
         {
             this.StartCoroutine(r);
         }
+
+		public void DrawFrame()
+		{
+			
+
+		}
     }
 }
