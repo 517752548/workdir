@@ -82,6 +82,8 @@ namespace Assets.Scripts.DataManagers
 				IsChanged = true
 			};
             _maps.Add(mapID, map);
+
+			MapIDS.Add (mapID);
             return map;
         }
 		public bool ReadMap(int mapID, int index, out MapPosData resdata)
