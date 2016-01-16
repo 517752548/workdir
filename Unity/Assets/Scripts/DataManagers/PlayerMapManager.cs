@@ -55,23 +55,32 @@ namespace Assets.Scripts.DataManagers
         public const string MAP_LIST_FILE = "__MAP_LIST.json";
 
 		public void RecordMap(int mapID, int index, bool isOpen, string json)
-        {
-            MapPresistData map;
-            if(_maps.TryGetValue(mapID,out map))
-            {
-                map[index].Json = json;
-                map.IsChanged = true;
-            }
-            else
-            {
-                var data = CreateMapPresistData(mapID);
-				data[index] = new MapPosData {  Index = index, Json = json, IsOpened = isOpen};
-            }
-        }
+		{
+			MapPresistData map;
+			if (_maps.TryGetValue (mapID, out map)) {
+				if (map [index] == null) {
+					map [index] = new MapPosData {  
+						Index = index, Json = json, IsOpened = isOpen
+					};
+				} else {
+					map [index].Json = json;
+
+				}
+				map.IsChanged = true;
+			} else {
+				var data = CreateMapPresistData (mapID);
+				data [index] = new MapPosData { Index = index, Json = json, IsOpened = isOpen };
+			}
+
+
+		}
 
         private MapPresistData  CreateMapPresistData(int mapID)
         {
-            var map = new MapPresistData() { MapID = mapID, Posistions = new Dictionary<int, MapPosData>() , IsChanged = true};
+			var map = new MapPresistData () { MapID = mapID, 
+				Posistions = new Dictionary<int, MapPosData> (),
+				IsChanged = true
+			};
             _maps.Add(mapID, map);
             return map;
         }
@@ -139,6 +148,7 @@ namespace Assets.Scripts.DataManagers
     {
         [JsonName("M")]
         public int MapID { set; get; }
+
         [JsonName("PS")]
         public List<MapPosData> SavePosistions
         {
@@ -161,6 +171,8 @@ namespace Assets.Scripts.DataManagers
 
         [JsonIgnore]
         public bool IsChanged { set; get; }
+
+		[JsonIgnore]
         public MapPosData this[int index]
         {
             set

@@ -8,6 +8,8 @@ using Assets.Scripts.DataManagers;
 [RequireComponent(typeof(BoxCollider))]
 public class GameMap : MonoBehaviour {
 
+	public delegate bool EachWithBreak<T>(T item) where T: Component;
+
 	// Use this for initialization
     void Start()
     {
@@ -95,10 +97,21 @@ public class GameMap : MonoBehaviour {
 
             if (i.DataType == Proto.MapEventType.BronPos)
                 Orgin = new Vector2(i.X, i.Y);
+			
         }
-
-
     }
+
+	public void EachAllPosition<T>(EachWithBreak<T> cond) where T:Component
+	{
+		foreach (var i in AllPosition) {
+			var item = i.Value as T;
+			if (item == null)
+				continue;
+			if (cond (item))
+				break;
+		}
+	}
+
 
     public Vector2 Orgin { get; private set; }
 
@@ -154,5 +167,5 @@ public class GameMap : MonoBehaviour {
 
 
 
-   
+
 }
