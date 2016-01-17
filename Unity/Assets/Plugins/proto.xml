@@ -116,7 +116,7 @@
         </member>
         <member name="P:ExcelConfig.MakeConfig.RewardItemsNumber">
             <summary>
-            
+            获得道具数量
             </summary>
         </member>
         <member name="P:ExcelConfig.MakeConfig.RequireGold">
@@ -132,6 +132,41 @@
         <member name="P:ExcelConfig.MakeConfig.UnlockPars1">
             <summary>
             解锁参数
+            </summary>
+        </member>
+        <member name="T:ExcelConfig.GambleConfig">
+            <summary>
+            博彩表
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.GambleConfig.GambleRatio">
+            <summary>
+            博弈比例
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.GambleConfig.HappenRatio">
+            <summary>
+            该比例出现概率
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.GambleConfig.Fixratio">
+            <summary>
+            概率随次数修正
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.GambleConfig.GemAddRatio">
+            <summary>
+            钻石出现比例
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.GambleConfig.RewardGem">
+            <summary>
+            固定钻石奖励值
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.GambleConfig.IgnorRatio">
+            <summary>
+            每日首次不计入
             </summary>
         </member>
         <member name="T:ExcelConfig.SecretStoreConfig">
@@ -214,9 +249,9 @@
             事件坐标集合
             </summary>
         </member>
-        <member name="P:ExcelConfig.SubMapConfig.IsAddExplore">
+        <member name="P:ExcelConfig.SubMapConfig.PerLocationMath">
             <summary>
-            是否计入探度
+            单个坐标探索值
             </summary>
         </member>
         <member name="P:ExcelConfig.SubMapConfig.Pars1">
@@ -291,12 +326,7 @@
         </member>
         <member name="P:ExcelConfig.MapConfig.MapGroup">
             <summary>
-            从属关系
-            </summary>
-        </member>
-        <member name="P:ExcelConfig.MapConfig.RandomBattle">
-            <summary>
-            随机战斗库
+            从属组集合
             </summary>
         </member>
         <member name="P:ExcelConfig.MapConfig.RandomPro">
@@ -327,6 +357,16 @@
         <member name="P:ExcelConfig.TalentConfig.Desctription">
             <summary>
             天赋说明
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.TalentConfig.TalentGet">
+            <summary>
+            天赋获取方式
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.TalentConfig.GetPars">
+            <summary>
+            获取参数
             </summary>
         </member>
         <member name="P:ExcelConfig.TalentConfig.TalentType">
@@ -417,6 +457,26 @@
         <member name="P:ExcelConfig.ConstAttConfig.JoinCastleItemID">
             <summary>
             回城卷轴ID
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.ConstAttConfig.OutLineRewTime">
+            <summary>
+            离线收益时间毫秒
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.ConstAttConfig.OrignalVisual">
+            <summary>
+            初始可视范围
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.ConstAttConfig.GamblePerTime">
+            <summary>
+            博弈次数
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.ConstAttConfig.ShareRewardGem">
+            <summary>
+            每日分享奖励钻石
             </summary>
         </member>
         <member name="T:ExcelConfig.BuildingConfig">
@@ -624,9 +684,9 @@
             奖励成就点
             </summary>
         </member>
-        <member name="P:ExcelConfig.AchievementConfig.OtherRewardType">
+        <member name="P:ExcelConfig.AchievementConfig.itmeReward">
             <summary>
-            其他奖励类型
+            物品奖励
             </summary>
         </member>
         <member name="P:ExcelConfig.AchievementConfig.RewardPar1">
@@ -642,11 +702,6 @@
         <member name="P:ExcelConfig.AchievementConfig.RewardPar3">
             <summary>
             奖励参数3
-            </summary>
-        </member>
-        <member name="P:ExcelConfig.AchievementConfig.RewardPar4">
-            <summary>
-            奖励参数4
             </summary>
         </member>
         <member name="T:ExcelConfig.BattleGroupConfig">
@@ -694,14 +749,19 @@
             NPCID
             </summary>
         </member>
-        <member name="P:ExcelConfig.BattleConfig.AddtionRewardType">
+        <member name="P:ExcelConfig.BattleConfig.RewardGold">
             <summary>
-            附加奖励
+            奖励金币
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.BattleConfig.AddtionRewarditem">
+            <summary>
+            附加奖励物品ID
             </summary>
         </member>
         <member name="P:ExcelConfig.BattleConfig.Pars1">
             <summary>
-            参数1
+            奖励数
             </summary>
         </member>
         <member name="T:ExcelConfig.SkillConfig">
@@ -736,7 +796,7 @@
         </member>
         <member name="P:ExcelConfig.SkillConfig.MainEffectTarget">
             <summary>
-            主要效果目标
+            效果目标
             </summary>
         </member>
         <member name="P:ExcelConfig.SkillConfig.MainEffectNumber">
@@ -751,7 +811,7 @@
         </member>
         <member name="P:ExcelConfig.SkillConfig.StatusTarget">
             <summary>
-            附加效果目标
+            效果目标
             </summary>
         </member>
         <member name="P:ExcelConfig.SkillConfig.Pars1">
@@ -902,6 +962,11 @@
         <member name="T:ExcelConfig.StoreDataConfig">
             <summary>
             货郎
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.StoreDataConfig.ItemId">
+            <summary>
+            物品ID
             </summary>
         </member>
         <member name="P:ExcelConfig.StoreDataConfig.Name">
@@ -1081,7 +1146,17 @@
         </member>
         <member name="P:ExcelConfig.RandomEventConfig.Type">
             <summary>
-            触发类型
+            事件类型
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.RandomEventConfig.EventUnlockType">
+            <summary>
+            事件解锁类型
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.RandomEventConfig.UnlockCondition">
+            <summary>
+            解锁参数
             </summary>
         </member>
         <member name="P:ExcelConfig.RandomEventConfig.Dialog1">
@@ -1099,29 +1174,24 @@
             需要消耗材料
             </summary>
         </member>
-        <member name="P:ExcelConfig.RandomEventConfig.Probability">
-            <summary>
-            万分比概率
-            </summary>
-        </member>
         <member name="P:ExcelConfig.RandomEventConfig.DialogOK">
             <summary>
-            成功
+            确定
             </summary>
         </member>
         <member name="P:ExcelConfig.RandomEventConfig.DialogFaiuler">
             <summary>
-            失败
+            取消
             </summary>
         </member>
-        <member name="P:ExcelConfig.RandomEventConfig.RewardItem">
+        <member name="P:ExcelConfig.RandomEventConfig.RewardType">
             <summary>
-            成功奖励
+            奖励类别
             </summary>
         </member>
-        <member name="P:ExcelConfig.RandomEventConfig.RewardSoidler">
+        <member name="P:ExcelConfig.RandomEventConfig.RewardConditon">
             <summary>
-            奖励士兵
+            参数
             </summary>
         </member>
         <member name="T:Proto.MapEventType">

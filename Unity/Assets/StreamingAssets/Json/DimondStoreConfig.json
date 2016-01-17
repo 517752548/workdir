@@ -1,3 +1,11 @@
-[{"ID":1,"Name":"hero1","ItemKey":"","Sold_price":0,"Is_reduce":0,"Reduce_percent":"","Last_time":""}
-,{"ID":2,"Name":"hero2","ItemKey":"","Sold_price":0,"Is_reduce":0,"Reduce_percent":"","Last_time":""}
+[{"ID":1,"Name":"\u56DE\u57CE\u5377","ItemKey":"157","Sold_price":10,"Is_reduce":-1,"Reduce_percent":"","Last_time":""}
+,{"ID":2,"Name":"\u826F\u8015\u5238\u2161","ItemKey":"154","Sold_price":200,"Is_reduce":-1,"Reduce_percent":"","Last_time":""}
+,{"ID":3,"Name":"\u91D1\u4E30\u4EE4\u2161","ItemKey":"156","Sold_price":200,"Is_reduce":-1,"Reduce_percent":"","Last_time":""}
+,{"ID":4,"Name":"\u4E30\u5FAD\u9F13","ItemKey":"161","Sold_price":50,"Is_reduce":-1,"Reduce_percent":"","Last_time":""}
+,{"ID":5,"Name":"\u91D1\u5E015000","ItemKey":"162","Sold_price":25,"Is_reduce":-1,"Reduce_percent":"","Last_time":""}
+,{"ID":6,"Name":"\u91D1\u5E015W","ItemKey":"163","Sold_price":200,"Is_reduce":-1,"Reduce_percent":"","Last_time":""}
+,{"ID":7,"Name":"\u3010\u5996\u3011:\u4E5D\u5C3E\u72D0","ItemKey":"171","Sold_price":300,"Is_reduce":-1,"Reduce_percent":"","Last_time":""}
+,{"ID":8,"Name":"\u5BCC\u5FAD\u4EE4","ItemKey":"160","Sold_price":200,"Is_reduce":-1,"Reduce_percent":"","Last_time":""}
+,{"ID":9,"Name":"\u5929\u8D4B\uFF1A\u5148\u53D1\u5236\u4EBA","ItemKey":"169","Sold_price":100,"Is_reduce":-1,"Reduce_percent":"","Last_time":""}
+,{"ID":10,"Name":"\u5927\u80CC\u5305","ItemKey":"185","Sold_price":150,"Is_reduce":-1,"Reduce_percent":"","Last_time":""}
 ]

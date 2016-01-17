@@ -154,7 +154,7 @@ namespace ExcelConfig
         public String RewardItems { set; get; }
         
         /// <summary>
-        /// 
+        /// 获得道具数量
         /// </summary>
         [ExcelConfigColIndex(5)]
         public String RewardItemsNumber { set; get; }
@@ -176,6 +176,50 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(8)]
         public String UnlockPars1 { set; get; }
+
+    }
+
+    /// <summary>
+    /// 博彩表
+    /// </summary>
+    [ConfigFile("GambleConfig.json","GambleConfig")]
+    public class GambleConfig:JSONConfigBase    {
+        
+        /// <summary>
+        /// 博弈比例
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int GambleRatio { set; get; }
+        
+        /// <summary>
+        /// 该比例出现概率
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int HappenRatio { set; get; }
+        
+        /// <summary>
+        /// 概率随次数修正
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int Fixratio { set; get; }
+        
+        /// <summary>
+        /// 钻石出现比例
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int GemAddRatio { set; get; }
+        
+        /// <summary>
+        /// 固定钻石奖励值
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int RewardGem { set; get; }
+        
+        /// <summary>
+        /// 每日首次不计入
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public int IgnorRatio { set; get; }
 
     }
 
@@ -278,10 +322,10 @@ namespace ExcelConfig
         public String Posistions { set; get; }
         
         /// <summary>
-        /// 是否计入探度
+        /// 单个坐标探索值
         /// </summary>
         [ExcelConfigColIndex(6)]
-        public int IsAddExplore { set; get; }
+        public int PerLocationMath { set; get; }
         
         /// <summary>
         /// 事件参数1
@@ -370,33 +414,27 @@ namespace ExcelConfig
         public int Point { set; get; }
         
         /// <summary>
-        /// 从属关系
+        /// 从属组集合
         /// </summary>
         [ExcelConfigColIndex(10)]
         public String MapGroup { set; get; }
         
         /// <summary>
-        /// 随机战斗库
-        /// </summary>
-        [ExcelConfigColIndex(11)]
-        public String RandomBattle { set; get; }
-        
-        /// <summary>
         /// 随机战斗触发概率
         /// </summary>
-        [ExcelConfigColIndex(12)]
+        [ExcelConfigColIndex(11)]
         public int RandomPro { set; get; }
         
         /// <summary>
         /// 地图完整探索度
         /// </summary>
-        [ExcelConfigColIndex(13)]
+        [ExcelConfigColIndex(12)]
         public int CompletePoint { set; get; }
         
         /// <summary>
         /// 背景音乐
         /// </summary>
-        [ExcelConfigColIndex(14)]
+        [ExcelConfigColIndex(13)]
         public String BackgroudMusic { set; get; }
 
     }
@@ -420,51 +458,63 @@ namespace ExcelConfig
         public String Desctription { set; get; }
         
         /// <summary>
-        /// 天赋类别
+        /// 天赋获取方式
         /// </summary>
         [ExcelConfigColIndex(3)]
+        public int TalentGet { set; get; }
+        
+        /// <summary>
+        /// 获取参数
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int GetPars { set; get; }
+        
+        /// <summary>
+        /// 天赋类别
+        /// </summary>
+        [ExcelConfigColIndex(5)]
         public int TalentType { set; get; }
         
         /// <summary>
         /// 参数1
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(6)]
         public String Pars1 { set; get; }
         
         /// <summary>
         /// 参数2
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(7)]
         public String Pars2 { set; get; }
         
         /// <summary>
         /// 参数3
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(8)]
         public String Pars3 { set; get; }
         
         /// <summary>
         /// 参数4
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(9)]
         public String Pars4 { set; get; }
         
         /// <summary>
         /// 参数5
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(10)]
         public String Pars5 { set; get; }
         
         /// <summary>
         /// 参数6
         /// </summary>
-        [ExcelConfigColIndex(9)]
+        [ExcelConfigColIndex(11)]
         public String Pars6 { set; get; }
         
         /// <summary>
         /// 参数7
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(12)]
         public String Pars7 { set; get; }
 
     }
@@ -528,6 +578,30 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(9)]
         public int JoinCastleItemID { set; get; }
+        
+        /// <summary>
+        /// 离线收益时间毫秒
+        /// </summary>
+        [ExcelConfigColIndex(10)]
+        public int OutLineRewTime { set; get; }
+        
+        /// <summary>
+        /// 初始可视范围
+        /// </summary>
+        [ExcelConfigColIndex(11)]
+        public int OrignalVisual { set; get; }
+        
+        /// <summary>
+        /// 博弈次数
+        /// </summary>
+        [ExcelConfigColIndex(12)]
+        public int GamblePerTime { set; get; }
+        
+        /// <summary>
+        /// 每日分享奖励钻石
+        /// </summary>
+        [ExcelConfigColIndex(13)]
+        public int ShareRewardGem { set; get; }
 
     }
 
@@ -782,10 +856,10 @@ namespace ExcelConfig
         public int RewardPoint { set; get; }
         
         /// <summary>
-        /// 其他奖励类型
+        /// 物品奖励
         /// </summary>
         [ExcelConfigColIndex(9)]
-        public int OtherRewardType { set; get; }
+        public int itmeReward { set; get; }
         
         /// <summary>
         /// 奖励参数1
@@ -804,12 +878,6 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(12)]
         public String RewardPar3 { set; get; }
-        
-        /// <summary>
-        /// 奖励参数4
-        /// </summary>
-        [ExcelConfigColIndex(13)]
-        public String RewardPar4 { set; get; }
 
     }
 
@@ -870,15 +938,21 @@ namespace ExcelConfig
         public int NpcID { set; get; }
         
         /// <summary>
-        /// 附加奖励
+        /// 奖励金币
         /// </summary>
         [ExcelConfigColIndex(4)]
-        public int AddtionRewardType { set; get; }
+        public int RewardGold { set; get; }
         
         /// <summary>
-        /// 参数1
+        /// 附加奖励物品ID
         /// </summary>
         [ExcelConfigColIndex(5)]
+        public int AddtionRewarditem { set; get; }
+        
+        /// <summary>
+        /// 奖励数
+        /// </summary>
+        [ExcelConfigColIndex(6)]
         public String Pars1 { set; get; }
 
     }
@@ -920,7 +994,7 @@ namespace ExcelConfig
         public int MainEffectType { set; get; }
         
         /// <summary>
-        /// 主要效果目标
+        /// 效果目标
         /// </summary>
         [ExcelConfigColIndex(6)]
         public int MainEffectTarget { set; get; }
@@ -938,7 +1012,7 @@ namespace ExcelConfig
         public int StatusType { set; get; }
         
         /// <summary>
-        /// 附加效果目标
+        /// 效果目标
         /// </summary>
         [ExcelConfigColIndex(9)]
         public int StatusTarget { set; get; }
@@ -1130,45 +1204,51 @@ namespace ExcelConfig
     public class StoreDataConfig:JSONConfigBase    {
         
         /// <summary>
-        /// 物品名称
+        /// 物品ID
         /// </summary>
         [ExcelConfigColIndex(1)]
+        public int ItemId { set; get; }
+        
+        /// <summary>
+        /// 物品名称
+        /// </summary>
+        [ExcelConfigColIndex(2)]
         public String Name { set; get; }
         
         /// <summary>
         /// 出售价格
         /// </summary>
-        [ExcelConfigColIndex(2)]
+        [ExcelConfigColIndex(3)]
         public int Sold_price { set; get; }
         
         /// <summary>
         /// 物品解锁条件类
         /// </summary>
-        [ExcelConfigColIndex(3)]
+        [ExcelConfigColIndex(4)]
         public int Unlock_type { set; get; }
         
         /// <summary>
         /// 解锁参数1
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(5)]
         public String Unlock_para1 { set; get; }
         
         /// <summary>
         /// 解锁参数2
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(6)]
         public String Unlock_para2 { set; get; }
         
         /// <summary>
         /// 解锁参数3
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(7)]
         public String Unlock_para3 { set; get; }
         
         /// <summary>
         /// 解锁参数4
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(8)]
         public String Unlock_para4 { set; get; }
 
     }
@@ -1348,58 +1428,64 @@ namespace ExcelConfig
         public String Name { set; get; }
         
         /// <summary>
-        /// 触发类型
+        /// 事件类型
         /// </summary>
         [ExcelConfigColIndex(2)]
         public int Type { set; get; }
         
         /// <summary>
-        /// 介绍
+        /// 事件解锁类型
         /// </summary>
         [ExcelConfigColIndex(3)]
+        public int EventUnlockType { set; get; }
+        
+        /// <summary>
+        /// 解锁参数
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int UnlockCondition { set; get; }
+        
+        /// <summary>
+        /// 介绍
+        /// </summary>
+        [ExcelConfigColIndex(5)]
         public String Dialog1 { set; get; }
         
         /// <summary>
         /// 消耗类型
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(6)]
         public int CostType { set; get; }
         
         /// <summary>
         /// 需要消耗材料
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(7)]
         public String NeedItem { set; get; }
         
         /// <summary>
-        /// 万分比概率
+        /// 确定
         /// </summary>
-        [ExcelConfigColIndex(6)]
-        public int Probability { set; get; }
-        
-        /// <summary>
-        /// 成功
-        /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(8)]
         public String DialogOK { set; get; }
         
         /// <summary>
-        /// 失败
+        /// 取消
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(9)]
         public String DialogFaiuler { set; get; }
         
         /// <summary>
-        /// 成功奖励
-        /// </summary>
-        [ExcelConfigColIndex(9)]
-        public String RewardItem { set; get; }
-        
-        /// <summary>
-        /// 奖励士兵
+        /// 奖励类别
         /// </summary>
         [ExcelConfigColIndex(10)]
-        public String RewardSoidler { set; get; }
+        public int RewardType { set; get; }
+        
+        /// <summary>
+        /// 参数
+        /// </summary>
+        [ExcelConfigColIndex(11)]
+        public String RewardConditon { set; get; }
 
     }
 

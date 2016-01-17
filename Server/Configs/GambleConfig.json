@@ -1,0 +1,12 @@
+[{"ID":1,"GambleRatio":8000,"HappenRatio":1300,"Fixratio":0,"GemAddRatio":0,"RewardGem":5,"IgnorRatio":1}
+,{"ID":2,"GambleRatio":9000,"HappenRatio":1000,"Fixratio":200,"GemAddRatio":0,"RewardGem":5,"IgnorRatio":1}
+,{"ID":3,"GambleRatio":9500,"HappenRatio":1000,"Fixratio":500,"GemAddRatio":0,"RewardGem":5,"IgnorRatio":-1}
+,{"ID":4,"GambleRatio":10500,"HappenRatio":1600,"Fixratio":-200,"GemAddRatio":200,"RewardGem":5,"IgnorRatio":-1}
+,{"ID":5,"GambleRatio":11000,"HappenRatio":2400,"Fixratio":-500,"GemAddRatio":300,"RewardGem":5,"IgnorRatio":-1}
+,{"ID":6,"GambleRatio":12000,"HappenRatio":800,"Fixratio":0,"GemAddRatio":500,"RewardGem":5,"IgnorRatio":-1}
+,{"ID":7,"GambleRatio":12500,"HappenRatio":800,"Fixratio":0,"GemAddRatio":500,"RewardGem":5,"IgnorRatio":-1}
+,{"ID":8,"GambleRatio":13000,"HappenRatio":800,"Fixratio":0,"GemAddRatio":500,"RewardGem":5,"IgnorRatio":-1}
+,{"ID":9,"GambleRatio":13500,"HappenRatio":100,"Fixratio":0,"GemAddRatio":500,"RewardGem":5,"IgnorRatio":-1}
+,{"ID":10,"GambleRatio":14000,"HappenRatio":100,"Fixratio":0,"GemAddRatio":500,"RewardGem":5,"IgnorRatio":-1}
+,{"ID":11,"GambleRatio":15000,"HappenRatio":100,"Fixratio":0,"GemAddRatio":500,"RewardGem":5,"IgnorRatio":-1}
+]

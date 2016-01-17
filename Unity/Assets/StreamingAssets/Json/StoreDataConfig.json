@@ -1,3 +1,12 @@
-[{"ID":1,"Name":"hero1","Sold_price":0,"Unlock_type":0,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
-,{"ID":2,"Name":"hero2","Sold_price":0,"Unlock_type":0,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+[{"ID":1,"ItemId":91,"Name":"\u56FE\u7EB8:1\u7EA7\u77FF\u9504","Sold_price":15,"Unlock_type":-1,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+,{"ID":2,"ItemId":159,"Name":"\u56DE\u9B42\u5E61","Sold_price":20,"Unlock_type":-1,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+,{"ID":3,"ItemId":165,"Name":"\u56FE\u7EB8:\u77F3\u785D","Sold_price":50,"Unlock_type":-1,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+,{"ID":4,"ItemId":7,"Name":"\u5706\u6728","Sold_price":4,"Unlock_type":-1,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+,{"ID":5,"ItemId":168,"Name":"\u5730\u5951","Sold_price":10,"Unlock_type":-1,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+,{"ID":6,"ItemId":22,"Name":"\u7825\u77F3","Sold_price":4,"Unlock_type":-1,"Unlock_para1":"","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+,{"ID":7,"ItemId":2,"Name":"\u751F\u94C1","Sold_price":10,"Unlock_type":1,"Unlock_para1":"3","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+,{"ID":8,"ItemId":3,"Name":"\u7070\u94A2","Sold_price":14,"Unlock_type":1,"Unlock_para1":"4","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+,{"ID":9,"ItemId":12,"Name":"\u86EE\u76AE","Sold_price":4,"Unlock_type":1,"Unlock_para1":"13","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+,{"ID":10,"ItemId":17,"Name":"\u9752\u9EBB","Sold_price":6,"Unlock_type":1,"Unlock_para1":"18","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
+,{"ID":11,"ItemId":23,"Name":"\u85CF\u9B42\u77F3","Sold_price":12,"Unlock_type":1,"Unlock_para1":"24","Unlock_para2":"","Unlock_para3":"","Unlock_para4":""}
 ]
