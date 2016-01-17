@@ -21,12 +21,18 @@ namespace Assets.Scripts.GameStates
             UI.UIControllor.Singleton.HideAllUI();
             Map = GameObject.FindObjectOfType<GameMap>();
             Map.InitForExploreState();
-
+			this.Map.EachAllPosition<MapPosition> ((t) => {
+				var open = DataManagers.PlayerMapManager.Singleton.IsOpen(Config.ID, t.ToIndex());
+				t.SetMask(open);
+				return false;
+			});
             var lastPos = DataManagers.GamePlayerManager.Singleton.CurrentPos;
-            if (lastPos == null) //中心点
-                TargetPos = Map.Orgin;
-            else
-                TargetPos = lastPos.Value;
+			if (lastPos == null) { //中心点
+				TargetPos = Map.Orgin;
+			} else {
+				TargetPos = lastPos.Value;
+			}
+			RecordPos (TargetPos);
 
             Map.LookAt(TargetPos, true);
             Map.SetZone(4, true);
@@ -64,7 +70,7 @@ namespace Assets.Scripts.GameStates
             if (CheckWaiting()) return;
             Debug.Log("V:" + pox);
             var org = new Vector2(Screen.width / 2, Screen.height / 2);
-            var distance = Vector2.Distance(org, pox);
+            //var distance = Vector2.Distance(org, pox);
             var d = (pox - org).normalized;
             Debug.Log("D:" + d);
             //TargetPos += Vector2.up;
@@ -232,6 +238,17 @@ namespace Assets.Scripts.GameStates
         private void RecordPos(Vector2? target)
         {
             DataManagers.GamePlayerManager.Singleton.GoPos(target);
+			if (target == null)
+				return;
+			
+			DataManagers.PlayerMapManager.Singleton.OpenClosedIndex (Config.ID,
+				GamePlayerManager.PosXYToIndex ((int)target.Value.x, (int)target.Value.y), this.Map);
+			
+			this.Map.EachAllPosition<MapPosition> ((t) => {
+				var open = DataManagers.PlayerMapManager.Singleton.IsOpen(Config.ID, t.ToIndex());
+				t.SetMask(open);
+				return false;
+			});
         }
 
         public void JoinCastle(bool useItem = false)

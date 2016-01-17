@@ -47,7 +47,11 @@ public class IAPExample : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		#if !UNITY_IOS || UNITY_EDITOR
+		Destroy(this);
+		#else
 		InitIAPManager();
+		#endif
 	}
 	
 	// Update is called once per frame
