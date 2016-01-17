@@ -154,78 +154,94 @@ namespace Assets.Scripts.GameStates
         
         
         public void OnChange(Vector2 target)
-        {
+		{
 
-            if (!Map.HaveIndex(target)) {
-                GoBack();
-                return;
-            }
-            //处理回城
-            if (Map.IsOrgin(target))
-            {
-                JoinCastle();
-            }
-            else
-            {
-                int index = GamePlayerManager.PosXYToIndex((int)target.x, (int)target.y);
-                foreach (var i in SubMapConfigs)
-                {
-                    var indexs = Tools.UtilityTool.SplitIDS(i.Posistions);
-                    for (var p = 0; p < indexs.Count; p++)
-                    {
-                        if (index == indexs[p])
-                        {
-                            #region haveIndex
-                            switch ((Proto.MapEventType)i.EventType)
-                            {
-                                case Proto.MapEventType.BattlePos:
-                                    var battleGroups = Tools.UtilityTool.SplitIDS(i.Pars1);
-                                    if (battleGroups.Count > p)
-                                    {
-                                        StartBattle(battleGroups[p], index,(winner) =>
-                                        {
-                                            if (winner)
-                                            {
-                                                RecordPos(target);
-                                            }
-                                            else
-                                            {
-                                                GoBack();
-                                            }
-                                        });
-                                    }
-                                    break;
-                                case Proto.MapEventType.BronPos:
-                                    break;
-                            }
+			if (!Map.HaveIndex (target)) {
+				GoBack ();
+				return;
+			}
+			//处理回城
+			if (Map.IsOrgin (target)) {
+				JoinCastle ();
+			} else {
+				int index = GamePlayerManager.PosXYToIndex ((int)target.x, (int)target.y);
+				foreach (var i in SubMapConfigs) {
+					var indexs = Tools.UtilityTool.SplitIDS (i.Posistions);
+					for (var p = 0; p < indexs.Count; p++) {
+						if (index == indexs [p]) {
+							#region haveIndex
+							switch ((Proto.MapEventType)i.EventType) 
+							{
+							case Proto.MapEventType.BattlePos10:
+							case Proto.MapEventType.BattlePos11:
+							case Proto.MapEventType.BattlePos2:
+							case Proto.MapEventType.BattlePos3:
+							case Proto.MapEventType.BattlePos4:
+							case Proto.MapEventType.BattlePos5:
+							case Proto.MapEventType.BattlePos6:
+							case Proto.MapEventType.BattlePos7:
+							case Proto.MapEventType.BattlePos8:
+							case Proto.MapEventType.BattlePos9:
+							case Proto.MapEventType.BattlePos:
+								var battleGroups = Tools.UtilityTool.ConvertToInt (i.Pars1);
+								if (battleGroups> 0) {
+									StartBattle (battleGroups, index, (winner) => {
+										if (winner) {
+											RecordPos (target);
+										} else {
+											GoBack ();
+										}
+									});
+								}
+								break;
+							case Proto.MapEventType.BronPos:
+								JoinCastle ();
+								break;
+							case Proto.MapEventType.ChestPos:
+								break;
+							case Proto.MapEventType.GoHomePos:
+								JoinCastle ();
+								break;
+							case Proto.MapEventType.GoToNextLvlPos:
+								break;
+							case Proto.MapEventType.PKEnterPos:
+								break;
+							case Proto.MapEventType.RandomChestPos:
+								break;
+							case Proto.MapEventType.RandomEvnetPos:
+								break;
+							case Proto.MapEventType.RechargePos:
+								break;
+							case Proto.MapEventType.ReLivePos:
+								break;
+							case Proto.MapEventType.ScrectShopPos:
+								break;
 
-                            #endregion
-                            return;
-                        }
-                    }
-                }
-                //received the onchange event
-                if (GRandomer.Probability10000(Config.RandomPro))
-                {
-                    //出发随机事件
-                    var battleID = GRandomer.RandomList(Tools.UtilityTool.SplitIDS(Config.RandomBattle));
-                    StartBattle(battleID,index, (winner) =>
-                    {
-                        if (winner)
-                        {
-                            RecordPos(target);
-                        }
-                        else {
-                            GoBack();
-                        }
-                    });
-                    return;
-                }
-                //记录当前行走点
+							}
 
-                RecordPos(target);
-            }
-        }
+							#endregion
+							return;
+						}
+					}
+				}
+				//received the onchange event
+				if (GRandomer.Probability10000 (Config.RandomPro)) {
+					//出发随机事件
+					/*var battleID = GRandomer.RandomList (Tools.UtilityTool.SplitIDS (Config.));
+					StartBattle (battleID, index, (winner) => {
+						if (winner) {
+							RecordPos (target);
+						} else {
+							GoBack ();
+						}
+					});
+					return;*/
+				}
+				//记录当前行走点
+
+				RecordPos (target);
+			}
+		}
 
 
         private void GoBack()

@@ -33,7 +33,8 @@ namespace Assets.Scripts.UI.Windows
                 set
                 {
                     _Config = value;
-                    var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(_Config.ID);
+					var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(
+						Tools.UtilityTool.ConvertToInt(_Config.ItemKey));
                     ItemConfig = item;
                     if (item == null) return;
                     var Color = _Config.Sold_price <= DataManagers.GamePlayerManager.Singleton.Gold ?
@@ -79,7 +80,7 @@ namespace Assets.Scripts.UI.Windows
                 set
                 {
                     _Config = value;
-                    var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(_Config.ID);
+					var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(_Config.ItemId);
                     ItemConfig = item;
                     if (item == null) return;
                     var Color = _Config.Sold_price <= DataManagers.GamePlayerManager.Singleton.Gold ?
@@ -152,20 +153,18 @@ namespace Assets.Scripts.UI.Windows
                        case StoreUnlockType.None:
                            return true;
                        case StoreUnlockType.BuildGetTargetLevel:
-                           var builds = Tools.UtilityTool.SplitKeyValues(item.Unlock_para1);
-                           foreach (var i in builds)
-                           {
-                               var build = DataManagers.BuildingManager.Singleton[i.Key];
-                               if (build == null) return false;
-                               if (build.Level < i.Value) return false;
-                           }
-                           return true;
+						    var buildID = Tools.UtilityTool.ConvertToInt(item.Unlock_para1);
+							var config = ExcelToJSONConfigManager.Current.GetConfigByID<BuildingConfig>(buildID);
+						    if(config ==null) return false;
+							var build = DataManagers.BuildingManager.Singleton[config.BuildingId];
+							if(build.Level>= config.Level) return true;
+							return false;
                        case StoreUnlockType.ExploreGetTarget:
                            int explore = 0;
                            if (!int.TryParse(item.Unlock_para1, out explore)) return false;
                            if (DataManagers.GamePlayerManager.Singleton[DataManagers.PlayDataKeys.EXPLORE_VALUE] < explore) return false;
                            return true;
-                   }
+					}
                    return true;
                    #endregion
                });
@@ -184,7 +183,7 @@ namespace Assets.Scripts.UI.Windows
             PackageView.ActiveSelfObject(false);
             PackageViewCoin.ActiveSelfObject(true);
             var shopData = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.DimondStoreConfig>();
-            ItemGridTableManager.Count = shopData.Length;
+			ItemGridCoinTableManager.Count = shopData.Length;
             int index = 0;
             foreach (var i in ItemGridCoinTableManager)
             {

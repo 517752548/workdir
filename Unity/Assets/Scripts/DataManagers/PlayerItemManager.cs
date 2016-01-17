@@ -135,7 +135,7 @@ namespace Assets.Scripts.DataManagers
 
         internal bool BuyItem(ExcelConfig.StoreDataConfig config)
         {
-            var itemconfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(config.ID);
+			var itemconfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(config.ItemId);
             var price = config.Sold_price;
             var gold = GamePlayerManager.Singleton.Gold;
             if (gold < price)
@@ -146,8 +146,10 @@ namespace Assets.Scripts.DataManagers
 
             GamePlayerManager.Singleton.SubGold(price);
 
-            PlayerItemManager.Singleton.AddItem(config.ID, 1);
-            UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["COST_GOLD_REWARD_ITEM"],price, itemconfig.Name, 1));
+			PlayerItemManager.Singleton.AddItem(config.ItemId, 1);
+            UI.UITipDrawer.Singleton.DrawNotify(
+				string.Format(LanguageManager.Singleton["COST_GOLD_REWARD_ITEM"],
+					price, itemconfig.Name, 1));
             return true;
         }
 

@@ -53,6 +53,7 @@ namespace Assets.Scripts.UI.Windows
         public UISlider PlayerHpBar;
         public UIGrid SkillGrid;
         public UIButton bt_battleMode;
+        public UISprite AutoSprite;
         public UIButton bt_addHp;
 
 
@@ -80,6 +81,7 @@ namespace Assets.Scripts.UI.Windows
             PlayerHpBar = FindChild<UISlider>("PlayerHpBar");
             SkillGrid = FindChild<UIGrid>("SkillGrid");
             bt_battleMode = FindChild<UIButton>("bt_battleMode");
+            AutoSprite = FindChild<UISprite>("AutoSprite");
             bt_addHp = FindChild<UIButton>("bt_addHp");
 
             StarGridTableManager.InitFromGrid(StarGrid);

@@ -243,8 +243,10 @@ namespace Assets.Scripts.DataManagers
 			this [PlayDataKeys.PRODUCE_TIME] = (int)(DateTime.UtcNow - TimeZero).TotalSeconds;
 
 			var dict = new Dictionary<int, Item> ();
-			if (times > 100)
-				times = 100;
+			var maxTime = GameAppliaction.Singleton.ConstValues.OutLineRewTime / GameAppliaction.Singleton.ConstValues.ProduceRewardTick;
+
+			if (times > maxTime)
+				times = maxTime;
 			
 			for (var t = times; t > 0; t--) {
 				foreach (var i in ProduceOpenState) {

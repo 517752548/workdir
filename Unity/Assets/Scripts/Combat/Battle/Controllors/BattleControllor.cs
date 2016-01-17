@@ -48,7 +48,7 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 							//让刷新暂停 目前没想好办法 先这样
 							if (!IsPause) {
 								IsPause = true;
-								state.WaitForSeconds(1.2f);
+								state.WaitForSeconds(0.5f);
 								return GAction.Empty;
 							}
 							//0.5f late call

@@ -74,7 +74,9 @@ namespace Assets.Scripts.UI.Windows
                     DataManagers.BattleControlMode.AUTO;
 
                 DataManagers.GamePlayerManager.Singleton.SetControlMode(setmode);
-
+					//batte_player_controll_bt
+				AutoSprite.spriteName =  
+						setmode == Assets.Scripts.DataManagers.BattleControlMode.AUTO?"Battle_ui_bt_auto":"batte_player_controll_bt";
                 //bt_battleMode.Text(LanguageManager.Singleton[setmode == DataManagers.BattleControlMode.AUTO ? "BATTLE_AUTO" : "BATTLE_PLAYER"]);
                 if (this.Per == null) return;
                 this.Per.ChangePlayerControllor(setmode == DataManagers.BattleControlMode.AUTO);
@@ -93,6 +95,7 @@ namespace Assets.Scripts.UI.Windows
         public override void OnShow()
         {
             base.OnShow();
+			MonsterRoot.ActiveSelfObject (false);
             _cancel = false;
             SkillBar.value = 0;
         }
@@ -159,6 +162,7 @@ namespace Assets.Scripts.UI.Windows
 
         public void ShowMonster(Combat.Battle.Elements.BattleArmy monster)
         {
+			MonsterRoot.ActiveSelfObject (true);
             Monster = monster;
             lb_monsterName.text = Monster.Soldiers[0].Config.Name;
             var config = monster.Soldiers[0].Config;
