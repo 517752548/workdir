@@ -363,6 +363,11 @@
     <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Vertex Colored.shader" />
     <None Include="Assets\StreamingAssets\language.xml" />
     <None Include="Assets\link.xml" />
+    <None Include="Assets\map1..txt" />
+    <None Include="Assets\map2..txt" />
+    <None Include="Assets\map3..txt" />
+    <None Include="Assets\map4..txt" />
+    <None Include="Assets\map5..txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
