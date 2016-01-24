@@ -21,10 +21,6 @@ namespace Proto
         /// </summary>
         BronPos=1,
         /// <summary>
-        /// 复活点
-        /// </summary>
-        ReLivePos=2,
-        /// <summary>
         /// 竞技场入口
         /// </summary>
         PKEnterPos=3,

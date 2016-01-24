@@ -1209,11 +1209,6 @@
             出生点
             </summary>
         </member>
-        <member name="F:Proto.MapEventType.ReLivePos">
-            <summary>
-            复活点
-            </summary>
-        </member>
         <member name="F:Proto.MapEventType.PKEnterPos">
             <summary>
             竞技场入口
