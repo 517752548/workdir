@@ -286,13 +286,17 @@ namespace Assets.Scripts.DataManagers
 				}
 			}
 
+			StringBuilder sb = new StringBuilder ();
 			foreach (var i in dict) {
 				var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (i.Key);
+				var str = string.Format (LanguageManager.Singleton ["REWARD_ITEM"], 
+					          config.Name, i.Value.Diff);
+				sb.Append ( " "+str);
 				if (GameAppliaction.Singleton.Current is GameStates.CastleState)
-					UI.UITipDrawer.Singleton.DrawNotify (string.Format (LanguageManager.Singleton ["REWARD_ITEM"], 
-						config.Name, i.Value.Diff));
+					UI.UITipDrawer.Singleton.DrawNotify (str);
 				
 			}
+			UI.UIControllor.Singleton.ShowMessage (sb.ToString(), 10);
             UIManager.Singleton.UpdateUIData<UI.Windows.UICastlePanel>();
             return true;
         }

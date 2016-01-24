@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Proto;
 
 namespace Assets.Scripts.UI
 {
@@ -31,5 +32,15 @@ namespace Assets.Scripts.UI
             uirender.ShowOrHideMessage( show);
         }
 
+
+		public void OpenScrectShop(int shopID, int mapID, int index)
+		{
+			
+		}
+
+		public void ShowChestDialog(List<Item> need, List<Item> reward, int index)
+		{
+			
+		}
     }
 }

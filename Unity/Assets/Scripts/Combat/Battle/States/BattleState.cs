@@ -52,8 +52,16 @@ namespace Assets.Scripts.Combat.Battle.States
 
     public class BattleResult
     {
-       public ArmyCamp Winner{set;get;}
-    }
+        public ArmyCamp Winner{set;get;}
+		public List<Proto.Item> DropList{set;get;}
+		public int DropGold{ set; get; }
+		public BattleResult()
+		{
+			DropGold = 0;
+			DropList = new List<Item> ();
+			Winner = ArmyCamp.Monster;
+		}
+	}
 
     public delegate void EndBattleCallBack(BattleResult result);
 }

@@ -121,4 +121,7 @@
   <LanguageKey Key="UIEXPLORE_EXIT_MESSGAE">回城需要消耗一个回城卷。</LanguageKey> 
   <LanguageKey Key="JOIN_CASTLE_ITEM_NOT_ENOUGH">{0}不足</LanguageKey>
   <LanguageKey Key="JOIN_CASTLE_ITEM_COST">消耗一个{0}</LanguageKey>   
+
+  <LanguageKey Key="EXPLORE_NO_KEY">打开宝箱需要{0} *{1}</LanguageKey>
+  <LanguageKey Key="EXPLORE_NO_KEY_TITLE">道具不足</LanguageKey>
 </ArrayOfLanguageKey>

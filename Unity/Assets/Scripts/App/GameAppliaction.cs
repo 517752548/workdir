@@ -206,6 +206,13 @@ namespace Assets.Scripts.App
             Current.OnTap(gesture.Position);
         }
 
+		public void OnPinch(PinchGesture gesture)
+		{
+			if (Current == null)
+				return;
+			Current.OnPinch (gesture);
+		}
+
         public Queue<IEnumerator> works = new Queue<IEnumerator>();
 
         public IEnumerator Run()

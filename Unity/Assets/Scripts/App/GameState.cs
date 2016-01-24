@@ -15,5 +15,7 @@ namespace Assets.Scripts.App
         public virtual void OnTick() { }
 
         public virtual void OnTap(Vector2 pox) { }
+
+		public virtual void OnPinch (PinchGesture gesture){}
     }
 }

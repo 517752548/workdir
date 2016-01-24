@@ -202,12 +202,17 @@ namespace Assets.Scripts.UI.Windows
         public void ShowDialog(ExcelConfig.BattleConfig battleConfig)
         {
             GameDebug.Log(battleConfig.Dialog);
-            //Per.State.Enable = false;
-            //UI.Windows.UIMessageBox.ShowMessage(battleConfig.Name, battleConfig.Dialog,
-            //    () => { Per.State.Enable = true; },
-            //    () => { Per.State.Enable = true; });
-            ////UITipDrawer.Singleton.DrawNotify(battleConfig.Dialog);
+            Per.State.Enable = false;
+            UI.Windows.UIMessageBox.ShowMessage(battleConfig.Name, battleConfig.Dialog,
+                () => { Per.State.Enable = true; },
+				() => {  ExitBattle(); });
+            UITipDrawer.Singleton.DrawNotify(battleConfig.Dialog);
         }
+
+		private void ExitBattle()
+		{
+			
+		}
 
 
 

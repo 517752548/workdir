@@ -16,6 +16,11 @@ public class GameMap : MonoBehaviour {
 		if (MapCamera != null) {
 			MapCamera.clearFlags = CameraClearFlags.Color;
 			MapCamera.backgroundColor = Color.black;
+			MapCamera.orthographic = true;
+			var listener = MapCamera.GetComponent<AudioListener> ();
+			if (listener != null) {
+				Destroy (listener);
+			}
 		}
     }
 	
@@ -25,6 +30,7 @@ public class GameMap : MonoBehaviour {
         if (MapCamera == null) return;
         MapCamera.transform.position = Vector3.Lerp(MapCamera.transform.position, TargetPos, Time.deltaTime * 4);
         MapCamera.orthographicSize = Mathf.Lerp(MapCamera.orthographicSize, targetZone, Time.deltaTime * 4);
+
     }
 
     public float LookAt(Vector2 grid, bool nodelay = false)
@@ -61,6 +67,9 @@ public class GameMap : MonoBehaviour {
             MapCamera.orthographicSize = targetZone;
         }
     }
+
+
+
 
     public bool IsOrgin(Vector2 pos) 
     {

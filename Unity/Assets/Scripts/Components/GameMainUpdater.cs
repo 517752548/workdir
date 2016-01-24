@@ -108,6 +108,12 @@ namespace Assets.Scripts
             GameAppliaction.Singleton.OnTap(tap);
         }
 
+		void OnPinch(PinchGesture pinch)
+		{
+			//if (UICamera.hoveredObject) return;
+			GameAppliaction.Singleton.OnPinch(pinch);
+		}
+
         public void DoRun(System.Collections.IEnumerator r)
         {
             this.StartCoroutine(r);

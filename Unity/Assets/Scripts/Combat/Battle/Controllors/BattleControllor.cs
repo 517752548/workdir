@@ -7,87 +7,86 @@ using UnityEngine;
 
 namespace Assets.Scripts.Combat.Battle.Controllors
 {
-    public class BattleControllor :GControllor
-    {
-        public BattleControllor(GPerception per):base(per)
-        { }
+	public class BattleControllor :GControllor
+	{
+		public BattleControllor (GPerception per) : base (per)
+		{
+		}
 
 
 		private bool IsPause = false;
 
-        public override GAction GetAction(GObject current)
-        {
+		public override GAction GetAction (GObject current)
+		{
 
-            var battle = current as Elements.BattleEl;
-            var per = Perception as States.BattlePerception;
-            battle.TickEffect();
+			var battle = current as Elements.BattleEl;
+			var per = Perception as States.BattlePerception;
+			battle.TickEffect ();
 
-            var state = per.State as States.BattleState;
-            if(state.Render.Cancel)
-            {
-                 return new Actions.EndBattleAction(current, per) { Winner = Proto.ArmyCamp.Monster };
-            }
-
+			var state = per.State as States.BattleState;
+			if (state.Render.Cancel) {
+				return new Actions.EndBattleAction (current, per) { Winner = Proto.ArmyCamp.Monster };
+			}
 
 
-            switch (battle.State)
-            {
-                case Elements.BattleStateType.NOStart:
-                    return new Actions.StartBattleAction(current, per);
-                case Elements.BattleStateType.Battling:
-                    if (per.HaveDeadArmy())
-                    {
-					if (!per.PlayerDead ()) {  
-						if (battle.BattleIndex >= battle.Battles.Length) 
-						{
-							//return new Actions.EndBattleAction(current, per);
-						}
-						else 
-						{
+
+			switch (battle.State) {
+			case Elements.BattleStateType.NOStart:
+				return new Actions.StartBattleAction (current, per);
+			case Elements.BattleStateType.Battling:
+				if (per.HaveDeadArmy ()) {
+					if (!per.PlayerDead ()) 
+					{
+						//do drop
+
+						battle.ProcessDrop ();
+
+						if (battle.BattleIndex < battle.Battles.Length) {
 							//wait for dailog
+
+
 							//让刷新暂停 目前没想好办法 先这样
-							if (!IsPause) {
+							if (!IsPause) 
+							{
 								IsPause = true;
-								state.WaitForSeconds(0.5f);
+								state.WaitForSeconds (0.5f);
 								return GAction.Empty;
 							}
 							//0.5f late call
 							IsPause = false;
+
+
 							//创建
-							return new Actions.AddMonsterAction 
-								(current, 
+							return new Actions.AddMonsterAction (current, 
 								per,
 								battle.Battles [battle.BattleIndex]
-								);
+							);
 						}
-					} else 
-					{
+					} else {
 						//player
 					}
-                        battle.State =  Elements.BattleStateType.End;
-                        TimeToEnd = Time.time + 1.5f;
-                    }
-                    return GAction.Empty;
-                case Elements.BattleStateType.End:
-                    if (TimeToEnd > Time.time) return GAction.Empty;
-                    if (per.PlayerDead())
-                    {   //玩家死亡
-                        return new Actions.EndBattleAction(current, Perception) { Winner = Proto.ArmyCamp.Monster };
-                    }
-                    else
-                    {
+					battle.State = Elements.BattleStateType.End;
+					TimeToEnd = Time.time + 1.5f;
+				}
+				return GAction.Empty;
+			case Elements.BattleStateType.End:
+				if (TimeToEnd > Time.time)
+					return GAction.Empty;
+				if (per.PlayerDead ()) {   //玩家死亡
+					return new Actions.EndBattleAction (current, Perception) { Winner = Proto.ArmyCamp.Monster };
+				} else {
 
-                        return new Actions.EndBattleAction(current, per) { Winner = Proto.ArmyCamp.Player };
-                    }
+					return new Actions.EndBattleAction (current, per) { Winner = Proto.ArmyCamp.Player };
+				}
                     
-                default:
-                    return GAction.Empty;
-            }
+			default:
+				return GAction.Empty;
+			}
 
-        }
+		}
 
 
 
-        public float TimeToEnd { get; set; }
-    }
+		public float TimeToEnd { get; set; }
+	}
 }

@@ -7,11 +7,9 @@ enum MapEventType
    ReLivePos =2;//复活点
    PKEnterPos =3;//竞技场入口
    ScrectShopPos = 4;//地图黑店
-   ChestPos =5;//神秘宝藏
    RechargePos =6 ;//驿站补给点
    BattlePos = 7;//固定战斗点
    RandomChestPos = 8;//宝箱散落点
-   GoldPos = 9;//金矿
    RandomEvnetPos=10;//随机事件点
    GoToNextLvlPos =11;//下层传送点
    GoHomePos =12;//回城点

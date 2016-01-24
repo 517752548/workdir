@@ -56,5 +56,7 @@ namespace Assets.Scripts.UI.Windows
             ui.lb_Message.text = message;
             ui.lb_Title.text = title;
         }
+
+
     }
 }

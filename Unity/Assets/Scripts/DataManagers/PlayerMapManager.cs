@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets.Scripts.App;
 
 namespace Assets.Scripts.DataManagers
 {
@@ -114,7 +115,8 @@ namespace Assets.Scripts.DataManagers
 		public void OpenClosedIndex(int mapID, int index, GameMap map)
 		{
 			//size ;
-			var size = 1;
+			var size =GameAppliaction.Singleton.ConstValues.OrignalVisual;
+			//var size = 1;
 			var current = GamePlayerManager.IndexToPos (index);
 
 			for (int x = -size; x <= size; x++) {

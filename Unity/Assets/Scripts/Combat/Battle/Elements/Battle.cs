@@ -25,6 +25,7 @@ namespace Assets.Scripts.Combat.Battle.Elements
             Battles = listBattle;
             State = BattleStateType.NOStart;
             BattleIndex++;
+			DropList = new List<Proto.Item> ();
         }
 
         public ExcelConfig.BattleGroupConfig BattleGroup { private set; get; }
@@ -87,6 +88,41 @@ namespace Assets.Scripts.Combat.Battle.Elements
         private Queue<BattleEffect> _deeeffect = new Queue<BattleEffect>();
 
         public BattleStateType State { set; get; }
+
+		public void AddDropItem(int entry, int num)
+		{
+			if (num <= 0)
+				return;
+			if (DropList == null)
+				DropList = new List<Proto.Item> ();
+			foreach (var i in DropList) {
+				if (i.Entry == entry) {
+					i.Num += num;
+					return;
+				}
+			}
+
+			DropList.Add (new Proto.Item{ Entry = entry, Num = num });
+		}
+
+		public List<Proto.Item> DropList{ private set; get; }
+
+		public int DropGold{ set; get; }
+
+		public void ProcessDrop()
+		{
+			if (Index > 0 && Index <= Battles.Length) {
+				var config = Battles [Index - 1];
+				if (config.RewardGold > 0)
+					DropGold += config.RewardGold;
+				if (config.AddtionRewarditem > 0) 
+				{
+				
+					this.AddDropItem(config.AddtionRewarditem, Tools.UtilityTool.ConvertToInt( config.Pars1));
+				}
+			}
+
+		}
     }
 
     public enum BattleStateType

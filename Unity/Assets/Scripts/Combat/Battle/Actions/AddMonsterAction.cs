@@ -29,7 +29,7 @@ namespace Assets.Scripts.Combat.Battle.Actions
             var monsterArmy = new Elements.BattleArmy(controllor, monster);
             Perception.State.AddElement(monsterArmy);
             battle.BattleIndex++;
-            if (!string.IsNullOrEmpty(battleConfig.Dialog))
+			if (!string.IsNullOrEmpty(battleConfig.Name))
             {
                 state.Render.ShowDialog(battleConfig);
                 //UI.UIControllor.Singleton.ShowBattleDialog(battleConfig);

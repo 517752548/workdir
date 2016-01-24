@@ -64,6 +64,21 @@ namespace Assets.Scripts.GameStates
 
         private Vector3 lastPos;
 
+		public override void OnPinch (PinchGesture gesture)
+		{
+			base.OnPinch (gesture);
+			float zone = 4;
+			if (gesture.State == GestureRecognitionState.Ended) {
+				Map.SetZone (zone);
+			} else if (gesture.State == GestureRecognitionState.InProgress) {
+				
+				var target = zone + 20*(gesture.Gap  /240);
+				target = Mathf.Clamp (target, 4, 20);
+				Map.SetZone (target);
+			}
+
+		}
+
         public override void OnTap(Vector2 pox)
         {
             base.OnTap(pox);
@@ -170,6 +185,7 @@ namespace Assets.Scripts.GameStates
 					for (var p = 0; p < indexs.Count; p++) {
 						if (index == indexs [p]) {
 							#region haveIndex
+							Debug.Log("P:"+(Proto.MapEventType)i.EventType);
 							switch ((Proto.MapEventType)i.EventType) 
 							{
 							case Proto.MapEventType.BattlePos10:
@@ -192,12 +208,13 @@ namespace Assets.Scripts.GameStates
 											GoBack ();
 										}
 									});
+									//return;
 								}
 								break;
 							case Proto.MapEventType.BronPos:
 								JoinCastle ();
 								break;
-							case Proto.MapEventType.ChestPos:
+							case Proto.MapEventType.ChestPos: //No
 								break;
 							case Proto.MapEventType.GoHomePos:
 								JoinCastle ();
@@ -206,15 +223,60 @@ namespace Assets.Scripts.GameStates
 								break;
 							case Proto.MapEventType.PKEnterPos:
 								break;
-							case Proto.MapEventType.RandomChestPos:
+							case Proto.MapEventType.RandomChestPos: //宝箱
+								//var needItem = new List<Proto.Item>();
+								var needitems = Tools.UtilityTool.SplitIDS(i.Pars1);
+								var rewardItems = Tools.UtilityTool.SplitIDS(i.Pars2);
+								var rewardCounts = Tools.UtilityTool.SplitIDS(i.Pars3);
+
+							    
+								if(DataManagers.PlayerItemManager.Singleton.GetItemCount(needitems[0])>= needitems[1])
+								{
+
+									var needItem = new List<Proto.Item>();
+									var rewardItemDatas = new List<Proto.Item>();
+									needItem.Add(new Proto.Item{ Entry = needitems[0], Num = needitems[1] });
+									for(var tIndex =0 ; tIndex <rewardItems.Count ;tIndex++)
+									{
+										rewardItemDatas.Add(
+										new Proto.Item
+											{ 
+												Entry = rewardItems[tIndex],
+												Num = rewardCounts[tIndex]
+										    });
+									}
+									UI.UIControllor.Singleton.ShowChestDialog(needItem,rewardItemDatas,index);
+
+									RecordPos(target);
+								}
+								else
+								{
+									var cheshItemName = string.Empty;
+									//no item
+									UI.Windows.UIMessageBox.ShowMessage(
+										LanguageManager.Singleton["EXPLORE_NO_KEY_TITLE"],
+										String.Format(LanguageManager.Singleton[ "EXPLORE_NO_KEY"], 
+											cheshItemName, needitems[1]), 
+										()=>{
+											GoBack();
+										  },
+										()=>{
+
+											GoBack();
+										});
+								}
+
 								break;
 							case Proto.MapEventType.RandomEvnetPos:
 								break;
 							case Proto.MapEventType.RechargePos:
 								break;
-							case Proto.MapEventType.ReLivePos:
+							case Proto.MapEventType.ReLivePos: //NO in our game
 								break;
 							case Proto.MapEventType.ScrectShopPos:
+								//OPEN  SHOW 
+								var shopID = Tools.UtilityTool.ConvertToInt( i.Pars1);
+								UI.UIControllor.Singleton.OpenScrectShop(shopID, Config.ID, index);
 								break;
 
 							}
@@ -224,6 +286,8 @@ namespace Assets.Scripts.GameStates
 						}
 					}
 				}
+
+
 				//received the onchange event
 				if (GRandomer.Probability10000 (Config.RandomPro)) {
 					//出发随机事件
@@ -305,7 +369,7 @@ namespace Assets.Scripts.GameStates
                  soldiers,
                  (result) =>
                  {
-						SoundManager.Singleton.PlaySound("battle_complete");
+			         SoundManager.Singleton.PlaySound("battle_complete");
                      callBack(result.Winner == Proto.ArmyCamp.Player);
                      //战斗失败处理
                      //Hide 

@@ -28,7 +28,8 @@ namespace Assets.Scripts.Combat.Battle.Actions
             var state = per.State as States.BattleState;
             var winner = Winner;
 
-            state.End(new States.BattleResult { Winner = winner });
+
+			state.End(new States.BattleResult { Winner = winner, DropList = battle.DropList , DropGold = battle.DropGold});
         }
     }
 }
