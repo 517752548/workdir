@@ -1656,7 +1656,7 @@
         </member>
         <member name="F:Proto.EmployCondtionType.GetItem">
             <summary>
-            获得道具 （1：1|2：3|3：1）
+            获得道具
             </summary>
         </member>
         <member name="T:Proto.EmployCostCurrent">

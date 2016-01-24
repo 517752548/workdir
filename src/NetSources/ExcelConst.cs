@@ -411,11 +411,11 @@ namespace Proto
         /// <summary>
         /// 获得成就（1|2|3）
         /// </summary>
-        GetAchievement=2,
+        GetAchievement=3,
         /// <summary>
-        /// 获得道具 （1：1|2：3|3：1）
+        /// 获得道具
         /// </summary>
-        GetItem=3,
+        GetItem=2,
 
     }
    /// <summary>
