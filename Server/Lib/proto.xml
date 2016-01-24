@@ -1224,11 +1224,6 @@
             地图黑店
             </summary>
         </member>
-        <member name="F:Proto.MapEventType.ChestPos">
-            <summary>
-            神秘宝藏
-            </summary>
-        </member>
         <member name="F:Proto.MapEventType.RechargePos">
             <summary>
             驿站补给点
@@ -1242,11 +1237,6 @@
         <member name="F:Proto.MapEventType.RandomChestPos">
             <summary>
             宝箱散落点
-            </summary>
-        </member>
-        <member name="F:Proto.MapEventType.GoldPos">
-            <summary>
-            金矿
             </summary>
         </member>
         <member name="F:Proto.MapEventType.RandomEvnetPos">

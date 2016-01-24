@@ -33,10 +33,6 @@ namespace Proto
         /// </summary>
         ScrectShopPos=4,
         /// <summary>
-        /// 神秘宝藏
-        /// </summary>
-        ChestPos=5,
-        /// <summary>
         /// 驿站补给点
         /// </summary>
         RechargePos=6,
@@ -48,10 +44,6 @@ namespace Proto
         /// 宝箱散落点
         /// </summary>
         RandomChestPos=8,
-        /// <summary>
-        /// 金矿
-        /// </summary>
-        GoldPos=9,
         /// <summary>
         /// 随机事件点
         /// </summary>
