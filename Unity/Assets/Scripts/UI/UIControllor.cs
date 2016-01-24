@@ -40,6 +40,12 @@ namespace Assets.Scripts.UI
 
 		public void ShowChestDialog(List<Item> need, List<Item> reward, int index)
 		{
+
+
+		}
+
+		public void ShowMapListUI()
+		{
 			
 		}
     }

@@ -53,38 +53,48 @@ public class MapTypeSpritesEditorWindow : EditorWindow
 
 		socoll = EditorGUILayout.BeginScrollView(socoll, GUILayout.Height(position.height),GUILayout.Width(position.width));
         EditorGUILayout.BeginVertical();
+		if (GUILayout.Button("SAVE"))
+		{
+			var path = Path.Combine(Application.dataPath, PATH);
+			var json = JsonTool.Serialize(data);
+			File.WriteAllText(path,json);
+		}
         int index = 1;
-        EditorGUILayout.BeginHorizontal();
-        foreach (var i in data)
-        {
-            UnityEngine.Object obj = i.Obj;
-            if (obj==null && !string.IsNullOrEmpty(i.GUID))
-            {
-                obj = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(i.GUID), typeof(Sprite));
-            }
+        
+		foreach (var i in data) {
+			EditorGUILayout.BeginHorizontal ();
+			GUILayout.Label (i.Type.ToString (),GUILayout.MaxWidth(200));
+			UnityEngine.Object obj = i.Obj;
+			if (obj == null && !string.IsNullOrEmpty (i.GUID)) {
+				obj = AssetDatabase.LoadAssetAtPath (AssetDatabase.GUIDToAssetPath (i.GUID), typeof(Sprite));
+			}
 
-            obj = EditorGUILayout.ObjectField(i.Type.ToString(), obj, typeof(Sprite));
-            if (obj != null)
-            {
-                i.Obj = obj;
-                i.GUID = AssetDatabase.AssetPathToGUID( AssetDatabase.GetAssetPath(obj));
-            }
+			obj = EditorGUILayout.ObjectField ( obj, typeof(Sprite),GUILayout.Width(80),GUILayout.Height(80));
+			if (obj != null) {
+				i.Obj = obj;
+				i.GUID = AssetDatabase.AssetPathToGUID (AssetDatabase.GetAssetPath (obj));
+			}
+			UnityEngine.Object objOpen = i.ObjOpen;
+			if (objOpen == null && !string.IsNullOrEmpty (i.GUIDOpen)) {
+				objOpen = AssetDatabase.LoadAssetAtPath (AssetDatabase.GUIDToAssetPath (i.GUIDOpen), typeof(Sprite));
+			}
 
-            if (index >0 && index % 2==0)
-            {
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.BeginHorizontal();
-            }
-            index++;
-        }
-        EditorGUILayout.EndHorizontal();
+			objOpen = EditorGUILayout.ObjectField ( objOpen, typeof(Sprite),GUILayout.Width(80),GUILayout.Height(80));
+			if (objOpen != null) {
+				i.ObjOpen = objOpen;
+				i.GUIDOpen = AssetDatabase.AssetPathToGUID (AssetDatabase.GetAssetPath (objOpen));
+			}
 
-        if (GUILayout.Button("SAVE"))
-        {
-            var path = Path.Combine(Application.dataPath, PATH);
-            var json = JsonTool.Serialize(data);
-            File.WriteAllText(path,json);
-        }
+
+		  
+           
+			EditorGUILayout.EndHorizontal ();
+
+			index++;
+		}
+        
+
+       
         EditorGUILayout.EndVertical();
 		EditorGUILayout.EndScrollView ();
     }
@@ -114,6 +124,9 @@ public class MapTypeSpritesEditorWindow : EditorWindow
         public string GUID;
         [JsonIgnore]
         public UnityEngine.Object Obj;
+		public string GUIDOpen;
+		[JsonIgnore]
+		public UnityEngine.Object ObjOpen;
     }
 
     /// <summary>

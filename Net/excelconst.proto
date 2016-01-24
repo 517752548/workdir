@@ -4,7 +4,6 @@ enum MapEventType
 { 
    None = 0; //默认
    BronPos = 1; //出生点
-   ReLivePos =2;//复活点
    PKEnterPos =3;//竞技场入口
    ScrectShopPos = 4;//地图黑店
    RechargePos =6 ;//驿站补给点

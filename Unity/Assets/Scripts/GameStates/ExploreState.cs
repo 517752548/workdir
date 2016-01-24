@@ -199,11 +199,21 @@ namespace Assets.Scripts.GameStates
 							case Proto.MapEventType.BattlePos8:
 							case Proto.MapEventType.BattlePos9:
 							case Proto.MapEventType.BattlePos:
+								//IS have explored
+								var json = DataManagers.PlayerMapManager.Singleton.GetJsonByIndex(Config.ID, index);
+
+								if(!string.IsNullOrEmpty(json)){
+									RecordPos(target); 
+									return;
+								}
+
 								var battleGroups = Tools.UtilityTool.ConvertToInt (i.Pars1);
 								if (battleGroups> 0) {
+									
 									StartBattle (battleGroups, index, (winner) => {
 										if (winner) {
 											RecordPos (target);
+											PlayerMapManager.Singleton.RecordMap(Config.ID, index, true, "OK", true);
 										} else {
 											GoBack ();
 										}
@@ -214,17 +224,67 @@ namespace Assets.Scripts.GameStates
 							case Proto.MapEventType.BronPos:
 								JoinCastle ();
 								break;
-							case Proto.MapEventType.ChestPos: //No
-								break;
 							case Proto.MapEventType.GoHomePos:
 								JoinCastle ();
 								break;
 							case Proto.MapEventType.GoToNextLvlPos:
+								UI.UIControllor.Singleton.ShowMapListUI();
 								break;
 							case Proto.MapEventType.PKEnterPos:
+								var pkNeedItem = Tools.UtilityTool.SplitIDS(i.Pars1);
+								var pkBattleGroup = Tools.UtilityTool.ConvertToInt(i.Pars2);
+								if(PlayerItemManager.Singleton.GetItemCount(pkNeedItem[0])>=pkNeedItem[1])
+								{
+									PlayerItemManager.Singleton.SubItem(pkNeedItem[0],pkNeedItem[1]);
+									if (pkBattleGroup> 0) {
+										StartBattle (pkBattleGroup, index, 
+											(winner) => {
+											if (winner) 
+											{
+												RecordPos (target);
+											} else {
+												GoBack ();
+											}
+										});
+									}
+								}
+								else
+								{
+
+									var pkNeedItemName = string.Empty;
+									var configPK = ExcelToJSONConfigManager
+										.Current.GetConfigByID<ItemConfig>(pkNeedItem[0]);
+									if(configPK!=null)
+									{
+										pkNeedItemName = configPK.Name;
+									}
+									//no item
+									UI.Windows.UIMessageBox.ShowMessage(
+										LanguageManager.Singleton["EXPLORE_NO_KEY_TITLE"],
+										String.Format(LanguageManager.Singleton[ "EXPLORE_NO_KEY"], 
+											pkNeedItemName, pkNeedItem[1]), 
+										()=>{
+											GoBack();
+										},
+										()=>{
+
+											GoBack();
+										});
+									//GoBack();	
+								}
+
 								break;
 							case Proto.MapEventType.RandomChestPos: //宝箱
 								//var needItem = new List<Proto.Item>();
+
+								var  chestJson = PlayerMapManager.Singleton.GetJsonByIndex(this.Config.ID,index);
+								if(!string.IsNullOrEmpty(chestJson)) 
+								{
+									
+									RecordPos(target);
+									break;
+								}
+
 								var needitems = Tools.UtilityTool.SplitIDS(i.Pars1);
 								var rewardItems = Tools.UtilityTool.SplitIDS(i.Pars2);
 								var rewardCounts = Tools.UtilityTool.SplitIDS(i.Pars3);
@@ -245,6 +305,7 @@ namespace Assets.Scripts.GameStates
 												Num = rewardCounts[tIndex]
 										    });
 									}
+
 									UI.UIControllor.Singleton.ShowChestDialog(needItem,rewardItemDatas,index);
 
 									RecordPos(target);
@@ -252,6 +313,11 @@ namespace Assets.Scripts.GameStates
 								else
 								{
 									var cheshItemName = string.Empty;
+									var configChesh = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(needitems[0]);
+									if(configChesh!=null)
+									{
+										cheshItemName = configChesh.Name;
+									}
 									//no item
 									UI.Windows.UIMessageBox.ShowMessage(
 										LanguageManager.Singleton["EXPLORE_NO_KEY_TITLE"],
@@ -268,10 +334,26 @@ namespace Assets.Scripts.GameStates
 
 								break;
 							case Proto.MapEventType.RandomEvnetPos:
+								if(GRandomer.Probability10000(Config.RandomPro))
+								{
+									var randmonBattleGroupID = Tools.UtilityTool.ConvertToInt(i.Pars2);
+									//RechargePos
+									if(randmonBattleGroupID>0)
+									{
+										StartBattle (randmonBattleGroupID, index, 
+											(winner) => {
+												if (winner) 
+												{
+													RecordPos (target);
+												} else {
+													GoBack ();
+												}
+											});
+									}
+								}
 								break;
 							case Proto.MapEventType.RechargePos:
-								break;
-							case Proto.MapEventType.ReLivePos: //NO in our game
+								
 								break;
 							case Proto.MapEventType.ScrectShopPos:
 								//OPEN  SHOW 
@@ -315,12 +397,12 @@ namespace Assets.Scripts.GameStates
             Map.LookAt(TargetPos);
         }
 
-        private void RecordPos(Vector2? target)
+		private void RecordPos(Vector2? target)
         {
             DataManagers.GamePlayerManager.Singleton.GoPos(target);
 			if (target == null)
 				return;
-			
+
 			DataManagers.PlayerMapManager.Singleton.OpenClosedIndex (Config.ID,
 				GamePlayerManager.PosXYToIndex ((int)target.Value.x, (int)target.Value.y), this.Map);
 			

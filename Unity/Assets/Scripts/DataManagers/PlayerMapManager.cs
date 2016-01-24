@@ -55,7 +55,7 @@ namespace Assets.Scripts.DataManagers
         public const string MAP_FORMAT_STR = "__MAP__{0:0000}.json";
         public const string MAP_LIST_FILE = "__MAP_LIST.json";
 
-		public void RecordMap(int mapID, int index, bool isOpen, string json)
+		public void RecordMap(int mapID, int index, bool isOpen, string json ,bool updateJson = false)
 		{
 			MapPresistData map;
 			if (_maps.TryGetValue (mapID, out map)) {
@@ -64,6 +64,7 @@ namespace Assets.Scripts.DataManagers
 						Index = index, Json = json, IsOpened = isOpen
 					};
 				} else {
+					if(updateJson)
 					map [index].Json = json;
 
 				}
@@ -72,8 +73,19 @@ namespace Assets.Scripts.DataManagers
 				var data = CreateMapPresistData (mapID);
 				data [index] = new MapPosData { Index = index, Json = json, IsOpened = isOpen };
 			}
+		}
 
-
+		public string GetJsonByIndex(int mapID, int index)
+		{
+			MapPresistData map;
+			if (_maps.TryGetValue (mapID, out map)) {
+				if (map [index] == null) {
+					return string.Empty;
+				} else {
+					return	map [index].Json;
+				}
+			}
+			return string.Empty;
 		}
 
         private MapPresistData  CreateMapPresistData(int mapID)
@@ -126,7 +138,7 @@ namespace Assets.Scripts.DataManagers
 						//var recordValue = new MapPosData
 						RecordMap (mapID, 
 							GamePlayerManager.PosXYToIndex ((int)pos.x, (int)pos.y), 
-							true,"");
+							true,string.Empty, false);
 
 					}
 				}
