@@ -129,8 +129,8 @@ enum EmployCondtionType
 {
    None = -1;
    CompleteMap=1;//通关副本   （1|2|3）
-   GetAchievement =2;//获得成就（1|2|3）
-   GetItem =3;//获得道具 （1：1|2：3|3：1）
+   GetAchievement =3;//获得成就（1|2|3）
+   GetItem =2;//获得道具 
 }
 //雇佣消耗货币类型
 enum EmployCostCurrent

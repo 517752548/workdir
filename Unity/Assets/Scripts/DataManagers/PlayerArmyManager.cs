@@ -176,10 +176,10 @@ namespace Assets.Scripts.DataManagers
                         return false;
                     break;
                 case EmployCondtionType.GetItem:
-                    var keyValues = UtilityTool.SplitKeyValues(hero.recruit_para);
+				    var keyValues = UtilityTool.SplitIDS(hero.recruit_para);
                     foreach (var i in keyValues)
                     {
-                        if (PlayerItemManager.Singleton.GetItemCount(i.Key) < i.Value) return false;
+					  if (!(PlayerItemManager.Singleton.GetItemCount(i)>0)) return false;
                     }
                     return true;
                 case EmployCondtionType.None:
