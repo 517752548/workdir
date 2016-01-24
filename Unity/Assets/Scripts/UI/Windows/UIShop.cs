@@ -24,7 +24,19 @@ namespace Assets.Scripts.UI.Windows
             public override void InitModel()
             {
                 //todo
+				Template.Bt_itemName.OnMouseClick((s,e)=>{
+					if(OnClick==null) return;
+					OnClick(this);
+				});
+				Template.bt_info.OnMouseClick ((s, e) => {
+					if(OnInfoClick==null)return;
+					OnInfoClick(this);
+				});
             }
+
+			public Action<ItemGridCoinTableModel> OnInfoClick;
+
+			public Action<ItemGridCoinTableModel> OnClick;
 
             public ItemConfig ItemConfig { private set; get; }
             private DimondStoreConfig _Config;
@@ -37,7 +49,7 @@ namespace Assets.Scripts.UI.Windows
 						Tools.UtilityTool.ConvertToInt(_Config.ItemKey));
                     ItemConfig = item;
                     if (item == null) return;
-                    var Color = _Config.Sold_price <= DataManagers.GamePlayerManager.Singleton.Gold ?
+					var Color = _Config.Sold_price <= DataManagers.GamePlayerManager.Singleton.Coin ?
                         LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
                     Template.Bt_itemName.Text(item.Name);
                     Template.lb_cost.text = string.Format(LanguageManager.Singleton["UIShop_Model_Cost"],
@@ -50,6 +62,14 @@ namespace Assets.Scripts.UI.Windows
                     return _Config;
                 }
             }
+
+			public void SetDrag(bool enable)
+			{
+				var d = this.Item.Root.GetComponent<UIDragScrollView> ();
+				if (d == null)
+					return;
+				d.enabled = enable;
+			}
 
         }
 
@@ -96,6 +116,14 @@ namespace Assets.Scripts.UI.Windows
                     return _Config;
                 }
             }
+
+			public void SetDrag(bool enable)
+			{
+				var d = this.Item.Root.GetComponent<UIDragScrollView> ();
+				if (d == null)
+					return;
+				d.enabled = enable;
+			}
         }
 
         public override void InitModel()
@@ -175,6 +203,7 @@ namespace Assets.Scripts.UI.Windows
                 ItemGridTableManager[i].Model.Config = shopItems[i];
                 ItemGridTableManager[i].Model.OnInfoClick = OnInfoClick;
                 ItemGridTableManager[i].Model.OnClick = OnClick;
+				ItemGridTableManager [i].Model.SetDrag (shopItems.Length >= 7);
             }
         }
 
@@ -188,8 +217,9 @@ namespace Assets.Scripts.UI.Windows
             foreach (var i in ItemGridCoinTableManager)
             {
                 i.Model.Config = shopData[index];
-               // i.Model.OnItemClick = OnClickBuy;
-                //i.Model.SetDrag(shopData.Length >= 7);
+				i.Model.OnClick = OnClickBuy;
+				i.Model.OnInfoClick = OnClickCoinInfo;
+                i.Model.SetDrag(shopData.Length >= 7);
                 index++;
             }
         }
@@ -206,6 +236,22 @@ namespace Assets.Scripts.UI.Windows
         {
             UIControllor.Singleton.ShowMessage(obj.ItemConfig.Desription);
         }
+
+
+		private void OnClickBuy(ItemGridCoinTableModel obj)
+		{
+			if (DataManagers.PlayerItemManager.Singleton.BuyItemUseCoin(obj.Config))
+			{
+				UIManager.Singleton.UpdateUIData();
+			}
+		}
+
+		private void OnClickCoinInfo(ItemGridCoinTableModel obj)
+		{
+			UIControllor.Singleton.ShowMessage(obj.ItemConfig.Desription);
+		}
+
+
         public override void OnHide()
         {
             base.OnHide();

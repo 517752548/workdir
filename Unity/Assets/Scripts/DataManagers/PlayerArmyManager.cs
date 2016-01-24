@@ -188,6 +188,48 @@ namespace Assets.Scripts.DataManagers
             return true;
         }
 
+		public string GetEmployHeroRequire(HeroConfig hero)
+		{
+			switch ((EmployCondtionType)hero.recruit_condition)
+			{
+			case EmployCondtionType.CompleteMap:
+				//探索完成指定地图
+				var mapID = Tools.UtilityTool.ConvertToInt (hero.recruit_para);
+				var mapConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MapConfig> (mapID);
+				return string.Format (LanguageManager.Singleton ["NEED_COMPLETE_MAP"], mapConfig.Name);
+				break;
+			case EmployCondtionType.GetAchievement:
+				var aches = UtilityTool.SplitIDS (hero.recruit_para);
+				var sb = new StringBuilder ();
+				foreach (var i in aches) {
+					var a = ExcelToJSONConfigManager.Current.GetConfigByID<AchievementConfig> (i);
+					if (a == null)
+						continue;
+					sb.Append (a.Name);
+					sb.Append (" ");
+				}
+
+				return string.Format (LanguageManager.Singleton ["NEED_GET_ACH"], sb.ToString ());
+				break;
+			case EmployCondtionType.GetItem:
+				var keyValues = UtilityTool.SplitIDS (hero.recruit_para);
+				var sbItem = new StringBuilder ();
+				foreach (var i in keyValues)
+				{
+					var itemConfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (i);
+					if (itemConfig == null)
+						continue;
+					sbItem.Append (itemConfig.Name);
+					sbItem.Append (" ");
+
+				}
+				return string.Format (LanguageManager.Singleton ["NEED_GET_ITEM"], sbItem.ToString ());
+			case EmployCondtionType.None:
+				break;
+			}
+			return  LanguageManager.Singleton["CAN_EMPLOY"];
+		}
+
         /// <summary>
         ///  设置图标
         /// </summary>

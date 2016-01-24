@@ -153,6 +153,29 @@ namespace Assets.Scripts.DataManagers
             return true;
         }
 
+
+		public bool BuyItemUseCoin(ExcelConfig.DimondStoreConfig config)
+		{
+			var entry = Tools.UtilityTool.ConvertToInt (config.ItemKey);
+			var itemconfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(
+				entry);
+			var price = config.Sold_price;
+			var coin = GamePlayerManager.Singleton.Coin;
+			if (coin < price)
+			{
+				UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["BUY_ITEM_NO_ENOUGH_COIN"]);
+				return false;
+			}
+
+			GamePlayerManager.Singleton.SubCoin(price);
+
+			PlayerItemManager.Singleton.AddItem(entry, 1);
+			UI.UITipDrawer.Singleton.DrawNotify(
+				string.Format(LanguageManager.Singleton["COST_COIN_REWARD_ITEM"],
+					price, itemconfig.Name, 1));
+			return true;
+		}
+
         internal bool MakeItem(MakeConfig config)
         {
             var needs = Tools.UtilityTool.SplitKeyValues(config.RequireItems,config.RequireItemsNumber);

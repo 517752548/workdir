@@ -23,12 +23,22 @@ namespace Assets.Scripts.UI.Windows
                     if (OnClick == null) return;
                     OnClick(this);
                 });
+				this.Template.s_lock.OnMouseClick ((s, e) => {
+					LockInfo();
+				});
             }
 
             private UITableManager<UITableItem> startTable;
 
             public MonsterConfig Monster { private set; get; }
             public HeroConfig Hero { private set; get; }
+
+			private void LockInfo()
+			{
+				var des = DataManagers.PlayerArmyManager.Singleton.GetEmployHeroRequire (this.Hero);
+				UI.UIControllor.Singleton.ShowMessage (des);
+			}
+
             public void SetDrag(bool canDrag)
             {
                 var d = this.Item.Root.GetComponent<UIDragScrollView>();
