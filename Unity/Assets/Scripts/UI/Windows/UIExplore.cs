@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.Tools;
 using Assets.Scripts.GameStates;
+using UnityEngine;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -27,18 +28,37 @@ namespace Assets.Scripts.UI.Windows
                     }, null);
 
             });
+
             //Write Code here
         }
         public override void OnShow()
         {
             base.OnShow();
-            var state = App.GameAppliaction.Singleton.Current as ExploreState;
-            if (state == null) return;
-            this.lb_title.text =state.Config.Name;
+			OnUpdateUIData ();
         }
         public override void OnHide()
         {
             base.OnHide();
         }
+
+		public override void OnUpdateUIData ()
+		{
+			base.OnUpdateUIData ();
+			var state = App.GameAppliaction.Singleton.Current as ExploreState;
+			if (state == null) return;
+			this.lb_title.text =state.Config.Name;
+			int foodNum = 20;
+			int packageCur = 10;
+			int packageSize = 100;
+			var totalExplore = DataManagers.PlayerMapManager.Singleton.GetMapTotalExploreValue (state.Config.ID);
+			var currentExplore = DataManagers.PlayerMapManager.Singleton.GetMapExploreValue (state.Config.ID);
+
+			lb_explorevalue.text = string.Format (LanguageManager.Singleton ["UI_EXPLORE_EXPLOREVALUE"],
+				100f*((float)currentExplore / Mathf.Max (1, totalExplore)));
+
+			lb_food.text = string.Format (LanguageManager.Singleton ["UI_EXPLORE_FOOD"], foodNum);
+			lb_package.text = string.Format ("{0}/{1}", packageCur, packageSize);
+			
+		}
     }
 }

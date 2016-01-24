@@ -203,15 +203,21 @@ namespace Assets.Scripts.UI.Windows
         {
             GameDebug.Log(battleConfig.Dialog);
             Per.State.Enable = false;
-            UI.Windows.UIMessageBox.ShowMessage(battleConfig.Name, battleConfig.Dialog,
+            UI.Windows.UIMessageBox.ShowMessage
+			(
+				battleConfig.Name, battleConfig.Dialog,
                 () => { Per.State.Enable = true; },
-				() => {  ExitBattle(); });
-            UITipDrawer.Singleton.DrawNotify(battleConfig.Dialog);
+				() => {  ExitBattle(); }
+			);
+            //UITipDrawer.Singleton.DrawNotify(battleConfig.Dialog);
         }
 
+		//NO success player select exit!!
 		private void ExitBattle()
 		{
-			
+			var state = this.Per.State as Combat.Battle.States.BattleState;
+			state.End (new BattleResult{ Winner = Proto.ArmyCamp.Monster, Dead = false  });
+
 		}
 
 

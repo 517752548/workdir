@@ -73,10 +73,13 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 				if (TimeToEnd > Time.time)
 					return GAction.Empty;
 				if (per.PlayerDead ()) {   //玩家死亡
-					return new Actions.EndBattleAction (current, Perception) { Winner = Proto.ArmyCamp.Monster };
+					return new Actions.EndBattleAction (current, Perception) { 
+						Winner = Proto.ArmyCamp.Monster ,
+						PlayerDead = true};
 				} else {
 
-					return new Actions.EndBattleAction (current, per) { Winner = Proto.ArmyCamp.Player };
+					return new Actions.EndBattleAction (current, per) { Winner = Proto.ArmyCamp.Player ,
+						PlayerDead = false};
 				}
                     
 			default:

@@ -63,6 +63,7 @@ namespace Assets.Scripts.DataManagers
 					map [index] = new MapPosData {  
 						Index = index, Json = json, IsOpened = isOpen
 					};
+				//	TryToAddExploreValue (mapID, index);
 				} else {
 					if(updateJson)
 					map [index].Json = json;
@@ -72,6 +73,7 @@ namespace Assets.Scripts.DataManagers
 			} else {
 				var data = CreateMapPresistData (mapID);
 				data [index] = new MapPosData { Index = index, Json = json, IsOpened = isOpen };
+				//TryToAddExploreValue (mapID, index);
 			}
 		}
 
@@ -123,7 +125,6 @@ namespace Assets.Scripts.DataManagers
 
         private HashSet<int> MapIDS { set; get; }
 
-
 		public void OpenClosedIndex(int mapID, int index, GameMap map)
 		{
 			//size ;
@@ -139,10 +140,63 @@ namespace Assets.Scripts.DataManagers
 						RecordMap (mapID, 
 							GamePlayerManager.PosXYToIndex ((int)pos.x, (int)pos.y), 
 							true,string.Empty, false);
-
 					}
 				}
 			}
+		}
+
+		public void TryToAddExploreValue (int mapID, int index)
+		{
+			var subconfigs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.SubMapConfig> (t => t.MapID == mapID);
+			foreach (var i in subconfigs) {
+				var counts = Tools.UtilityTool.SplitIDS (i.Posistions);
+				foreach (var t in counts) 
+				{
+					if (t == index) {
+						AddExploreValue (mapID, index, i.PerLocationMath);
+					}
+				}
+			}
+		}
+
+		public void AddExploreValue(int mapID,int index,int value)
+		{
+			MapPresistData map;
+			if (_maps.TryGetValue (mapID, out map)) {
+				//处理每次添加
+				foreach (var i in map.AddExploreValue) {
+					if (i == index)
+						return;
+				}
+				map.IsChanged = true;
+				map.ExploreValue += value;
+			} else {
+				var data = CreateMapPresistData (mapID);
+				data.ExploreValue += value;
+			}
+		}
+
+		public int GetMapExploreValue(int mapID)
+		{
+			MapPresistData map;
+			if (_maps.TryGetValue (mapID, out map)) {
+				 
+				return map.ExploreValue;
+			}
+
+			return 0;
+		}
+
+		public int GetMapTotalExploreValue(int mapID)
+		{
+			int value = 0;
+			var subconfigs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.SubMapConfig> (t => t.MapID == mapID);
+			foreach (var i in subconfigs) {
+				var count = Tools.UtilityTool.SplitIDS (i.Posistions);
+				value += (count.Count * i.PerLocationMath);
+			}
+
+			return value;
 		}
 
 
@@ -164,6 +218,12 @@ namespace Assets.Scripts.DataManagers
     {
         [JsonName("M")]
         public int MapID { set; get; }
+
+		[JsonName("EV")]
+		public int ExploreValue{ set; get; }
+
+		[JsonName("AP")]
+		public List<int> AddExploreValue{ set; get; }
 
         [JsonName("PS")]
         public List<MapPosData> SavePosistions
@@ -211,6 +271,7 @@ namespace Assets.Scripts.DataManagers
         {
             IsChanged = false;
             Posistions = new Dictionary<int, MapPosData>();
+			AddExploreValue = new List<int> ();
         }
     }
 

@@ -296,6 +296,13 @@ namespace Assets.Scripts.DataManagers
                 Soldiers[soldier] = false;
         }
 
+		public void DeadAllSoldiersInTeam()
+		{
+			foreach (var i in _explore_team) {
+				Dead (i);
+			}
+		}
+
         /// <summary>
         ///  复活士兵
         /// </summary>

@@ -14,6 +14,8 @@ namespace Assets.Scripts.GameStates
 
         public const string PLAY_RES = "PlayerMap";
 
+		private HashSet<int> _tempPosIndex = new HashSet<int>();
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -353,7 +355,22 @@ namespace Assets.Scripts.GameStates
 								}
 								break;
 							case Proto.MapEventType.RechargePos:
-								
+								if(_tempPosIndex.Contains(index)) break;
+
+								var rechargeItems = Tools.UtilityTool.SplitIDS(i.Pars1);
+								var rechargeNums = Tools.UtilityTool.SplitIDS(i.Pars2);
+
+								var rechageItemDatas = new List<Proto.Item>();
+								for(var tIndex =0;tIndex <rechargeItems.Count;tIndex++)
+								{
+									rechageItemDatas.Add(new Proto.Item{
+										Entry = rechargeItems[tIndex],
+										Num = rechargeNums[tIndex]  });
+								}
+
+								UI.UIControllor.Singleton.ShowRechargeUI(rechageItemDatas);
+								_tempPosIndex.Add(index);
+
 								break;
 							case Proto.MapEventType.ScrectShopPos:
 								//OPEN  SHOW 
@@ -453,6 +470,12 @@ namespace Assets.Scripts.GameStates
                  {
 			         SoundManager.Singleton.PlaySound("battle_complete");
                      callBack(result.Winner == Proto.ArmyCamp.Player);
+					 if(result.Dead)
+					 {
+							PlayerArmyManager.Singleton.DeadAllSoldiersInTeam();
+							JoinCastle();
+							RecordPos(null);		
+					  }
                      //战斗失败处理
                      //Hide 
                      battleUI.HideWindow();

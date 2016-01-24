@@ -14,6 +14,9 @@ namespace Assets.Scripts.UI.Windows
 
         public UILabel lb_title;
         public UIButton bt_close;
+        public UILabel lb_package;
+        public UILabel lb_food;
+        public UILabel lb_explorevalue;
 
 
 
@@ -23,6 +26,9 @@ namespace Assets.Scripts.UI.Windows
             base.InitTemplate();
             lb_title = FindChild<UILabel>("lb_title");
             bt_close = FindChild<UIButton>("bt_close");
+            lb_package = FindChild<UILabel>("lb_package");
+            lb_food = FindChild<UILabel>("lb_food");
+            lb_explorevalue = FindChild<UILabel>("lb_explorevalue");
 
 
         }

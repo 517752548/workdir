@@ -32,21 +32,24 @@ namespace Assets.Scripts.UI
             uirender.ShowOrHideMessage( show);
         }
 
-
+		//奸商商店
 		public void OpenScrectShop(int shopID, int mapID, int index)
 		{
 			
 		}
-
+		//开宝箱的UI
 		public void ShowChestDialog(List<Item> need, List<Item> reward, int index)
 		{
 
 
 		}
-
+		//切换地图UI
 		public void ShowMapListUI()
 		{
 			
+		}
+		//驿站UI
+		public void ShowRechargeUI(List<Item> shop){
 		}
     }
 }

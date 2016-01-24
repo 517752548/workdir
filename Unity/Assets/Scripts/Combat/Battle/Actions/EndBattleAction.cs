@@ -14,22 +14,29 @@ namespace Assets.Scripts.Combat.Battle.Actions
         { }
 
         public Proto.ArmyCamp Winner { set; get; }
+
+		public bool PlayerDead{ set; get; }
         public override void DoAction()
-        {
-            //GOTo Explore
-            //App.GameAppliaction.Singleton.GoToExplore(-1); 
-            //ShowBattle result 
+		{
+			//GOTo Explore
+			//App.GameAppliaction.Singleton.GoToExplore(-1); 
+			//ShowBattle result 
             
-            var per  = Perception as States.BattlePerception;
-            //UI.UITipDrawer.Singleton.DrawNotify(string.Format("BattleEnd"));
-            //throw new NotImplementedException();
-            var battle = this.Obj as Elements.BattleEl;
-            battle.State = Elements.BattleStateType.End;
-            var state = per.State as States.BattleState;
-            var winner = Winner;
+			var per = Perception as States.BattlePerception;
+			//UI.UITipDrawer.Singleton.DrawNotify(string.Format("BattleEnd"));
+			//throw new NotImplementedException();
+			var battle = this.Obj as Elements.BattleEl;
+			battle.State = Elements.BattleStateType.End;
+			var state = per.State as States.BattleState;
+			var winner = Winner;
 
 
-			state.End(new States.BattleResult { Winner = winner, DropList = battle.DropList , DropGold = battle.DropGold});
-        }
+			state.End (new States.BattleResult { 
+				Winner = winner, 
+				DropList = battle.DropList,
+				DropGold = battle.DropGold,
+				Dead = PlayerDead
+			});
+		}
     }
 }

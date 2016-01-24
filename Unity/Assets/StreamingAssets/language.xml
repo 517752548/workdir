@@ -111,12 +111,14 @@
   <LanguageKey Key="BATTLE_UI_MONSTER_LVL">LV.{0}</LanguageKey>
   <LanguageKey Key="BATTLE_AUTO">自  动</LanguageKey>
   <LanguageKey Key="BATTLE_PLAYER">手  动</LanguageKey>
-  <LanguageKey Key="ATTACK_MONSTER">M:[FF0000]{0}</LanguageKey> 
-  <LanguageKey Key="LOST_HP">P:[00FF00]{0}</LanguageKey> 
+  <LanguageKey Key="ATTACK_MONSTER">怪物掉血:[FF0000]{0}</LanguageKey> 
+  <LanguageKey Key="LOST_HP">我放掉血:[00FF00]{0}</LanguageKey> 
   <LanguageKey Key="CANCEL_TITLE">退出？</LanguageKey> 
   <LanguageKey Key="CANCEL_MESSAGE">我要逃跑啊!</LanguageKey> 
   
-  
+ 
+  <LanguageKey Key="UI_EXPLORE_FOOD">干粮：{0}</LanguageKey>
+  <LanguageKey Key="UI_EXPLORE_EXPLOREVALUE">探索度：{0:0.00}%</LanguageKey>
   <LanguageKey Key="UIEXPLORE_EXIT_TITLE">回城</LanguageKey> 
   <LanguageKey Key="UIEXPLORE_EXIT_MESSGAE">回城需要消耗一个回城卷。</LanguageKey> 
   <LanguageKey Key="JOIN_CASTLE_ITEM_NOT_ENOUGH">{0}不足</LanguageKey>
