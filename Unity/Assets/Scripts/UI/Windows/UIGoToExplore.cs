@@ -309,6 +309,7 @@ namespace Assets.Scripts.UI.Windows
 		public override void OnHide ()
 		{
 			base.OnHide ();
+			UI.UIManager.Singleton.UpdateUIData ();
 		}
 	}
 
