@@ -48,9 +48,9 @@ public class IAPExample : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		#if !UNITY_IOS || UNITY_EDITOR
-		Destroy(this);
+		 Destroy(this);
 		#else
-		InitIAPManager();
+		 InitIAPManager();
 		#endif
 	}
 	

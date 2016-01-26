@@ -110,6 +110,17 @@ namespace Assets.Scripts.DataManagers
             var item = this[itemID];
             if (diff <= 0) return null;
             var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(itemID);
+
+			switch ((Proto.ItemType)config.Category) {
+
+			case Proto.ItemType.GoldPackage:
+				var gold = Tools.UtilityTool.ConvertToInt (config.Pars1);
+				GamePlayerManager.Singleton.AddGold (gold * diff);
+				return new Proto.Item{ Entry = itemID, Num =0, Diff =0 };
+			case Proto.ItemType.Tools:
+				break;//return new Proto.Item{ Entry = itemID, Num =0, Diff =0 };
+			}
+
             if (item == null)
             {
                 item = new PlayerGameItem

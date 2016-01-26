@@ -31,6 +31,14 @@ namespace Assets.Scripts.UI.Windows
 					DataManagers.GamePlayerManager.Singleton.EffectOn ? 1:0);
 
 			});
+			Bt_Reset.OnMouseClick (
+				(s, e) => {
+					UIMessageBox.ShowMessage(
+						LanguageManager.Singleton["RESET_TITLE"], 
+						LanguageManager.Singleton["RESET_CONTENT"],
+						()=>{App.GameAppliaction.Singleton.ResetPlayData(); this.HideWindow();},
+						()=>{ });
+			});
             //Write Code here
         }
         public override void OnShow()

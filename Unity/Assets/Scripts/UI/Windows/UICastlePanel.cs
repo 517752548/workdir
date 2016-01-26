@@ -34,8 +34,10 @@ namespace Assets.Scripts.UI.Windows
 
             public void SetDrag(bool canDrag)
             {
-               var d = this.Item.Root.GetComponent<UIDragScrollView>();
-               d.enabled = canDrag;
+				var d = this.Item.Root.GetComponent<UIDragScrollView>();
+				if (d == null)
+					return;
+                d.enabled = canDrag;
             }
         }
 

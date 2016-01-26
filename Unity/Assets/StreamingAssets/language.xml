@@ -109,6 +109,7 @@
   <LanguageKey Key="UI_GOEXPLORE_Relive_NOT_ENOUGH_ITEM">{0}不足</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_Relive_Success">消耗{0} 使得{1}复活</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_NEED_ARMY">起码您也要带个猪出去吧！！！</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NEED_FOOD">出门不带干粮，肯定要饿死啊～～</LanguageKey>
 
   <LanguageKey Key="BATTLE_UI_MONSTER_LVL">LV.{0}</LanguageKey>
   <LanguageKey Key="BATTLE_AUTO">自  动</LanguageKey>
@@ -133,4 +134,9 @@
   <LanguageKey Key="CAN_EMPLOY">满足条件可以招募</LanguageKey>
   <LanguageKey Key="NEED_GET_ACH">需要获得成就 {0}</LanguageKey>
   <LanguageKey Key="NEED_GET_ITEM">需要获得道具 {0}</LanguageKey>
+
+ <LanguageKey Key="YOU_CAN_MAKE">获得制造 {0} 的图纸</LanguageKey>
+
+  <LanguageKey Key="RESET_TITLE">重置游戏</LanguageKey>
+  <LanguageKey Key="RESET_CONTENT">重置游戏将丢失所有数据，包括您的充值信息！！！</LanguageKey>
 </ArrayOfLanguageKey>

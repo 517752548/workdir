@@ -41,6 +41,21 @@ enum ItemType
    TimeToUse = 11;//时效性
    Tools = 12 ;//功能性扩展道具
 }
+
+//功能道具类型
+enum ToolItemType
+{
+   AddFoodChargeValue =1;// 1-增加干粮恢复数值
+   AddGoldProduce = 2;//2-增加点金收益
+   AddPackageSize = 3;//3-增加背包大小
+   CalProuduceTime = 4;// 4-缩减生产收获时间
+   GoHome = 5;//5-回程
+   Relive = 6;//6-复活
+   AddWheatProduce = 7;//7-增加小麦单位产量
+   AddProducesOffTime=8;//8-增加离线收获时间
+   Unlock=9;//9-地契解锁耕地
+}
+
 //建筑类型
 enum BuildingType
 {

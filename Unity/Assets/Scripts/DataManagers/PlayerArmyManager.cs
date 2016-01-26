@@ -95,6 +95,11 @@ namespace Assets.Scripts.DataManagers
             }
         }
 
+		public void RemoveSoldierInTeam(int soldier)
+		{
+			_explore_team.Remove (soldier);
+		}
+
         public bool HaveEmployHero(HeroConfig hero)
         {
             return _employSoldier.Contains(hero.ID);
@@ -375,6 +380,15 @@ namespace Assets.Scripts.DataManagers
                 return false;
             }
         }
+
+		public bool IsAlive(int id)
+		{
+			bool isAlive = false;
+			if (Soldiers.TryGetValue (id, out isAlive)) {
+				return isAlive;
+			}
+			return true;
+		}
 
         /// <summary>
         /// 是否在队伍中

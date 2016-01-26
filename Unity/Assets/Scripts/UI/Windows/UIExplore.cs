@@ -5,6 +5,7 @@ using System.Text;
 using Assets.Scripts.Tools;
 using Assets.Scripts.GameStates;
 using UnityEngine;
+using Assets.Scripts.DataManagers;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -47,9 +48,9 @@ namespace Assets.Scripts.UI.Windows
 			var state = App.GameAppliaction.Singleton.Current as ExploreState;
 			if (state == null) return;
 			this.lb_title.text =state.Config.Name;
-			int foodNum = 20;
-			int packageCur = 10;
-			int packageSize = 100;
+			int foodNum = GamePlayerManager.Singleton.FoodCount;
+			int packageCur = foodNum;
+			int packageSize = GamePlayerManager.Singleton.PackageSize;
 			var totalExplore = DataManagers.PlayerMapManager.Singleton.GetMapTotalExploreValue (state.Config.ID);
 			var currentExplore = DataManagers.PlayerMapManager.Singleton.GetMapExploreValue (state.Config.ID);
 

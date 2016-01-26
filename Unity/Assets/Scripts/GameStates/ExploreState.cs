@@ -34,7 +34,7 @@ namespace Assets.Scripts.GameStates
 			} else {
 				TargetPos = lastPos.Value;
 			}
-			RecordPos (TargetPos);
+			RecordPos (TargetPos,true);
 
             Map.LookAt(TargetPos, true);
             Map.SetZone(4, true);
@@ -414,11 +414,20 @@ namespace Assets.Scripts.GameStates
             Map.LookAt(TargetPos);
         }
 
-		private void RecordPos(Vector2? target)
+		private void RecordPos(Vector2? target,bool isEnter = false)
         {
             DataManagers.GamePlayerManager.Singleton.GoPos(target);
 			if (target == null)
 				return;
+			
+			if (!isEnter && DataManagers.GamePlayerManager.Singleton.CostFood (1)) {
+			   
+				DataManagers.PlayerArmyManager.Singleton.DeadAllSoldiersInTeam ();
+				JoinCastle ();
+				return;
+			}
+
+			UI.UIManager.Singleton.UpdateUIData ();
 
 			DataManagers.PlayerMapManager.Singleton.OpenClosedIndex (Config.ID,
 				GamePlayerManager.PosXYToIndex ((int)target.Value.x, (int)target.Value.y), this.Map);

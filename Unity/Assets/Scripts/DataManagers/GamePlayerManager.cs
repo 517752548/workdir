@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Proto;
+using Assets.Scripts.UI.Windows;
 
 namespace Assets.Scripts.DataManagers
 {
@@ -296,8 +297,14 @@ namespace Assets.Scripts.DataManagers
 					UI.UITipDrawer.Singleton.DrawNotify (str);
 				
 			}
-			UI.UIControllor.Singleton.ShowMessage (sb.ToString(), 10);
-            UIManager.Singleton.UpdateUIData<UI.Windows.UICastlePanel>();
+
+			UIManager.Singleton.UpdateUIData<UI.Windows.UICastlePanel> ();
+			var ui = UIManager.Singleton.GetUIWindow<UIGoToExplore> ();
+			if (ui == null || !ui.IsVisable ) {
+			
+				UI.UIControllor.Singleton.ShowMessage (sb.ToString (), 10);
+
+			}
             return true;
         }
 
@@ -453,7 +460,7 @@ namespace Assets.Scripts.DataManagers
         {
             if ((num + FoodCount) > PackageSize) return false;
             var foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
-            if (PlayerItemManager.Singleton.GetItemCount(foodEntry) <= num) return false;
+            if (PlayerItemManager.Singleton.GetItemCount(foodEntry) < num) return false;
             PlayerItemManager.Singleton.SubItem(foodEntry, num);
             this[PlayDataKeys.PLAYER_ARMY_FOOD] += num;
             return true;
@@ -632,6 +639,10 @@ namespace Assets.Scripts.DataManagers
 
 		public bool IsMusicOn{
 			get{
+				var value = this [PlayDataKeys.MUSIC_OFF];
+				if (value == -1) {
+					this [PlayDataKeys.MUSIC_OFF] = 0;
+				}
 				return	this [PlayDataKeys.MUSIC_OFF] == 0;
 			}
 		}
@@ -643,6 +654,11 @@ namespace Assets.Scripts.DataManagers
 
 		public bool EffectOn{
 			get{ 
+				var value = this [PlayDataKeys.EFFECT_MUSIC];
+				if (value == -1) 
+				{
+					this [PlayDataKeys.EFFECT_MUSIC] = 0;
+				}
 				return this [PlayDataKeys.EFFECT_MUSIC] == 0;
 			}
 		}
