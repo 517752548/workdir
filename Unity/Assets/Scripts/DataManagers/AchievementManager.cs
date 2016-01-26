@@ -10,6 +10,7 @@ namespace Assets.Scripts.DataManagers
     {
         public const string ACHIEVEMENT_DATA = "__ACHIEVEMENT_DATA.JSON";
 
+		public int AchievementPoint {  get{ return GamePlayerManager.Singleton.AchievementPoint;} }
 
         public void Presist()
         {
@@ -45,6 +46,8 @@ namespace Assets.Scripts.DataManagers
         { 
         
         }
+
+
     }
 
 

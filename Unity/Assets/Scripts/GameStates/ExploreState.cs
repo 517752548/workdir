@@ -479,6 +479,15 @@ namespace Assets.Scripts.GameStates
                  {
 			         SoundManager.Singleton.PlaySound("battle_complete");
                      callBack(result.Winner == Proto.ArmyCamp.Player);
+						if(result.Winner == Proto.ArmyCamp.Player)
+						{
+							var ui = UI.Windows.UIBattleResult.Show();
+							GamePlayerManager.Singleton.AddGold(result.DropGold);
+							{
+								//add?
+							}
+							ui.ShowResult(this.Config.ID, result.DropList);
+						}
 					 if(result.Dead)
 					 {
 							PlayerArmyManager.Singleton.DeadAllSoldiersInTeam();

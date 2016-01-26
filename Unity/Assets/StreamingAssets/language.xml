@@ -134,8 +134,9 @@
   <LanguageKey Key="CAN_EMPLOY">满足条件可以招募</LanguageKey>
   <LanguageKey Key="NEED_GET_ACH">需要获得成就 {0}</LanguageKey>
   <LanguageKey Key="NEED_GET_ITEM">需要获得道具 {0}</LanguageKey>
-
- <LanguageKey Key="YOU_CAN_MAKE">获得制造 {0} 的图纸</LanguageKey>
+  
+  <LanguageKey Key="UIAchievement_Label">成就点 {0}</LanguageKey>
+  <LanguageKey Key="YOU_CAN_MAKE">获得制造 {0} 的图纸</LanguageKey>
 
   <LanguageKey Key="RESET_TITLE">重置游戏</LanguageKey>
   <LanguageKey Key="RESET_CONTENT">重置游戏将丢失所有数据，包括您的充值信息！！！</LanguageKey>

@@ -46,6 +46,10 @@ namespace Assets.Scripts.App
                   JoinCastle();
             }
             Runner = runer;
+
+			if (!GamePlayerManager.Singleton.EffectOn) {
+				SoundManager.Singleton.SetSourceValue (0);
+			}
             Runner.DoRun(Run());
         }
 

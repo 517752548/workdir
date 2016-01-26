@@ -49,7 +49,9 @@ namespace Assets.Scripts.UI
 			
 		}
 		//驿站UI
-		public void ShowRechargeUI(List<Item> shop){
+		public void ShowRechargeUI(List<Item> shop)
+		{
+			
 		}
     }
 }

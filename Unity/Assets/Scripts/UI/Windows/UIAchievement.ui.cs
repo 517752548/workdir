@@ -26,7 +26,7 @@ namespace Assets.Scripts.UI.Windows
         public UIPanel PackageView;
         public UIGrid ItemGrid;
         public UIButton bt_return;
-        public UILabel Label;
+        public UILabel lb_point;
 
 
         public UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>> ItemGridTableManager = new UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>>();
@@ -38,7 +38,7 @@ namespace Assets.Scripts.UI.Windows
             PackageView = FindChild<UIPanel>("PackageView");
             ItemGrid = FindChild<UIGrid>("ItemGrid");
             bt_return = FindChild<UIButton>("bt_return");
-            Label = FindChild<UILabel>("Label");
+            lb_point = FindChild<UILabel>("lb_point");
 
             ItemGridTableManager.InitFromGrid(ItemGrid);
 

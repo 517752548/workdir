@@ -117,8 +117,13 @@ namespace Assets.Scripts.DataManagers
 				var gold = Tools.UtilityTool.ConvertToInt (config.Pars1);
 				GamePlayerManager.Singleton.AddGold (gold * diff);
 				return new Proto.Item{ Entry = itemID, Num =0, Diff =0 };
-			case Proto.ItemType.Tools:
-				break;//return new Proto.Item{ Entry = itemID, Num =0, Diff =0 };
+			case Proto.ItemType.Diagram:
+				if(GetItemCount(itemID)==0){
+					var makeConfig = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>
+						(Tools.UtilityTool.ConvertToInt (config.Pars1));
+					UI.UITipDrawer.Singleton.DrawNotify (string.Format(LanguageManager.Singleton["YOU_CAN_MAKE"],makeConfig.Name));
+					}
+				break;
 			}
 
             if (item == null)

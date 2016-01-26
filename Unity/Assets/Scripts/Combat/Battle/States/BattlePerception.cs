@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Scripts.Combat.Battle.States
 {
@@ -91,5 +92,16 @@ namespace Assets.Scripts.Combat.Battle.States
         { 
            //
         }
+
+		public void ResetAllSkillCD()
+		{
+			State.Each<BattleArmy> (t => {
+				foreach(var s in t.Soldiers)
+				{
+					s.AttackCdTime = Time.time;
+				}
+				return false;
+			});
+		}
     }
 }

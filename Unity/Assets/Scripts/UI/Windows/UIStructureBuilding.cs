@@ -57,8 +57,10 @@ namespace Assets.Scripts.UI.Windows
                     Template.lb_name.text = Build.Name;
                     Template.lb_lvl.text = (Build.Level > 0 ? "" + Build.Level : "0");
                     var sb = new StringBuilder();
+					bool f = true;
                     if (nextConfig.CostGold > 0)
                     {
+						f = false;
                         var Color = nextConfig.CostGold <= DataManagers.GamePlayerManager.Singleton.Gold ?
                           LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
                         sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Gold"],
@@ -69,6 +71,7 @@ namespace Assets.Scripts.UI.Windows
 						}
                     }
                     var costItems = UtilityTool.SplitKeyValues(nextConfig.CostItems, nextConfig.CostItemCounts);
+					//var f = true;
                     foreach (var i in costItems)
                     {
                         var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(i.Key);
@@ -78,9 +81,16 @@ namespace Assets.Scripts.UI.Windows
                          LanguageManager.Singleton["APP_GREEN"] : LanguageManager.Singleton["APP_RED"];
 						if (PlayerItemManager.Singleton.GetItemCount (i.Key) < i.Value)
 							canBuild = false;
+
+						if (f) {
+							f = false;
+						} else {
+							sb.Append (" ");
+						}
                         sb.Append(string.Format(LanguageManager.Singleton["UIStructureBuilding_Cost_Item"],
                             item.Name,
                             string.Format(Color, i.Value)));
+						
                     }
                     var require = sb.ToString();
                     Template.lb_cost.text =

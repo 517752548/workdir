@@ -24,7 +24,7 @@ namespace Assets.Scripts.Combat.Battle.Controllors
             {
                 if (lastIndex != i) continue; 
                 var s = army.Soldiers[i];
-                if (s.AttackCdTime + (s.SkillConfig.SkillCd / 1000f) < Time.time)
+				if (s.LeftTime<=0)
                 {
 
                     var enemy = per.GetEnemy(army);

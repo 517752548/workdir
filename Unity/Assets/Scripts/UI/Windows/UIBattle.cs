@@ -56,6 +56,8 @@ namespace Assets.Scripts.UI.Windows
             internal void Update()
             {
                 if (_Soldier == null) return;
+				Template.s_mask.fillAmount = _Soldier.LeftTime / _Soldier.CdTimeToFloat ();
+
                 Template.Bt_skill.Disable(_Soldier.LeftTime > 0);
             }
         }
@@ -206,7 +208,7 @@ namespace Assets.Scripts.UI.Windows
             UI.Windows.UIMessageBox.ShowMessage
 			(
 				battleConfig.Name, battleConfig.Dialog,
-                () => { Per.State.Enable = true; },
+				() => {  Per.ResetAllSkillCD(); Per.State.Enable = true; },
 				() => {  ExitBattle(); }
 			);
             //UITipDrawer.Singleton.DrawNotify(battleConfig.Dialog);

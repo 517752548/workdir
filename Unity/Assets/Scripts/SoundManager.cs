@@ -25,7 +25,7 @@ public class SoundManager : MonoBehaviour {
 
 	public void PlaySound(string name)
 	{
-		if (!Assets.Scripts.DataManagers.GamePlayerManager.Singleton.EffectOn)
+		if (!Assets.Scripts.DataManagers.GamePlayerManager.Singleton.IsMusicOn)
 			return;
 		var res = Assets.Scripts.Tools.ResourcesManager.Singleton.LoadResources<AudioClip> ("sounds/" + name);
 		//res.length
@@ -36,10 +36,19 @@ public class SoundManager : MonoBehaviour {
 
 	public void SetSourceValue(float value)
 	{
+		if (value <= 0.001f) {
+			var listener = this.GetComponent<AudioListener> ();
+			listener.enabled = false;
+		} else {
+			var listener = this.GetComponent<AudioListener> ();
+			listener.enabled = true;
+		}
 		var sources = this.GetComponent<AudioSource> ();
 		if (sources != null)
 			sources.volume = value;
+		
 	}
+		
 
 
 	//public AudioSource Source;

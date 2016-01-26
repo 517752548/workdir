@@ -102,6 +102,8 @@ namespace Assets.Scripts.DataManagers
             }
         }
 
+
+
         public void Load()
         {
             var list = Tools.PresistTool.LoadJson<List<PlayerData>>(PLAYER_DATA_PATH);
@@ -270,7 +272,15 @@ namespace Assets.Scripts.DataManagers
 					if (!engough)
 						continue;
 					foreach (var r in requires) {
-						PlayerItemManager.Singleton.SubItem (r.Key, (r.Value * i.Value.PeopleNum));
+						var diffNum = (r.Value * i.Value.PeopleNum);
+						PlayerItemManager.Singleton.SubItem (r.Key, diffNum);
+						if (dict.ContainsKey (r.Key))
+						{				
+							dict [r.Key].Diff -= diffNum;// item.Diff;
+						} else {
+							dict.Add (r.Key, new Item{ Entry= i.Key, Diff = -diffNum});
+						}
+
 					}
 					foreach (var r in rewards) {
 						var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (r.Key);
@@ -289,6 +299,8 @@ namespace Assets.Scripts.DataManagers
 
 			StringBuilder sb = new StringBuilder ();
 			foreach (var i in dict) {
+				if (i.Value.Diff <= 0)
+					continue;
 				var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (i.Key);
 				var str = string.Format (LanguageManager.Singleton ["REWARD_ITEM"], 
 					          config.Name, i.Value.Diff);
@@ -540,6 +552,20 @@ namespace Assets.Scripts.DataManagers
         {
             return true;
         }
+
+		public int AchievementPoint{ get{ 
+				return  this [PlayDataKeys.PLAYER_ACHIEVEMENT_POINT] <= 0 ? 0 : this [PlayDataKeys.PLAYER_ACHIEVEMENT_POINT];
+			}}
+
+		public int AddAchievementPoint(int point)
+		{
+			if (point <= 0)
+				return AchievementPoint;
+			
+			var pointResult = AchievementPoint + point;
+			this [PlayDataKeys.PLAYER_ACHIEVEMENT_POINT] = pointResult;
+			return pointResult;
+		}
         #endregion
 
         #region 金币
@@ -650,6 +676,7 @@ namespace Assets.Scripts.DataManagers
 		public void MusicState(int state)
 		{
 			this [PlayDataKeys.MUSIC_OFF] = state;
+
 		}
 
 		public bool EffectOn{
@@ -666,6 +693,7 @@ namespace Assets.Scripts.DataManagers
 		public void EffectMusicState(int state)
 		{
 			this [PlayDataKeys.EFFECT_MUSIC] = state;
+			SoundManager.Singleton.SetSourceValue (EffectOn ? 1 : 0);
 		}
 
         #region paement

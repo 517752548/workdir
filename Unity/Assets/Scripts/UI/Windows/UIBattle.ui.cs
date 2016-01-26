@@ -25,12 +25,14 @@ namespace Assets.Scripts.UI.Windows
             public UIButton Bt_skill;
             public UISprite job;
             public UITexture icon;
+            public UISprite s_mask;
 
             public override void InitTemplate()
             {
                 Bt_skill = FindChild<UIButton>("Bt_skill");
                 job = FindChild<UISprite>("job");
                 icon = FindChild<UITexture>("icon");
+                s_mask = FindChild<UISprite>("s_mask");
 
             }
         }
