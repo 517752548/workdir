@@ -154,6 +154,49 @@ namespace Proto
 
     }
    /// <summary>
+    /// 功能道具类型
+    /// </summary>
+    public enum ToolItemType
+    {
+        /// <summary>
+        ///  1-增加干粮恢复数值
+        /// </summary>
+        AddFoodChargeValue=1,
+        /// <summary>
+        /// 2-增加点金收益
+        /// </summary>
+        AddGoldProduce=2,
+        /// <summary>
+        /// 3-增加背包大小
+        /// </summary>
+        AddPackageSize=3,
+        /// <summary>
+        ///  4-缩减生产收获时间
+        /// </summary>
+        CalProuduceTime=4,
+        /// <summary>
+        /// 5-回程
+        /// </summary>
+        GoHome=5,
+        /// <summary>
+        /// 6-复活
+        /// </summary>
+        Relive=6,
+        /// <summary>
+        /// 7-增加小麦单位产量
+        /// </summary>
+        AddWheatProduce=7,
+        /// <summary>
+        /// 8-增加离线收获时间
+        /// </summary>
+        AddProducesOffTime=8,
+        /// <summary>
+        /// 9-地契解锁耕地
+        /// </summary>
+        Unlock=9,
+
+    }
+   /// <summary>
     /// 建筑类型
     /// </summary>
     public enum BuildingType

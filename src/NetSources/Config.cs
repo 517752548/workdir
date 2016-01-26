@@ -1222,33 +1222,39 @@ namespace ExcelConfig
         public int Sold_price { set; get; }
         
         /// <summary>
-        /// 物品解锁条件类
+        /// 购买最大数
         /// </summary>
         [ExcelConfigColIndex(4)]
+        public int Max_purchase { set; get; }
+        
+        /// <summary>
+        /// 物品解锁条件类
+        /// </summary>
+        [ExcelConfigColIndex(5)]
         public int Unlock_type { set; get; }
         
         /// <summary>
         /// 解锁参数1
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(6)]
         public String Unlock_para1 { set; get; }
         
         /// <summary>
         /// 解锁参数2
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(7)]
         public String Unlock_para2 { set; get; }
         
         /// <summary>
         /// 解锁参数3
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(8)]
         public String Unlock_para3 { set; get; }
         
         /// <summary>
         /// 解锁参数4
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(9)]
         public String Unlock_para4 { set; get; }
 
     }
@@ -1412,6 +1418,12 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(6)]
         public String Last_time { set; get; }
+        
+        /// <summary>
+        /// 最大可购买数
+        /// </summary>
+        [ExcelConfigColIndex(7)]
+        public int Max_purchase_times { set; get; }
 
     }
 
