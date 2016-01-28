@@ -18,6 +18,7 @@ namespace Assets.Scripts.DataManagers
             _items = new Dictionary<int, PlayerGameItem>();
         }
         private Dictionary<int, PlayerGameItem> _items { set; get; }
+		private Dictionary<int,PlayerGameItem> _packageItems = new Dictionary<int, PlayerGameItem> ();
 
         public PlayerGameItem this[int key]
         {
@@ -28,25 +29,7 @@ namespace Assets.Scripts.DataManagers
                 return null;
             }
         }
-
-        [System.Obsolete]
-        public static List<int[]> SplitFormatItemData(string format)
-        {
-            if (format == "-") return new List<int[]>();
-            var splits = format.Split('|');
-            var produces = new List<int[]>();
-            foreach (var i in splits)
-            {
-                var strSplit = i.Split(':');
-                if (strSplit.Length != 2)
-                {
-                    Debug.LogError(string.Format("Format:{0} error!", format));
-                    continue;
-                }
-                produces.Add(new int[] { Convert.ToInt32(strSplit[0]), Convert.ToInt32(strSplit[1]) });
-            }
-            return produces;
-        }
+	
 
         public int GetItemCount(int entry)
         {
@@ -56,16 +39,26 @@ namespace Assets.Scripts.DataManagers
         }
 
         public const string _ITEM_SAVE_FILE_ = "_ITEM_.json";
+		public const string _PACKAGE_SAVE_FILE= "_PLAY_PACKAGE.json";
+
         public void Load()
         {
             this._items = new Dictionary<int, PlayerGameItem>();
             var list = Tools.PresistTool.LoadJson<List<PlayerGameItem>>(_ITEM_SAVE_FILE_);
-            if (list == null) return;
-            foreach (var i in list)
-            {
-                if (_items.ContainsKey(i.ConfigID)) continue;
-                _items.Add(i.ConfigID, i);
-            }
+			if (list != null) {
+				foreach (var i in list) {
+					if (_items.ContainsKey (i.ConfigID))
+						continue;
+					_items.Add (i.ConfigID, i);
+				}
+			}
+			_packageItems.Clear ();
+			var pack = Tools.PresistTool.LoadJson<List<PlayerGameItem>> (_PACKAGE_SAVE_FILE);
+			if (pack == null)
+				return;
+			foreach (var i in pack) {
+				this._packageItems.Add (i.ConfigID, i);
+			}
 
         }
 
@@ -96,12 +89,15 @@ namespace Assets.Scripts.DataManagers
         public void Presist()
         {
             var items = _items.Values.ToList();
+			var pack = _packageItems.Values.ToList ();
             Tools.PresistTool.SaveJson(items, _ITEM_SAVE_FILE_);
+			Tools.PresistTool.SaveJson (pack, _PACKAGE_SAVE_FILE);
         }
 
         public void Reset()
         {
             _items.Clear();
+			_packageItems.Clear ();
             Presist();
         }
 
@@ -260,8 +256,77 @@ namespace Assets.Scripts.DataManagers
             //throw new NotImplementedException();
         }
 
+		public int CurrentSize{ get{
+				int count = 0;
+				foreach (var i in _packageItems) {
+					count += i.Value.Num;
+				}
+				return count;
+			}}
 
+		public bool AddItemIntoPack(int entry,int num)
+		{
+			if (num <= 0)
+				return false;
+			if (CurrentSize+num > GamePlayerManager.Singleton.PackageSize)
+				return false;
+			if (_packageItems.ContainsKey (entry)) {
+				_packageItems [entry].Num += num;
+			} else {
+				_packageItems.Add (entry, new PlayerGameItem(entry,num));
+			}
+			return true;
+		}
+
+		public bool CalItemFromPack(int entry,int num)
+		{
+			if (num <= 0)
+				return false;
+			if (_packageItems.ContainsKey (entry)) {
+				if (_packageItems [entry].Num >= num) {
+					_packageItems [entry].Num -= num; return true;
+				}
+
+			}
+			return false;
+		}
+
+		public int GetFoodNum()
+		{
+			int foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
+			if (_packageItems.ContainsKey (foodEntry))
+				return _packageItems [foodEntry].Num;
+			return 0;
+		}
+
+		public List<PlayerGameItem> PackageToList{ get { return _packageItems.Values.ToList (); } }
+
+		public void JoinCastle()
+		{
+			if (_packageItems.Count == 0)
+				return;
+			
+			StringBuilder sb = new StringBuilder ();
+
+			foreach (var i in _packageItems) {
+				this.AddItem (i.Key, i.Value.Num);
+				sb.Append( string.Format (LanguageManager.Singleton ["REWARD_ITEM"], 
+					i.Value.Config.Name, i.Value.Num));
+			}
+
+			_packageItems.Clear ();
+			var str = string.Format (LanguageManager.Singleton ["GET_FROM_EXPLORE"], sb.ToString ());
+			UI.UITipDrawer.Singleton.DrawNotify(str);
+			UI.UIControllor.Singleton.ShowMessage (str);
+		}
+
+		public void EmptyPackage()
+		{
+			_packageItems.Clear ();
+		}
     }
+
+
 
     public class PlayerGameItem 
     {

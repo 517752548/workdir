@@ -115,7 +115,7 @@
   <LanguageKey Key="BATTLE_AUTO">自  动</LanguageKey>
   <LanguageKey Key="BATTLE_PLAYER">手  动</LanguageKey>
   <LanguageKey Key="ATTACK_MONSTER">怪物掉血:[FF0000]{0}</LanguageKey> 
-  <LanguageKey Key="LOST_HP">我放掉血:[00FF00]{0}</LanguageKey> 
+  <LanguageKey Key="LOST_HP">我方掉血[00FF00]{0}</LanguageKey> 
   <LanguageKey Key="CANCEL_TITLE">退出？</LanguageKey> 
   <LanguageKey Key="CANCEL_MESSAGE">我要逃跑啊!</LanguageKey> 
   
@@ -125,7 +125,10 @@
   <LanguageKey Key="UIEXPLORE_EXIT_TITLE">回城</LanguageKey> 
   <LanguageKey Key="UIEXPLORE_EXIT_MESSGAE">回城需要消耗一个回城卷。</LanguageKey> 
   <LanguageKey Key="JOIN_CASTLE_ITEM_NOT_ENOUGH">{0}不足</LanguageKey>
-  <LanguageKey Key="JOIN_CASTLE_ITEM_COST">消耗一个{0}</LanguageKey>   
+  <LanguageKey Key="JOIN_CASTLE_ITEM_COST">消耗一个{0}</LanguageKey> 
+  <LanguageKey Key="UIEXPLORE_GOHOME">回城</LanguageKey>  
+  <LanguageKey Key="UIEXPLORE_STILL_HRER">取消</LanguageKey>  
+  
 
   <LanguageKey Key="EXPLORE_NO_KEY">打开宝箱需要{0} *{1}</LanguageKey>
   <LanguageKey Key="EXPLORE_NO_KEY_TITLE">道具不足</LanguageKey>
@@ -140,4 +143,14 @@
 
   <LanguageKey Key="RESET_TITLE">重置游戏</LanguageKey>
   <LanguageKey Key="RESET_CONTENT">重置游戏将丢失所有数据，包括您的充值信息！！！</LanguageKey>
+  
+  <LanguageKey Key="Message_OK">确定</LanguageKey>
+  <LanguageKey Key="Message_Cancel">取消</LanguageKey>
+
+  <LanguageKey Key="GET_FROM_EXPLORE">带点打劫收获 {0}</LanguageKey>
+  <LanguageKey Key="EXPLORE_NO_FOOD">又要打仗，又要跑，还没干粮吃，活不了了！</LanguageKey>
+  <LanguageKey Key="EXPLORE_BATTLE_F">战败了!</LanguageKey>
+  <LanguageKey Key="Battle_End_Reward_Gold">抢的金币{0}</LanguageKey>
+  <LanguageKey Key="NOFOOD_DEAD">{0}已经饿死</LanguageKey>
+  <LanguageKey Key="BATTLE_DEAD">{0}已经战死</LanguageKey>
 </ArrayOfLanguageKey>

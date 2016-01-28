@@ -49,13 +49,31 @@ namespace Assets.Scripts.UI.Windows
 
         public static void ShowMessage(string title, string message, Action clickOK, Action clickCancel )
         {
-            var ui = UIManager.Singleton.CreateOrGetWindow<UIMessageBox>();
-            ui.ShowWindow();
-            ui.OK = clickOK;
-            ui.Cancel = clickCancel;
-            ui.lb_Message.text = message;
-            ui.lb_Title.text = title;
+			ShowMessage (title,
+				message,
+				LanguageManager.Singleton ["Message_OK"],
+				LanguageManager.Singleton ["Message_Cancel"],
+				clickOK,
+				clickCancel);
         }
+
+		public static void ShowMessage(string title,
+			string message,
+			string okTile,
+			string cancelTitle,
+			Action clickOK,Action clickCancel)
+		{
+
+			var ui = UIManager.Singleton.CreateOrGetWindow<UIMessageBox>();
+			ui.ShowWindow();
+			ui.OK = clickOK;
+			ui.Cancel = clickCancel;
+			ui.lb_Message.text = message;
+			ui.lb_Title.text = title;
+			ui.bt_ok.Text (okTile);
+			ui.bt_cancel.Text (cancelTitle);
+
+		}
 
 
     }

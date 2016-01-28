@@ -24,6 +24,8 @@ namespace Assets.Scripts.UI.Windows
                 if (state == null) return;
                 UIMessageBox.ShowMessage(LanguageManager.Singleton["UIEXPLORE_EXIT_TITLE"],
                     LanguageManager.Singleton["UIEXPLORE_EXIT_MESSGAE"],
+					LanguageManager.Singleton["UIEXPLORE_GOHOME"],
+					LanguageManager.Singleton["UIEXPLORE_STILL_HRER"],
                     () => {
                         state.JoinCastle(true);
                     }, null);
@@ -48,7 +50,7 @@ namespace Assets.Scripts.UI.Windows
 			var state = App.GameAppliaction.Singleton.Current as ExploreState;
 			if (state == null) return;
 			this.lb_title.text =state.Config.Name;
-			int foodNum = GamePlayerManager.Singleton.FoodCount;
+			int foodNum = PlayerItemManager.Singleton.GetFoodNum ();// GamePlayerManager.Singleton.FoodCount;
 			int packageCur = foodNum;
 			int packageSize = GamePlayerManager.Singleton.PackageSize;
 			var totalExplore = DataManagers.PlayerMapManager.Singleton.GetMapTotalExploreValue (state.Config.ID);

@@ -27,9 +27,6 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 			if (state.Render.Cancel) {
 				return new Actions.EndBattleAction (current, per) { Winner = Proto.ArmyCamp.Monster };
 			}
-
-
-
 			switch (battle.State) {
 			case Elements.BattleStateType.NOStart:
 				return new Actions.StartBattleAction (current, per);
@@ -37,38 +34,25 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 				if (per.HaveDeadArmy ()) {
 					if (!per.PlayerDead ()) 
 					{
-						//do drop
-
 						battle.ProcessDrop ();
-
 						if (battle.BattleIndex < battle.Battles.Length) {
-							//wait for dailog
-
-
-							//让刷新暂停 目前没想好办法 先这样
-							if (!IsPause) 
-							{
-								IsPause = true;
-								state.WaitForSeconds (0.5f);
-								return GAction.Empty;
-							}
-							//0.5f late call
-							IsPause = false;
-
-
-							//创建
-							return new Actions.AddMonsterAction (current, 
-								per,
-								battle.Battles [battle.BattleIndex]
-							);
+							if(battle.BattleIndex>0)
+							  state.WaitForSeconds (3);
+							battle.State = Assets.Scripts.Combat.Battle.Elements.BattleStateType.AddMonster;
+							return GAction.Empty;
 						}
-					} else {
-						//player
-					}
+					} 
 					battle.State = Elements.BattleStateType.End;
 					TimeToEnd = Time.time + 1.5f;
 				}
 				return GAction.Empty;
+			case Elements.BattleStateType.AddMonster:
+				battle.State = Assets.Scripts.Combat.Battle.Elements.BattleStateType.Battling;
+				return new Actions.AddMonsterAction (current, 
+					per,
+					battle.Battles [battle.BattleIndex]
+				);
+				break;
 			case Elements.BattleStateType.End:
 				if (TimeToEnd > Time.time)
 					return GAction.Empty;

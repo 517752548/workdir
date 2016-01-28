@@ -15,6 +15,23 @@ namespace Assets.Scripts.Combat.Simulate
 
         public abstract void OnExit();
 
+		public void JoinAllItem()
+		{
+			while (_addTemp.Count > 0)
+			{
+
+				var item = _addTemp.Dequeue();
+				if (_elements.ContainsKey(item.Index))
+				{
+					Debug.LogWarning("INDEX:"+item.Index+" HAD IN DICT!");
+					continue;
+				}
+				item.Enable = true;
+				item.OnJoinState();
+				_elements.Add(item.Index, item);
+			}
+		}
+
         public virtual void OnTick()
         {
             if (!Enable) return;
@@ -23,19 +40,7 @@ namespace Assets.Scripts.Combat.Simulate
 					return;
 				waitTime = -1;
 			}
-			while (_addTemp.Count > 0)
-            {
-
-                var item = _addTemp.Dequeue();
-                if (_elements.ContainsKey(item.Index))
-                {
-                    Debug.LogWarning("INDEX:"+item.Index+" HAD IN DICT!");
-                    continue;
-                }
-                item.Enable = true;
-                item.OnJoinState();
-                _elements.Add(item.Index, item);
-            }
+			JoinAllItem ();
             foreach(var i in _elements)
             {
                 if (!i.Value.Enable)

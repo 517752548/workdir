@@ -68,6 +68,7 @@ namespace Assets.Scripts.Combat.Battle.Elements
                 this._lockState.Add((ActionState)i, 0);
             }
 
+			//Camp = this.Army.Camp;
         }
 
         public List<BattleSoldier> Soldiers { set; get; }
@@ -107,8 +108,9 @@ namespace Assets.Scripts.Combat.Battle.Elements
                 if (HP <= 0) HP = 0;
 
                 var isdead = HP == 0;
-                if (isdead)
-                    this.Enable = false;
+				if (isdead) {
+					Enable = false;
+				}
                 return isdead;
             }
         }
@@ -173,7 +175,7 @@ namespace Assets.Scripts.Combat.Battle.Elements
                 if (category.AddCategory == mainSoilder.Config.Type)
                 {
                     //克制 修正默认攻击参数
-                    addRate = category.AddRate;
+					addRate = (float)category.AddRate/10000f;
                     //设置暴击概率
                     multPro = (int)soldier.Config.CrtPro;
                     //暴击倍数

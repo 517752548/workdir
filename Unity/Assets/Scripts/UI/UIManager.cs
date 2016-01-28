@@ -135,8 +135,6 @@ namespace Assets.Scripts.UI
         public virtual void OnPreScecondUpdate() { }
         public void ShowWindow()
         {
-            //Hide message when new ui show
-            UIManager.Singleton.Render.ShowMessage(string.Empty, -1f);
             this.Depth = UIManager.Singleton.MaxDepth + 1;
             this.Root.SetActive(true);
             if (!NoCollider)
@@ -187,7 +185,6 @@ namespace Assets.Scripts.UI
 
         public void HideWindow()
         {
-            UIManager.Singleton.Render.ShowMessage(string.Empty, -1f);
             if (Model == ShowModel.Children)
             {
                 if (parent != null)

@@ -8,100 +8,116 @@ using UnityEngine;
 
 namespace Assets.Scripts.Combat.Battle.States
 {
-    public class BattlePerception : GPerception
-    {
-        public BattlePerception(GState state)
-            : base(state)
-        { }
+	public class BattlePerception : GPerception
+	{
+		public BattlePerception (GState state)
+			: base (state)
+		{
+		}
 
-        public bool HaveDeadArmy()
-        {
-            bool have = false;
-            int count = 0;
-            State.Each<BattleArmy>((el) =>
-            {
-                if (el.IsDead)
-                {
-                    have = true;
-                    return true;
-                }
-                count++;
-                return false;
-            });
-            if (count == 1) return true;
-            return have;
-        }
+		public bool HaveDeadArmy ()
+		{
+			bool have = false;
+			int count = 0;
+			State.Each<BattleArmy> ((el) => {
+				if (el.IsDead) {
+					have = true;
+					return true;
+				}
+				count++;
+				return false;
+			});
+			if (count == 1)
+				return true;
+			return have;
+		}
 
-        public bool PlayerDead()
-        {
-            bool have = false;
-            State.Each<BattleArmy>((el) =>
-            {
-                if (el.IsDead && el.Camp == Proto.ArmyCamp.Player)
-                {
-                    have = true;
-                    return true;
-                }
-                return false;
-            });
-            return have;
-        }
+		public bool PlayerDead ()
+		{
+			bool have = true;
+			State.Each<BattleArmy> ((el) => {
+				if (!el.IsDead && el.Camp == Proto.ArmyCamp.Player) {
+					have = false;
+					return true;
+				}
+				return false;
+			});
+			return have;
+		}
 
-        public BattleArmy GetEnemy(BattleArmy el)
-        {
-            BattleArmy enemy = null;
-            State.Each<BattleArmy>((item) =>
-            {
-                if (item.Camp != el.Camp)
-                {
-                    enemy = item;
-                    return true;
-                }
-                return false;
-            });
-            return enemy;
-        }
+		public bool PlayerAddHp(int hp)
+		{
+			if (hp <= 0)
+				return false;
+			BattleArmy player =null;
+			State.Each<BattleArmy> (el => {
+				if(el.Camp == Proto.ArmyCamp.Player){
+					player =el;
+					return true;
+				}
+				return false;
+			});
+			if (player == null)
+				return false;
+			player.CalHp (hp);
+			return true;
+		}
 
-        internal BattleEl GetBattle()
-        {
-            BattleEl el = null;
-            State.Each<BattleEl>((item) => { el = item; return true; });
-            return el;
-        }
+		public BattleArmy GetEnemy (BattleArmy el)
+		{
+			BattleArmy enemy = null;
+			State.Each<BattleArmy> ((item) => {
+				if (item.IsDead)
+					return false;
+				if (item.Camp != el.Camp) {
+					enemy = item;
+					return true;
+				}
+				return false;
+			});
+			return enemy;
+		}
 
-        public void ChangePlayerControllor(bool auto)
-        {
-            BattleArmy player = null;
-            State.Each<BattleArmy>((t) =>
-            {
-                if (t.Army.Camp == Proto.ArmyCamp.Player)
-                {
-                    player = t;
-                    return true;
-                }
-                return false;
-            });
-            GControllor controllor;
-            if (auto) controllor = new Controllors.ArmyControllor(this);
-            else controllor = new Controllors.ArmyPlayerControllor(this);
+		internal BattleEl GetBattle ()
+		{
+			BattleEl el = null;
+			State.Each<BattleEl> ((item) => {
+				el = item;
+				return true;
+			});
+			return el;
+		}
 
-            player.Controllor = controllor;
-        }
+		public void ChangePlayerControllor (bool auto)
+		{
+			BattleArmy player = null;
+			State.Each<BattleArmy> ((t) => {
+				if (t.Army.Camp == Proto.ArmyCamp.Player) {
+					player = t;
+					return true;
+				}
+				return false;
+			});
+			if (player == null)
+				return;
+			
+			GControllor controllor;
+			if (auto)
+				controllor = new Controllors.ArmyControllor (this);
+			else
+				controllor = new Controllors.ArmyPlayerControllor (this);
 
-        public void AddHP()
-        { 
-           //
-        }
+			player.Controllor = controllor;
+		}
 
-		public void ResetAllSkillCD()
+		public void ResetAllSkillCD ()
 		{
 			State.Each<BattleArmy> (t => {
-				foreach(var s in t.Soldiers)
-				{
+				foreach (var s in t.Soldiers) {
 					s.AttackCdTime = Time.time;
 				}
 				return false;
 			});
 		}
-    }
+	}
 }

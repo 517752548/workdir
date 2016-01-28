@@ -18,6 +18,7 @@ namespace Assets.Scripts.UI.Windows
             });
 
             Bt_Achievement.OnMouseClick((s, e) => {
+				HideWindow();
                 UIAchievement.Show();
             });
 
@@ -49,10 +50,14 @@ namespace Assets.Scripts.UI.Windows
 
 			Bt_Music.value = DataManagers.GamePlayerManager.Singleton.IsMusicOn;
 			Bt_MusicEffect.value = DataManagers.GamePlayerManager.Singleton.EffectOn;
+			UI.UIControllor.Singleton.HidenMessage = true;
         }
         public override void OnHide()
         {
             base.OnHide();
+			UI.UIControllor.Singleton.HidenMessage = false;
         }
+
+
     }
 }

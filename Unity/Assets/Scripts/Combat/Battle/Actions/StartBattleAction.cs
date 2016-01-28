@@ -38,7 +38,9 @@ namespace Assets.Scripts.Combat.Battle.Actions
                 player.Soldiers.Add(new Soldier { ConfigID = i, Num = 1 });
 
             var playerArmy = new Elements.BattleArmy(controllor, player);
+			//playerArmy.Camp = ArmyCamp.Player;
             Perception.State.AddElement(playerArmy);
+
             var battle = this.Obj as Battle.Elements.BattleEl;
             battle.State = Elements.BattleStateType.Battling;
             //var state = this.Perception.State as States.BattleState;

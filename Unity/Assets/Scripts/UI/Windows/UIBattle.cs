@@ -78,7 +78,8 @@ namespace Assets.Scripts.UI.Windows
                 DataManagers.GamePlayerManager.Singleton.SetControlMode(setmode);
 					//batte_player_controll_bt
 				AutoSprite.spriteName =  
-						setmode == Assets.Scripts.DataManagers.BattleControlMode.AUTO?"Battle_ui_bt_auto":"batte_player_controll_bt";
+						setmode == Assets.Scripts.DataManagers.BattleControlMode.AUTO?
+						"Battle_ui_bt_auto":"batte_player_controll_bt";
                 //bt_battleMode.Text(LanguageManager.Singleton[setmode == DataManagers.BattleControlMode.AUTO ? "BATTLE_AUTO" : "BATTLE_PLAYER"]);
                 if (this.Per == null) return;
                 this.Per.ChangePlayerControllor(setmode == DataManagers.BattleControlMode.AUTO);
@@ -93,12 +94,32 @@ namespace Assets.Scripts.UI.Windows
                
             });
 
+			bt_addHp.OnMouseClick ((s, e) => {
+			  
+				var foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
+				var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(foodEntry);
+				var hp = Tools.UtilityTool.ConvertToInt(config.Pars1);
+
+				bt_addHp.Disable(true);
+
+				App.GameAppliaction.Singleton.DelayCall(()=>{bt_addHp.Disable(false);},3f);
+				if(DataManagers.PlayerItemManager.Singleton.CalItemFromPack(foodEntry,1))
+				{	
+					Per.PlayerAddHp(hp);
+					UIManager.Singleton.UpdateUIData();
+				}
+			});
+
         }
         public override void OnShow()
         {
             base.OnShow();
 			MonsterRoot.ActiveSelfObject (false);
             _cancel = false;
+			var mode = DataManagers.GamePlayerManager.Singleton.ControlMode;
+			AutoSprite.spriteName =  
+				mode == Assets.Scripts.DataManagers.BattleControlMode.AUTO?
+				"Battle_ui_bt_auto":"batte_player_controll_bt";
             SkillBar.value = 0;
         }
         public override void OnHide()
@@ -125,7 +146,8 @@ namespace Assets.Scripts.UI.Windows
             {
                 targetMonsterHp = (float)Monster.HP / (float)Monster.MaxHP;
                 //HpBar.value = (float)Monster.HP / (float)Monster.MaxHP;
-                SkillBar.value = (Monster.Soldiers[0].CdTimeToFloat() - Monster.Soldiers[0].LeftTime) / Monster.Soldiers[0].CdTimeToFloat();
+                SkillBar.value = (Monster.Soldiers[0].CdTimeToFloat() - Monster.Soldiers[0].LeftTime) 
+					/ Monster.Soldiers[0].CdTimeToFloat();
             }
             if (Player != null)
             {
@@ -208,7 +230,10 @@ namespace Assets.Scripts.UI.Windows
             UI.Windows.UIMessageBox.ShowMessage
 			(
 				battleConfig.Name, battleConfig.Dialog,
-				() => {  Per.ResetAllSkillCD(); Per.State.Enable = true; },
+				() => { 
+					Per.State.JoinAllItem();
+					Per.ResetAllSkillCD();
+					Per.State.Enable = true;  },
 				() => {  ExitBattle(); }
 			);
             //UITipDrawer.Singleton.DrawNotify(battleConfig.Dialog);

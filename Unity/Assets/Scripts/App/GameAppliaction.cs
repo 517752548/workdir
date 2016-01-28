@@ -140,6 +140,7 @@ namespace Assets.Scripts.App
         {
             //SceneManager.LoadScene("Castle",LoadSceneMode.Single);
             Application.LoadLevel("Castle");
+
             var state = new CastleState();
             ChangeState(state);
         }
@@ -152,6 +153,8 @@ namespace Assets.Scripts.App
             var r = DoGoToExplore(configID);
             works.Enqueue(r);
         }
+
+
 
         private IEnumerator DoGoToExplore(int configID)
         {
@@ -227,12 +230,23 @@ namespace Assets.Scripts.App
                 while (works.Count > 0)
                 {
                     var w = works.Dequeue();
-                    while (w.MoveNext())
-                        yield return null;
+					this.Runner.DoRun (w);
                 }
                 yield return null;
             }
         }
+
+		private IEnumerator DelayRuner(float delay,Action call)
+		{
+			yield return new WaitForSeconds (delay);
+			call ();
+		}
+
+		public void DelayCall(Action action,float time)
+		{
+			var r = DelayRuner (time, action);
+			works.Enqueue(r);
+		}
     }
 
     public interface IRuner

@@ -116,18 +116,18 @@ namespace Assets.Scripts.UI.Windows
 					return;
 				}
 				
-				if (DataManagers.GamePlayerManager.Singleton.FoodCount == 0) {
+				if (DataManagers.PlayerItemManager.Singleton.GetFoodNum() == 0) {
 					UITipDrawer.Singleton.DrawNotify (LanguageManager.Singleton ["UI_GOEXPLORE_NEED_FOOD"]);
 					return;	
 				}
 
 				DataManagers.PlayerArmyManager.Singleton.SetTeam (team);
-
+				GamePlayerManager.Singleton.LastFood = DataManagers.PlayerItemManager.Singleton.GetFoodNum();
 				App.GameAppliaction.Singleton.GoToExplore (DataManagers.GamePlayerManager.Singleton.CurrentMap);
 			});
 
 			bt_add.OnMouseClick ((s, e) => {
-				if (DataManagers.GamePlayerManager.Singleton.FoodCount == DataManagers.GamePlayerManager.Singleton.PackageSize) {
+				if (DataManagers.PlayerItemManager.Singleton.GetFoodNum() == DataManagers.GamePlayerManager.Singleton.PackageSize) {
 					UITipDrawer.Singleton.DrawNotify (LanguageManager.Singleton ["UI_GOEXPLORE_NO_PLACE"]);
 					return;
 				}
@@ -180,9 +180,10 @@ namespace Assets.Scripts.UI.Windows
 
 		private void ShowFood ()
 		{
+			var foodCount = DataManagers.PlayerItemManager.Singleton.GetFoodNum ();
 			lb_packageSize.text = string.Format (LanguageManager.Singleton ["UI_GOEXPLORE_PACKAGE"],
-				DataManagers.GamePlayerManager.Singleton.FoodCount, DataManagers.GamePlayerManager.Singleton.PackageSize);
-			this.lb_foodvalue.text = string.Format ("{0}", DataManagers.GamePlayerManager.Singleton.FoodCount);
+				PlayerItemManager.Singleton.CurrentSize, DataManagers.GamePlayerManager.Singleton.PackageSize);
+			this.lb_foodvalue.text = string.Format ("{0}", foodCount);
 		}
 
 		private void ShowArmyCount ()
@@ -199,8 +200,12 @@ namespace Assets.Scripts.UI.Windows
 		public override void OnShow ()
 		{
 			base.OnShow ();
+			var lastFood = GamePlayerManager.Singleton.LastFood;
+			PlayerItemManager.Singleton.AddItemIntoPack (App.GameAppliaction.Singleton.ConstValues.FoodItemID, lastFood);
+			UI.UIControllor.Singleton.HidenMessage = true;
 			OnUpdateUIData ();
 			ClickCategory (Proto.HeroJob.Xian, to_xian);
+
 		}
 
 
@@ -309,6 +314,7 @@ namespace Assets.Scripts.UI.Windows
 		public override void OnHide ()
 		{
 			base.OnHide ();
+			UI.UIControllor.Singleton.HidenMessage = false;
 			UI.UIManager.Singleton.UpdateUIData ();
 		}
 	}

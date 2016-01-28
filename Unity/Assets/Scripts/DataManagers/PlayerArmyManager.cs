@@ -171,7 +171,7 @@ namespace Assets.Scripts.DataManagers
                 case EmployCondtionType.CompleteMap:
                     //探索完成指定地图
                     var mapID = Tools.UtilityTool.ConvertToInt(hero.recruit_para);
-                    if (!GamePlayerManager.Singleton.CompleteMap(UtilityTool.SplitIDS(hero.recruit_para)))
+				if (!GamePlayerManager.Singleton.CompleteMap(new List<int>{mapID}))
                     {
                         return false;
                     }
@@ -202,7 +202,7 @@ namespace Assets.Scripts.DataManagers
 				var mapID = Tools.UtilityTool.ConvertToInt (hero.recruit_para);
 				var mapConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MapConfig> (mapID);
 				return string.Format (LanguageManager.Singleton ["NEED_COMPLETE_MAP"], mapConfig.Name);
-				break;
+				//break;
 			case EmployCondtionType.GetAchievement:
 				var aches = UtilityTool.SplitIDS (hero.recruit_para);
 				var sb = new StringBuilder ();
@@ -215,7 +215,7 @@ namespace Assets.Scripts.DataManagers
 				}
 
 				return string.Format (LanguageManager.Singleton ["NEED_GET_ACH"], sb.ToString ());
-				break;
+				//break;
 			case EmployCondtionType.GetItem:
 				var keyValues = UtilityTool.SplitIDS (hero.recruit_para);
 				var sbItem = new StringBuilder ();
@@ -343,11 +343,13 @@ namespace Assets.Scripts.DataManagers
                 Soldiers[soldier] = false;
         }
 
-		public void DeadAllSoldiersInTeam()
+		public List<int> DeadAllSoldiersInTeam()
 		{
 			foreach (var i in _explore_team) {
 				Dead (i);
 			}
+			return _explore_team.ToList ();
+			//PlayerItemManager.Singleton.EmptyPackage ();
 		}
 
         /// <summary>

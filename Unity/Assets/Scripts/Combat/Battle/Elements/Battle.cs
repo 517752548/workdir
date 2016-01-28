@@ -14,7 +14,8 @@ namespace Assets.Scripts.Combat.Battle.Elements
             : base(battleControllor)
         {
             // TODO: Complete member initialization
-            var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.BattleGroupConfig>(battleGroupID);
+            var config = ExcelConfig.ExcelToJSONConfigManager.Current
+				.GetConfigByID<ExcelConfig.BattleGroupConfig>(battleGroupID);
             var battleIDs = Tools.UtilityTool.SplitIDS(config.BattleIds);//.Split("|");
             var listBattle = ExcelConfig.ExcelToJSONConfigManager.Current
                 .GetConfigs<ExcelConfig.BattleConfig>((t) =>
@@ -61,7 +62,12 @@ namespace Assets.Scripts.Combat.Battle.Elements
             AddBuf(rd);
         }
 
-        internal void DoDotEffect(BattleArmy source, BattleArmy target, BattleSoldier solider,  int durtion, int tick,int damage)
+        internal void DoDotEffect(BattleArmy source, 
+			BattleArmy target,
+			BattleSoldier solider, 
+			int durtion,
+			int tick,
+			int damage)
         {
             var dot = new DotEffect(source, target, solider, durtion, tick, damage);
             AddBuf(dot);
@@ -129,6 +135,7 @@ namespace Assets.Scripts.Combat.Battle.Elements
     {
          NOStart, //开始
          Battling, //开始了
+		 AddMonster,
          End//战斗结束
     }
 

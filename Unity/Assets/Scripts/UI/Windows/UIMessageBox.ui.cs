@@ -17,6 +17,7 @@ namespace Assets.Scripts.UI.Windows
         public UIButton bt_ok;
         public UIButton bt_cancel;
         public UILabel lb_Title;
+        public UISprite Mask;
 
 
 
@@ -29,6 +30,7 @@ namespace Assets.Scripts.UI.Windows
             bt_ok = FindChild<UIButton>("bt_ok");
             bt_cancel = FindChild<UIButton>("bt_cancel");
             lb_Title = FindChild<UILabel>("lb_Title");
+            Mask = FindChild<UISprite>("Mask");
 
 
         }

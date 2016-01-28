@@ -20,8 +20,20 @@ namespace Assets.Scripts.UI
         }
 
 
+		private bool _hide = false;
+		public bool HidenMessage {
+			set {
+				_hide = value;	
+				var uirender = UIManager.Singleton.Render;
+				uirender.ShowMessage (string.Empty, -1);
+			}
+			get{ return _hide; } 
+		}
+
         internal void ShowMessage(string msg, float delayTime=-1f)
         {
+			if (_hide)
+				return;
             var uirender = UIManager.Singleton.Render;
             uirender.ShowMessage(msg, delayTime);
         }
