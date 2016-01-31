@@ -142,12 +142,30 @@ public class MapTypeSpritesEditorWindow : EditorWindow
             {
                 if (!string.IsNullOrEmpty(i.GUID))
                 {
-                    return AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(i.GUID), typeof(Sprite)) as Sprite;
+                    return AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(i.GUID),
+						typeof(Sprite)) as Sprite;
                 }
             }
         }
 
         return null;
     }
+
+	public static Sprite GetExploreSpriteByType(MapEventType type)
+	{
+		foreach (var i in SaveData)
+		{
+			if (i.Type == type)
+			{
+				if (!string.IsNullOrEmpty(i.GUIDOpen))
+				{
+					return AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(i.GUIDOpen),
+						typeof(Sprite)) as Sprite;
+				}
+			}
+		}
+
+		return null;
+	}
 
 }

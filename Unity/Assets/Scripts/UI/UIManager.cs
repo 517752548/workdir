@@ -89,6 +89,10 @@ namespace Assets.Scripts.UI
     /// </summary>
     public class UIWindow
     {
+		public UIWindow()
+		{
+			CanDestoryWhenHide = true;
+		}
         private GameObject Root { set; get; }
         public void Init(GameObject root)
         {
