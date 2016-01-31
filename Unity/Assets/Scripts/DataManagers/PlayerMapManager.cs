@@ -301,6 +301,16 @@ namespace Assets.Scripts.DataManagers
 			return false;
 		}
      
+		public void GotoNextMap(int mapID, int index)
+		{
+			RecordMap (mapID, index, true, string.Empty, false, true);
+			TryToAddExploreValue (mapID, index);
+
+			var nextMap = mapID + 1;
+
+			//GamePlayerManager.Singleton.JoinMap (nextMap);
+			App.GameAppliaction.Singleton.GoToExplore (nextMap);
+		}
     }
 
 

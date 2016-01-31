@@ -233,7 +233,12 @@ namespace Assets.Scripts.GameStates
 								JoinCastle ();
 								break;
 							case Proto.MapEventType.GoToNextLvlPos:
-								UI.UIControllor.Singleton.ShowMapListUI ();
+								if (DataManagers.PlayerMapManager.Singleton.IsExplored (Config.ID, index)) {
+									UI.UIControllor.Singleton.ShowMapListUI ();
+								}else{
+									
+									DataManagers.PlayerMapManager.Singleton.GotoNextMap(Config.ID,index);
+								}
 								break;
 							case Proto.MapEventType.PKEnterPos:
 								var pkNeedItem = Tools.UtilityTool.SplitIDS (i.Pars1);
