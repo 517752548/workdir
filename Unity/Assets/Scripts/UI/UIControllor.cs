@@ -48,7 +48,7 @@ namespace Assets.Scripts.UI
 		//奸商商店
 		public void OpenScrectShop(int shopID, int mapID, int index)
 		{
-			
+			//screct shop
 		}
 		//开宝箱的UI
 		public void ShowChestDialog(int mapID,
@@ -72,9 +72,11 @@ namespace Assets.Scripts.UI
 			//show map list ui
 		}
 		//驿站UI
-		public void ShowRechargeUI(List<Item> shop)
+		public void ShowRechargeUI(int mapID, int index,List<Item> shop)
 		{
-			
+			var ui =UI.Windows.UIBattleResult.Show ();
+			ui.ShowResult (mapID, shop, index);
+			ui.callAfterCollect = null;
 		}
     }
 }

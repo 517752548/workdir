@@ -17,12 +17,12 @@ namespace Assets.Scripts.App
     public class GameAppliaction:Tools.XSingleton<GameAppliaction>,ExcelConfig.IConfigLoader
     {
 
-        public static bool BattleDebug = false;
+		public static bool BattleDebug = true;
 
         public void Start(IRuner runer)
         {
             //初始化配置
-            var excelConfig = new ExcelToJSONConfigManager(this);
+            new ExcelToJSONConfigManager(this);
             prisit = new List<IPresist>(){
                 PlayerItemManager.Singleton,
                 GamePlayerManager.Singleton,

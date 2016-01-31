@@ -88,8 +88,10 @@ namespace Assets.Scripts.Combat.Battle.Elements
         /// <returns>是否死亡</returns>
         public bool CalHp(int hp)
         {
+			if (HP == 0)
+				return true;
             if (hp > 0) //加血
-            {
+			{
                 HP += hp;
                 if (HP > MaxHP) HP = MaxHP;
                 return false;
@@ -105,7 +107,8 @@ namespace Assets.Scripts.Combat.Battle.Elements
                     else { hp = AppendHP; AppendHP = 0; }
                 }
                 HP += hp;
-                if (HP <= 0) HP = 0;
+                if (HP <= 0)
+					HP = 0;
 
                 var isdead = HP == 0;
 				if (isdead) {

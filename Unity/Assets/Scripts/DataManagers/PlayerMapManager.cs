@@ -131,11 +131,14 @@ namespace Assets.Scripts.DataManagers
 			RecordMap (mapId, indexPos, true, json, true);
 		}
 
+
+
 		public void SaveBattleIndex(int mapID, int indexPos, List<Item> items)
 		{
 			var json = JsonTool.Serialize (new BattlePosData{ Items = items });
 			RecordMap (mapID, indexPos, true, json, true);
 		}
+
 
 		public List<Item> GetChestBoxData(int mapID, int indexPos)
 		{
@@ -234,6 +237,8 @@ namespace Assets.Scripts.DataManagers
 
 		public void AddExploreValue(int mapID,int index,int value)
 		{
+			if (value <= 0)
+				return;
 			MapPresistData map;
 			if (_maps.TryGetValue (mapID, out map)) {
 				//处理每次添加
@@ -265,6 +270,8 @@ namespace Assets.Scripts.DataManagers
 			int value = 0;
 			var subconfigs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.SubMapConfig> (t => t.MapID == mapID);
 			foreach (var i in subconfigs) {
+				if (i.PerLocationMath <= 0)
+					continue;
 				var count = Tools.UtilityTool.SplitIDS (i.Posistions);
 				value += (count.Count * i.PerLocationMath);
 			}

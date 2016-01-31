@@ -14,7 +14,7 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 		}
 
 
-		private bool IsPause = false;
+		//private bool IsPause = false;
 
 		public override GAction GetAction (GObject current)
 		{
@@ -38,6 +38,7 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 						if (battle.BattleIndex < battle.Battles.Length) {
 							if(battle.BattleIndex>0)
 							  state.WaitForSeconds (3);
+							
 							battle.State = Assets.Scripts.Combat.Battle.Elements.BattleStateType.AddMonster;
 							return GAction.Empty;
 						}
@@ -52,7 +53,7 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 					per,
 					battle.Battles [battle.BattleIndex]
 				);
-				break;
+				//break;
 			case Elements.BattleStateType.End:
 				if (TimeToEnd > Time.time)
 					return GAction.Empty;

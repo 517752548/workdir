@@ -45,8 +45,11 @@ namespace Assets.Scripts.DataManagers
 		public const string _GOLD_SHOP_DATA_FILE="_GOLD_SHOP_BUY_COUNT.json";
 		public const string _COIN_SHOP_DATA_FILE="_COIN_SHOP_BUY_COUNT.json";
 
+		public const string _SRECT_SHOP_DATA_FILE="_SCRECT_SHOP_{0:0000}_COUNT.json";
+
 		private Dictionary<int,int> _coinShop = new Dictionary<int, int>();
 		private Dictionary<int,int> _goldShop = new Dictionary<int, int>();
+
 
         public void Load()
         {

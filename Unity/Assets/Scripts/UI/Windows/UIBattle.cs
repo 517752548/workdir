@@ -146,6 +146,7 @@ namespace Assets.Scripts.UI.Windows
         {
             if (Monster != null)
             {
+				Debug.Log (Monster.HP);
                 targetMonsterHp = (float)Monster.HP / (float)Monster.MaxHP;
                 //HpBar.value = (float)Monster.HP / (float)Monster.MaxHP;
                 SkillBar.value = (Monster.Soldiers[0].CdTimeToFloat() - Monster.Soldiers[0].LeftTime) 
@@ -160,6 +161,7 @@ namespace Assets.Scripts.UI.Windows
                     i.Model.Update();
                 }
             }
+
 
             HpBar.value = Mathf.Lerp(HpBar.value, targetMonsterHp, Time.deltaTime * 5);
             PlayerHpBar.value = Mathf.Lerp(PlayerHpBar.value, targetPlayerHp, Time.deltaTime * 5);
