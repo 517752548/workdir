@@ -790,16 +790,9 @@ namespace Assets.Scripts.DataManagers
 
 		internal bool DoPayment (PersistStructs.PaymentData paymentData)
 		{
-
-
-#if UNITY_EDITOR
 			this.AddCoin (paymentData.Reward);
 			UIManager.Singleton.UpdateUIData ();
 			return true;
-#endif
-			return true;
-
-			//Call Payment
 		}
 
 		#endregion

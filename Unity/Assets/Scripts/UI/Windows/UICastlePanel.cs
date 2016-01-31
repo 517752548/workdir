@@ -108,6 +108,8 @@ namespace Assets.Scripts.UI.Windows
 
             bt_Coin.OnMouseClick((s, e) =>
             {
+					if(IAPExample.Current==null) return;
+					if(!IAPExample.Current.isActiveAndEnabled)return;
                 var ui = UIManager.Singleton.CreateOrGetWindow<UIPayment>();
                 ui.ShowWindow();
             });

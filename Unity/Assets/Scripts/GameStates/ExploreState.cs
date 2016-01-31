@@ -27,6 +27,8 @@ namespace Assets.Scripts.GameStates
 			this.Map.EachAllPosition<MapPosition> ((t) => {
 				var open = DataManagers.PlayerMapManager.Singleton.IsOpen (Config.ID, t.ToIndex ());
 				t.SetMask (open);
+				var isExplored = DataManagers.PlayerMapManager.Singleton.IsExplored (Config.ID, t.ToIndex ());
+				t.SetExplored(isExplored);
 				return false;
 			});
 			var lastPos = DataManagers.GamePlayerManager.Singleton.CurrentPos;
@@ -109,6 +111,12 @@ namespace Assets.Scripts.GameStates
 					TargetPos += new Vector2 (0, -1);
 				}
 			} else {
+				return;
+			}
+
+			if (!Map.HaveIndex (TargetPos)) 
+			{
+				TargetPos = lastPos;
 				return;
 			}
 
@@ -417,6 +425,8 @@ namespace Assets.Scripts.GameStates
 			DataManagers.GamePlayerManager.Singleton.GoPos (target);
 			if (target == null)
 				return;
+
+
 			
 			if (!isEnter && !DataManagers.GamePlayerManager.Singleton.CostFood (1)) {
 				DataManagers.PlayerItemManager.Singleton.EmptyPackage ();
@@ -435,17 +445,22 @@ namespace Assets.Scripts.GameStates
 				UI.UITipDrawer.Singleton.DrawNotify (str);
 				return;
 			}
+			int index = GamePlayerManager.PosXYToIndex ((int)target.Value.x, (int)target.Value.y);
 
-			UI.UIManager.Singleton.UpdateUIData ();
+			DataManagers.PlayerMapManager.Singleton.TryToAddExploreValue (Config.ID, index);
 
 			DataManagers.PlayerMapManager.Singleton.OpenClosedIndex (Config.ID,
-				GamePlayerManager.PosXYToIndex ((int)target.Value.x, (int)target.Value.y), this.Map);
+					index, this.Map);
 			
 			this.Map.EachAllPosition<MapPosition> ((t) => {
 				var open = DataManagers.PlayerMapManager.Singleton.IsOpen (Config.ID, t.ToIndex ());
+				var isExplored = DataManagers.PlayerMapManager.Singleton.IsExplored (Config.ID, t.ToIndex ());
+				t.SetExplored(isExplored);
 				t.SetMask (open);
 				return false;
 			});
+
+			UI.UIManager.Singleton.UpdateUIData ();
 		}
 
 		public void JoinCastle (bool useItem = false)

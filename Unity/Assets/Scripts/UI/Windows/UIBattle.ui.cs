@@ -57,6 +57,7 @@ namespace Assets.Scripts.UI.Windows
         public UIButton bt_battleMode;
         public UISprite AutoSprite;
         public UIButton bt_addHp;
+        public UILabel lb_foodNum;
 
 
         public UITableManager<AutoGenTableItem<StarGridTableTemplate, StarGridTableModel>> StarGridTableManager = new UITableManager<AutoGenTableItem<StarGridTableTemplate, StarGridTableModel>>();
@@ -85,6 +86,7 @@ namespace Assets.Scripts.UI.Windows
             bt_battleMode = FindChild<UIButton>("bt_battleMode");
             AutoSprite = FindChild<UISprite>("AutoSprite");
             bt_addHp = FindChild<UIButton>("bt_addHp");
+            lb_foodNum = FindChild<UILabel>("lb_foodNum");
 
             StarGridTableManager.InitFromGrid(StarGrid);
             SkillGridTableManager.InitFromGrid(SkillGrid);

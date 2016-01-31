@@ -7,7 +7,14 @@ using System.Linq;
 public class IAPExample : MonoBehaviour {
 	
 	public List<string> productInfo = new List<string>();
-	
+
+	private static IAPExample _example;
+	public static IAPExample Current{ get {  return _example;} } 
+
+	void Awake()
+	{
+		_example = this;
+	}
 	[DllImport("__Internal")]
 	private static extern void TestMsg();//测试信息发送
 	
@@ -58,8 +65,18 @@ public class IAPExample : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	public bool IsPaymentAvailabel { 
+		get {
+			return IsProductAvailable();
+		}
+	}
 	
 	void OnGUI(){
+		return;
+
+		if (!IsProductAvailable ())
+			return;
 		/*if(GUILayout.Button("Test 1",GUILayout.Width(200), GUILayout.Height(100)))
 			TestMsg();
 		

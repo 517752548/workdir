@@ -3,6 +3,7 @@ using System.Collections;
 using Assets.Scripts.PersistStructs;
 using System.Collections.Generic;
 using Assets.Scripts.DataManagers;
+using Assets.Scripts.Tools;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(BoxCollider))]
@@ -108,7 +109,36 @@ public class GameMap : MonoBehaviour {
                 Orgin = new Vector2(i.X, i.Y);
 			
         }
+		CreateBound ();
     }
+
+	private void CreateBound()
+	{
+		int size = 24;
+		var rect = new Rect (0, 0, this.CurrentMap.Width, this.CurrentMap.Height);
+		int x = -size;
+		int y = -size;
+		var bound = new GameObject ("Bound");
+		bound.transform.parent = this.transform;
+		bound.transform.localPosition = Vector3.zero;
+		bound.transform.localScale = Vector3.one;
+		int yMax = this.CurrentMap.Height + size;
+		int xMax = this.CurrentMap.Width + size;
+		for (var _x = x; _x < xMax; _x++) {
+			for (var _y = y; _y < yMax; _y++) {
+				if (rect.Contains (new Vector2 (_x, _y))) {
+					continue;
+				}
+				var temp = new GameObject(string.Format("Bound_{0}_{1}",_x,_y));
+				temp.transform.parent = bound.transform;
+				temp.transform.localPosition = new Vector3 (_x * OneGridSize, _y * OneGridSize, 0);
+				var sp = temp.AddComponent<SpriteRenderer> ();
+				//bound
+				sp.sprite = ResourcesManager.Singleton.LoadResources<Sprite> ("mask");
+				sp.sortingOrder = 3;
+			}
+		}
+	}
 
 	public void EachAllPosition<T>(EachWithBreak<T> cond) where T:Component
 	{

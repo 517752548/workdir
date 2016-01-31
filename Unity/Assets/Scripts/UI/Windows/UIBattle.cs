@@ -115,12 +115,13 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShow();
 			MonsterRoot.ActiveSelfObject (false);
-            _cancel = false;
+			_cancel = false;
 			var mode = DataManagers.GamePlayerManager.Singleton.ControlMode;
 			AutoSprite.spriteName =  
 				mode == Assets.Scripts.DataManagers.BattleControlMode.AUTO?
 				"Battle_ui_bt_auto":"batte_player_controll_bt";
-            SkillBar.value = 0;
+			SkillBar.value = 0;
+			OnUpdateUIData ();
         }
         public override void OnHide()
         {
@@ -131,6 +132,7 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnUpdateUIData();
 
+			lb_foodNum.text = string.Format ("{0}", DataManagers.PlayerItemManager.Singleton.GetFoodNum ());
         }
 
         public override void OnUpdate()

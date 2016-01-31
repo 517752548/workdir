@@ -46,4 +46,20 @@ public class MapPosition :MonoBehaviour
 		}
 
 	}
+
+	public void SetExplored(bool isExplored)
+	{
+		
+		var explored = this.transform.FindChild<SpriteRenderer> ("explored");
+		if (explored == null)
+			return;
+		if (isExplored) {
+			var render = this.GetComponent<SpriteRenderer> ();
+			if (render != null) {
+				GameObject.Destroy (render);
+			}
+		}
+		explored.ActiveSelfObject (isExplored);
+
+	}
 }

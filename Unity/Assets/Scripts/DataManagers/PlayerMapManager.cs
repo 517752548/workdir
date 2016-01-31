@@ -13,9 +13,11 @@ namespace Assets.Scripts.DataManagers
         public void Presist()
         {
             Tools.PresistTool.SaveJson(MapIDS.ToList(),MAP_LIST_FILE);
+
             foreach(var i in _maps)
             {
-                if (!i.Value.IsChanged) continue;
+                if (!i.Value.IsChanged)
+					continue;
                 Tools.PresistTool.SaveJson(i.Value, GetMapFileName(i.Value.MapID));
             }
         }

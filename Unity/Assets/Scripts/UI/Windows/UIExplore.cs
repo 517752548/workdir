@@ -19,7 +19,8 @@ namespace Assets.Scripts.UI.Windows
         {
             base.InitModel();
 
-            bt_close.OnMouseClick((s, e) => {
+            bt_close.OnMouseClick((s, e) => 
+				{
                 var state = App.GameAppliaction.Singleton.Current as ExploreState;
                 if (state == null) return;
                 UIMessageBox.ShowMessage(LanguageManager.Singleton["UIEXPLORE_EXIT_TITLE"],

@@ -43,7 +43,7 @@
         NSLog(@"Invalid product id:%@",invalidProductId);
     }
     
-    [request autorelease];
+    //[request autorelease];  -fno-objc-arcc
 }
 
 -(void)buyRequest:(NSString *)productIdentifier{
