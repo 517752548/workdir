@@ -47,8 +47,8 @@
   
   <!--货郎-->
   <LanguageKey Key="UIShop_Model_Cost">{0:N0}</LanguageKey>
-  <LanguageKey Key="COST_GOLD_REWARD_ITEM">消耗金币{0} 获得{1} ＊{2}</LanguageKey>
-  <LanguageKey Key="COST_COIN_REWARD_ITEM">消耗钻石{0} 获得{1} ＊{2}</LanguageKey>
+  <LanguageKey Key="COST_GOLD_REWARD_ITEM">消耗金币{0} {1}+{2}</LanguageKey>
+  <LanguageKey Key="COST_COIN_REWARD_ITEM">消耗钻石{0} {1}+{2}</LanguageKey>
   
   <LanguageKey Key="UITavern_Attack">{0:N0}</LanguageKey> 
   <LanguageKey Key="UITavern_hp">{0:N0}</LanguageKey>  
@@ -121,7 +121,7 @@
   
  
   <LanguageKey Key="UI_EXPLORE_FOOD">干粮：{0}</LanguageKey>
-  <LanguageKey Key="UI_EXPLORE_EXPLOREVALUE">探索度：{0:0.00}%</LanguageKey>
+  <LanguageKey Key="UI_EXPLORE_EXPLOREVALUE">探索度：{0:0}%</LanguageKey>
   <LanguageKey Key="UIEXPLORE_EXIT_TITLE">回城</LanguageKey> 
   <LanguageKey Key="UIEXPLORE_EXIT_MESSGAE">回城需要消耗一个回城卷。</LanguageKey> 
   <LanguageKey Key="JOIN_CASTLE_ITEM_NOT_ENOUGH">{0}不足</LanguageKey>
@@ -154,5 +154,5 @@
   <LanguageKey Key="NOFOOD_DEAD">{0}已经饿死</LanguageKey>
   <LanguageKey Key="BATTLE_DEAD">{0}已经战死</LanguageKey>
 
- 
+
 </ArrayOfLanguageKey>

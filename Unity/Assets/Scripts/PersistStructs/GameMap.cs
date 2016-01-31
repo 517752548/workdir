@@ -118,6 +118,7 @@ public class GameMap : MonoBehaviour {
 		var rect = new Rect (0, 0, this.CurrentMap.Width, this.CurrentMap.Height);
 		int x = -size;
 		int y = -size;
+		var spArr= new string[]{"dg_fangkuai_lan","dg_fangkuai_lv"};
 		var bound = new GameObject ("Bound");
 		bound.transform.parent = this.transform;
 		bound.transform.localPosition = Vector3.zero;
@@ -134,7 +135,8 @@ public class GameMap : MonoBehaviour {
 				temp.transform.localPosition = new Vector3 (_x * OneGridSize, _y * OneGridSize, 0);
 				var sp = temp.AddComponent<SpriteRenderer> ();
 				//bound
-				sp.sprite = ResourcesManager.Singleton.LoadResources<Sprite> ("mask");
+
+				sp.sprite = ResourcesManager.Singleton.LoadResources<Sprite> (GRandomer.RandomArray (spArr));;
 				sp.sortingOrder = 3;
 			}
 		}
