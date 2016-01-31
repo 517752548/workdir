@@ -40,11 +40,15 @@ namespace Assets.Scripts.UI.Windows
         public override void InitModel()
         {
             base.InitModel();
+			bt_hide.OnMouseClick ((s, e) => {
+				HideWindow();
+			});
             //Write Code here
         }
         public override void OnShow()
         {
             base.OnShow();
+			OnUpdateUIData ();
         }
         public override void OnHide()
         {
@@ -68,6 +72,7 @@ namespace Assets.Scripts.UI.Windows
 		private void OnClickItem(MapGridTableModel model)
 		{
 			this.HideWindow ();
+			DataManagers.GamePlayerManager.Singleton.JoinMap (model.Config.ID);
 			App.GameAppliaction.Singleton.GoToExplore (model.Config.ID);
 
 		}

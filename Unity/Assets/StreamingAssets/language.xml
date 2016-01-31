@@ -154,5 +154,7 @@
   <LanguageKey Key="NOFOOD_DEAD">{0}已经饿死</LanguageKey>
   <LanguageKey Key="BATTLE_DEAD">{0}已经战死</LanguageKey>
 
+  <LanguageKey Key="UI_RESULT_PACKAGE_SIZE">背包大小:{0}/{1}</LanguageKey>  
+
 
 </ArrayOfLanguageKey>

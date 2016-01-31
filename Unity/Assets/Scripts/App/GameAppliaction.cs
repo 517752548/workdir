@@ -113,7 +113,9 @@ namespace Assets.Scripts.App
         public void ChangeState(GameState target) {
             if (Current != null) 
                 Current.OnExit();
+		
             Current = target;
+			if(Current!=null)
             Current.OnEnter();
         }
 
@@ -150,6 +152,7 @@ namespace Assets.Scripts.App
         /// </summary>
         public void GoToExplore(int configID)
         {
+			ChangeState (null);
             var r = DoGoToExplore(configID);
             works.Enqueue(r);
         }

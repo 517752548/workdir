@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.App;
 using Proto;
+using ExcelConfig;
 
 namespace Assets.Scripts.DataManagers
 {
@@ -56,6 +57,8 @@ namespace Assets.Scripts.DataManagers
             {
                 i.Value.IsChanged = true;
                 i.Value.Posistions.Clear();
+				i.Value.ExploreValue = 0;
+				i.Value.AddExploreValue.Clear ();
             }
             Presist();
         }
@@ -308,10 +311,20 @@ namespace Assets.Scripts.DataManagers
 
 			var nextMap = mapID + 1;
 
-			//GamePlayerManager.Singleton.JoinMap (nextMap);
-			App.GameAppliaction.Singleton.GoToExplore (nextMap);
+			OpenMap (nextMap);
+			//App.GameAppliaction.Singleton.GoToExplore (nextMap);
 		}
-    }
+
+		public void OpenMap(int mapID){
+			var mapConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MapConfig>(mapID);
+			if(mapConfig==null) return;
+			MapPresistData map;
+			if (_maps.TryGetValue (mapID, out map)) {
+				return;
+			}
+			map =CreateMapPresistData (mapID);
+		}
+	}
 
 
     public class MapPresistData

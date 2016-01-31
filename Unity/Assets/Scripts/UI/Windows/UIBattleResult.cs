@@ -105,6 +105,11 @@ namespace Assets.Scripts.UI.Windows
 				i.Model.ItemData = item [index];
 				index++;
 			}
+
+			lb_packageSize.text = string.Format (LanguageManager.Singleton ["UI_RESULT_PACKAGE_SIZE"],
+
+				PlayerItemManager.Singleton.CurrentSize,
+				GamePlayerManager.Singleton.PackageSize);
 		}
         public override void OnHide()
         {
@@ -119,6 +124,8 @@ namespace Assets.Scripts.UI.Windows
 		public void ShowResult(int mapID, List<Item> item,int indexPos)
 		{
 			items = item;
+			posIndex = indexPos;
+			this.mapID = mapID;
 			OnUpdateUIData ();
 			//show
 		}

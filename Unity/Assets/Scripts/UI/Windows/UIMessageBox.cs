@@ -19,7 +19,7 @@ namespace Assets.Scripts.UI.Windows
             });
 
             c_close.OnMouseClick((s, e) => {
-
+				return;
                 if (Cancel != null)
                     Cancel();
                 HideWindow();

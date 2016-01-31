@@ -156,6 +156,8 @@ namespace Assets.Scripts.GameStates
 			}
           
 			CheckWaiting ();
+			if (player == null)
+				return;
 			player.transform.position = Vector3.Lerp (player.transform.position, targetPosPlayer, 20);
 		}
 
@@ -233,12 +235,12 @@ namespace Assets.Scripts.GameStates
 								JoinCastle ();
 								break;
 							case Proto.MapEventType.GoToNextLvlPos:
-								if (DataManagers.PlayerMapManager.Singleton.IsExplored (Config.ID, index)) {
-									UI.UIControllor.Singleton.ShowMapListUI ();
-								}else{
+								if (!DataManagers.PlayerMapManager.Singleton.IsExplored (Config.ID, index)) {
 									
 									DataManagers.PlayerMapManager.Singleton.GotoNextMap(Config.ID,index);
 								}
+								UI.UIControllor.Singleton.ShowMapListUI ();
+
 								break;
 							case Proto.MapEventType.PKEnterPos:
 								var pkNeedItem = Tools.UtilityTool.SplitIDS (i.Pars1);

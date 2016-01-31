@@ -66,7 +66,7 @@ namespace Assets.Scripts.DataManagers
 		//资源生产技术开放
 		public const string PLAYER_PRODUCE_OPEN = "_PLAYER_PRODUCE_OPEN.json";
 		//探索过的地图
-		public const string COMPLETE_MAPS = "_PLAYER_MAP_COMPLETED_LIST.json";
+
 
 		public const string PAYMENT_PATH = "/PaymentData.json";
 
@@ -76,7 +76,7 @@ namespace Assets.Scripts.DataManagers
 
 		private Dictionary<int, ProducePrisitData> ProduceOpenState { set; get; }
 
-		private HashSet<int> MapIDs = new HashSet<int> ();
+
 
 		/// <summary>
 		/// 从x，y到index
@@ -137,13 +137,7 @@ namespace Assets.Scripts.DataManagers
 					ProduceOpenState.Add (i.ProduceID, i);
 				}
 			}
-			MapIDs.Clear ();
-			var mapList = Tools.PresistTool.LoadJson<List<int>> (COMPLETE_MAPS);
-			if (mapList == null)
-				return;
-			foreach (var i in mapList) {
-				MapIDs.Add (i);
-			}
+
 		}
 
 		public void Presist ()
@@ -153,16 +147,12 @@ namespace Assets.Scripts.DataManagers
 
 			var produceList = ProduceOpenState.Select (t => t.Value).ToList ();
 			Tools.PresistTool.SaveJson (produceList, PLAYER_PRODUCE_OPEN);
-
-			var mapList = MapIDs.Select (t => t).ToList ();
-			Tools.PresistTool.SaveJson (mapList, COMPLETE_MAPS);
 		}
 
 		public void Reset ()
 		{
 			PlayerData.Clear ();
 			ProduceOpenState.Clear ();
-			MapIDs.Clear ();
 			Presist ();
 		}
 
@@ -460,8 +450,9 @@ namespace Assets.Scripts.DataManagers
 		/// <returns></returns>
 		internal bool CompleteMap (List<int> mapID)
 		{
+			var maps = PlayerMapManager.Singleton.GetOpenedMaps ();
 			foreach (var i in mapID) {
-				if (!MapIDs.Contains (i))
+				if (!maps.Contains (i))
 					return false;
 			}
 			return true;
@@ -488,12 +479,14 @@ namespace Assets.Scripts.DataManagers
 		/// <param name="map"></param>
 		public void JoinMap (int map)
 		{
+			PlayerMapManager.Singleton. OpenMap (map);
+			
 			this [PlayDataKeys.PLAYER_CURRENT_MAP] = map;
-			if (MapIDs.Contains (map))
-				return;
-			MapIDs.Add (map);
-		}
+			GoPos(null);
 
+
+		}
+			
 
 		/// <summary>
 		/// record the last pos 
