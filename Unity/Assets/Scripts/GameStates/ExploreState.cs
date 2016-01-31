@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Proto;
 
 namespace Assets.Scripts.GameStates
 {
@@ -176,7 +177,8 @@ namespace Assets.Scripts.GameStates
 						if (index == indexs [p]) {
 							#region haveIndex
 							Debug.Log ("P:" + (Proto.MapEventType)i.EventType);
-							switch ((Proto.MapEventType)i.EventType) {
+							switch ((Proto.MapEventType)i.EventType)
+							{
 							case Proto.MapEventType.BattlePos10:
 							case Proto.MapEventType.BattlePos11:
 							case Proto.MapEventType.BattlePos2:
@@ -189,9 +191,15 @@ namespace Assets.Scripts.GameStates
 							case Proto.MapEventType.BattlePos9:
 							case Proto.MapEventType.BattlePos:
 								//IS have explored
-								var json = DataManagers.PlayerMapManager.Singleton.GetJsonByIndex (Config.ID, index);
-
-								if (!string.IsNullOrEmpty (json)) {
+								if (DataManagers.PlayerMapManager.Singleton.IsExplored (Config.ID, index))
+								{
+									var items = PlayerMapManager.Singleton.GetBattleData(Config.ID,index);
+									if(items!=null && items.Count>0)
+									{
+										var ui = UI.Windows.UIBattleResult.Show ();
+										ui.ShowResult (this.Config.ID,items, index);
+										ui.callAfterCollect = SaveBattlePos;
+									}
 									RecordPos (target); 
 									return;
 								}
@@ -202,7 +210,10 @@ namespace Assets.Scripts.GameStates
 									StartBattle (battleGroups, index, (winner) => {
 										if (winner) {
 											RecordPos (target);
-											PlayerMapManager.Singleton.RecordMap (Config.ID, index, true, "OK", true);
+											PlayerMapManager.Singleton.RecordMap (
+												Config.ID, 
+												index, true,
+												string.Empty, false, true);
 										} else {
 											GoBack ();
 										}
@@ -259,58 +270,72 @@ namespace Assets.Scripts.GameStates
 
 								break;
 							case Proto.MapEventType.RandomChestPos: //宝箱
-								//var needItem = new List<Proto.Item>();
-
-								var chestJson = PlayerMapManager.Singleton.GetJsonByIndex (this.Config.ID, index);
-								if (!string.IsNullOrEmpty (chestJson)) {
-									
+								if (PlayerMapManager.Singleton.IsExplored (Config.ID, index)) 
+								{
+									var items = PlayerMapManager.Singleton.GetChestBoxData(Config.ID, index);
+									if(items !=null && items.Count >0)
+									{
+										UI.UIControllor.Singleton.ShowChestDialog 
+										(
+											Config.ID, 
+											items, 
+											index,
+											SaveBattlePos);
+									}
 									RecordPos (target);
 									break;
-								}
-
-								var needitems = Tools.UtilityTool.SplitIDS (i.Pars1);
-								var rewardItems = Tools.UtilityTool.SplitIDS (i.Pars2);
-								var rewardCounts = Tools.UtilityTool.SplitIDS (i.Pars3);
-
+								} else {
+									var needitems = Tools.UtilityTool.SplitIDS (i.Pars1);
+									var rewardItems = Tools.UtilityTool.SplitIDS (i.Pars2);
+									var rewardCounts = Tools.UtilityTool.SplitIDS (i.Pars3);
 							    
-								if (DataManagers.PlayerItemManager.Singleton.GetItemCount (needitems [0]) >= needitems [1]) {
+									if (DataManagers.PlayerItemManager.Singleton.GetItemCount (needitems [0]) >= needitems [1]) {
+										var needItem = new List<Proto.Item> ();
+										var rewardItemDatas = new List<Proto.Item> ();
+										needItem.Add (new Proto.Item{ Entry = needitems [0], Num = needitems [1] });
+										for (var tIndex = 0; tIndex < rewardItems.Count; tIndex++) {
+											rewardItemDatas.Add (
+												new Proto.Item { 
+													Entry = rewardItems [tIndex],
+													Num = rewardCounts [tIndex]
+												});
+										}
 
-									var needItem = new List<Proto.Item> ();
-									var rewardItemDatas = new List<Proto.Item> ();
-									needItem.Add (new Proto.Item{ Entry = needitems [0], Num = needitems [1] });
-									for (var tIndex = 0; tIndex < rewardItems.Count; tIndex++) {
-										rewardItemDatas.Add (
-											new Proto.Item { 
-												Entry = rewardItems [tIndex],
-												Num = rewardCounts [tIndex]
+										foreach (var ni in needItem) {
+											DataManagers.PlayerItemManager.Singleton.SubItem (ni.Entry, ni.Num);
+										}
+
+										UI.UIControllor.Singleton.ShowChestDialog (
+											Config.ID, 
+											rewardItemDatas, index,
+											SaveChestBoxPos);
+										RecordPos (target);
+
+										PlayerMapManager.Singleton.RecordMap(Config.ID,index,true,string.Empty,false,true);
+
+									} else {
+										var cheshItemName = string.Empty;
+										var configChesh = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (needitems [0]);
+										if (configChesh != null) {
+											cheshItemName = configChesh.Name;
+										}
+										//no item
+										UI.Windows.UIMessageBox.ShowMessage (
+											LanguageManager.Singleton ["EXPLORE_NO_KEY_TITLE"],
+											String.Format (LanguageManager.Singleton ["EXPLORE_NO_KEY"], 
+												cheshItemName, needitems [1]), 
+											() => {
+												GoBack ();
+											},
+											() => {
+
+												GoBack ();
 											});
 									}
-
-									UI.UIControllor.Singleton.ShowChestDialog (needItem, rewardItemDatas, index);
-
-									RecordPos (target);
-								} else {
-									var cheshItemName = string.Empty;
-									var configChesh = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (needitems [0]);
-									if (configChesh != null) {
-										cheshItemName = configChesh.Name;
-									}
-									//no item
-									UI.Windows.UIMessageBox.ShowMessage (
-										LanguageManager.Singleton ["EXPLORE_NO_KEY_TITLE"],
-										String.Format (LanguageManager.Singleton ["EXPLORE_NO_KEY"], 
-											cheshItemName, needitems [1]), 
-										() => {
-											GoBack ();
-										},
-										() => {
-
-											GoBack ();
-										});
 								}
-
 								break;
 							case Proto.MapEventType.RandomEvnetPos:
+								//随机
 								if (GRandomer.Probability10000 (Config.RandomPro)) {
 									var randmonBattleGroupID = Tools.UtilityTool.ConvertToInt (i.Pars2);
 									//RechargePos
@@ -441,9 +466,20 @@ namespace Assets.Scripts.GameStates
 			PlayerItemManager.Singleton.JoinCastle ();
 		}
 
+		private void SaveBattlePos (int mapId, int indexPos, List<Item> list)
+		{
+			PlayerMapManager.Singleton.SaveBattleIndex (mapId, indexPos, list);
+		}
+
+		private void SaveChestBoxPos (int mapID, int indexPos, List<Item> list)
+		{
+			PlayerMapManager.Singleton.SaveChestBoxIndex (mapID, indexPos, list);
+		}
+
+
 		public void StartBattle (int battlegroup, int index, Action<bool> callBack)
 		{
-			var group = ExcelToJSONConfigManager.Current.GetConfigByID<BattleGroupConfig> (battlegroup);
+			//var group = ExcelToJSONConfigManager.Current.GetConfigByID<BattleGroupConfig> (battlegroup);
 			var battleIndex = 0;
 			//var battleIndex = DataManagers.PlayerMapManager.Singleton.GetBattleIndex(this.Config.ID, index);
 
@@ -471,6 +507,7 @@ namespace Assets.Scripts.GameStates
 							if (result.DropList.Count > 0) {
 								var ui = UI.Windows.UIBattleResult.Show ();
 								ui.ShowResult (this.Config.ID, result.DropList, index);
+								ui.callAfterCollect = SaveBattlePos;
 							}
 						}
 						if (result.Dead) {
@@ -485,7 +522,7 @@ namespace Assets.Scripts.GameStates
 							}
 							JoinCastle ();
 							RecordPos (null);
-							var str = LanguageManager.Singleton ["EXPLORE_BATTLE_F"] + sb.ToString();
+							var str = LanguageManager.Singleton ["EXPLORE_BATTLE_F"] + sb.ToString ();
 							UI.UIControllor.Singleton.ShowMessage (str);
 							UI.UITipDrawer.Singleton.DrawNotify (str);
 						}

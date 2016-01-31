@@ -97,7 +97,7 @@ public class GameMap : MonoBehaviour {
             if (AllPosition.ContainsKey(i.ToIndex())) continue;
             AllPosition.Add(i.ToIndex(), i);
 
-            if (i.DataType == Proto.MapEventType.None)
+			if (i.DataType == Proto.MapEventType.None || i.DataType == Proto.MapEventType.RandomEvnetPos)
             {
                 var renderer = i.GetComponent<SpriteRenderer>();
                 if (renderer != null)

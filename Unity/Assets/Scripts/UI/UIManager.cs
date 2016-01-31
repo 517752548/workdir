@@ -135,8 +135,9 @@ namespace Assets.Scripts.UI
         public virtual void OnPreScecondUpdate() { }
         public void ShowWindow()
         {
-            this.Depth = UIManager.Singleton.MaxDepth + 1;
+            
             this.Root.SetActive(true);
+			this.Depth = UIManager.Singleton.MaxDepth + 1;
             if (!NoCollider)
                 NGUITools.AddWidgetCollider(this.Root);
             if (WindowEffect != null)
@@ -249,7 +250,9 @@ namespace Assets.Scripts.UI
                 foreach (var i in uiPanels)
                 {
                     i.depth = (i.depth - rootDepth) + value;
+					i.Refresh ();
                 }
+				rootPanel.Refresh ();
             }
         }
 

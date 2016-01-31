@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Assets.Scripts.App;
+using Proto;
 
 namespace Assets.Scripts.DataManagers
 {
@@ -41,6 +42,11 @@ namespace Assets.Scripts.DataManagers
             }
         }
 
+		public List<int> GetOpenedMaps()
+		{
+			return MapIDS.ToList ();
+		}
+
         public void Reset()
         {
             MapIDS = new HashSet<int>();
@@ -55,7 +61,13 @@ namespace Assets.Scripts.DataManagers
         public const string MAP_FORMAT_STR = "__MAP__{0:0000}.json";
         public const string MAP_LIST_FILE = "__MAP_LIST.json";
 
-		public void RecordMap(int mapID, int index, bool isOpen, string json ,bool updateJson = false)
+		public void RecordMap(int mapID, 
+			int index,
+			bool isOpen, 
+			string json ,
+			bool updateJson = false,
+			bool explored = false
+		 )
 		{
 			MapPresistData map;
 			if (_maps.TryGetValue (mapID, out map)) {
@@ -65,14 +77,23 @@ namespace Assets.Scripts.DataManagers
 					};
 				//	TryToAddExploreValue (mapID, index);
 				} else {
-					if(updateJson)
-					map [index].Json = json;
-
+					if (updateJson) {
+						map [index].Json = json;
+					}
+					if (explored) {
+						map [index].IsExplored = true;
+					}
 				}
 				map.IsChanged = true;
 			} else {
 				var data = CreateMapPresistData (mapID);
-				data [index] = new MapPosData { Index = index, Json = json, IsOpened = isOpen };
+				data [index] = new MapPosData 
+				{ 
+					Index = index,
+					Json = json, 
+					IsOpened = isOpen, 
+					IsExplored = explored
+				};
 				//TryToAddExploreValue (mapID, index);
 			}
 		}
@@ -101,6 +122,55 @@ namespace Assets.Scripts.DataManagers
 			MapIDS.Add (mapID);
             return map;
         }
+
+		public void SaveChestBoxIndex(int mapId, int indexPos, List<Item> items)
+		{
+			var json = JsonTool.Serialize (new ChestBoxData{ Items = items });
+			RecordMap (mapId, indexPos, true, json, true);
+		}
+
+		public void SaveBattleIndex(int mapID, int indexPos, List<Item> items)
+		{
+			var json = JsonTool.Serialize (new BattlePosData{ Items = items });
+			RecordMap (mapID, indexPos, true, json, true);
+		}
+
+		public List<Item> GetChestBoxData(int mapID, int indexPos)
+		{
+			MapPosData pos;
+			if (ReadMap (mapID, indexPos, out pos))
+			{
+				var json = pos.Json;
+				if (!string.IsNullOrEmpty (json)) {
+
+					var data = JsonTool.Deserialize<ChestBoxData> (json);
+					if (data != null)
+						return data.Items;
+					return null;
+				}
+			}
+
+			return null;
+		}
+
+		public List<Item> GetBattleData(int mapID, int indexPos)
+		{
+			MapPosData pos;
+			if (ReadMap (mapID, indexPos, out pos))
+			{
+				var json = pos.Json;
+				if (!string.IsNullOrEmpty (json)) {
+
+					var data = JsonTool.Deserialize<BattlePosData> (json);
+					if (data != null)
+						return data.Items;
+					return null;
+				}
+			}
+
+			return null;
+		}
+
 		public bool ReadMap(int mapID, int index, out MapPosData resdata)
         {
 			resdata = null;
@@ -138,8 +208,9 @@ namespace Assets.Scripts.DataManagers
 					if (map.HaveIndex(pos)) {
 						//var recordValue = new MapPosData
 						RecordMap (mapID, 
-							GamePlayerManager.PosXYToIndex ((int)pos.x, (int)pos.y), 
-							true,string.Empty, false);
+							GamePlayerManager.PosXYToIndex (
+								(int)pos.x, (int)pos.y), 
+							true,string.Empty, false,false);
 					}
 				}
 			}
@@ -210,6 +281,16 @@ namespace Assets.Scripts.DataManagers
 			return false;
 		}
 
+
+		public bool IsExplored(int mapID,int index)
+		{
+			MapPosData data;
+			if (ReadMap (mapID, index, out data)) 
+			{
+				return data.IsExplored;
+			}
+			return false;
+		}
      
     }
 
@@ -282,5 +363,19 @@ namespace Assets.Scripts.DataManagers
 		public bool IsOpened{ set; get; }
         [JsonName("V")]
         public string Json { set; get; }
+		[JsonName("EP")]
+		public bool IsExplored{ set; get; }
     }
+
+	public class BattlePosData
+	{
+		[JsonName("IS")]
+		public List<Item> Items{ set; get; }
+	}
+
+	public class ChestBoxData
+	{
+		[JsonName("IS")]
+		public List<Item> Items{ set; get; }
+	}
 }

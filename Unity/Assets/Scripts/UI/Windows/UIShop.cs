@@ -174,6 +174,10 @@ namespace Assets.Scripts.UI.Windows
             var shopItems = ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.StoreDataConfig>(
                (item) =>
                {
+					if(item.Max_purchase>0){
+					 var count = DataManagers.PlayerItemManager.Singleton.GetGoldShopCount(item);
+					 if(count >= item.Max_purchase) return false;
+					}
                    #region Condition
                    var unlockType = (StoreUnlockType)item.Unlock_type;
                    switch (unlockType)
@@ -211,7 +215,13 @@ namespace Assets.Scripts.UI.Windows
         {
             PackageView.ActiveSelfObject(false);
             PackageViewCoin.ActiveSelfObject(true);
-            var shopData = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.DimondStoreConfig>();
+			var shopData = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.DimondStoreConfig>(Item=>{
+				if(Item.Max_purchase_times>0){
+				 var count = DataManagers.PlayerItemManager.Singleton.GetCoinShopCount(Item);
+				 if(count>= Item.Max_purchase_times) return false;
+				}
+				return true;
+			});
 			ItemGridCoinTableManager.Count = shopData.Length;
             int index = 0;
             foreach (var i in ItemGridCoinTableManager)

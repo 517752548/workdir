@@ -54,6 +54,7 @@ namespace Assets.Scripts.UI.Windows
         public override void InitModel()
         {
             base.InitModel();
+			this.CanDestoryWhenHide = true;
 			bt_close.OnMouseClick ((s, e) => {
 				this.HideWindow();
 			});
@@ -64,15 +65,21 @@ namespace Assets.Scripts.UI.Windows
 					var currentSize = DataManagers.PlayerItemManager.Singleton.CurrentSize;
 					var maxSize = DataManagers.GamePlayerManager.Singleton.PackageSize;
 					int max = maxSize - currentSize;
-					int diff = Mathf.Max(max,i.Num);
+					int diff = Mathf.Min(max,i.Num);
 					i.Num -=diff;
 					DataManagers.PlayerItemManager.Singleton.AddItemIntoPack(i.Entry,diff);
 				}
 				items.RemoveAll(t=>t.Num<=0);
 				UIManager.Singleton.UpdateUIData();
+				if(callAfterCollect ==null ) return;
+				callAfterCollect(this.mapID,this.posIndex, items);
+
 			});
             //Write Code here
         }
+
+		public Action<int,int,List<Item>> callAfterCollect;
+
         public override void OnShow()
         {
             base.OnShow();
@@ -105,12 +112,14 @@ namespace Assets.Scripts.UI.Windows
         }
 
 
+		private int posIndex;
+		private int mapID;
+
 		private List<Item> items = new List<Item>();
 		public void ShowResult(int mapID, List<Item> item,int indexPos)
 		{
 			items = item;
 			OnUpdateUIData ();
-
 			//show
 		}
     }

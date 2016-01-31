@@ -99,7 +99,7 @@ namespace Assets.Scripts.UI.Windows
 				var foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
 				var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>(foodEntry);
 				var hp = Tools.UtilityTool.ConvertToInt(config.Pars1);
-
+				hp += DataManagers.GamePlayerManager.Singleton. FoodChargeAppend;
 				bt_addHp.Disable(true);
 
 				App.GameAppliaction.Singleton.DelayCall(()=>{bt_addHp.Disable(false);},3f);

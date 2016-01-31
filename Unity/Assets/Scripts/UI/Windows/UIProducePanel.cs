@@ -152,7 +152,7 @@ namespace Assets.Scripts.UI.Windows
             base.OnHide();
         }
 
-        private float hideTime = 0;
+        //private float hideTime = 0;
         public void ClickItem(ItemGridTableModel item)
         {
 

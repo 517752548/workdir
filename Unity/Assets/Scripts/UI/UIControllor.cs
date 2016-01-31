@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Proto;
+using ExcelConfig;
 
 namespace Assets.Scripts.UI
 {
@@ -50,15 +51,25 @@ namespace Assets.Scripts.UI
 			
 		}
 		//开宝箱的UI
-		public void ShowChestDialog(List<Item> need, List<Item> reward, int index)
+		public void ShowChestDialog(int mapID,
+			List<Item> reward, 
+			int index,
+			Action<int,int,List<Item>> callBack)
 		{
-
-
+			
+			var ui =UI.Windows.UIBattleResult.Show ();
+			ui.ShowResult (mapID, reward, index);
+			ui.callAfterCollect = callBack;
 		}
 		//切换地图UI
 		public void ShowMapListUI()
 		{
-			
+			var maps = DataManagers.PlayerMapManager.Singleton.GetOpenedMaps ();
+			if (maps.Count < 2)
+				return;
+			UI.Windows.UIMapList.Show ();
+		   
+			//show map list ui
 		}
 		//驿站UI
 		public void ShowRechargeUI(List<Item> shop)

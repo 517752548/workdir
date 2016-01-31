@@ -9,7 +9,7 @@
   <LanguageKey Key="APP_GOLD_Label">{0}</LanguageKey>  
   
   
-  <LanguageKey Key="NO_SCROLL">获取制造图纸激活制造</LanguageKey>
+  <LanguageKey Key="NO_SCROLL">没有任何图纸，不能制造</LanguageKey>
   <LanguageKey Key="NO_BUILD">请先建造生产类建筑</LanguageKey>
   <LanguageKey Key="NO_HERO">请先从酒馆招募您喜爱的英雄</LanguageKey>
   <LanguageKey Key="REWARD_ITEM">{0} +{1}</LanguageKey>
@@ -153,4 +153,6 @@
   <LanguageKey Key="Battle_End_Reward_Gold">抢的金币{0}</LanguageKey>
   <LanguageKey Key="NOFOOD_DEAD">{0}已经饿死</LanguageKey>
   <LanguageKey Key="BATTLE_DEAD">{0}已经战死</LanguageKey>
+
+ 
 </ArrayOfLanguageKey>

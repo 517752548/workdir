@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Proto;
 
 namespace Assets.Scripts.DataManagers
 {
@@ -41,6 +42,12 @@ namespace Assets.Scripts.DataManagers
         public const string _ITEM_SAVE_FILE_ = "_ITEM_.json";
 		public const string _PACKAGE_SAVE_FILE= "_PLAY_PACKAGE.json";
 
+		public const string _GOLD_SHOP_DATA_FILE="_GOLD_SHOP_BUY_COUNT.json";
+		public const string _COIN_SHOP_DATA_FILE="_COIN_SHOP_BUY_COUNT.json";
+
+		private Dictionary<int,int> _coinShop = new Dictionary<int, int>();
+		private Dictionary<int,int> _goldShop = new Dictionary<int, int>();
+
         public void Load()
         {
             this._items = new Dictionary<int, PlayerGameItem>();
@@ -54,13 +61,60 @@ namespace Assets.Scripts.DataManagers
 			}
 			_packageItems.Clear ();
 			var pack = Tools.PresistTool.LoadJson<List<PlayerGameItem>> (_PACKAGE_SAVE_FILE);
-			if (pack == null)
-				return;
-			foreach (var i in pack) {
-				this._packageItems.Add (i.ConfigID, i);
+			if (pack != null) {
+				foreach (var i in pack) {
+					this._packageItems.Add (i.ConfigID, i);
+				}
 			}
 
+			_coinShop.Clear ();
+			var coinData = Tools.PresistTool.LoadJson<List<ShopPersistData>> (_COIN_SHOP_DATA_FILE);
+			if (coinData != null) {
+				foreach (var i in coinData) 
+				{
+					_coinShop.Add (i.entry, i.count);
+				}
+			}
+			_goldShop.Clear ();
+			var goldShop = Tools.PresistTool.LoadJson<List<ShopPersistData>> (_GOLD_SHOP_DATA_FILE);
+			if (goldShop != null) {
+				foreach (var i in goldShop) {
+					_goldShop.Add (i.entry, i.count);
+				}
+			}
         }
+
+		public int GetGoldShopCount(ExcelConfig.StoreDataConfig config)
+		{
+			if (this._goldShop.ContainsKey (config.ID))
+				return this._goldShop [config.ID];
+			return 0;
+		}
+
+		public void BuyGoldShopItem(ExcelConfig.StoreDataConfig config)
+		{
+			if (this._goldShop.ContainsKey (config.ID)) {
+				this._goldShop [config.ID] += 1;
+			} else {
+				this._goldShop.Add (config.ID, 1);
+			}
+		}
+
+		public int GetCoinShopCount(ExcelConfig.DimondStoreConfig config)
+		{
+			if (this._coinShop.ContainsKey (config.ID))
+				return this._coinShop [config.ID];
+			return 0;
+		}
+
+		public void BuyCoinShopItem(ExcelConfig.DimondStoreConfig config)
+		{
+			if (this._coinShop.ContainsKey (config.ID)) {
+				this._coinShop [config.ID]+=1;
+			} else {
+				this._coinShop.Add (config.ID, 1);
+			}
+		}
 
         /// <summary>
         /// 消耗道具
@@ -90,8 +144,12 @@ namespace Assets.Scripts.DataManagers
         {
             var items = _items.Values.ToList();
 			var pack = _packageItems.Values.ToList ();
+			var goldBuy = _goldShop.Select (t => new ShopPersistData{ entry = t.Key, count = t.Value }).ToList ();
+			var coinBuy = _coinShop.Select (t => new ShopPersistData{ entry = t.Key, count = t.Value }).ToList ();
             Tools.PresistTool.SaveJson(items, _ITEM_SAVE_FILE_);
 			Tools.PresistTool.SaveJson (pack, _PACKAGE_SAVE_FILE);
+			Tools.PresistTool.SaveJson (goldBuy, _GOLD_SHOP_DATA_FILE);
+			Tools.PresistTool.SaveJson (coinBuy, _COIN_SHOP_DATA_FILE);
         }
 
         public void Reset()
@@ -108,7 +166,14 @@ namespace Assets.Scripts.DataManagers
             var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(itemID);
 
 			switch ((Proto.ItemType)config.Category) {
-
+			case ItemType.Indenture:
+				UITipDrawer.Singleton.DrawNotify (config.Desription);
+				break;
+			case ItemType.Book:
+				var skillID = Tools.UtilityTool.ConvertToInt (config.Pars1);
+				GamePlayerManager.Singleton.AddPlayerSkill (skillID);
+				UITipDrawer.Singleton.DrawNotify (config.Desription);
+				break;
 			case Proto.ItemType.GoldPackage:
 				var gold = Tools.UtilityTool.ConvertToInt (config.Pars1);
 				GamePlayerManager.Singleton.AddGold (gold * diff);
@@ -119,6 +184,39 @@ namespace Assets.Scripts.DataManagers
 						(Tools.UtilityTool.ConvertToInt (config.Pars1));
 					UI.UITipDrawer.Singleton.DrawNotify (string.Format(LanguageManager.Singleton["YOU_CAN_MAKE"],makeConfig.Name));
 					}
+				break;
+			case Proto.ItemType.Tools:
+				var itemToolType = (ToolItemType)Tools.UtilityTool.ConvertToInt (config.Pars1);
+
+				switch (itemToolType) {
+				case ToolItemType.AddFoodChargeValue:
+					GamePlayerManager.Singleton.AddFoodChargeAppend (Tools.UtilityTool.ConvertToInt (config.Pars2));
+					UITipDrawer.Singleton.DrawNotify (config.Desription);
+					break;
+				case ToolItemType.AddGoldProduce:
+					GamePlayerManager.Singleton.AddGoldProduceAppend (Tools.UtilityTool.ConvertToInt (config.Pars2));
+					UITipDrawer.Singleton.DrawNotify (config.Desription);
+					break;
+				case ToolItemType.AddPackageSize:
+					GamePlayerManager.Singleton.AddPackageSize (Tools.UtilityTool.ConvertToInt (config.Pars2));
+					UITipDrawer.Singleton.DrawNotify (config.Desription);
+					break;
+				case ToolItemType.AddProducesOffTime:
+					var times = Tools.UtilityTool.ConvertToInt (config.Pars2);
+					GamePlayerManager.Singleton.SetOfflineMaxTime (times);
+					UITipDrawer.Singleton.DrawNotify (config.Desription);
+					break;
+				case ToolItemType.AddWheatProduce: //No support
+					
+					break;
+				case ToolItemType.CalProuduceTime:
+					var timeOfProduce = Tools.UtilityTool.ConvertToInt (config.Pars2);
+					GamePlayerManager.Singleton.SetRewardTime (timeOfProduce);
+					UITipDrawer.Singleton.DrawNotify (config.Desription);
+					break;
+				default:
+					break;
+				}
 				break;
 			}
 
@@ -159,6 +257,7 @@ namespace Assets.Scripts.DataManagers
             GamePlayerManager.Singleton.SubGold(price);
 
 			PlayerItemManager.Singleton.AddItem(config.ItemId, 1);
+			PlayerItemManager.Singleton.BuyGoldShopItem (config);
             UI.UITipDrawer.Singleton.DrawNotify(
 				string.Format(LanguageManager.Singleton["COST_GOLD_REWARD_ITEM"],
 					price, itemconfig.Name, 1));
@@ -182,6 +281,7 @@ namespace Assets.Scripts.DataManagers
 			GamePlayerManager.Singleton.SubCoin(price);
 
 			PlayerItemManager.Singleton.AddItem(entry, 1);
+			PlayerItemManager.Singleton.BuyCoinShopItem (config);
 			UI.UITipDrawer.Singleton.DrawNotify(
 				string.Format(LanguageManager.Singleton["COST_COIN_REWARD_ITEM"],
 					price, itemconfig.Name, 1));
@@ -361,4 +461,12 @@ namespace Assets.Scripts.DataManagers
             ConfigID = configID;
         }
     }
+
+	public class ShopPersistData
+	{
+		[JsonName("i")]
+		public int entry{set;get;}
+		[JsonName("n")]
+		public int count{ set; get; }
+	}
 }

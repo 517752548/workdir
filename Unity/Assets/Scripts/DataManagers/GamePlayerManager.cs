@@ -47,8 +47,13 @@ namespace Assets.Scripts.DataManagers
 		//成就点
 		MUSIC_OFF = 15,
 //音乐
-		EFFECT_MUSIC = 16
+		EFFECT_MUSIC = 16,
 		//音效
+		FoodChargeAppendValue = 17,//干粮加血附加值
+		GoldProduceAppendValue = 18,//点金附加值
+		CalProuduceTime = 19,//游戏产量计算时间
+		WheatProduceAppend = 20,//小麦产量附加值
+		ProductOffLineTimeAppend =21 //离线产量计算时间
 	}
 
 	public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
@@ -64,6 +69,8 @@ namespace Assets.Scripts.DataManagers
 		public const string COMPLETE_MAPS = "_PLAYER_MAP_COMPLETED_LIST.json";
 
 		public const string PAYMENT_PATH = "/PaymentData.json";
+
+		public const string PLAYER_SKILLS = "_PLAYER_SKILL.json"; //No completed
 
 		private Dictionary<int, int> PlayerData { set; get; }
 
@@ -212,11 +219,52 @@ namespace Assets.Scripts.DataManagers
 			Presist ();
 		}
 
+		/// <summary>
+		/// 附加的血量
+		/// </summary>
+		/// <value>The food charge append.</value>
+		public int FoodChargeAppend{
+			get{ 
+				var value = this [PlayDataKeys.FoodChargeAppendValue];
+				if (value <= 0)
+					value = 0;
+				return value;
+			}
+		}
+
+		public void AddFoodChargeAppend(int value)
+		{
+			var cur = this.FoodChargeAppend;
+			this [PlayDataKeys.FoodChargeAppendValue] = cur + value;
+		}
+
+		public void AddGoldProduceAppend(int append)
+		{
+			var goldAppend = this [PlayDataKeys.GoldProduceAppendValue];
+			if (goldAppend <= 0) {
+				goldAppend = 0;
+			}
+			this [PlayDataKeys.GoldProduceAppendValue] = goldAppend + append;
+		}
+
+		public int GoldProduceAppend {
+			get {
+				var goldAppend = this [PlayDataKeys.GoldProduceAppendValue];
+				if (goldAppend <= 0) {
+					goldAppend = 0;
+				}
+
+				return goldAppend;
+			}
+		}
+
 		internal float CallProduceGold ()
 		{
 			var goldProduce = App.GameAppliaction.Singleton.ConstValues.GoldProduceLvl1;// GetGoldProduce();
+			goldProduce += GoldProduceAppend;
 			this.AddGold (goldProduce);
-			UITipDrawer.Singleton.DrawNotify (string.Format (LanguageManager.Singleton ["ProduceGoldPreTick"], goldProduce));
+			UITipDrawer.Singleton.DrawNotify (string.Format (LanguageManager.Singleton ["ProduceGoldPreTick"],
+				goldProduce));
 			AddProduceTimes (1);
 			UI.UIManager.Singleton.UpdateUIData ();
 			return (float)App.GameAppliaction.Singleton.ConstValues.GoldProduceLvl1CD / 1000f;
@@ -231,6 +279,23 @@ namespace Assets.Scripts.DataManagers
 			this [PlayDataKeys.PRODUCE_CLICK_TIMES] = currentTime;
 		}
 
+		public int OfflineMaxTime{
+			get{
+				var max = this [PlayDataKeys.ProductOffLineTimeAppend];
+				if (max <= GameAppliaction.Singleton.ConstValues.OutLineRewTime) {
+					return GameAppliaction.Singleton.ConstValues.OutLineRewTime;
+				}
+				return max;
+			}
+		}
+
+		public void SetOfflineMaxTime(int time)
+		{
+			var offMaxTimes = this.OfflineMaxTime;
+			this [PlayDataKeys.ProductOffLineTimeAppend] = time;// GameAppliaction.Singleton.ConstValues.OutLineRewTime
+
+		}
+
 		public bool CalProduce ()
 		{
 			if (TimeToProduce.TotalSeconds > 0)
@@ -243,7 +308,8 @@ namespace Assets.Scripts.DataManagers
 			this [PlayDataKeys.PRODUCE_TIME] = (int)(DateTime.UtcNow - TimeZero).TotalSeconds;
 
 			var dict = new Dictionary<int, Item> ();
-			var maxTime = GameAppliaction.Singleton.ConstValues.OutLineRewTime / GameAppliaction.Singleton.ConstValues.ProduceRewardTick;
+			var maxTime = OfflineMaxTime / 
+				GameAppliaction.Singleton.ConstValues.ProduceRewardTick;
 
 			if (times > maxTime)
 				times = maxTime;
@@ -315,9 +381,26 @@ namespace Assets.Scripts.DataManagers
 			return true;
 		}
 
+		public int TimeRewardTick{
+			get{
+				var value = this [PlayDataKeys.CalProuduceTime];
+				if (value <= 0) {
+					return GameAppliaction.Singleton.ConstValues.ProduceRewardTick;
+				}
+
+				return value;
+			}
+		}
+
+		public void SetRewardTime(int time)
+		{
+			this [PlayDataKeys.CalProuduceTime] = time*1000;
+		}
+
 		public TimeSpan TimeToProduce {
 			get {
-				var timeTickForProduce = TimeSpan.FromMilliseconds (GameAppliaction.Singleton.ConstValues.ProduceRewardTick);
+				var timeTickForProduce = TimeSpan.FromMilliseconds (
+					TimeRewardTick);
 				var time = DateTime.UtcNow;
 				var lastTime = TimeZero + TimeSpan.FromSeconds (this [PlayDataKeys.PRODUCE_TIME]);
 				if (lastTime > time)
@@ -362,6 +445,11 @@ namespace Assets.Scripts.DataManagers
 		}
 
 		#endregion
+
+		public void AddPlayerSkill(int skillid)
+		{
+			
+		}
 
 		#region 地图探索相关
 
@@ -455,6 +543,12 @@ namespace Assets.Scripts.DataManagers
 				}
 				return size;
 			}
+		}
+
+		public void AddPackageSize(int size)
+		{
+			var current = this.PackageSize;
+			this [PlayDataKeys.PACKAGE_SIZE] = current + size;
 		}
 
 		//添加
