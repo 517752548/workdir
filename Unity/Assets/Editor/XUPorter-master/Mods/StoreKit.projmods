@@ -3,7 +3,7 @@
     "libs": [],
     "frameworks": ["StoreKit.framework"],
     "headerpaths": [],                    
-    "files":   ["iOS/Store/libStoreKit.a"],
+    "files":   [""],
     "folders": [],    
     "excludes": ["^.*.meta$", "^.*.mdown$", "^.*.pdf$"],
     "compiler_flags": [],

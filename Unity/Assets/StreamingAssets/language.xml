@@ -147,7 +147,7 @@
   <LanguageKey Key="Message_OK">确定</LanguageKey>
   <LanguageKey Key="Message_Cancel">取消</LanguageKey>
 
-  <LanguageKey Key="GET_FROM_EXPLORE">带点打劫收获 {0}</LanguageKey>
+  <LanguageKey Key="GET_FROM_EXPLORE">队伍带回了 {0}</LanguageKey>
   <LanguageKey Key="EXPLORE_NO_FOOD">又要打仗，又要跑，还没干粮吃，活不了了！</LanguageKey>
   <LanguageKey Key="EXPLORE_BATTLE_F">战败了!</LanguageKey>
   <LanguageKey Key="Battle_End_Reward_Gold">抢的金币{0}</LanguageKey>

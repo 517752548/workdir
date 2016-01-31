@@ -279,7 +279,9 @@ namespace Assets.Scripts.UI.Windows
 						config.Name, obj.Monster.Name),
 					() => {
 						if (DataManagers.PlayerArmyManager.Singleton.Relive (obj.PlayerSoldier.Soldier.SoldierID)) {
-							UIManager.Singleton.UpdateUIData ();
+							//UIManager.Singleton.UpdateUIData ();
+							obj.PlayerSoldier.Soldier.IsAlive =true;
+							obj.PlayerSoldier = obj.PlayerSoldier;
 						}
 					},
 					null);

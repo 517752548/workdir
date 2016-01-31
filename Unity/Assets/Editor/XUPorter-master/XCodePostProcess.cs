@@ -17,21 +17,20 @@ public static class XCodePostProcess
 			Debug.LogWarning("Target is not iPhone. XCodePostProcess will not run");
 			return;
 		}
-
-		return;
+			
 		// Create a new project object from build target
 		XCProject project = new XCProject( pathToBuiltProject );
 
 		// Find and run through all projmods files to patch the project.
 		// Please pay attention that ALL projmods files in your project folder will be excuted!
-		string[] files = Directory.GetFiles( Application.dataPath, "*.projmods", SearchOption.AllDirectories );
+		string[] files = Directory.GetFiles( Application.dataPath, "StoreKit.projmods", SearchOption.AllDirectories );
 		foreach( string file in files ) {
 			UnityEngine.Debug.Log("ProjMod File: "+file);
 			project.ApplyMod( file );
 		}
 
 		//TODO implement generic settings as a module option
-		project.overwriteBuildSetting("CODE_SIGN_IDENTITY[sdk=iphoneos*]", "iPhone Distribution", "Release");
+		//project.overwriteBuildSetting("CODE_SIGN_IDENTITY[sdk=iphoneos*]", "iPhone Distribution", "Release");
 		
 		// Finally save the xcode project
 		project.Save();
