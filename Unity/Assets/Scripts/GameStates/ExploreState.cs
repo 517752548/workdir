@@ -74,13 +74,13 @@ namespace Assets.Scripts.GameStates
 		public override void OnPinch (PinchGesture gesture)
 		{
 			base.OnPinch (gesture);
-			float zone = 4;
+			float zone = 6;
 			if (gesture.State == GestureRecognitionState.Ended) {
 				Map.SetZone (zone);
 			} else if (gesture.State == GestureRecognitionState.InProgress) {
 				
-				var target = zone + 20 * (gesture.Gap / 240);
-				target = Mathf.Clamp (target, 4, 20);
+				var target = zone + 20 * (gesture.Gap / 640);
+				target = Mathf.Clamp (target, 6, 20);
 				Map.SetZone (target);
 			}
 

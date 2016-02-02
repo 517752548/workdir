@@ -197,7 +197,7 @@ public class GameMap : MonoBehaviour {
             {
                 var pos = new Vector3(x * OneGridSize, z * OneGridSize, 0);
                 Gizmos.color = Color.white;
-                Gizmos.DrawWireCube(pos, new Vector3(0.99f * OneGridSize, 0.99f * OneGridSize, 0));
+                Gizmos.DrawWireCube(pos, new Vector3(1f * OneGridSize, 1f * OneGridSize, 0));
             }
         }
     }
