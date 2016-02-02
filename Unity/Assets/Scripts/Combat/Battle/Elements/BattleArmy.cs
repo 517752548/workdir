@@ -23,6 +23,7 @@ namespace Assets.Scripts.Combat.Battle.Elements
             Config = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterConfig>(soldier.ConfigID);
             SkillConfig = ExcelToJSONConfigManager.Current.GetConfigByID<SkillConfig>(Config.SkillID);
             AttackCdTime = -1;
+			Soldier = soldier;
         }
         public Proto.Soldier Soldier { set; get; }
         public ExcelConfig.MonsterConfig Config { set; get; }

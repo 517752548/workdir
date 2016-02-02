@@ -90,8 +90,10 @@ namespace Assets.Scripts.UI.Windows
             bt_close.OnMouseClick((s, e) => {
 
                 this.Per.State.Enable = false;
-                UIMessageBox.ShowMessage(LanguageManager.Singleton["CANCEL_TITLE"], LanguageManager.Singleton["CANCEL_MESSAGE"],
-                    () => { _cancel = true; this.Per.State.Enable = true; }, () => { this.Per.State.Enable = true; });
+                UIMessageBox.ShowMessage(LanguageManager.Singleton["CANCEL_TITLE"], 
+					LanguageManager.Singleton["CANCEL_MESSAGE"],
+                    () => { _cancel = true; this.Per.State.Enable = true; }, 
+					() => { this.Per.State.Enable = true; });
                
             });
 
@@ -103,7 +105,7 @@ namespace Assets.Scripts.UI.Windows
 				hp += DataManagers.GamePlayerManager.Singleton. FoodChargeAppend;
 				bt_addHp.Disable(true);
 
-				App.GameAppliaction.Singleton.DelayCall(()=>{bt_addHp.Disable(false);},3f);
+				App.GameAppliaction.Singleton.DelayCall(()=>{bt_addHp.Disable(false);},1f);
 				if(DataManagers.PlayerItemManager.Singleton.CalItemFromPack(foodEntry,1))
 				{	
 					Per.PlayerAddHp(hp);

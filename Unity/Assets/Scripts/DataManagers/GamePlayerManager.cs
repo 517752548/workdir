@@ -12,43 +12,53 @@ using Assets.Scripts.UI.Windows;
 
 namespace Assets.Scripts.DataManagers
 {
+	public enum BattleControlMode
+	{
+		AUTO = 0,
+		PLAYER = 1
+	}
+
+	public class ProducePrisitData
+	{
+		[JsonName ("P")]
+		public int ProduceID { set; get; }
+
+		[JsonName ("S")]
+		public bool IsOpen { set; get; }
+
+		[JsonName ("N")]
+		public int PeopleNum { set; get; }
+	}
+
+	public class PlayerData
+	{
+		[JsonName ("K")]
+		public int Key { set; get; }
+
+		[JsonName ("V")]
+		public int Value { set; get; }
+	}
 	/// <summary>
 	/// 储存玩家信心
 	/// </summary>
 	public enum PlayDataKeys
 	{
-		PRODUCE_LEVEL = 1,
-		//玩家的炼金等级
-		PRODUCE_CLICK_TIMES = 2,
-//炼金点击次数
-		PEOPLE_COUNT = 3,
-//当前中的民工数
-		PRODUCE_TIME = 4,
-//上次计算时间
-		PACKAGE_SIZE = 5,
-//背包大小
-		TEAM_SIZE = 6,
-//队伍上线
-		EXPLORE_VALUE = 7,
-		//探索度
-		PLAYER_GOLD = 8,
-//金币
-		PLAYER_COIN = 9,
-//钻石
-		PLAYER_CURRENT_MAP = 10,
-		//当前地图
-		PLAYER_CURREN_POS = 11,
-//当前地图所在坐标
-		PLAYER_LAST_FOOD =12,
-//当前所带食物
-		PLAYER_BATTLE_MODE = 13,
-		//当前战斗模式
-		PLAYER_ACHIEVEMENT_POINT = 14,
-		//成就点
-		MUSIC_OFF = 15,
-//音乐
-		EFFECT_MUSIC = 16,
-		//音效
+		PRODUCE_LEVEL = 1,//玩家的炼金等级
+		PRODUCE_CLICK_TIMES = 2,//炼金点击次数
+		PEOPLE_COUNT = 3,//当前中的民工数
+		PRODUCE_TIME = 4,//上次计算时间
+		PACKAGE_SIZE = 5,//背包大小
+		TEAM_SIZE = 6,//队伍上线
+		EXPLORE_VALUE = 7,//探索度
+		PLAYER_GOLD = 8,//金币
+		PLAYER_COIN = 9,//钻石
+		PLAYER_CURRENT_MAP = 10,//当前地图
+		PLAYER_CURREN_POS = 11,//当前地图所在坐标
+		PLAYER_LAST_FOOD =12,//当前所带食物
+		PLAYER_BATTLE_MODE = 13,//当前战斗模式
+		PLAYER_ACHIEVEMENT_POINT = 14,//成就点
+		MUSIC_OFF = 15,//音乐
+		EFFECT_MUSIC = 16,//音效
 		FoodChargeAppendValue = 17,//干粮加血附加值
 		GoldProduceAppendValue = 18,//点金附加值
 		CalProuduceTime = 19,//游戏产量计算时间
@@ -257,6 +267,7 @@ namespace Assets.Scripts.DataManagers
 				goldProduce));
 			AddProduceTimes (1);
 			UI.UIManager.Singleton.UpdateUIData ();
+			AchievementManager.Singleton.ProduceGold (goldProduce);
 			return (float)App.GameAppliaction.Singleton.ConstValues.GoldProduceLvl1CD / 1000f;
 		}
 
@@ -450,7 +461,7 @@ namespace Assets.Scripts.DataManagers
 		/// <returns></returns>
 		internal bool CompleteMap (List<int> mapID)
 		{
-			var maps = PlayerMapManager.Singleton.GetOpenedMaps ();
+			var maps = PlayerMapManager.Singleton.GetCompletedMaps ();
 			foreach (var i in mapID) {
 				if (!maps.Contains (i))
 					return false;
@@ -479,12 +490,9 @@ namespace Assets.Scripts.DataManagers
 		/// <param name="map"></param>
 		public void JoinMap (int map)
 		{
-			PlayerMapManager.Singleton. OpenMap (map);
-			
+			PlayerMapManager.Singleton.OpenMap (map);
 			this [PlayDataKeys.PLAYER_CURRENT_MAP] = map;
 			GoPos(null);
-
-
 		}
 			
 
@@ -643,6 +651,7 @@ namespace Assets.Scripts.DataManagers
 			if (cost < 0)
 				return this.Gold;
 			Gold = Gold - cost;
+			AchievementManager.Singleton.CostGold (cost);
 			return Gold;
 		}
 
@@ -686,6 +695,7 @@ namespace Assets.Scripts.DataManagers
 			if (cost < 0)
 				return this.Coin;
 			Coin = Coin - cost;
+			AchievementManager.Singleton.CostCoin (cost);
 			return Coin;
 		}
 
@@ -791,30 +801,5 @@ namespace Assets.Scripts.DataManagers
 		#endregion
 	}
 
-	public enum BattleControlMode
-	{
-		AUTO = 0,
-		PLAYER = 1
-	}
 
-	public class ProducePrisitData
-	{
-		[JsonName ("P")]
-		public int ProduceID { set; get; }
-
-		[JsonName ("S")]
-		public bool IsOpen { set; get; }
-
-		[JsonName ("N")]
-		public int PeopleNum { set; get; }
-	}
-
-	public class PlayerData
-	{
-		[JsonName ("K")]
-		public int Key { set; get; }
-
-		[JsonName ("V")]
-		public int Value { set; get; }
-	}
 }

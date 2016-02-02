@@ -14,7 +14,7 @@ namespace Assets.Scripts.DataManagers
         public void Presist()
         {
             Tools.PresistTool.SaveJson(MapIDS.ToList(),MAP_LIST_FILE);
-
+			Tools.PresistTool.SaveJson (MapCompleteds.ToList (), COMPLETE_LIST);
             foreach(var i in _maps)
             {
                 if (!i.Value.IsChanged)
@@ -37,12 +37,24 @@ namespace Assets.Scripts.DataManagers
                 }
             }
 
+			var comps = Tools.PresistTool.LoadJson<List<int>> (COMPLETE_LIST);
+			MapCompleteds = new HashSet<int> ();
+			if (comps != null) {
+				foreach (var i in comps) {
+					if (MapCompleteds.Contains (i))
+						continue;
+					MapCompleteds.Add (i);
+				}
+			}
+
             _maps = new Dictionary<int, MapPresistData>();
             foreach(var i in MapIDS)
             {
                 var data = Tools.PresistTool.LoadJson<MapPresistData>(GetMapFileName(i));
                 _maps.Add(data.MapID, data);
             }
+
+
         }
 
 		public List<int> GetOpenedMaps()
@@ -50,9 +62,15 @@ namespace Assets.Scripts.DataManagers
 			return MapIDS.ToList ();
 		}
 
+		public List<int> GetCompletedMaps()
+		{
+			return MapCompleteds.ToList ();
+		}
+
         public void Reset()
         {
             MapIDS = new HashSet<int>();
+			MapCompleteds = new HashSet<int> ();
             foreach(var i in _maps)
             {
                 i.Value.IsChanged = true;
@@ -65,6 +83,7 @@ namespace Assets.Scripts.DataManagers
 
         public const string MAP_FORMAT_STR = "__MAP__{0:0000}.json";
         public const string MAP_LIST_FILE = "__MAP_LIST.json";
+		public const string COMPLETE_LIST = "__MAP_COMPLETE_LIST.json";
 
 		public void RecordMap(int mapID, 
 			int index,
@@ -202,6 +221,7 @@ namespace Assets.Scripts.DataManagers
         }
 
         private HashSet<int> MapIDS { set; get; }
+		private HashSet<int> MapCompleteds{ set; get; }
 
 		public void OpenClosedIndex(int mapID, int index, GameMap map)
 		{
@@ -242,6 +262,9 @@ namespace Assets.Scripts.DataManagers
 		{
 			if (value <= 0)
 				return;
+
+			AchievementManager.Singleton.Export (mapID,value);
+
 			MapPresistData map;
 			if (_maps.TryGetValue (mapID, out map)) {
 				//处理每次添加
@@ -303,19 +326,9 @@ namespace Assets.Scripts.DataManagers
 			}
 			return false;
 		}
-     
-		public void GotoNextMap(int mapID, int index)
+    
+		public void OpenMap(int mapID)
 		{
-			RecordMap (mapID, index, true, string.Empty, false, true);
-			TryToAddExploreValue (mapID, index);
-
-			var nextMap = mapID + 1;
-
-			OpenMap (nextMap);
-			//App.GameAppliaction.Singleton.GoToExplore (nextMap);
-		}
-
-		public void OpenMap(int mapID){
 			var mapConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MapConfig>(mapID);
 			if(mapConfig==null) return;
 			MapPresistData map;
@@ -323,6 +336,15 @@ namespace Assets.Scripts.DataManagers
 				return;
 			}
 			map =CreateMapPresistData (mapID);
+		}
+
+		public void CompletedMap(int map)
+		{
+			if (this.MapCompleteds.Contains (map))
+				return;
+			MapCompleteds.Add (map);
+			AchievementManager.Singleton.MapCompleted (map);
+			this.Presist ();
 		}
 	}
 

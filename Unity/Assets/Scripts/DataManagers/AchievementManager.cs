@@ -6,6 +6,14 @@ using System.Text;
 
 namespace Assets.Scripts.DataManagers
 {
+	public class AchievementData
+	{
+		[JsonName("I")]
+		public int ID { set; get; }
+		[JsonName("P")]
+		public string Pararms { set; get; }
+	}
+
     public class AchievementManager : Tools.XSingleton<AchievementManager>, IPresist
     {
         public const string ACHIEVEMENT_DATA = "__ACHIEVEMENT_DATA.JSON";
@@ -32,12 +40,22 @@ namespace Assets.Scripts.DataManagers
         
         }
 
+		public void CostCoin(int coin)
+		{
+			
+		}
+
+		public void ProduceGold(int gold)
+		{
+			
+		}
+
         public void BuildLevel(int buildID, int level)
         { 
         
         }
 
-        public void Export(int exportValue)
+        public void Export(int mapID ,int exportValue)
         { 
         
         }
@@ -47,15 +65,13 @@ namespace Assets.Scripts.DataManagers
         
         }
 
+		public void MapCompleted(int mapID)
+		{
+		   
+		}
 
     }
 
 
-    public class AchievementData
-    {
-        [JsonName("I")]
-        public int ID { set; get; }
-        [JsonName("P")]
-        public string Pararms { set; get; }
-    }
+ 
 }

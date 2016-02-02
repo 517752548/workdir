@@ -117,11 +117,14 @@ namespace Assets.Scripts.DataManagers
                     GamePlayerManager.Singleton.SubGold(build.CostGold);
                 AddOrlevelUPBuild(build.BuildingId, level);
                 BuildEvent(build);
+
+				AchievementManager.Singleton.BuildLevel (build.BuildingId, level);
             }
             else
             {
                 UI.UITipDrawer.Singleton.DrawNotify(sb.ToString());
             }
+
 
             return have;
         }

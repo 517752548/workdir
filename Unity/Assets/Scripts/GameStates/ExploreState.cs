@@ -235,12 +235,7 @@ namespace Assets.Scripts.GameStates
 								JoinCastle ();
 								break;
 							case Proto.MapEventType.GoToNextLvlPos:
-								if (!DataManagers.PlayerMapManager.Singleton.IsExplored (Config.ID, index)) {
-									
-									DataManagers.PlayerMapManager.Singleton.GotoNextMap(Config.ID,index);
-								}
 								UI.UIControllor.Singleton.ShowMapListUI ();
-
 								break;
 							case Proto.MapEventType.PKEnterPos:
 								var pkNeedItem = Tools.UtilityTool.SplitIDS (i.Pars1);
@@ -518,7 +513,27 @@ namespace Assets.Scripts.GameStates
 
 		private  void MonsterDead(int monsterID)
 		{
+			MapUnlockType type = (MapUnlockType)Config.OpenCondtion;
+			if (type == MapUnlockType.KillMonster) {
+				var killed = Tools.UtilityTool.ConvertToInt (Config.OpenParams);
+				if (killed == monsterID) {
+					CompletedMap ();
+				}
+			}
 			//monster dead;
+		}
+
+		private void CompletedMap()
+		{
+			MapUnlockModeType unlockMode = (MapUnlockModeType)Config.UnlockMode;
+			switch (unlockMode) {
+			case MapUnlockModeType.UnlockMap:
+				var unlockMapID = Tools.UtilityTool.ConvertToInt (Config.UnlockParams);
+				PlayerMapManager.Singleton.OpenMap (unlockMapID);
+				break;
+			}
+
+			PlayerMapManager.Singleton.CompletedMap (this.Config.ID);
 		}
 
 		public void StartBattle (int battlegroup, int index, Action<bool> callBack)
