@@ -37,7 +37,7 @@ namespace Assets.Scripts.GameStates
 			} else {
 				TargetPos = lastPos.Value;
 			}
-			RecordPos (TargetPos, true);
+			RecordPos (null,TargetPos, true);
 
 			Map.LookAt (TargetPos, true);
 			Map.SetZone (4, true);
@@ -91,12 +91,10 @@ namespace Assets.Scripts.GameStates
 			base.OnTap (pox);
 			if (CheckWaiting ())
 				return;
-			Debug.Log ("V:" + pox);
+
+
 			var org = new Vector2 (Screen.width / 2, Screen.height / 2);
-			//var distance = Vector2.Distance(org, pox);
 			var d = (pox - org).normalized;
-			Debug.Log ("D:" + d);
-			//TargetPos += Vector2.up;
 			lastPos = TargetPos;
 			if (Mathf.Abs (d.x) > 0.8) {
 				if (d.x > 0) {
@@ -121,7 +119,7 @@ namespace Assets.Scripts.GameStates
 
 			delayChange = Time.time + Map.LookAt (TargetPos);
 			targetPosPlayer = Map.GetPositionOfGrid (TargetPos);
-			//Debug.Log ("Target:" + TargetPos + "Time:" + delayChange);
+
 		}
 
 		private float delayChange = -1f;
@@ -131,7 +129,7 @@ namespace Assets.Scripts.GameStates
 			if (delayChange > 0) {
 				if (delayChange <= Time.time) {
 					delayChange = -1f;
-					OnChange (TargetPos);
+					OnChange (lastPos, TargetPos);
 					return false;
 				} else {
 					return true;
@@ -168,7 +166,7 @@ namespace Assets.Scripts.GameStates
 
         
         
-		public void OnChange (Vector2 target)
+		public void OnChange (Vector2 oldPos,Vector2 target)
 		{
 
 			if (!Map.HaveIndex (target)) {
@@ -206,7 +204,7 @@ namespace Assets.Scripts.GameStates
 										ui.ShowResult (this.Config.ID, items, index);
 										ui.callAfterCollect = SaveBattlePos;
 									}
-									RecordPos (target); 
+									RecordPos(oldPos, target); 
 									return;
 								}
 
@@ -220,7 +218,7 @@ namespace Assets.Scripts.GameStates
 												Config.ID, 
 												index, true,
 												string.Empty, false, true);
-											RecordPos (target);
+											RecordPos (oldPos,target);
 										} else {
 											GoBack ();
 										}
@@ -248,7 +246,7 @@ namespace Assets.Scripts.GameStates
 											StartBattle (pkBattleGroup, index, 
 												(winner) => {
 													if (winner) {
-														RecordPos (target);
+														RecordPos (oldPos,target);
 													} else {
 														GoBack ();
 													}
@@ -281,7 +279,7 @@ namespace Assets.Scripts.GameStates
 										StartBattle (pkBattleGroup, index, 
 											(winner) => {
 												if (winner) {
-													RecordPos (target);
+													RecordPos (oldPos, target);
 												} else {
 													GoBack ();
 												}
@@ -300,7 +298,7 @@ namespace Assets.Scripts.GameStates
 											index,
 											SaveBattlePos);
 									}
-									RecordPos (target);
+									RecordPos (oldPos, target);
 									break;
 								} else {
 									var needitems = Tools.UtilityTool.SplitIDS (i.Pars1);
@@ -328,7 +326,7 @@ namespace Assets.Scripts.GameStates
 											rewardItemDatas, index,
 											SaveChestBoxPos);
 										PlayerMapManager.Singleton.RecordMap (Config.ID, index, true, string.Empty, false, true);
-										RecordPos (target);
+										RecordPos (oldPos, target);
 									} else {
 										var cheshItemName = string.Empty;
 										var configChesh = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (needitems [0]);
@@ -359,7 +357,7 @@ namespace Assets.Scripts.GameStates
 										StartBattle (randmonBattleGroupID, index, 
 											(winner) => {
 												if (winner) {
-													RecordPos (target);
+													RecordPos (oldPos, target);
 												} else {
 													GoBack ();
 												}
@@ -387,13 +385,13 @@ namespace Assets.Scripts.GameStates
 									index, 
 									rechageItemDatas);
 								_tempPosIndex.Add (index);
-								RecordPos (target);
+								RecordPos (oldPos, target);
 								break;
 							case Proto.MapEventType.ScrectShopPos:
 								//OPEN  SHOW 
 								var shopID = Tools.UtilityTool.ConvertToInt (i.Pars1);
 								UI.UIControllor.Singleton.OpenScrectShop (shopID, Config.ID, index);
-								RecordPos (target);
+								RecordPos (oldPos, target);
 								break;
 
 							}
@@ -420,7 +418,7 @@ namespace Assets.Scripts.GameStates
 				}
 				//记录当前行走点
 
-				RecordPos (target);
+				RecordPos (oldPos, target);
 			}
 		}
 
@@ -432,7 +430,7 @@ namespace Assets.Scripts.GameStates
 			Map.LookAt (TargetPos);
 		}
 
-		private void RecordPos (Vector2? target, bool isEnter = false)
+		private void RecordPos (Vector2? last, Vector2? target, bool isEnter = false)
 		{
 			DataManagers.GamePlayerManager.Singleton.GoPos (target);
 			if (target == null)
@@ -457,8 +455,8 @@ namespace Assets.Scripts.GameStates
 				UI.UITipDrawer.Singleton.DrawNotify (str);
 				return;
 			}
-			int index = GamePlayerManager.PosXYToIndex ((int)target.Value.x, (int)target.Value.y);
 
+			int index = GamePlayerManager.PosXYToIndex ((int)target.Value.x, (int)target.Value.y);
 			DataManagers.PlayerMapManager.Singleton.TryToAddExploreValue (Config.ID, index);
 
 			DataManagers.PlayerMapManager.Singleton.OpenClosedIndex (Config.ID,
@@ -496,7 +494,7 @@ namespace Assets.Scripts.GameStates
 					return;
 				}
 			}
-			RecordPos (null);//回城的时候
+			RecordPos (null,null);//回城的时候
 			App.GameAppliaction.Singleton.JoinCastle ();
 			PlayerItemManager.Singleton.JoinCastle ();
 		}
@@ -581,7 +579,7 @@ namespace Assets.Scripts.GameStates
 								sb.Append (string.Format (LanguageManager.Singleton ["BATTLE_DEAD"], config.Name));
 							}
 							JoinCastle ();
-							RecordPos (null);
+							RecordPos (null, null);
 							var str = LanguageManager.Singleton ["EXPLORE_BATTLE_F"] + sb.ToString ();
 							UI.UIControllor.Singleton.ShowMessage (str);
 							UI.UITipDrawer.Singleton.DrawNotify (str);

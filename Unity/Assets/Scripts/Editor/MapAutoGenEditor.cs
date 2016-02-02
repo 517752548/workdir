@@ -21,9 +21,27 @@ public class MapAutoGenEditor:EditorWindow
 	[MenuItem ("GAME/MAP/REFRESH_ALL_SPRITE")]
 	public static void ResetAllSprite ()
 	{
+		var res = AssetDatabase.LoadAssetAtPath ("Assets/Maps/Texture/gezi.png", typeof(Sprite)) as Sprite;
 		var grid = GameObject.FindObjectsOfType<MapPosition> ();
 		foreach (var i in grid) {
 			MapAutoGenEditor.SetType (i);
+		}
+
+		var groundRoot = GameObject.Find ("MAP_ROOT");
+		var root = groundRoot.transform.FindChild<Transform> ("GROUND");
+		for (var i = 0; i < root.childCount; i++) {
+			var ground = root.GetChild (i);
+			var gr = ground.FindChild<SpriteRenderer>("groundgrid");
+			if (gr == null) {
+				var g = new GameObject ("groundgrid", typeof(SpriteRenderer));
+				g.transform.parent = ground;
+				g.transform.localPosition = Vector3.zero;
+				gr = g.GetComponent<SpriteRenderer> ();
+			}
+
+			gr.sprite = res;
+			gr.sortingOrder = 1;
+					//GROUND
 		}
 	}
 
@@ -229,7 +247,7 @@ public class MapAutoGenEditor:EditorWindow
 			sprite = pos.gameObject.AddComponent<SpriteRenderer> ();
 		}
 		sprite.sprite = sp;
-		sprite.sortingOrder = 1;
+		sprite.sortingOrder = 2;
 	    
 		var explore = pos.transform.FindChild<SpriteRenderer> ("explored");
 		if (explore == null) {
@@ -242,7 +260,7 @@ public class MapAutoGenEditor:EditorWindow
 			render.sprite = 
 				MapTypeSpritesEditorWindow.GetExploreSpriteByType (pos.DataType);
 			obj.SetActive (false);
-			render.sortingOrder = 1;
+			render.sortingOrder = 2;
 		} else {
 			explore.sprite =
 				MapTypeSpritesEditorWindow.GetExploreSpriteByType (pos.DataType);
