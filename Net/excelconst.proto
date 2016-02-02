@@ -167,3 +167,16 @@ enum HeroJob
 	Yao =2 ;//妖
 	Ming =3;//冥
 }
+
+//过关条件
+enum MapUnlockType
+{
+   KillMonster = 1 ;//击杀boss
+}
+
+//解锁方式
+enum MapUnlockModeType
+{
+   None =-1;//没有
+   UnlockMap =1 ;//开启地图
+}

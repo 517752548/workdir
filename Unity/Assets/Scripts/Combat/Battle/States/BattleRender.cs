@@ -11,7 +11,7 @@ namespace Assets.Scripts.Combat.Battle.States
         void ShowMonster(Elements.BattleArmy monster);
 
         void SetPerception(BattlePerception per);
-        int GetTapIndex();
+        int  GetTapIndex();
 
         int ReleaseTapIndex();
 
@@ -22,5 +22,7 @@ namespace Assets.Scripts.Combat.Battle.States
         void OnAttack(Elements.DamageResult result, Elements.BattleArmy cur);
 
         bool Cancel { get; }
+
+		void OnMonsterDead (int monsterID);
     }
 }

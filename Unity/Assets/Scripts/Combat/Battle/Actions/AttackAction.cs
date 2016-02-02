@@ -99,10 +99,17 @@ namespace Assets.Scripts.Combat.Battle.Actions
                     break;
             }
 
+
+
             if (result != null)
             {
                 var state = this.Perception.State as States.BattleState;
                 state.Render.OnAttack(result, cur);
+				if (Enemy.Camp == ArmyCamp.Monster) {
+					if (result.IsDead) {
+						state.Render.OnMonsterDead (Enemy.Soldiers [0].Soldier.ConfigID);
+					}
+				}
             }
 
 			var battleState = this.Perception.State as States.BattleState;

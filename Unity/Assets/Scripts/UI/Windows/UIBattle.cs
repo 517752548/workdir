@@ -238,7 +238,8 @@ namespace Assets.Scripts.UI.Windows
 				() => { 
 					Per.State.JoinAllItem();
 					Per.ResetAllSkillCD();
-					Per.State.Enable = true;  },
+					Per.State.Enable = true;  
+				},
 				() => {  ExitBattle(); }
 			);
             //UITipDrawer.Singleton.DrawNotify(battleConfig.Dialog);
@@ -253,7 +254,12 @@ namespace Assets.Scripts.UI.Windows
 		}
 
 
-
+		public void OnMonsterDead(int monsterID)
+		{
+			if (this.OnMonsterDeadCallBack == null)
+				return;
+			OnMonsterDeadCallBack (monsterID);
+		}
 
         public void OnAttack(Combat.Battle.Elements.DamageResult result,BattleArmy cur)
         {
@@ -300,5 +306,7 @@ namespace Assets.Scripts.UI.Windows
         {
             get { return _cancel; }
         }
+
+		public Action<int> OnMonsterDeadCallBack;
     }
 }

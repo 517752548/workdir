@@ -486,6 +486,7 @@ namespace Assets.Scripts.GameStates
 				return true;
 			return DataManagers.PlayerMapManager.Singleton.IsExplored (Config.ID, index);
 		}
+			
 
 		public void JoinCastle (bool useItem = false)
 		{
@@ -515,6 +516,10 @@ namespace Assets.Scripts.GameStates
 			PlayerMapManager.Singleton.SaveChestBoxIndex (mapID, indexPos, list);
 		}
 
+		private  void MonsterDead(int monsterID)
+		{
+			//monster dead;
+		}
 
 		public void StartBattle (int battlegroup, int index, Action<bool> callBack)
 		{
@@ -525,6 +530,7 @@ namespace Assets.Scripts.GameStates
 #region OK
 			Action ok = () => {
 				var battleUI = UI.Windows.UIBattle.Show ();
+				battleUI.OnMonsterDeadCallBack = MonsterDead;
 				var soldiers = DataManagers.PlayerArmyManager.Singleton.GetTeam ();
 				BState = new Combat.Battle.States.BattleState (
 					battlegroup,
