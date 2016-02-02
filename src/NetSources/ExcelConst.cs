@@ -514,4 +514,30 @@ namespace Proto
         Ming=3,
 
     }
+   /// <summary>
+    /// 过关条件
+    /// </summary>
+    public enum MapUnlockType
+    {
+        /// <summary>
+        /// 击杀boss
+        /// </summary>
+        KillMonster=1,
+
+    }
+   /// <summary>
+    /// 解锁方式
+    /// </summary>
+    public enum MapUnlockModeType
+    {
+        /// <summary>
+        /// 没有
+        /// </summary>
+        None=-1,
+        /// <summary>
+        /// 开启地图
+        /// </summary>
+        UnlockMap=1,
+
+    }
 }

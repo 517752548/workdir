@@ -1779,6 +1779,31 @@
             冥
             </summary>
         </member>
+        <member name="T:Proto.MapUnlockType">
+            <summary>
+            过关条件
+            </summary>
+        </member>
+        <member name="F:Proto.MapUnlockType.KillMonster">
+            <summary>
+            击杀boss
+            </summary>
+        </member>
+        <member name="T:Proto.MapUnlockModeType">
+            <summary>
+            解锁方式
+            </summary>
+        </member>
+        <member name="F:Proto.MapUnlockModeType.None">
+            <summary>
+            没有
+            </summary>
+        </member>
+        <member name="F:Proto.MapUnlockModeType.UnlockMap">
+            <summary>
+            开启地图
+            </summary>
+        </member>
         <member name="T:Proto.GameVersion">
             <summary>
             
