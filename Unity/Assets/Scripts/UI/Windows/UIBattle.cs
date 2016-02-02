@@ -7,6 +7,7 @@ using Assets.Scripts.Combat.Battle.States;
 using ExcelConfig;
 using Assets.Scripts.Combat.Battle.Elements;
 using UnityEngine;
+using System.Collections;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -277,9 +278,18 @@ namespace Assets.Scripts.UI.Windows
             {
                 var an = this.zhuahenFx.GetComponent<Animator>();
                 an.SetTrigger("Start");
+				StopAllCoroutines ();
+				StartCoroutine(DoetScale ());
                 UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["LOST_HP"], result.Damage));
             }
         }
+
+		private IEnumerator DoetScale()
+		{
+			TweenScale.Begin (this.MonsterRoot.gameObject, 0.1f, new Vector3 (2, 2, 2)).style = UITweener.Style.Once;
+			yield return new  WaitForSeconds (0.1f);
+			TweenScale.Begin (this.MonsterRoot.gameObject, 0.1f, new Vector3 (1, 1, 1)).style = UITweener.Style.Once;
+		}
 
         private float targetPlayerHp =1f;
         private float targetMonsterHp = 1f;

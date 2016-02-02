@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Assets.Scripts.Tools;
+using System.Collections;
 
 namespace Assets.Scripts.UI
 {
@@ -93,14 +94,25 @@ namespace Assets.Scripts.UI
 		{
 			CanDestoryWhenHide = true;
 		}
-        private GameObject Root { set; get; }
+		public GameObject Root { private set;  get; }
         public void Init(GameObject root)
         {
             WindowEffect = root.GetComponent<IEffect>();
             State = WindowStates.Normal;
             Root = root;
+			Mate = Root.AddComponent<UIResourcesMate> ();
             OnCreate();
         }
+		private UIResourcesMate Mate{ set; get; }
+
+		public void StartCoroutine(IEnumerator coroutine)
+		{
+			Mate.StartCoroutine (coroutine);
+		}
+
+		public void StopAllCoroutines(){
+			Mate.StopAllCoroutines ();
+		}
 
         private IEffect WindowEffect;
         public bool CanDestoryWhenHide { set; get; }
@@ -190,6 +202,7 @@ namespace Assets.Scripts.UI
 
         public void HideWindow()
         {
+			Mate.StopAllCoroutines ();
             if (Model == ShowModel.Children)
             {
                 if (parent != null)

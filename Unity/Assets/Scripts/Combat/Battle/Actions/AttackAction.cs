@@ -104,7 +104,11 @@ namespace Assets.Scripts.Combat.Battle.Actions
                 var state = this.Perception.State as States.BattleState;
                 state.Render.OnAttack(result, cur);
             }
+
+			var battleState = this.Perception.State as States.BattleState;
+			battleState.WaitForSeconds (0.3f);
         }
+
 
         //战斗计算在这里
     }
