@@ -295,7 +295,7 @@ public class MapAutoGenEditor:EditorWindow
 			sprite = pos.gameObject.AddComponent<SpriteRenderer> ();
 		}
 		sprite.sprite = sp;
-		sprite.sortingOrder = 3;
+		sprite.sortingOrder = 2;
 	    
 		var explore = pos.transform.FindChild<SpriteRenderer> ("explored");
 		if (explore == null) {
@@ -308,7 +308,7 @@ public class MapAutoGenEditor:EditorWindow
 			render.sprite = 
 				MapTypeSpritesEditorWindow.GetExploreSpriteByType (pos.DataType);
 			obj.SetActive (false);
-			render.sortingOrder = 2;
+			render.sortingOrder = 3;
 		} else {
 			explore.sprite =
 				MapTypeSpritesEditorWindow.GetExploreSpriteByType (pos.DataType);

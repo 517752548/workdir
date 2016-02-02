@@ -40,7 +40,7 @@ namespace Assets.Scripts.GameStates
 			RecordPos (null,TargetPos, true);
 
 			Map.LookAt (TargetPos, true);
-			Map.SetZone (4, true);
+			Map.SetZone (6, true);
 
 			player = GameObject.Instantiate<GameObject> (ResourcesManager.Singleton.LoadResources<GameObject> (PLAY_RES));
 			lastPos = targetPosPlayer = player.transform.position = Map.GetPositionOfGrid (TargetPos);
@@ -234,6 +234,7 @@ namespace Assets.Scripts.GameStates
 								break;
 							case Proto.MapEventType.GoToNextLvlPos:
 								UI.UIControllor.Singleton.ShowMapListUI ();
+								RecordPos (oldPos,target);
 								break;
 							case Proto.MapEventType.PKEnterPos:
 								var pkNeedItem = Tools.UtilityTool.SplitIDS (i.Pars1);
@@ -436,7 +437,8 @@ namespace Assets.Scripts.GameStates
 			if (target == null)
 				return;
 
-
+			if (last == null)
+				return;
 			
 			if (!isEnter && !DataManagers.GamePlayerManager.Singleton.CostFood (1)) {
 				DataManagers.PlayerItemManager.Singleton.EmptyPackage ();
@@ -457,10 +459,11 @@ namespace Assets.Scripts.GameStates
 			}
 
 			int index = GamePlayerManager.PosXYToIndex ((int)target.Value.x, (int)target.Value.y);
+			int oldIndex= GamePlayerManager.PosXYToIndex ((int)last.Value.x, (int)last.Value.y);
 			DataManagers.PlayerMapManager.Singleton.TryToAddExploreValue (Config.ID, index);
 
 			DataManagers.PlayerMapManager.Singleton.OpenClosedIndex (Config.ID,
-				index, this.Map);
+				index, oldIndex, this.Map);
 			
 			this.Map.EachAllPosition<MapPosition> ((t) => {
 				var open = DataManagers.PlayerMapManager.Singleton.IsOpen (Config.ID, t.ToIndex ());

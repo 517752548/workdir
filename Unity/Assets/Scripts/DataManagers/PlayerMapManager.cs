@@ -223,25 +223,27 @@ namespace Assets.Scripts.DataManagers
         private HashSet<int> MapIDS { set; get; }
 		private HashSet<int> MapCompleteds{ set; get; }
 
-		public void OpenClosedIndex(int mapID, int index, GameMap map)
+		public void OpenClosedIndex(int mapID, int index, int old, GameMap map)
 		{
 			//size ;
-			var size =GameAppliaction.Singleton.ConstValues.OrignalVisual;
+			var size =GameAppliaction.Singleton.ConstValues.OrignalMoveStep;
 			//var size = 1;
 			var current = GamePlayerManager.IndexToPos (index);
+			var oldPos = GamePlayerManager.IndexToPos(old);
 
-			for (int x = -size; x <= size; x++) {
-				for (int y = -size; y <= size; y++) {
-					var pos = new UnityEngine.Vector2 (x+ current.x, y+current.y);
-					if (map.HaveIndex(pos)) {
-						//var recordValue = new MapPosData
-						RecordMap (mapID, 
-							GamePlayerManager.PosXYToIndex (
-								(int)pos.x, (int)pos.y), 
-							true,string.Empty, false,false);
-					}
+			var forward = current - oldPos;
+			for (var i = 0; i < size; i++) {
+				var pos =  current + (forward* (i));
+				if (map.HaveIndex(pos)) {
+					//var recordValue = new MapPosData
+					RecordMap (mapID, 
+						GamePlayerManager.PosXYToIndex (
+							(int)pos.x, (int)pos.y), 
+						true,string.Empty, false,false);
 				}
 			}
+
+
 		}
 
 		public void TryToAddExploreValue (int mapID, int index)

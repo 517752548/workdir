@@ -118,7 +118,7 @@ public class GameMap : MonoBehaviour {
 		var rect = new Rect (0, 0, this.CurrentMap.Width, this.CurrentMap.Height);
 		int x = -size;
 		int y = -size;
-		var spArr= new string[]{"dg_fangkuai_lan","dg_fangkuai_lv"};
+		var spArr= new string[]{"mask","mask"};
 		var bound = new GameObject ("Bound");
 		bound.transform.parent = this.transform;
 		bound.transform.localPosition = Vector3.zero;
