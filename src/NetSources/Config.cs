@@ -602,6 +602,12 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(13)]
         public int ShareRewardGem { set; get; }
+        
+        /// <summary>
+        /// 初始移动格数
+        /// </summary>
+        [ExcelConfigColIndex(14)]
+        public int OrignalMoveStep { set; get; }
 
     }
 
