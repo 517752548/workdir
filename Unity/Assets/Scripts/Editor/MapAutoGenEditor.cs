@@ -247,7 +247,7 @@ public class MapAutoGenEditor:EditorWindow
 			sprite = pos.gameObject.AddComponent<SpriteRenderer> ();
 		}
 		sprite.sprite = sp;
-		sprite.sortingOrder = 2;
+		sprite.sortingOrder = 3;
 	    
 		var explore = pos.transform.FindChild<SpriteRenderer> ("explored");
 		if (explore == null) {

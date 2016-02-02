@@ -153,19 +153,8 @@ public class MapTypeSpritesEditorWindow : EditorWindow
 
 	public static Sprite GetExploreSpriteByType(MapEventType type)
 	{
-		foreach (var i in SaveData)
-		{
-			if (i.Type == type)
-			{
-				if (!string.IsNullOrEmpty(i.GUIDOpen))
-				{
-					return AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(i.GUIDOpen),
-						typeof(Sprite)) as Sprite;
-				}
-			}
-		}
-
-		return null;
+		return AssetDatabase.LoadAssetAtPath("Assets/Maps/TypeTexutre/dg_exlpored.png",
+			typeof(Sprite)) as Sprite;
 	}
 
 }
