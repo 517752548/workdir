@@ -479,6 +479,11 @@
             每日分享奖励钻石
             </summary>
         </member>
+        <member name="P:ExcelConfig.ConstAttConfig.OrignalMoveStep">
+            <summary>
+            初始移动格数
+            </summary>
+        </member>
         <member name="T:ExcelConfig.BuildingConfig">
             <summary>
             建筑表
