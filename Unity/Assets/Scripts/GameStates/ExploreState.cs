@@ -34,6 +34,10 @@ namespace Assets.Scripts.GameStates
 			var lastPos = DataManagers.GamePlayerManager.Singleton.CurrentPos;
 			if (lastPos == null) { //中心点
 				TargetPos = Map.Orgin;
+				//Near 
+				DataManagers.PlayerMapManager.Singleton.OpenNearIndex (Config.ID, TargetPos.ToIndex (),
+					App.GameAppliaction.Singleton.ConstValues.OrignalVisual, this.Map);
+					
 			} else {
 				TargetPos = lastPos.Value;
 			}
@@ -213,12 +217,12 @@ namespace Assets.Scripts.GameStates
 									
 									StartBattle (battleGroups, index, (winner) => {
 										if (winner) {
-											
+											RecordPos (oldPos,target);
 											PlayerMapManager.Singleton.RecordMap (
 												Config.ID, 
 												index, true,
 												string.Empty, false, true);
-											RecordPos (oldPos,target);
+											
 										} else {
 											GoBack ();
 										}

@@ -223,6 +223,29 @@ namespace Assets.Scripts.DataManagers
         private HashSet<int> MapIDS { set; get; }
 		private HashSet<int> MapCompleteds{ set; get; }
 
+		public void OpenNearIndex(int mapID, int index,int size,GameMap map)
+		{
+			
+			//var size = 1;
+			var current = GamePlayerManager.IndexToPos (index);
+			//var oldPos = GamePlayerManager.IndexToPos(old);
+
+
+			for (var i = -size; i < size; i++) {
+				for (var j = -size; j < size; j++) {
+					var pos = current + new UnityEngine.Vector2(i,j);
+					if (map.HaveIndex (pos)) {
+						//var recordValue = new MapPosData
+						RecordMap (mapID, 
+							GamePlayerManager.PosXYToIndex (
+								(int)pos.x, (int)pos.y), 
+							true, string.Empty);
+					}
+				}
+			}
+
+		}
+
 		public void OpenClosedIndex(int mapID, int index, int old, GameMap map)
 		{
 			//size ;
@@ -239,7 +262,7 @@ namespace Assets.Scripts.DataManagers
 					RecordMap (mapID, 
 						GamePlayerManager.PosXYToIndex (
 							(int)pos.x, (int)pos.y), 
-						true,string.Empty, false,false);
+						true, string.Empty);
 				}
 			}
 

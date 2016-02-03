@@ -120,6 +120,13 @@ namespace Assets.Scripts.Tools
             return label.text;
         }
 
+		public static int ToIndex(this Vector2 ver)
+		{
+			var x = (int)ver.x;
+			var y = (int)ver.y;
+			return DataManagers.GamePlayerManager.PosXYToIndex (x, y);
+		}
+
         public static string ToDebugString(this MonsterConfig monster)
         {
             string format = "N:{0} L:{1} Res:{2} Damage:{3} Type:{4} Speed:{5} star:{6}";
