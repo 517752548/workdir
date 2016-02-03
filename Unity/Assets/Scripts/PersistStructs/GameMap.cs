@@ -36,6 +36,7 @@ public class GameMap : MonoBehaviour {
 
     public float LookAt(Vector2 grid, bool nodelay = false)
     {
+		gridGrid = grid;
         var center = (Vector3)grid * OneGridSize
             + new Vector3(0, 0, -20);
         TargetPos = center;
@@ -46,6 +47,13 @@ public class GameMap : MonoBehaviour {
         }
         return 0.3f;
     }
+
+	private Vector2 gridGrid;
+
+	public Vector2 GetCurrent()
+	{
+		return  gridGrid - Orgin;
+	}
 
     public void SetTarget(float zone)
     {
@@ -164,8 +172,8 @@ public class GameMap : MonoBehaviour {
 
     internal bool HaveIndex(Vector2 target)
     {
-        int index = GamePlayerManager.PosXYToIndex((int)target.x, (int)target.y);
-        return AllPosition.ContainsKey(index);
+        //int index = GamePlayerManager.PosXYToIndex((int)target.x, (int)target.y);
+		return AllPosition.ContainsKey(target.ToIndex());
     }
 
 #if UNITY_EDITOR

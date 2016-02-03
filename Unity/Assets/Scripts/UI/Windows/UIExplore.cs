@@ -11,6 +11,38 @@ namespace Assets.Scripts.UI.Windows
 {
     partial class UIExplore
     {
+		public class BagGridTableModel : TableItemModel<BagGridTableTemplate>
+		{
+
+			public BagGridTableModel() { }
+			public override void InitModel()
+			{
+				//todo
+			}
+			private DataManagers.PlayerGameItem _GameItem;
+			public DataManagers.PlayerGameItem GameItem
+			{
+				get
+				{
+					return _GameItem;
+				}
+				set
+				{
+					_GameItem = value;
+					Template.lb_name.text = value.Config.Name;
+					Template.lv_num.text = string.Format(string.Format(LanguageManager.Singleton["APP_NUM_FORMAT"], value.Num));
+				}
+			}
+
+			public void SetDrag(bool canDrag)
+			{
+				var d = this.Item.Root.GetComponent<UIDragScrollView>();
+				if (d == null)
+					return;
+				d.enabled = canDrag;
+			}
+		}
+
         public UIExplore()
         {
             NoCollider = true;
@@ -39,6 +71,7 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShow();
 			OnUpdateUIData ();
+			this.s_bagRoot.ActiveSelfObject (false);
         }
         public override void OnHide()
         {
@@ -62,7 +95,14 @@ namespace Assets.Scripts.UI.Windows
 
 			lb_food.text = string.Format (LanguageManager.Singleton ["UI_EXPLORE_FOOD"], foodNum);
 			lb_package.text = string.Format ("{0}/{1}", packageCur, packageSize);
+			var cur = map.GetCurrent();
+			lb_vector.text = string.Format (LanguageManager.Singleton ["UI_EXPLORE_VECTOR"], cur.x, cur.y);
 			
+		}
+		private GameMap map;
+		public void SetMap(GameMap map)
+		{
+			this.map = map;
 		}
     }
 }

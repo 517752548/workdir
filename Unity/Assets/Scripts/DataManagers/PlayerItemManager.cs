@@ -11,6 +11,15 @@ using Proto;
 
 namespace Assets.Scripts.DataManagers
 {
+
+	public class ShopPersistData
+	{
+		[JsonName("i")]
+		public int entry{set;get;}
+		[JsonName("n")]
+		public int count{ set; get; }
+	}
+
     public class PlayerItemManager : Tools.XSingleton<PlayerItemManager>, IPresist
     {
 
@@ -467,11 +476,4 @@ namespace Assets.Scripts.DataManagers
         }
     }
 
-	public class ShopPersistData
-	{
-		[JsonName("i")]
-		public int entry{set;get;}
-		[JsonName("n")]
-		public int count{ set; get; }
-	}
 }

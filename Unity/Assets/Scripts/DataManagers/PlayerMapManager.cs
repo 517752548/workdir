@@ -6,9 +6,94 @@ using System.Text;
 using Assets.Scripts.App;
 using Proto;
 using ExcelConfig;
+using Assets.Scripts.Tools;
+using UnityEngine;
 
 namespace Assets.Scripts.DataManagers
 {
+	public class MapPosData{
+		[JsonName("I")]
+		public int Index { set; get; }
+		[JsonName("O")]
+		public bool IsOpened{ set; get; }
+		[JsonName("V")]
+		public string Json { set; get; }
+		[JsonName("EP")]
+		public bool IsExplored{ set; get; }
+	}
+
+	public class BattlePosData
+	{
+		[JsonName("IS")]
+		public List<Item> Items{ set; get; }
+	}
+
+	public class ChestBoxData
+	{
+		[JsonName("IS")]
+		public List<Item> Items{ set; get; }
+	}
+	public class MapPresistData
+	{
+		[JsonName("M")]
+		public int MapID { set; get; }
+
+		[JsonName("EV")]
+		public int ExploreValue{ set; get; }
+
+		[JsonName("AP")]
+		public List<int> AddExploreValue{ set; get; }
+
+		[JsonName("PS")]
+		public List<MapPosData> SavePosistions
+		{
+			set
+			{
+				Posistions = new Dictionary<int, MapPosData>();
+				foreach (var i in value)
+				{
+					Posistions.Add(i.Index, i);
+				}
+			}
+			get
+			{
+				return Posistions.Values.ToList();
+			}
+		}
+
+		[JsonIgnore]
+		public Dictionary<int, MapPosData> Posistions { set; get; }
+
+		[JsonIgnore]
+		public bool IsChanged { set; get; }
+
+		[JsonIgnore]
+		public MapPosData this[int index]
+		{
+			set
+			{
+				if (Posistions.ContainsKey(index))
+					Posistions[index] = value;
+				else
+					Posistions.Add(index, value);
+			}
+			get
+			{
+				if (Posistions.ContainsKey(index))
+					return Posistions[index];
+				else
+					return null;
+			}
+		}
+
+		public MapPresistData()
+		{
+			IsChanged = false;
+			Posistions = new Dictionary<int, MapPosData>();
+			AddExploreValue = new List<int> ();
+		}
+	}
+
     public class PlayerMapManager:Tools.XSingleton<PlayerMapManager>, IPresist
     {
         public void Presist()
@@ -118,7 +203,6 @@ namespace Assets.Scripts.DataManagers
 					IsOpened = isOpen, 
 					IsExplored = explored
 				};
-				//TryToAddExploreValue (mapID, index);
 			}
 		}
 
@@ -225,14 +309,9 @@ namespace Assets.Scripts.DataManagers
 
 		public void OpenNearIndex(int mapID, int index,int size,GameMap map)
 		{
-			
-			//var size = 1;
 			var current = GamePlayerManager.IndexToPos (index);
-			//var oldPos = GamePlayerManager.IndexToPos(old);
-
-
-			for (var i = -size; i < size; i++) {
-				for (var j = -size; j < size; j++) {
+			for (var i = -size; i <= size; i++) {
+				for (var j = -size; j <= size; j++) {
 					var pos = current + new UnityEngine.Vector2(i,j);
 					if (map.HaveIndex (pos)) {
 						//var recordValue = new MapPosData
@@ -246,27 +325,45 @@ namespace Assets.Scripts.DataManagers
 
 		}
 
+		private static Vector2[] _round = new UnityEngine.Vector2[]{
+			Vector2.up,Vector2.left, Vector2.down, Vector2.right
+		};
+
 		public void OpenClosedIndex(int mapID, int index, int old, GameMap map)
 		{
-			//size ;
 			var size =GameAppliaction.Singleton.ConstValues.OrignalMoveStep;
-			//var size = 1;
 			var current = GamePlayerManager.IndexToPos (index);
 			var oldPos = GamePlayerManager.IndexToPos(old);
-
 			var forward = current - oldPos;
 			for (var i = 0; i < size; i++) {
 				var pos =  current + (forward* (i));
-				if (map.HaveIndex(pos)) {
-					//var recordValue = new MapPosData
-					RecordMap (mapID, 
-						GamePlayerManager.PosXYToIndex (
-							(int)pos.x, (int)pos.y), 
+				if (map.HaveIndex(pos)) 
+				{
+					RecordMap(mapID, 
+						pos.ToIndex(), 
 						true, string.Empty);
 				}
 			}
+		}
 
-
+		public bool IsAllOpen(int mapID,int index, GameMap map)
+		{
+			var pos = GamePlayerManager.IndexToPos (index);
+			int total = 0;
+			foreach (var i in _round) {
+				var tIndex = (pos + i);
+				if (map.HaveIndex (tIndex)) {
+					if (IsOpen (mapID, tIndex.ToIndex()))
+						total++;
+				} else {
+					total++;
+				}
+			}
+			if (total >= 3) {
+				RecordMap (mapID, index, true, string.Empty);
+				return true;
+			}
+			return false;
 		}
 
 		public void TryToAddExploreValue (int mapID, int index)
@@ -334,8 +431,8 @@ namespace Assets.Scripts.DataManagers
 		public bool IsOpen(int mapID,int index)
 		{
 			MapPosData data;
-			if (ReadMap (mapID, index, out data)) {
-			
+			if (ReadMap (mapID, index, out data))
+			{
 				return data.IsOpened;
 			}
 			return false;
@@ -372,89 +469,5 @@ namespace Assets.Scripts.DataManagers
 			this.Presist ();
 		}
 	}
-
-
-    public class MapPresistData
-    {
-        [JsonName("M")]
-        public int MapID { set; get; }
-
-		[JsonName("EV")]
-		public int ExploreValue{ set; get; }
-
-		[JsonName("AP")]
-		public List<int> AddExploreValue{ set; get; }
-
-        [JsonName("PS")]
-        public List<MapPosData> SavePosistions
-        {
-            set
-            {
-                Posistions = new Dictionary<int, MapPosData>();
-                foreach (var i in value)
-                {
-                    Posistions.Add(i.Index, i);
-                }
-            }
-            get
-            {
-                return Posistions.Values.ToList();
-            }
-        }
-
-        [JsonIgnore]
-        public Dictionary<int, MapPosData> Posistions { set; get; }
-
-        [JsonIgnore]
-        public bool IsChanged { set; get; }
-
-		[JsonIgnore]
-        public MapPosData this[int index]
-        {
-            set
-            {
-                if (Posistions.ContainsKey(index))
-                    Posistions[index] = value;
-                else
-                    Posistions.Add(index, value);
-            }
-            get
-            {
-                if (Posistions.ContainsKey(index))
-                    return Posistions[index];
-                else
-                    return null;
-            }
-        }
-
-        public MapPresistData()
-        {
-            IsChanged = false;
-            Posistions = new Dictionary<int, MapPosData>();
-			AddExploreValue = new List<int> ();
-        }
-    }
-
-    public class MapPosData{
-        [JsonName("I")]
-        public int Index { set; get; }
-		[JsonName("O")]
-		public bool IsOpened{ set; get; }
-        [JsonName("V")]
-        public string Json { set; get; }
-		[JsonName("EP")]
-		public bool IsExplored{ set; get; }
-    }
-
-	public class BattlePosData
-	{
-		[JsonName("IS")]
-		public List<Item> Items{ set; get; }
-	}
-
-	public class ChestBoxData
-	{
-		[JsonName("IS")]
-		public List<Item> Items{ set; get; }
-	}
+  
 }

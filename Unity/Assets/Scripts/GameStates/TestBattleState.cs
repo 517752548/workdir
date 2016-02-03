@@ -20,7 +20,7 @@ namespace Assets.Scripts.GameStates
             {
                 ui = UIBattle.Show();
             }
-            var battleGroup = ExcelToJSONConfigManager.Current.GetConfigByID<BattleGroupConfig>(battleID);
+            //var battleGroup = ExcelToJSONConfigManager.Current.GetConfigByID<BattleGroupConfig>(battleID);
             if (BState != null)
             {
                 BState.OnExit();

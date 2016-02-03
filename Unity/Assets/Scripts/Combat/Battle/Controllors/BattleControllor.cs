@@ -37,14 +37,14 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 						battle.ProcessDrop ();
 						if (battle.BattleIndex < battle.Battles.Length) {
 							if(battle.BattleIndex>0)
-							  state.WaitForSeconds (3);
+							  state.WaitForSeconds (2);
 							
 							battle.State = Assets.Scripts.Combat.Battle.Elements.BattleStateType.AddMonster;
 							return GAction.Empty;
 						}
 					} 
+					state.WaitForSeconds (2);
 					battle.State = Elements.BattleStateType.End;
-					TimeToEnd = Time.time + 1.5f;
 				}
 				return GAction.Empty;
 			case Elements.BattleStateType.AddMonster:
@@ -55,8 +55,6 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 				);
 				//break;
 			case Elements.BattleStateType.End:
-				if (TimeToEnd > Time.time)
-					return GAction.Empty;
 				if (per.PlayerDead ()) {   //玩家死亡
 					return new Actions.EndBattleAction (current, Perception) { 
 						Winner = Proto.ArmyCamp.Monster ,

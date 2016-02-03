@@ -119,7 +119,7 @@
   <LanguageKey Key="CANCEL_TITLE">退出？</LanguageKey> 
   <LanguageKey Key="CANCEL_MESSAGE">我要逃跑啊!</LanguageKey> 
   
- 
+  <LanguageKey Key="UI_EXPLORE_VECTOR">坐标：{0:0},{1:0}</LanguageKey>
   <LanguageKey Key="UI_EXPLORE_FOOD">干粮：{0}</LanguageKey>
   <LanguageKey Key="UI_EXPLORE_EXPLOREVALUE">探索度：{0:0}%</LanguageKey>
   <LanguageKey Key="UIEXPLORE_EXIT_TITLE">回城</LanguageKey> 
