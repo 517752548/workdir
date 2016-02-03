@@ -24,13 +24,7 @@ namespace Assets.Scripts.GameStates
 			UI.UIControllor.Singleton.HideAllUI ();
 			Map = GameObject.FindObjectOfType<GameMap> ();
 			Map.InitForExploreState ();
-			this.Map.EachAllPosition<MapPosition> ((t) => {
-				var open = DataManagers.PlayerMapManager.Singleton.IsOpen (Config.ID, t.ToIndex ());
-				t.SetMask (open);
-				var isExplored = IsExploredIndex (t.ToIndex ());
-				t.SetExplored (isExplored);
-				return false;
-			});
+	
 			var lastPos = DataManagers.GamePlayerManager.Singleton.CurrentPos;
 			if (lastPos == null) { //中心点
 				TargetPos = Map.Orgin;
@@ -49,6 +43,14 @@ namespace Assets.Scripts.GameStates
 			player = GameObject.Instantiate<GameObject> (ResourcesManager.Singleton.LoadResources<GameObject> (PLAY_RES));
 			lastPos = targetPosPlayer = player.transform.position = Map.GetPositionOfGrid (TargetPos);
 			UI.Windows.UIExplore.Show ();
+			this.Map.EachAllPosition<MapPosition> ((t) => {
+				var open = DataManagers.PlayerMapManager.Singleton.IsOpen (Config.ID, t.ToIndex ());
+				t.SetMask (open);
+				var isExplored = IsExploredIndex (t.ToIndex ());
+				t.SetExplored (isExplored);
+				return false;
+			});
+
 		}
 
 		private GameObject player;
@@ -79,7 +81,9 @@ namespace Assets.Scripts.GameStates
 		{
 			base.OnPinch (gesture);
 			float zone = 6;
-			if (gesture.State == GestureRecognitionState.Ended) {
+			//Debug.Log ("Pinch:"+gesture.State);
+			if (gesture.State == GestureRecognitionState.Ended) 
+			{
 				Map.SetZone (zone);
 			} else if (gesture.State == GestureRecognitionState.InProgress) {
 				
@@ -361,13 +365,12 @@ namespace Assets.Scripts.GameStates
 									if (randmonBattleGroupID > 0) {
 										StartBattle (randmonBattleGroupID, index, 
 											(winner) => {
-												if (winner) {
-													RecordPos (oldPos, target);
-												} else {
-													GoBack ();
-												}
+												RecordPos (oldPos, target);
 											});
 									}
+								}
+								else{
+									RecordPos (oldPos, target);
 								}
 								break;
 							case Proto.MapEventType.RechargePos:
@@ -399,6 +402,9 @@ namespace Assets.Scripts.GameStates
 								RecordPos (oldPos, target);
 								break;
 
+								default:
+								RecordPos (oldPos, target);
+								break;
 							}
 
 							#endregion
@@ -407,20 +413,7 @@ namespace Assets.Scripts.GameStates
 					}
 				}
 
-
-				//received the onchange event
-				if (GRandomer.Probability10000 (Config.RandomPro)) {
-					//出发随机事件
-					/*var battleID = GRandomer.RandomList (Tools.UtilityTool.SplitIDS (Config.));
-					StartBattle (battleID, index, (winner) => {
-						if (winner) {
-							RecordPos (target);
-						} else {
-							GoBack ();
-						}
-					});
-					return;*/
-				}
+			
 				//记录当前行走点
 
 				RecordPos (oldPos, target);
