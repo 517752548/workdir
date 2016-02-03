@@ -159,6 +159,8 @@ namespace Assets.Scripts.DataManagers
         {
             _items.Clear();
 			_packageItems.Clear ();
+			_coinShop.Clear ();
+			_goldShop.Clear ();
             Presist();
         }
 
