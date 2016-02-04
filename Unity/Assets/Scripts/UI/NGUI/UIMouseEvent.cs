@@ -39,11 +39,15 @@ public class UIMouseClick : UIEventBase
     // Use this for initialization
     void Start()
     {
-
+		time = Time.time;
     }
+
+	private float time = 0f;
 
     void OnClick()
     {
+		if (time + 0.5f > Time.time)
+			return;
         if (Click != null)
             Click(this, new UIEventArgs() { UserState = this.UserState });
     }

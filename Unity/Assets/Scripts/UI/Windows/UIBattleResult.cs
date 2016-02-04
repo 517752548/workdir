@@ -71,9 +71,12 @@ namespace Assets.Scripts.UI.Windows
 				}
 				items.RemoveAll(t=>t.Num<=0);
 				UIManager.Singleton.UpdateUIData();
+
 				if(callAfterCollect ==null ) return;
 				callAfterCollect(this.mapID,this.posIndex, items);
 
+				if(items.Count==0)
+					HideWindow();
 			});
             //Write Code here
         }
