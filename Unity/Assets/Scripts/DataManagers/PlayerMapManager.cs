@@ -469,8 +469,8 @@ namespace Assets.Scripts.DataManagers
 				return;
 			}
 			//Unlock 
-			UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["OPEN_MAP_NAME"],
-				mapConfig.Name));
+			UI.UIControllor.Singleton.ShowInfo(string.Format(LanguageManager.Singleton["OPEN_MAP_NAME"],
+				mapConfig.Name),6);
 			map =CreateMapPresistData (mapID);
 		}
 

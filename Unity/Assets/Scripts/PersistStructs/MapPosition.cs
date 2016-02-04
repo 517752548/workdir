@@ -56,4 +56,10 @@ public class MapPosition :MonoBehaviour
 		explored.ActiveSelfObject (isExplored);
 
 	}
+
+	public void Start()
+	{
+		var render = GetComponent<SpriteRenderer> ();
+		render.enabled = DataType != MapEventType.None; 
+	}
 }
