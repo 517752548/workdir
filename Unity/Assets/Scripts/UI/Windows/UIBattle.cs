@@ -288,7 +288,7 @@ namespace Assets.Scripts.UI.Windows
             {
                 var an = this.zhuahenFx.GetComponent<Animator>();
                 an.SetTrigger("Start");
-				StopAllCoroutines ();
+				//StopAllCoroutines ();
 				StartCoroutine(DoetScale ());
                 UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["LOST_HP"], result.Damage));
             }
