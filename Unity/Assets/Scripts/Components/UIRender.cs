@@ -57,7 +57,7 @@ public class UIRender :
 
     [SerializeField]
     public Transform MessagePanel;
-	public UIPanel MessageViewPanle;
+	//public UIPanel MessageViewPanle;
 
     [SerializeField]
     public Transform UITipPanel;
