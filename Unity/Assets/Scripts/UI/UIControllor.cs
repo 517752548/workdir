@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Proto;
 using ExcelConfig;
+using Assets.Scripts.GameStates;
 
 namespace Assets.Scripts.UI
 {
@@ -34,6 +35,8 @@ namespace Assets.Scripts.UI
 
         internal void ShowMessage(string msg)
         {
+			if (!(App.GameAppliaction.Singleton.Current is CastleState))
+				return;
 			if (string.IsNullOrEmpty (msg))
 				return;
 			message.AddLast (msg);

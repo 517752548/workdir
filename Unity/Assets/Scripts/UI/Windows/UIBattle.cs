@@ -105,15 +105,21 @@ namespace Assets.Scripts.UI.Windows
 				hp += DataManagers.GamePlayerManager.Singleton. FoodChargeAppend;
 				bt_addHp.Disable(true);
 
-				App.GameAppliaction.Singleton.DelayCall(()=>{bt_addHp.Disable(false);},1f);
+				StartCoroutine(RunDisable());
 				if(DataManagers.PlayerItemManager.Singleton.CalItemFromPack(foodEntry,1))
 				{	
 					Per.PlayerAddHp(hp);
 					UIManager.Singleton.UpdateUIData();
 				}
 			});
-
         }
+
+		private IEnumerator RunDisable()
+		{
+			yield return new WaitForSeconds (1f);
+			bt_addHp.Disable (false);
+		}
+
         public override void OnShow()
         {
             base.OnShow();
