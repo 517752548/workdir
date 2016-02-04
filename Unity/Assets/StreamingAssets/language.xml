@@ -135,7 +135,7 @@
   <LanguageKey Key="EXPLORE_NO_KEY">打开宝箱需要{0} *{1}</LanguageKey>
   <LanguageKey Key="EXPLORE_NO_KEY_TITLE">道具不足</LanguageKey>
 
-  <LanguageKey Key="NEED_COMPLETE_MAP">需要探索地图 {0}</LanguageKey>
+  <LanguageKey Key="NEED_COMPLETE_MAP">需要探索完成地图 {0}</LanguageKey>
   <LanguageKey Key="CAN_EMPLOY">满足条件可以招募</LanguageKey>
   <LanguageKey Key="NEED_GET_ACH">需要获得成就 {0}</LanguageKey>
   <LanguageKey Key="NEED_GET_ITEM">需要获得道具 {0}</LanguageKey>
