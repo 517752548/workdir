@@ -89,7 +89,12 @@ public class UIRender :
     {
         if (MessageLable == null) return;
         MessageLable.text = text;
+
 		NGUITools.AddWidgetCollider (MessageLable.gameObject);
+		if (string.IsNullOrEmpty (text)) {
+		
+			MessagePanel.GetComponent<UIPanel> ().ResetClip ();
+		}
     }
 
 
