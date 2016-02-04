@@ -160,5 +160,6 @@
   <LanguageKey Key="OPEN_MAP_NAME">开启地图:{0}</LanguageKey>
   <LanguageKey Key="PEOPLE_WORK">工匠们辛勤工作获得了:{0}</LanguageKey>  
   <LanguageKey Key="UI_GOTO_EXPLORE_FOOD_INFO">跑的远，战斗力强，都是吃干粮吃出来的。</LanguageKey> 
+  <LanguageKey Key="GONextMapNoMap">击杀boss开启新的地图</LanguageKey>
    
 </ArrayOfLanguageKey>

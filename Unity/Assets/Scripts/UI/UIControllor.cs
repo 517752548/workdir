@@ -101,8 +101,10 @@ namespace Assets.Scripts.UI
 		public void ShowMapListUI()
 		{
 			var maps = DataManagers.PlayerMapManager.Singleton.GetOpenedMaps ();
-			if (maps.Count < 2)
+			if (maps.Count < 2) {
+				ShowInfo (LanguageManager.Singleton ["GONextMapNoMap"]);
 				return;
+			}
 			UI.Windows.UIMapList.Show ();
 		   
 			//show map list ui
