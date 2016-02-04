@@ -56,7 +56,7 @@ namespace Assets.Scripts.UI.Windows
 						sb.Append (string.Format (LanguageManager.Singleton ["UIMake_Cost_Item"], item.Name, i.Value));
 					}
 
-					UIControllor.Singleton.ShowMessage (sb.ToString ());
+					UIControllor.Singleton.ShowInfo (sb.ToString ());
 
 					#endregion
 				});

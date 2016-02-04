@@ -458,11 +458,14 @@ namespace Assets.Scripts.DataManagers
                 }
                 if (config.RequireGold > 0)
                     GamePlayerManager.Singleton.SubGold(config.RequireGold);
+				var sb = new StringBuilder ();
                 foreach (var i in rewardItems)
                 {
                     AddItem(i.Config.ID, i.Num);
-					UIControllor.Singleton.ShowMessage(string.Format(LanguageManager.Singleton["REWARD_ITEM"], i.Config.Name, i.Num));
+					sb.Append(
+						string.Format(LanguageManager.Singleton["REWARD_ITEM"], i.Config.Name, i.Num));
                 }
+				UIControllor.Singleton.ShowMessage (sb.ToString ());
                 return true;
             }
 
