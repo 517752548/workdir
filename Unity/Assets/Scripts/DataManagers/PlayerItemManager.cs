@@ -523,17 +523,21 @@ namespace Assets.Scripts.DataManagers
 				return;
 			
 			StringBuilder sb = new StringBuilder ();
-
+			bool have = false;
 			foreach (var i in _packageItems) {
+				if (i.Value.Num <= 0)
+					continue;
 				this.AddItem (i.Key, i.Value.Num);
-				sb.Append( string.Format (LanguageManager.Singleton ["REWARD_ITEM"], 
+				have = true;
+				sb.Append (string.Format (LanguageManager.Singleton ["REWARD_ITEM"], 
 					i.Value.Config.Name, i.Value.Num));
 			}
 
 			_packageItems.Clear ();
 			var str = string.Format (LanguageManager.Singleton ["GET_FROM_EXPLORE"], sb.ToString ());
 			//UI.UITipDrawer.Singleton.DrawNotify(str);
-			UI.UIControllor.Singleton.ShowMessage (str);
+			if (have)
+				UI.UIControllor.Singleton.ShowMessage (str);
 		}
 
 		public void EmptyPackage()
