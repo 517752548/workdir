@@ -39,6 +39,7 @@
   <LanguageKey Key="MAKE_NOT_ENOUGHT_GOLD">金币不够.</LanguageKey>
   <LanguageKey Key="Build_NOT_ENOUGHT_GOLD">金币不够.</LanguageKey>
   <LanguageKey Key="BUY_ITEM_NO_ENOUGH_COIN">钻石不足</LanguageKey>
+  <LanguageKey Key="BUY_ITEM_NO_ENOUGH_GOLD">金币不够</LanguageKey>
   <LanguageKey Key="Build_event_add_companion">可出战人数{0}</LanguageKey>  
   <LanguageKey Key="Build_event_open_produce">可以生产{0}</LanguageKey> 
   <LanguageKey Key="Build_event_add_people">您的工匠数增加到了{0}</LanguageKey>     
@@ -85,7 +86,8 @@
   <LanguageKey Key="UIProduce_worker">工匠：{0}/{1}</LanguageKey>
   <LanguageKey Key="PRODUCE_TIME">收获时间:{0}:{1:00}</LanguageKey>
   
-  <LanguageKey Key="BUY_ITEM_NO_ENOUGH_GOLD">金币不够</LanguageKey>
+
+  
   
   <LanguageKey Key="BuyHeroSuccess">成功雇佣{0}</LanguageKey>
   <LanguageKey Key="BUY_HERO_NOT_ENOUGH_COIN">钻石不足不能招募</LanguageKey>
@@ -155,6 +157,8 @@
   <LanguageKey Key="BATTLE_DEAD">{0}已经战死</LanguageKey>
 
   <LanguageKey Key="UI_RESULT_PACKAGE_SIZE">背包大小:{0}/{1}</LanguageKey>  
-
-
+  <LanguageKey Key="OPEN_MAP_NAME">开启地图:{0}</LanguageKey>
+  <LanguageKey Key="PEOPLE_WORK">工匠们辛勤工作获得了:{0}</LanguageKey>  
+  <LanguageKey Key="UI_GOTO_EXPLORE_FOOD_INFO">跑的远，战斗力强，都是吃干粮吃出来的。</LanguageKey> 
+   
 </ArrayOfLanguageKey>

@@ -60,7 +60,8 @@ namespace Assets.Scripts.UI
     public interface IUIRender
     {
         void Render(GameObject uiRoot);
-        void ShowMessage(string message, float delayTime);
+        void ShowMessage(string message);
+		void ShowInfo (string message, float delay);
         void ShowOrHideMessage(bool show);
     }
 

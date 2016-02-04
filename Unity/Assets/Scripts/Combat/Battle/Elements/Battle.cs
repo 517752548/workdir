@@ -117,8 +117,8 @@ namespace Assets.Scripts.Combat.Battle.Elements
 
 		public void ProcessDrop()
 		{
-			if (Index > 0 && Index <= Battles.Length) {
-				var config = Battles [Index - 1];
+			if (BattleIndex > 0 && BattleIndex <= Battles.Length) {
+				var config = Battles [BattleIndex - 1];
 				if (config.RewardGold > 0)
 					DropGold += config.RewardGold;
 				if (config.AddtionRewarditem > 0) 

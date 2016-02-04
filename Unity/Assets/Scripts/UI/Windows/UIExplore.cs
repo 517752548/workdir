@@ -87,7 +87,7 @@ namespace Assets.Scripts.UI.Windows
 			int foodNum = PlayerItemManager.Singleton.GetFoodNum ();// GamePlayerManager.Singleton.FoodCount;
 			int packageCur = foodNum;
 			int packageSize = GamePlayerManager.Singleton.PackageSize;
-			var totalExplore = DataManagers.PlayerMapManager.Singleton.GetMapTotalExploreValue (state.Config.ID);
+			var totalExplore = state.TotalExploreValue;
 			var currentExplore = DataManagers.PlayerMapManager.Singleton.GetMapExploreValue (state.Config.ID);
 
 			lb_explorevalue.text = string.Format (LanguageManager.Singleton ["UI_EXPLORE_EXPLOREVALUE"],

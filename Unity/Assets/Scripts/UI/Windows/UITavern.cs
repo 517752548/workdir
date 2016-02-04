@@ -36,7 +36,7 @@ namespace Assets.Scripts.UI.Windows
 			private void LockInfo()
 			{
 				var des = DataManagers.PlayerArmyManager.Singleton.GetEmployHeroRequire (this.Hero);
-				UI.UIControllor.Singleton.ShowMessage (des);
+				UI.UIControllor.Singleton.ShowInfo (des);
 			}
 
             public void SetDrag(bool canDrag)

@@ -12,6 +12,8 @@ public class UIRender :
     void Start()
     {
         //when start
+		tweenPosition.Play(false);
+		isHide = true;
     }
 
     // Update is called once per frame
@@ -31,9 +33,9 @@ public class UIRender :
         {
             if (Time.time > delayTime)
             {
-                if (MessageLable != null)
-                    MessageLable.text = string.Empty;
-                delayTime = -1f;
+				delayTime = -1;
+				isHide = true;
+				this.tweenPosition.Play (false);
             }
         }
     }
@@ -52,8 +54,10 @@ public class UIRender :
     [SerializeField]
     public UILabel MessageLable;
 
+
     [SerializeField]
     public Transform MessagePanel;
+	public UIPanel MessageViewPanle;
 
     [SerializeField]
     public Transform UITipPanel;
@@ -81,19 +85,11 @@ public class UIRender :
     /// 
     /// </summary>
     /// <param name="text"></param>
-    /// <param name="time">-1 always show</param>
-    public void ShowMessage(string text,float time = 10f)
+    public void ShowMessage(string text)
     {
         if (MessageLable == null) return;
         MessageLable.text = text;
-        if (time > 0)
-        {
-            delayTime = Time.time + time;
-        }
-        else
-        {
-            delayTime = -1f;
-        }
+		NGUITools.AddWidgetCollider (MessageLable.gameObject);
     }
 
 
@@ -102,4 +98,18 @@ public class UIRender :
         if (MessagePanel == null) return;
         MessagePanel.ActiveSelfObject(show);
     }
+
+	public TweenPosition tweenPosition;
+	private bool isHide =true;
+	public UILabel lableInfo;
+
+	public void ShowInfo(string message,float delay)
+	{
+		lableInfo.text = message;
+		delayTime = Time.time + delay;
+		if (isHide) {
+			isHide = false;
+			tweenPosition.Play (true);
+		}
+	}
 }

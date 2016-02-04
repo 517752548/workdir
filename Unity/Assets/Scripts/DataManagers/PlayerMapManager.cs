@@ -42,7 +42,21 @@ namespace Assets.Scripts.DataManagers
 		public int ExploreValue{ set; get; }
 
 		[JsonName("AP")]
-		public List<int> AddExploreValue{ set; get; }
+		public List<int> AddExploreValue{ 
+			set{
+				ExploredPos = new HashSet<int> ();
+				foreach (var i in ExploredPos) {
+					if(ExploredPos.Contains(i)) continue;
+					ExploredPos.Add (i);
+				}
+			} 
+			get{ 
+				return	ExploredPos.ToList ();
+			} 
+		}
+
+		[JsonIgnore]
+		public HashSet<int> ExploredPos{ set; get; }
 
 		[JsonName("PS")]
 		public List<MapPosData> SavePosistions
@@ -384,22 +398,18 @@ namespace Assets.Scripts.DataManagers
 		{
 			if (value <= 0)
 				return;
-
-			AchievementManager.Singleton.Export (mapID,value);
-
+		
 			MapPresistData map;
 			if (_maps.TryGetValue (mapID, out map)) {
 				//处理每次添加
-				foreach (var i in map.AddExploreValue) {
-					if (i == index)
-						return;
-				}
+				if(map.ExploredPos.Contains(index)) return;
 				map.IsChanged = true;
-				map.ExploreValue += value;
 			} else {
-				var data = CreateMapPresistData (mapID);
-				data.ExploreValue += value;
+				map = CreateMapPresistData (mapID);
 			}
+			map.ExploreValue += value;
+			map.ExploredPos.Add (index);
+			AchievementManager.Singleton.Export (mapID,value);
 		}
 
 		public int GetMapExploreValue(int mapID)
@@ -423,7 +433,6 @@ namespace Assets.Scripts.DataManagers
 				var count = Tools.UtilityTool.SplitIDS (i.Posistions);
 				value += (count.Count * i.PerLocationMath);
 			}
-
 			return value;
 		}
 
@@ -453,10 +462,15 @@ namespace Assets.Scripts.DataManagers
 		{
 			var mapConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MapConfig>(mapID);
 			if(mapConfig==null) return;
+			if (mapConfig.IsOpen != 1)
+				return;
 			MapPresistData map;
 			if (_maps.TryGetValue (mapID, out map)) {
 				return;
 			}
+			//Unlock 
+			UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["OPEN_MAP_NAME"],
+				mapConfig.Name));
 			map =CreateMapPresistData (mapID);
 		}
 

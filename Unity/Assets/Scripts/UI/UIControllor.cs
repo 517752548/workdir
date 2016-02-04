@@ -25,30 +25,63 @@ namespace Assets.Scripts.UI
 		public bool HidenMessage {
 			set {
 				_hide = value;	
-				var uirender = UIManager.Singleton.Render;
-				uirender.ShowMessage (string.Empty, -1);
+				ShowOrHideMessage (!_hide);
 			}
 			get{ return _hide; } 
 		}
 
-        internal void ShowMessage(string msg, float delayTime=-1f)
+		private LinkedList<string> message = new LinkedList<string> ();
+
+        internal void ShowMessage(string msg)
         {
+			if (string.IsNullOrEmpty (msg))
+				return;
+			message.AddLast (msg);
+			if (message.Count > 40)
+				message.RemoveFirst ();
+			
 			if (_hide)
 				return;
+			var showMessage = GetMessage ();
             var uirender = UIManager.Singleton.Render;
-            uirender.ShowMessage(msg, delayTime);
+		
+			uirender.ShowMessage(showMessage);
         }
 
+		private string GetMessage()
+		{
+			var sb = new StringBuilder ();
+			foreach (var i in message) {
+				sb.AppendLine (i);
+			}
+			return sb.ToString ();
+		}
+
         public void ShowOrHideMessage(bool show)
-        {
-            var uirender = UIManager.Singleton.Render;
-            uirender.ShowOrHideMessage( show);
-        }
+		{
+			
+			var uirender = UIManager.Singleton.Render;
+			uirender.ShowOrHideMessage (show);
+			if (show) {
+				var showMessage = GetMessage ();
+				uirender.ShowMessage (showMessage);			
+			} else {
+				message.Clear ();
+				uirender.ShowMessage (string.Empty);
+			}
+		}
+
+		public void ShowInfo(string message,float delay = 2f){
+		
+			UIManager.Singleton.Render.ShowInfo (message, delay);
+		}
 
 		//奸商商店
 		public void OpenScrectShop(int shopID, int mapID, int index)
 		{
 			//screct shop
+			 UI.Windows.UIScrectShop.ShowMapScrectShop(mapID,index,shopID);
+		
 		}
 		//开宝箱的UI
 		public void ShowChestDialog(int mapID,

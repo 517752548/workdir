@@ -45,6 +45,7 @@ namespace Assets.Scripts.UI.Windows
         public UIButton bt_cal;
         public UILabel lb_foodvalue;
         public UIButton bt_info;
+        public UISprite bt_foodInfo;
         public UILabel lb_food_name;
         public UIPanel PackageView;
         public UIGrid ItemGrid;
@@ -68,6 +69,7 @@ namespace Assets.Scripts.UI.Windows
             bt_cal = FindChild<UIButton>("bt_cal");
             lb_foodvalue = FindChild<UILabel>("lb_foodvalue");
             bt_info = FindChild<UIButton>("bt_info");
+            bt_foodInfo = FindChild<UISprite>("bt_foodInfo");
             lb_food_name = FindChild<UILabel>("lb_food_name");
             PackageView = FindChild<UIPanel>("PackageView");
             ItemGrid = FindChild<UIGrid>("ItemGrid");

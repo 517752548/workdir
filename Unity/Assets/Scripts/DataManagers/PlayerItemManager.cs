@@ -20,6 +20,52 @@ namespace Assets.Scripts.DataManagers
 		public int count{ set; get; }
 	}
 
+	public class ScrectShopData
+	{
+
+		public ScrectShopData()
+		{
+			ShopData = new List<ShopPersistData> ();
+		}
+		[JsonName("id")]
+		public int ShopID{set;get;}
+
+		[JsonIgnore]
+		public Dictionary<int, int> Items{ set; get; }
+		 
+		[JsonName("item")]
+		public List<ShopPersistData> ShopData{ 
+			set{ 
+				Items = new Dictionary<int, int> ();
+				foreach (var i in value) {
+					if(Items.ContainsKey(i.entry))continue;
+					Items.Add (i.entry, i.count);
+				}
+			} 
+			get{
+				return Items.Select (t => new ShopPersistData{ entry = t.Key, count = t.Value }).ToList ();
+			} 
+		}
+
+		public  void AddItem(int entry,int count)
+		{
+			if (Items == null)
+				Items = new Dictionary<int, int> ();
+			if (Items.ContainsKey (entry))
+				Items [entry] += count;
+			else
+				Items.Add (entry, count);
+		}
+
+		public int GetBuyCount(int entry)
+		{
+			if (Items.ContainsKey (entry))
+				return Items [entry]; 
+			return 0;
+		}
+	}
+
+
     public class PlayerItemManager : Tools.XSingleton<PlayerItemManager>, IPresist
     {
 
@@ -54,11 +100,12 @@ namespace Assets.Scripts.DataManagers
 		public const string _GOLD_SHOP_DATA_FILE="_GOLD_SHOP_BUY_COUNT.json";
 		public const string _COIN_SHOP_DATA_FILE="_COIN_SHOP_BUY_COUNT.json";
 
-		public const string _SRECT_SHOP_DATA_FILE="_SCRECT_SHOP_{0:0000}_COUNT.json";
+		public const string _SRECT_SHOP_DATA_FILE="_SCRECT_SHOP_COUNT.json";
 
 		private Dictionary<int,int> _coinShop = new Dictionary<int, int>();
 		private Dictionary<int,int> _goldShop = new Dictionary<int, int>();
 
+		private Dictionary<int,ScrectShopData> _screctShop = new Dictionary<int, ScrectShopData>();
 
         public void Load()
         {
@@ -92,6 +139,14 @@ namespace Assets.Scripts.DataManagers
 			if (goldShop != null) {
 				foreach (var i in goldShop) {
 					_goldShop.Add (i.entry, i.count);
+				}
+			}
+
+			_screctShop.Clear ();
+			var screctShop = Tools.PresistTool.LoadJson<List<ScrectShopData>> (_SRECT_SHOP_DATA_FILE);
+			if (screctShop != null) {
+				foreach (var  i in screctShop) {
+					_screctShop.Add (i.ShopID, i);
 				}
 			}
         }
@@ -128,6 +183,49 @@ namespace Assets.Scripts.DataManagers
 			}
 		}
 
+		public bool BuyScrectShopItem(ExcelConfig.SecretStoreConfig config)
+		{
+			ScrectShopData shop;
+			if (!_screctShop.TryGetValue (config.Store_id, out shop)) {
+				shop = new ScrectShopData {ShopID = config.Store_id };
+				_screctShop.Add (shop.ShopID, shop);
+			} 
+
+			if (config.Max_purchase_times > 0) {
+				if (config.Max_purchase_times <= shop.GetBuyCount (config.ID))
+					return false;
+			}
+			switch ((Proto.EmployCostCurrent)config.current_type) 
+			{
+			case EmployCostCurrent.Coin:
+				if (!(GamePlayerManager.Singleton.Coin >= config.Sold_price)) {
+					UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["BUY_ITEM_NO_ENOUGH_COIN"]);
+					return false;
+				}
+				GamePlayerManager.Singleton.SubCoin (config.Sold_price);
+				PlayerItemManager.Singleton.AddItem (config.item_id, 1);
+				//COST_COIN_REWARD_ITEM
+				UIControllor.Singleton.ShowMessage(
+					string.Format(LanguageManager.Singleton["COST_COIN_REWARD_ITEM"],
+						config.Sold_price, config.item_name, 1));
+				break;
+			case EmployCostCurrent.Gold:
+				if (!(GamePlayerManager.Singleton.Gold >= config.Sold_price)) {
+					UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["BUY_ITEM_NO_ENOUGH_GOLD"]);
+					return false;
+				}
+				GamePlayerManager.Singleton.SubGold (config.Sold_price);
+				PlayerItemManager.Singleton.AddItem (config.item_id, 1);
+				UIControllor.Singleton.ShowMessage(
+					string.Format(LanguageManager.Singleton["COST_GOLD_REWARD_ITEM"],
+						config.Sold_price, config.item_name, 1));
+				break;
+			}
+
+			shop.AddItem (config.ID, 1);
+			return true;
+		}
+
         /// <summary>
         /// 消耗道具
         /// </summary>
@@ -152,16 +250,26 @@ namespace Assets.Scripts.DataManagers
             return -1;
         }
 
+		public int GetScrectShopCount(int shopID, int entry)
+		{
+			ScrectShopData shop;
+			if (_screctShop.TryGetValue (shopID, out shop)) {
+				return shop.GetBuyCount (entry);
+			}
+			return 0;
+		}
         public void Presist()
         {
             var items = _items.Values.ToList();
 			var pack = _packageItems.Values.ToList ();
 			var goldBuy = _goldShop.Select (t => new ShopPersistData{ entry = t.Key, count = t.Value }).ToList ();
 			var coinBuy = _coinShop.Select (t => new ShopPersistData{ entry = t.Key, count = t.Value }).ToList ();
+			var screctBuy = _screctShop.Values.ToList ();
             Tools.PresistTool.SaveJson(items, _ITEM_SAVE_FILE_);
 			Tools.PresistTool.SaveJson (pack, _PACKAGE_SAVE_FILE);
 			Tools.PresistTool.SaveJson (goldBuy, _GOLD_SHOP_DATA_FILE);
 			Tools.PresistTool.SaveJson (coinBuy, _COIN_SHOP_DATA_FILE);
+			Tools.PresistTool.SaveJson (screctBuy, _SRECT_SHOP_DATA_FILE);
         }
 
         public void Reset()
@@ -272,7 +380,7 @@ namespace Assets.Scripts.DataManagers
 
 			PlayerItemManager.Singleton.AddItem(config.ItemId, 1);
 			PlayerItemManager.Singleton.BuyGoldShopItem (config);
-            UI.UITipDrawer.Singleton.DrawNotify(
+			UIControllor.Singleton.ShowMessage(
 				string.Format(LanguageManager.Singleton["COST_GOLD_REWARD_ITEM"],
 					price, itemconfig.Name, 1));
             return true;
@@ -296,7 +404,7 @@ namespace Assets.Scripts.DataManagers
 
 			PlayerItemManager.Singleton.AddItem(entry, 1);
 			PlayerItemManager.Singleton.BuyCoinShopItem (config);
-			UI.UITipDrawer.Singleton.DrawNotify(
+			UIControllor.Singleton.ShowMessage(
 				string.Format(LanguageManager.Singleton["COST_COIN_REWARD_ITEM"],
 					price, itemconfig.Name, 1));
 			return true;
@@ -353,23 +461,13 @@ namespace Assets.Scripts.DataManagers
                 foreach (var i in rewardItems)
                 {
                     AddItem(i.Config.ID, i.Num);
-                    UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["REWARD_ITEM"], i.Config.Name, i.Num));
+					UIControllor.Singleton.ShowMessage(string.Format(LanguageManager.Singleton["REWARD_ITEM"], i.Config.Name, i.Num));
                 }
                 return true;
             }
 
         }
-
-        public void NotifyReward(List<Proto.Item> items)
-        {
-            foreach (var i in items)
-            {
-                var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig>(i.Entry);
-                UI.UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["REWARD_ITEM"], config.Name, i.Diff));
-            }
-            //throw new NotImplementedException();
-        }
-
+			
 		public int CurrentSize{ get{
 				int count = 0;
 				foreach (var i in _packageItems) {
@@ -412,6 +510,7 @@ namespace Assets.Scripts.DataManagers
 				return _packageItems [foodEntry].Num;
 			return 0;
 		}
+			
 
 		public List<PlayerGameItem> PackageToList{ get { return _packageItems.Values.ToList (); } }
 
@@ -430,7 +529,7 @@ namespace Assets.Scripts.DataManagers
 
 			_packageItems.Clear ();
 			var str = string.Format (LanguageManager.Singleton ["GET_FROM_EXPLORE"], sb.ToString ());
-			UI.UITipDrawer.Singleton.DrawNotify(str);
+			//UI.UITipDrawer.Singleton.DrawNotify(str);
 			UI.UIControllor.Singleton.ShowMessage (str);
 		}
 

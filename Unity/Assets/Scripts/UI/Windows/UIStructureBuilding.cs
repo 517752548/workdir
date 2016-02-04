@@ -34,7 +34,7 @@ namespace Assets.Scripts.UI.Windows
                     }
 
                     
-                    UIControllor.Singleton.ShowMessage(LanguageManager.ReplaceEc(next.Describe) + '\n' + unlock, 10);
+						UIControllor.Singleton.ShowInfo(LanguageManager.ReplaceEc(next.Describe) + '\n' + unlock);
                 });
 
                 this.Template.IconBuild.OnMouseClick((s, e) =>

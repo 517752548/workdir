@@ -309,8 +309,8 @@ namespace Assets.Scripts.DataManagers
 			this [PlayDataKeys.PRODUCE_TIME] = (int)(DateTime.UtcNow - TimeZero).TotalSeconds;
 
 			var dict = new Dictionary<int, Item> ();
-			var maxTime = OfflineMaxTime / 
-				GameAppliaction.Singleton.ConstValues.ProduceRewardTick;
+			var maxTime = OfflineMaxTime /
+			              GameAppliaction.Singleton.ConstValues.ProduceRewardTick;
 
 			if (times > maxTime)
 				times = maxTime;
@@ -360,25 +360,22 @@ namespace Assets.Scripts.DataManagers
 			}
 
 			StringBuilder sb = new StringBuilder ();
+			bool have = false;
 			foreach (var i in dict) {
 				if (i.Value.Diff <= 0)
 					continue;
 				var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (i.Key);
 				var str = string.Format (LanguageManager.Singleton ["REWARD_ITEM"], 
 					          config.Name, i.Value.Diff);
-				sb.Append (" " + str);
+				sb.Append (str);
 				if (GameAppliaction.Singleton.Current is GameStates.CastleState)
 					UI.UITipDrawer.Singleton.DrawNotify (str);
-				
+				have = true;
 			}
 
 			UIManager.Singleton.UpdateUIData<UI.Windows.UICastlePanel> ();
-			var ui = UIManager.Singleton.GetUIWindow<UIGoToExplore> ();
-			if (ui == null || !ui.IsVisable) {
-			
-				UI.UIControllor.Singleton.ShowMessage (sb.ToString (), 10);
-
-			}
+			if (have)
+			   UI.UIControllor.Singleton.ShowMessage(string.Format(LanguageManager.Singleton["PEOPLE_WORK"], sb.ToString ()));
 			return true;
 		}
 

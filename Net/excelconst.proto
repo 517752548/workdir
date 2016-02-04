@@ -156,7 +156,7 @@ enum EmployCostCurrent
 
 enum MakeItemUnlockType
 {
-    NONE = 0;//无需条件
+   NONE = 0;//无需条件
 	NeedScroll =1;//需要蓝图
 }
 

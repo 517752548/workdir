@@ -158,7 +158,7 @@ namespace Assets.Scripts.UI.Windows
 
             var Config = item.Config;
             if (Config == null) return;
-            UIControllor.Singleton.ShowMessage( LanguageManager.ReplaceEc(Config.Description),4);
+			UIControllor.Singleton.ShowInfo( LanguageManager.ReplaceEc(Config.Description));
         }
 
         public override void OnUpdate()
@@ -173,10 +173,10 @@ namespace Assets.Scripts.UI.Windows
 
             if (DataManagers.GamePlayerManager.Singleton.People - DataManagers.GamePlayerManager.Singleton.BusyPeople == 0)
             {
-                UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["BUILD_FRO_MORE_PEOPLE"], -1);
+				UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["BUILD_FRO_MORE_PEOPLE"]);
             }
             var allOpenProduce = DataManagers.GamePlayerManager.Singleton.OpenProduceConfigs();
-            var sb = new StringBuilder();
+            //var sb = new StringBuilder();
             var items = new Dictionary<int, int>();
             //var list = lb_reward_list.GetComponent<UITextList>();
             //list.Clear();

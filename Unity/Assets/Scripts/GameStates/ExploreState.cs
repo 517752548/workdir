@@ -51,6 +51,7 @@ namespace Assets.Scripts.GameStates
 				return false;
 			});
 
+			TotalExploreValue = PlayerMapManager.Singleton.GetMapTotalExploreValue (this.Config.ID);
 		}
 
 		private GameObject player;
@@ -58,6 +59,8 @@ namespace Assets.Scripts.GameStates
 		private Vector2 TargetPos;
 
 		private GameMap Map;
+
+		public int TotalExploreValue{ private set; get; }
 
 		public override void OnExit ()
 		{
@@ -455,7 +458,7 @@ namespace Assets.Scripts.GameStates
 				JoinCastle ();
 				var str = LanguageManager.Singleton ["EXPLORE_NO_FOOD"] + sb.ToString ();
 				UI.UIControllor.Singleton.ShowMessage (str);
-				UI.UITipDrawer.Singleton.DrawNotify (str);
+				//UI.UITipDrawer.Singleton.DrawNotify (str);
 				return;
 			}
 
@@ -534,12 +537,19 @@ namespace Assets.Scripts.GameStates
 
 		private void CompletedMap ()
 		{
-			MapUnlockModeType unlockMode = (MapUnlockModeType)Config.UnlockMode;
-			switch (unlockMode) {
-			case MapUnlockModeType.UnlockMap:
-				var unlockMapID = Tools.UtilityTool.ConvertToInt (Config.UnlockParams);
-				PlayerMapManager.Singleton.OpenMap (unlockMapID);
-				break;
+			var maps = ExcelToJSONConfigManager.Current.GetConfigs<MapConfig> ();
+			foreach (var config in maps) {
+				MapUnlockModeType unlockMode = (MapUnlockModeType)config.UnlockMode;
+				switch (unlockMode)
+				{
+				case MapUnlockModeType.UnlockMap:
+					var needCompleted = Tools.UtilityTool.ConvertToInt (config.UnlockParams);
+					if (needCompleted == Config.ID) {
+						PlayerMapManager.Singleton.OpenMap (config.ID); 
+					}
+
+					break;
+				}
 			}
 
 			PlayerMapManager.Singleton.CompletedMap (this.Config.ID);
@@ -593,7 +603,7 @@ namespace Assets.Scripts.GameStates
 							RecordPos (null, null);
 							var str = LanguageManager.Singleton ["EXPLORE_BATTLE_F"] + sb.ToString ();
 							UI.UIControllor.Singleton.ShowMessage (str);
-							UI.UITipDrawer.Singleton.DrawNotify (str);
+							//UI.UITipDrawer.Singleton.DrawNotify (str);
 						}
 						//战斗失败处理
 						//Hide 

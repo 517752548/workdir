@@ -244,7 +244,7 @@ namespace Assets.Scripts.UI.Windows
 
         private void OnInfoClick(ItemGridTableModel obj)
         {
-            UIControllor.Singleton.ShowMessage(obj.ItemConfig.Desription);
+			UIControllor.Singleton.ShowInfo(obj.ItemConfig.Desription);
         }
 
 
@@ -258,7 +258,7 @@ namespace Assets.Scripts.UI.Windows
 
 		private void OnClickCoinInfo(ItemGridCoinTableModel obj)
 		{
-			UIControllor.Singleton.ShowMessage(obj.ItemConfig.Desription);
+			UIControllor.Singleton.ShowInfo(obj.ItemConfig.Desription);
 		}
 
 

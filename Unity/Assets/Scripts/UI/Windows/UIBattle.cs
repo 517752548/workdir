@@ -149,22 +149,18 @@ namespace Assets.Scripts.UI.Windows
         {
             if (Monster != null)
             {
-				//Debug.Log (Monster.HP);
                 targetMonsterHp = (float)Monster.HP / (float)Monster.MaxHP;
-                //HpBar.value = (float)Monster.HP / (float)Monster.MaxHP;
-                SkillBar.value = (Monster.Soldiers[0].CdTimeToFloat() - Monster.Soldiers[0].LeftTime) 
-					/ Monster.Soldiers[0].CdTimeToFloat();
+				SkillBar.value = Monster.IsDead?0:((Monster.Soldiers[0].CdTimeToFloat() - Monster.Soldiers[0].LeftTime) 
+					/ Monster.Soldiers[0].CdTimeToFloat());
             }
             if (Player != null)
             {
                 targetPlayerHp = (float)Player.HP / (float)Player.MaxHP; 
-                //PlayerHpBar.value = (float)Player.HP / (float)Player.MaxHP;
                 foreach (var i in SkillGridTableManager)
                 {
                     i.Model.Update();
                 }
             }
-
 
             HpBar.value = Mathf.Lerp(HpBar.value, targetMonsterHp, Time.deltaTime * 5);
             PlayerHpBar.value = Mathf.Lerp(PlayerHpBar.value, targetPlayerHp, Time.deltaTime * 5);

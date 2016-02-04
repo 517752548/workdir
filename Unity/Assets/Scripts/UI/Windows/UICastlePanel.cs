@@ -65,7 +65,7 @@ namespace Assets.Scripts.UI.Windows
                 if (DataManagers.GamePlayerManager.Singleton.OpenProduceConfigs().Count == 0)
                 {
                     //NO_BUILD
-                    UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_BUILD"], 3f);
+                    //UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_BUILD"], 3f);
                     UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["NO_BUILD"]);
                     return;
                 }
@@ -98,7 +98,7 @@ namespace Assets.Scripts.UI.Windows
                           }).ToList() ;
                 if (makeConfigs.Count == 0)
                 {
-                    UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_SCROLL"], 3f);
+                    //UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_SCROLL"], 3f);
                     UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["NO_SCROLL"]);
                     return;
                 }
@@ -118,7 +118,7 @@ namespace Assets.Scripts.UI.Windows
             {
                 if (DataManagers.PlayerArmyManager.Singleton.GetAllSoldier().Count == 0)
                 {
-                    UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_HERO"], 3f);
+                    //UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_HERO"], 3f);
                     UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["NO_HERO"]);
                     return;
                 }
@@ -136,7 +136,7 @@ namespace Assets.Scripts.UI.Windows
             {
                 if (DataManagers.PlayerArmyManager.Singleton.GetAllSoldier().Count == 0)
                 {
-                    UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_HERO"],3f);
+                    //UIControllor.Singleton.ShowMessage(LanguageManager.Singleton["NO_HERO"]);
                     UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["NO_HERO"]);
                     return;
                 }

@@ -160,6 +160,9 @@ namespace Assets.Scripts.UI.Windows
 			to_ming.OnMouseClick ((s, e) => {
 				ClickCategory (Proto.HeroJob.Ming, to_ming);
 			});
+			bt_foodInfo.OnMouseClick ((s, e) => {
+				UIControllor.Singleton.ShowInfo(LanguageManager.Singleton["UI_GOTO_EXPLORE_FOOD_INFO"]);
+			});
 
 			//Write Code here
 		}

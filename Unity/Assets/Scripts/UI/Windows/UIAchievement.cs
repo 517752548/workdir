@@ -20,7 +20,7 @@ namespace Assets.Scripts.UI.Windows
 				//todo
 				Template.Bt_itemName.OnMouseClick((s,e)=>{
 					if(Config ==null) return;
-					UI.UIControllor.Singleton.ShowMessage(Config.Description,3f);
+					UI.UIControllor.Singleton.ShowInfo(Config.Description,3f);
 				});
 			}
 
