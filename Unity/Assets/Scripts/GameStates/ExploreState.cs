@@ -427,6 +427,8 @@ namespace Assets.Scripts.GameStates
 			Map.LookAt (TargetPos);
 		}
 
+		private int Food = 0;
+
 		private void RecordPos (Vector2? last, Vector2? target, bool isEnter = false)
 		{
 			DataManagers.GamePlayerManager.Singleton.GoPos (target);
@@ -435,8 +437,17 @@ namespace Assets.Scripts.GameStates
 
 			if (last == null)
 				return;
-			
-			if (!isEnter && !DataManagers.GamePlayerManager.Singleton.CostFood (1)) {
+
+			var foodEmpty = false;
+			if (!DataManagers.GamePlayerManager.Singleton.CostFood (1)) {
+				if (Food >= App.GameAppliaction.Singleton.ConstValues.OutOffeedMoving)
+					foodEmpty = true;
+				Food++;
+			} else {
+				Food = 0;
+			}
+
+			if (!isEnter && foodEmpty) {
 				DataManagers.PlayerItemManager.Singleton.EmptyPackage ();
 				var deads = DataManagers.PlayerArmyManager.Singleton.DeadAllSoldiersInTeam ();
 				StringBuilder sb = new StringBuilder ();
