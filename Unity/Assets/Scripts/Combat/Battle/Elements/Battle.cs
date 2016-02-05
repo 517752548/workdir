@@ -4,9 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Assets.Scripts.Tools;
 
 namespace Assets.Scripts.Combat.Battle.Elements
 {
+
+	public class DropTempData
+	{
+		public int DropItem{ set; get; }
+		public int Pro{ set; get; }
+		public int Count{ set; get; }
+	}
+
     public class BattleEl : GObject
     {
 
@@ -117,14 +126,70 @@ namespace Assets.Scripts.Combat.Battle.Elements
 
 		public void ProcessDrop()
 		{
-			if (BattleIndex > 0 && BattleIndex <= Battles.Length) {
+			if (BattleIndex > 0 && BattleIndex <= Battles.Length) 
+			{
+				//固定掉落
 				var config = Battles [BattleIndex - 1];
 				if (config.RewardGold > 0)
 					DropGold += config.RewardGold;
 				if (config.AddtionRewarditem > 0) 
-				{
-				
+				{			
 					this.AddDropItem(config.AddtionRewarditem, Tools.UtilityTool.ConvertToInt( config.Pars1));
+				}
+
+				var npc = config.NpcID;
+				var monster = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.MonsterConfig> (npc);
+				//var dropID = ;
+				if (monster.DropID > 0) {
+					//cunzai
+					var drop = ExcelConfig.ExcelToJSONConfigManager
+						.Current.GetConfigByID<ExcelConfig.DropConfig> (monster.DropID);
+					var list = new List<DropTempData> ();
+					list.Add (new DropTempData {
+						DropItem = drop.DropItem1,
+						Count = drop.DropItemCoun1, 
+						Pro = drop.DropItemPro1
+					});
+					list.Add (new DropTempData {
+						DropItem = drop.DropItem2,
+						Count = drop.DropItemCoun2, 
+						Pro = drop.DropItemPro2
+					});
+
+					list.Add (new DropTempData {
+						DropItem = drop.DropItem3,
+						Count = drop.DropItemCoun3, 
+						Pro = drop.DropItemPro3
+					});
+
+
+					list.Add (new DropTempData {
+						DropItem = drop.DropItem4,
+						Count = drop.DropItemCoun4, 
+						Pro = drop.DropItemPro4
+					});
+
+					list.Add (new DropTempData {
+						DropItem = drop.DropItem5,
+						Count = drop.DropItemCoun5, 
+						Pro = drop.DropItemPro5
+					});
+
+					list.Add (new DropTempData {
+						DropItem = drop.DropItem6,
+						Count = drop.DropItemCoun6, 
+						Pro = drop.DropItemPro6
+					});
+
+					list.RemoveAll (t => t.DropItem <= 0);
+					if (list.Count > 0) {
+						foreach (var i in list) {
+							if (GRandomer.Probability10000 (i.Pro))
+							{
+								AddDropItem (i.DropItem, i.Count);
+							}
+						}
+					}
 				}
 			}
 

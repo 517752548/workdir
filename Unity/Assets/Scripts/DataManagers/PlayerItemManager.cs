@@ -20,51 +20,6 @@ namespace Assets.Scripts.DataManagers
 		public int count{ set; get; }
 	}
 
-	public class ScrectShopData
-	{
-
-		public ScrectShopData()
-		{
-			ShopData = new List<ShopPersistData> ();
-		}
-		[JsonName("id")]
-		public int ShopID{set;get;}
-
-		[JsonIgnore]
-		public Dictionary<int, int> Items{ set; get; }
-		 
-		[JsonName("item")]
-		public List<ShopPersistData> ShopData{ 
-			set{ 
-				Items = new Dictionary<int, int> ();
-				foreach (var i in value) {
-					if(Items.ContainsKey(i.entry))continue;
-					Items.Add (i.entry, i.count);
-				}
-			} 
-			get{
-				return Items.Select (t => new ShopPersistData{ entry = t.Key, count = t.Value }).ToList ();
-			} 
-		}
-
-		public  void AddItem(int entry,int count)
-		{
-			if (Items == null)
-				Items = new Dictionary<int, int> ();
-			if (Items.ContainsKey (entry))
-				Items [entry] += count;
-			else
-				Items.Add (entry, count);
-		}
-
-		public int GetBuyCount(int entry)
-		{
-			if (Items.ContainsKey (entry))
-				return Items [entry]; 
-			return 0;
-		}
-	}
-
 
     public class PlayerItemManager : Tools.XSingleton<PlayerItemManager>, IPresist
     {
@@ -96,16 +51,15 @@ namespace Assets.Scripts.DataManagers
 
         public const string _ITEM_SAVE_FILE_ = "_ITEM_.json";
 		public const string _PACKAGE_SAVE_FILE= "_PLAY_PACKAGE.json";
-
 		public const string _GOLD_SHOP_DATA_FILE="_GOLD_SHOP_BUY_COUNT.json";
 		public const string _COIN_SHOP_DATA_FILE="_COIN_SHOP_BUY_COUNT.json";
-
 		public const string _SRECT_SHOP_DATA_FILE="_SCRECT_SHOP_COUNT.json";
+		public const string _MAKE_DATA_FILE="_MAKE_COUNT.json";
 
 		private Dictionary<int,int> _coinShop = new Dictionary<int, int>();
 		private Dictionary<int,int> _goldShop = new Dictionary<int, int>();
-
-		private Dictionary<int,ScrectShopData> _screctShop = new Dictionary<int, ScrectShopData>();
+		private Dictionary<int,int> _makeData = new Dictionary<int, int>();
+		private Dictionary<int,int> _screctShop = new Dictionary<int, int>();
 
         public void Load()
         {
@@ -143,10 +97,17 @@ namespace Assets.Scripts.DataManagers
 			}
 
 			_screctShop.Clear ();
-			var screctShop = Tools.PresistTool.LoadJson<List<ScrectShopData>> (_SRECT_SHOP_DATA_FILE);
+			var screctShop = Tools.PresistTool.LoadJson<List<ShopPersistData>> (_SRECT_SHOP_DATA_FILE);
 			if (screctShop != null) {
 				foreach (var  i in screctShop) {
-					_screctShop.Add (i.ShopID, i);
+					_screctShop.Add (i.entry, i.count);
+				}
+			}
+			_makeData.Clear ();
+			var makeData = Tools.PresistTool.LoadJson<List<ShopPersistData>> (_MAKE_DATA_FILE);
+			if (makeData != null) {
+				foreach (var i in makeData) {
+					_makeData.Add (i.entry, i.count);
 				}
 			}
         }
@@ -185,14 +146,10 @@ namespace Assets.Scripts.DataManagers
 
 		public bool BuyScrectShopItem(ExcelConfig.SecretStoreConfig config)
 		{
-			ScrectShopData shop;
-			if (!_screctShop.TryGetValue (config.Store_id, out shop)) {
-				shop = new ScrectShopData {ShopID = config.Store_id };
-				_screctShop.Add (shop.ShopID, shop);
-			} 
+			int shopCount = 0;_screctShop.TryGetValue (config.ID, out shopCount);
 
 			if (config.Max_purchase_times > 0) {
-				if (config.Max_purchase_times <= shop.GetBuyCount (config.ID))
+				if (config.Max_purchase_times <= shopCount)
 					return false;
 			}
 			switch ((Proto.EmployCostCurrent)config.current_type) 
@@ -222,7 +179,10 @@ namespace Assets.Scripts.DataManagers
 				break;
 			}
 
-			shop.AddItem (config.ID, 1);
+			if (_screctShop.ContainsKey (config.ID))
+				_screctShop [config.ID] += 1;
+			else
+				_screctShop.Add (config.ID, 1);
 			return true;
 		}
 
@@ -250,11 +210,11 @@ namespace Assets.Scripts.DataManagers
             return -1;
         }
 
-		public int GetScrectShopCount(int shopID, int entry)
+		public int GetScrectShopCount(int entry)
 		{
-			ScrectShopData shop;
-			if (_screctShop.TryGetValue (shopID, out shop)) {
-				return shop.GetBuyCount (entry);
+			int count =0;
+			if (_screctShop.TryGetValue (entry, out count)) {
+				return count;//_screctShop [entry];
 			}
 			return 0;
 		}
@@ -264,12 +224,16 @@ namespace Assets.Scripts.DataManagers
 			var pack = _packageItems.Values.ToList ();
 			var goldBuy = _goldShop.Select (t => new ShopPersistData{ entry = t.Key, count = t.Value }).ToList ();
 			var coinBuy = _coinShop.Select (t => new ShopPersistData{ entry = t.Key, count = t.Value }).ToList ();
-			var screctBuy = _screctShop.Values.ToList ();
+			var screctBuy = _screctShop.Select (t => new ShopPersistData{ entry = t.Key, count = t.Value }).ToList ();
+			var makeBuy =_makeData.Select (t => new ShopPersistData{ entry = t.Key, count = t.Value }).ToList ();
+
             Tools.PresistTool.SaveJson(items, _ITEM_SAVE_FILE_);
 			Tools.PresistTool.SaveJson (pack, _PACKAGE_SAVE_FILE);
 			Tools.PresistTool.SaveJson (goldBuy, _GOLD_SHOP_DATA_FILE);
 			Tools.PresistTool.SaveJson (coinBuy, _COIN_SHOP_DATA_FILE);
 			Tools.PresistTool.SaveJson (screctBuy, _SRECT_SHOP_DATA_FILE);
+			Tools.PresistTool.SaveJson (makeBuy, _MAKE_DATA_FILE);
+
         }
 
         public void Reset()
@@ -278,6 +242,8 @@ namespace Assets.Scripts.DataManagers
 			_packageItems.Clear ();
 			_coinShop.Clear ();
 			_goldShop.Clear ();
+			_screctShop.Clear ();
+			_makeData.Clear ();
             Presist();
         }
 
@@ -386,6 +352,23 @@ namespace Assets.Scripts.DataManagers
             return true;
         }
 
+		public int GetMakeCount(int entry)
+		{
+			int count = 0;
+			if (_makeData.TryGetValue (entry, out count))
+				return count;
+			return 0;
+		}
+
+		public void AddMakeCount(int entry, int count)
+		{
+			if (_makeData.ContainsKey (entry)) {
+			
+				_makeData [entry] += count;
+			} else {
+				_makeData.Add (entry, count);
+			}
+		}
 
 		public bool BuyItemUseCoin(ExcelConfig.DimondStoreConfig config)
 		{
@@ -465,6 +448,8 @@ namespace Assets.Scripts.DataManagers
 					sb.Append(
 						string.Format(LanguageManager.Singleton["REWARD_ITEM"], i.Config.Name, i.Num));
                 }
+				//需要检查
+				AddMakeCount (config.ID, 1);
 				UIControllor.Singleton.ShowMessage (sb.ToString ());
                 return true;
             }

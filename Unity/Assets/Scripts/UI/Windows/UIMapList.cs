@@ -35,6 +35,13 @@ namespace Assets.Scripts.UI.Windows
 				} 
 				get{return _mapID;}
 			}
+			public void SetDrag(bool can)
+			{
+				var drag = this.Item.Root.GetComponent<UIDragScrollView> ();
+				if (drag == null)
+					return;
+				drag.enabled = can;
+			}
 		}
 
         public override void InitModel()
@@ -65,6 +72,7 @@ namespace Assets.Scripts.UI.Windows
 			foreach (var i in MapGridTableManager) {
 				i.Model.MapID = maps [index];
 				i.Model.OnClick = OnClickItem;
+				i.Model.SetDrag (maps.Count >= 5);
 				index++;
 			}
 		}

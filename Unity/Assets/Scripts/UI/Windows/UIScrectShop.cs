@@ -95,7 +95,8 @@ namespace Assets.Scripts.UI.Windows
 				if(isShop)
 				{
 					if(t.Max_purchase_times>0)
-						return t.Max_purchase_times>DataManagers.PlayerItemManager.Singleton.GetScrectShopCount(t.Store_id,t.ID);
+						return t.Max_purchase_times>DataManagers.PlayerItemManager
+							.Singleton.GetScrectShopCount(t.ID);
 					return true;
 				}
 
