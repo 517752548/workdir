@@ -395,6 +395,10 @@ namespace Assets.Scripts.DataManagers
 
         internal bool MakeItem(MakeConfig config)
         {
+			if (config.MaxProduct > 0) {
+				if (config.MaxProduct <=GetMakeCount (config.ID))
+					return false;
+			}
             var needs = Tools.UtilityTool.SplitKeyValues(config.RequireItems,config.RequireItemsNumber);
             var rewards = Tools.UtilityTool.SplitKeyValues(config.RewardItems,config.RewardItemsNumber);
             var needItems = needs.Select(t => new
@@ -448,8 +452,9 @@ namespace Assets.Scripts.DataManagers
 					sb.Append(
 						string.Format(LanguageManager.Singleton["REWARD_ITEM"], i.Config.Name, i.Num));
                 }
-				//需要检查
-				AddMakeCount (config.ID, 1);
+				if (config.MaxProduct > 0) {
+					AddMakeCount (config.ID, 1);
+				}
 				UIControllor.Singleton.ShowMessage (sb.ToString ());
                 return true;
             }

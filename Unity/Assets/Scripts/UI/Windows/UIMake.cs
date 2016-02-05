@@ -79,10 +79,10 @@ namespace Assets.Scripts.UI.Windows
 						var colorGold = _MakeConfig.RequireGold >= DataManagers.GamePlayerManager.Singleton.Gold ? 
 							LanguageManager.Singleton ["APP_GREEN"] : LanguageManager.Singleton ["APP_RED"];
 						//sb.Append (colorGold);
-						sb.Append ( 
+						sb.Append (
 							string.Format (LanguageManager.Singleton ["UIMake_Cost_gold"],
-								string.Format(colorGold,
-							    _MakeConfig.RequireGold)));
+								string.Format (colorGold,
+									_MakeConfig.RequireGold)));
 						sb.Append ("[-]");
 					}
 					foreach (var i in items) {
@@ -92,9 +92,9 @@ namespace Assets.Scripts.UI.Windows
 						var colorItem = i.Value <= DataManagers.PlayerItemManager.Singleton.GetItemCount (i.Key) ? 
 							LanguageManager.Singleton ["APP_GREEN"] : LanguageManager.Singleton ["APP_RED"];
 						
-						sb.Append ( 
+						sb.Append (
 							string.Format (LanguageManager.Singleton ["UIMake_Cost_Item"], item.Name,
-								string.Format(colorItem,i.Value))
+								string.Format (colorItem, i.Value))
 						);
 						sb.Append ("[-]");
 					}
@@ -166,6 +166,7 @@ namespace Assets.Scripts.UI.Windows
 			base.OnUpdateUIData ();
 			ShowType ();
 		}
+
 		private void ShowTypes ()
 		{
 			CurrentType = ShowTypeName.Types;
@@ -200,18 +201,21 @@ namespace Assets.Scripts.UI.Windows
 			PackageView.ActiveSelfObject (true);
 			var makeConfigs = ExcelConfig.ExcelToJSONConfigManager
                 .Current.GetConfigs<ExcelConfig.MakeConfig> ()
-                .Where (
-				                           (t) => {
-					switch ((Proto.MakeItemUnlockType)t.UnlockType) {
-					case Proto.MakeItemUnlockType.NONE:
-						return true;
-					case Proto.MakeItemUnlockType.NeedScroll:
-						int item = Tools.UtilityTool.ConvertToInt (t.UnlockPars1);
-						return DataManagers.PlayerItemManager.Singleton.GetItemCount (item) > 0;
-					}
-					return false;
+                .Where ((t) => {
+				if (t.MaxProduct > 0) {
+					if (t.MaxProduct <= DataManagers.PlayerItemManager.Singleton.GetMakeCount (t.ID))
+						return false;
+				}	
+				switch ((Proto.MakeItemUnlockType)t.UnlockType) {
+				case Proto.MakeItemUnlockType.NONE:
+					return true;
+				case Proto.MakeItemUnlockType.NeedScroll:
+					int item = Tools.UtilityTool.ConvertToInt (t.UnlockPars1);
+					return DataManagers.PlayerItemManager.Singleton.GetItemCount (item) > 0;
+				}
+				return false;
 
-				}).ToArray ();
+			}).ToArray ();
 			int index = 0;
 			ItemGridTableManager.Count = makeConfigs.Length;
 			foreach (var i in ItemGridTableManager) {
