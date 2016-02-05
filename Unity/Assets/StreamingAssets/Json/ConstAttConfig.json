@@ -1,2 +1,2 @@
-[{"ID":1,"ProduceRewardTick":20000,"GoldProduceLvl1":2,"GoldProduceLvl1CD":200,"ReliveNeedItem":159,"DefaultMapID":1,"DefaultPackageSize":20,"FoodItemID":158,"DefaultTeamSize":1,"JoinCastleItemID":157,"OutLineRewTime":3600000,"OrignalVisual":3,"GamblePerTime":6,"ShareRewardGem":10,"OrignalMoveStep":1}
+[{"ID":1,"ProduceRewardTick":20000,"GoldProduceLvl1":2,"GoldProduceLvl1CD":200,"ReliveNeedItem":159,"DefaultMapID":1,"DefaultPackageSize":20,"FoodItemID":158,"DefaultTeamSize":1,"JoinCastleItemID":157,"OutLineRewTime":3600000,"OrignalVisual":3,"GamblePerTime":6,"ShareRewardGem":10,"OrignalMoveStep":1,"OutOffeedMoving":5}
 ]

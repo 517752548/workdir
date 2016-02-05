@@ -176,6 +176,12 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(8)]
         public String UnlockPars1 { set; get; }
+        
+        /// <summary>
+        /// 制作上限
+        /// </summary>
+        [ExcelConfigColIndex(9)]
+        public int MaxProduct { set; get; }
 
     }
 
@@ -608,6 +614,12 @@ namespace ExcelConfig
         /// </summary>
         [ExcelConfigColIndex(14)]
         public int OrignalMoveStep { set; get; }
+        
+        /// <summary>
+        /// 零干粮移动距离
+        /// </summary>
+        [ExcelConfigColIndex(15)]
+        public int OutOffeedMoving { set; get; }
 
     }
 

@@ -134,6 +134,11 @@
             解锁参数
             </summary>
         </member>
+        <member name="P:ExcelConfig.MakeConfig.MaxProduct">
+            <summary>
+            制作上限
+            </summary>
+        </member>
         <member name="T:ExcelConfig.GambleConfig">
             <summary>
             博彩表
@@ -482,6 +487,11 @@
         <member name="P:ExcelConfig.ConstAttConfig.OrignalMoveStep">
             <summary>
             初始移动格数
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.ConstAttConfig.OutOffeedMoving">
+            <summary>
+            零干粮移动距离
             </summary>
         </member>
         <member name="T:ExcelConfig.BuildingConfig">
