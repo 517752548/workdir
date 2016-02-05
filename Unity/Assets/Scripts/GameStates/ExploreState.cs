@@ -394,21 +394,13 @@ namespace Assets.Scripts.GameStates
 				if (_tempPosIndex.Contains (index))
 					break;
 
-				var rechargeItems = Tools.UtilityTool.SplitIDS (i.Pars1);
-				var rechargeNums = Tools.UtilityTool.SplitIDS (i.Pars2);
-
-				var rechageItemDatas = new List<Proto.Item> ();
-				for (var tIndex = 0; tIndex < rechargeItems.Count; tIndex++) {
-					rechageItemDatas.Add (new Proto.Item {
-						Entry = rechargeItems [tIndex],
-						Num = rechargeNums [tIndex]
-					});
-				}
+				var itemID = Tools.UtilityTool.ConvertToInt (i.Pars1);
+				var itemGold = Tools.UtilityTool.ConvertToInt (i.Pars2);
 
 				UI.UIControllor.Singleton.ShowRechargeUI (
 					Config.ID,
 					index, 
-					rechageItemDatas);
+					itemID,itemGold);
 				_tempPosIndex.Add (index);
 				RecordPos (oldPos, target);
 				break;
