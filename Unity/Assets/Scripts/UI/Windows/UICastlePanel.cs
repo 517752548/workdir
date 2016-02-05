@@ -235,7 +235,10 @@ namespace Assets.Scripts.UI.Windows
 
         private void ShowBag()
         {
-            var allItem = DataManagers.PlayerItemManager.Singleton.GetAllItems();
+			var allItem = DataManagers.PlayerItemManager
+				.Singleton.GetAllItems()
+				.Where(t=>t.Config.CanSale ==1)
+				.ToList();
             this.BagGridTableManager.Count = allItem.Count;
             int index = 0;
             foreach (var i in BagGridTableManager)

@@ -157,9 +157,15 @@ namespace Assets.Scripts.UI.Windows
 		public override void OnShow ()
 		{
 			base.OnShow ();
-			ShowType ();
+			OnUpdateUIData ();
 		}
 
+
+		public override void OnUpdateUIData ()
+		{
+			base.OnUpdateUIData ();
+			ShowType ();
+		}
 		private void ShowTypes ()
 		{
 			CurrentType = ShowTypeName.Types;
