@@ -110,11 +110,9 @@ namespace Assets.Scripts.UI
 			//show map list ui
 		}
 		//驿站UI
-		public void ShowRechargeUI(int mapID, int index,List<Item> shop)
+		public void ShowRechargeUI(int mapID, int index,int itemID, int gold)
 		{
-			var ui =UI.Windows.UIBattleResult.Show ();
-			ui.ShowResult (mapID, shop, index);
-			ui.callAfterCollect = null;
+			return;
 		}
     }
 }
