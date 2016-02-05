@@ -6,6 +6,7 @@ using Assets.Scripts.Tools;
 using Proto;
 using Assets.Scripts.DataManagers;
 using UnityEngine;
+using System.Collections;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -76,10 +77,16 @@ namespace Assets.Scripts.UI.Windows
 				callAfterCollect(this.mapID,this.posIndex, items);
 
 				if(items.Count==0)
-					HideWindow();
+					StartCoroutine(DelayClose());
 			});
             //Write Code here
         }
+
+		private IEnumerator DelayClose()
+		{
+			yield return new WaitForSeconds (0.3f);
+			HideWindow();
+		}
 
 		public Action<int,int,List<Item>> callAfterCollect;
 

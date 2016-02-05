@@ -3,9 +3,7 @@
 	Properties
 	{
 		_MainTex ("Base (RGB), Alpha (A)", 2D) = "black" {}
-		_SizeX ("Size_X",float) =1 
-		_SizeY("Size_Y",float) =1 
-		_Speed("Speed",float)=150
+		_Rect ("Rect",vector) = (1,0,1,0) 
 	}
 	
 	SubShader
@@ -35,7 +33,7 @@
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
-			float _SizeX,_SizeY,_Speed;
+			float4 _Rect;
 	
 			struct appdata_t
 			{
@@ -63,20 +61,8 @@
 			fixed4 frag (v2f IN) : COLOR
 			{ 
 			     float2 cellUV = float2(IN.texcoord.x, IN.texcoord.y);
-			     cellUV.x = cellUV.x + sin(_Time *(_Speed*_SizeX));
-			     cellUV.y = cellUV.y + sin(_Time *(_Speed*_SizeY));
-			     if(cellUV.y>1)
-			        cellUV.y = cellUV.y -1;
-			     if(cellUV.x>1)
-			        cellUV.x = cellUV.x -1;
-			     if(cellUV.y<0)
-			     {
-			         cellUV.y = cellUV.y +1;
-			     }
-
-			     if(cellUV.x<0)
-			        cellUV.x = cellUV.x +1;
-			          
+			     cellUV.x = (cellUV.x + (_Time *(_Rect.x*_Rect.z)))%1;
+			     cellUV.y = (cellUV.y + (_Time *(_Rect.y*_Rect.w)))%1;		          
 			     fixed4 colo = tex2D(_MainTex, cellUV) * IN.color;
 				 return colo;
 			}

@@ -310,7 +310,8 @@ namespace Assets.Scripts.DataManagers
 
 			Soldiers.Add (monsterLate.ID, Soldier.IsAlive);
 
-			UI.UITipDrawer.Singleton.DrawNotify (string.Format (LanguageManager.Singleton ["LVLUP_SUCCESS"], monsterOld.Name, monsterLate.Name));
+			UI.UITipDrawer.Singleton.DrawNotify (
+				string.Format (LanguageManager.Singleton ["LVLUP_SUCCESS"], monsterOld.Name));
 			return true;
 
 		}
