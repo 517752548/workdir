@@ -85,7 +85,7 @@ namespace Assets.Scripts.UI.Windows
 			if (state == null) return;
 			this.lb_title.text =state.Config.Name;
 			int foodNum = PlayerItemManager.Singleton.GetFoodNum ();// GamePlayerManager.Singleton.FoodCount;
-			int packageCur = foodNum;
+			int packageCur = PlayerItemManager.Singleton.CurrentSize;
 			int packageSize = GamePlayerManager.Singleton.PackageSize;
 			var totalExplore = state.TotalExploreValue;
 			var currentExplore = DataManagers.PlayerMapManager.Singleton.GetMapExploreValue (state.Config.ID);
