@@ -250,12 +250,9 @@ namespace Assets.Scripts.GameStates
 					//return;
 				}
 				break;
-			case Proto.MapEventType.BronPos:
-				RecordPos (oldPos, target);
-				JoinCastle ();
-				break;
 			case Proto.MapEventType.GoHomePos:
-				RecordPos (oldPos, target);
+			case Proto.MapEventType.BronPos:
+				RecordPos (oldPos, target,true);
 				JoinCastle ();
 				break;
 			case Proto.MapEventType.GoToNextLvlPos:
