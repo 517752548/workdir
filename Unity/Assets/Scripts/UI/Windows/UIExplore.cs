@@ -65,6 +65,13 @@ namespace Assets.Scripts.UI.Windows
 
             });
 
+			bt_package.OnMouseClick ((s, e) => {
+				ShowPackage();
+			});
+
+			bt_hide.OnMouseClick ((s, e) => {
+				this.s_bagRoot.ActiveSelfObject (false);
+			});
             //Write Code here
         }
         public override void OnShow()
@@ -103,6 +110,12 @@ namespace Assets.Scripts.UI.Windows
 		public void SetMap(GameMap map)
 		{
 			this.map = map;
+		}
+
+		public void ShowPackage()
+		{
+			this.s_bagRoot.ActiveSelfObject (true);
+
 		}
     }
 }
