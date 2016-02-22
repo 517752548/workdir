@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExcelConfig;
 
 namespace Assets.Scripts.DataManagers
 {
@@ -10,6 +11,8 @@ namespace Assets.Scripts.DataManagers
 	{
 		[JsonName("I")]
 		public int ID { set; get; }
+		[JsonName("C")]
+		public bool IsCompleted{ set; get; }
 		[JsonName("P")]
 		public string Pararms { set; get; }
 	}
@@ -17,27 +20,46 @@ namespace Assets.Scripts.DataManagers
     public class AchievementManager : Tools.XSingleton<AchievementManager>, IPresist
     {
         public const string ACHIEVEMENT_DATA = "__ACHIEVEMENT_DATA.JSON";
+		private Dictionary<int,AchievementData> _datas = new Dictionary<int, AchievementData>():
 
 		public int AchievementPoint {  get{ return GamePlayerManager.Singleton.AchievementPoint;} }
 
         public void Presist()
         {
+			Tools.PresistTool.SaveJson (_datas.Values.ToList (), ACHIEVEMENT_DATA);
             // throw new NotImplementedException();
         }
 
         public void Load()
         {
-            //throw new NotImplementedException();
+			_datas.Clear ();
+			var list = Tools.PresistTool.LoadJson<List<AchievementData>> (ACHIEVEMENT_DATA);
+			if (list == null || list.Count == 0)
+				return;
+			foreach (var i in list) {
+				_datas.Add (i.ID, i);
+			}
         }
 
         public void Reset()
         {
-            //throw new NotImplementedException();
+			_datas.Clear ();
+			this.Presist ();
         }
 
         public void CostGold(int gold)
         { 
-        
+			var haveCompleted = false;
+			var configs = GetAllConfigs (Proto.AchievementEventType.GoldCost);
+			foreach (var i in configs) {
+				var data = this [i.ID];
+				var num = Tools.UtilityTool.ConvertToInt (data.Pararms);
+				num += gold;
+				data.Pararms = string.Format ("{0}", num);
+				if (TryToCompleteAchievement (data, i)) {
+					haveCompleted = true;
+				}
+			}
         }
 
 		public void CostCoin(int coin)
@@ -52,7 +74,7 @@ namespace Assets.Scripts.DataManagers
 
         public void BuildLevel(int buildID, int level)
         { 
-        
+            
         }
 
         public void Export(int mapID ,int exportValue)
@@ -70,7 +92,53 @@ namespace Assets.Scripts.DataManagers
 		   
 		}
 
-    }
+		/// <summary>
+		/// NO completed
+		/// </summary>
+		/// <returns>The all configs.</returns>
+		/// <param name="eventType">Event type.</param>
+		private List<AchievementConfig> GetAllConfigs(Proto.AchievementEventType eventType)
+		{
+			var allAchievenments = ExcelConfig.ExcelToJSONConfigManager.Current.
+				GetConfigs<ExcelConfig.AchievementConfig> (t=>{ 
+					if(_datas.ContainsKey(t.ID))
+				    {
+						if(_datas[t.ID].IsCompleted ) return false;
+					}
+					return	t.ConditionType == (int)eventType;
+				});
+			return allAchievenments;
+		}
+
+		private void OnCompletedAchievement(int id)
+		{
+			this [id].IsCompleted = true;
+			var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.AchievementConfig> (id);
+			if (config == null)
+				return;//error will crash or not?
+			//oncompleted?
+		}
+
+		private bool TryToCompleteAchievement(AchievementData data, AchievementConfig config)
+		{
+			return false;
+		}
+
+
+		private AchievementData this [int id] 
+		{
+			get {
+				AchievementData data;
+				if (!_datas.TryGetValue (id, out data))
+				{
+					data = new AchievementData{ ID = id, IsCompleted = false, Pararms = string.Empty };
+					_datas.Add (data.ID, data);
+				}
+				return data;
+			}
+		}
+
+	}
 
 
  
