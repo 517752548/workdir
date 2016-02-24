@@ -324,57 +324,49 @@ namespace Proto
     public enum AchievementEventType
     {
         /// <summary>
-        /// 盘缠消耗到指定量
+        /// 1-点金累计至指定值
         /// </summary>
-        GoldCost=1,
+        ProduceGold=1,
         /// <summary>
-        /// 建筑到指定等级
+        /// 2-干粮累计消耗
         /// </summary>
-        BuildLevel=2,
+        CostFood=2,
         /// <summary>
-        /// 指定组建筑到指定等级
+        /// 3-赌博累计至指定值
         /// </summary>
-        AllBuildLevel=3,
+        Gamable=3,
         /// <summary>
-        /// 探索度到指定数
+        /// 4-击杀指定地图boss
         /// </summary>
-        Explore=4,
+        KillBoss=4,
         /// <summary>
-        /// 兵种进化到指定等级
+        /// 5-指定地图探索度达成
         /// </summary>
-        ArmyLevel=5,
+        ExploreValue=5,
         /// <summary>
-        /// 获得指定天
+        /// 6-获取指定数2星角色
         /// </summary>
-        PlaySkill=6,
+        GetStarTwo=6,
         /// <summary>
-        /// 消耗干粮达指定数量
+        /// 7-获取指定数3星角色
         /// </summary>
-        CostFood=7,
+        GetStarThree=7,
         /// <summary>
-        /// 杀死boss
+        /// 8-背包扩充至指定大小
         /// </summary>
-        KillBoss=8,
+        PackageSize=8,
         /// <summary>
-        /// 分享
+        /// 9-获取指定道具
         /// </summary>
-        ShareGame=9,
+        GetItem=9,
         /// <summary>
-        /// 杀死指定怪物数
+        /// 10-累计击杀怪物数
         /// </summary>
-        KillMonster=10,
+        KillMonsterCount=10,
         /// <summary>
-        /// 进入神秘地图
+        /// 11-累计竞技次数
         /// </summary>
-        EnterMap=11,
-        /// <summary>
-        /// 开启指定数量宝箱
-        /// </summary>
-        OpenChest=12,
-        /// <summary>
-        /// 成功抵御入侵
-        /// </summary>
-        DefenceEnemy=13,
+        PKCount=11,
 
     }
    /// <summary>

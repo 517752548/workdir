@@ -1579,69 +1579,59 @@
             成就达成条件类型
             </summary>
         </member>
-        <member name="F:Proto.AchievementEventType.GoldCost">
+        <member name="F:Proto.AchievementEventType.ProduceGold">
             <summary>
-            盘缠消耗到指定量
-            </summary>
-        </member>
-        <member name="F:Proto.AchievementEventType.BuildLevel">
-            <summary>
-            建筑到指定等级
-            </summary>
-        </member>
-        <member name="F:Proto.AchievementEventType.AllBuildLevel">
-            <summary>
-            指定组建筑到指定等级
-            </summary>
-        </member>
-        <member name="F:Proto.AchievementEventType.Explore">
-            <summary>
-            探索度到指定数
-            </summary>
-        </member>
-        <member name="F:Proto.AchievementEventType.ArmyLevel">
-            <summary>
-            兵种进化到指定等级
-            </summary>
-        </member>
-        <member name="F:Proto.AchievementEventType.PlaySkill">
-            <summary>
-            获得指定天
+            1-点金累计至指定值
             </summary>
         </member>
         <member name="F:Proto.AchievementEventType.CostFood">
             <summary>
-            消耗干粮达指定数量
+            2-干粮累计消耗
+            </summary>
+        </member>
+        <member name="F:Proto.AchievementEventType.Gamable">
+            <summary>
+            3-赌博累计至指定值
             </summary>
         </member>
         <member name="F:Proto.AchievementEventType.KillBoss">
             <summary>
-            杀死boss
+            4-击杀指定地图boss
             </summary>
         </member>
-        <member name="F:Proto.AchievementEventType.ShareGame">
+        <member name="F:Proto.AchievementEventType.ExploreValue">
             <summary>
-            分享
+            5-指定地图探索度达成
             </summary>
         </member>
-        <member name="F:Proto.AchievementEventType.KillMonster">
+        <member name="F:Proto.AchievementEventType.GetStarTwo">
             <summary>
-            杀死指定怪物数
+            6-获取指定数2星角色
             </summary>
         </member>
-        <member name="F:Proto.AchievementEventType.EnterMap">
+        <member name="F:Proto.AchievementEventType.GetStarThree">
             <summary>
-            进入神秘地图
+            7-获取指定数3星角色
             </summary>
         </member>
-        <member name="F:Proto.AchievementEventType.OpenChest">
+        <member name="F:Proto.AchievementEventType.PackageSize">
             <summary>
-            开启指定数量宝箱
+            8-背包扩充至指定大小
             </summary>
         </member>
-        <member name="F:Proto.AchievementEventType.DefenceEnemy">
+        <member name="F:Proto.AchievementEventType.GetItem">
             <summary>
-            成功抵御入侵
+            9-获取指定道具
+            </summary>
+        </member>
+        <member name="F:Proto.AchievementEventType.KillMonsterCount">
+            <summary>
+            10-累计击杀怪物数
+            </summary>
+        </member>
+        <member name="F:Proto.AchievementEventType.PKCount">
+            <summary>
+            11-累计竞技次数
             </summary>
         </member>
         <member name="T:Proto.RandomEventTickType">
