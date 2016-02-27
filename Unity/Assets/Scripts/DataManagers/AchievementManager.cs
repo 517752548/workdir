@@ -20,7 +20,7 @@ namespace Assets.Scripts.DataManagers
     public class AchievementManager : Tools.XSingleton<AchievementManager>, IPresist
     {
         public const string ACHIEVEMENT_DATA = "__ACHIEVEMENT_DATA.JSON";
-		private Dictionary<int,AchievementData> _datas = new Dictionary<int, AchievementData>():
+		private Dictionary<int,AchievementData> _datas = new Dictionary<int, AchievementData> ();
 
 		public int AchievementPoint {  get{ return GamePlayerManager.Singleton.AchievementPoint;} }
 
@@ -49,18 +49,23 @@ namespace Assets.Scripts.DataManagers
 
         public void CostGold(int gold)
         { 
+			
+        }
+
+		public void CostFood(int food)
+		{
 			var haveCompleted = false;
-			var configs = GetAllConfigs (Proto.AchievementEventType.GoldCost);
+			var configs = GetAllConfigs (Proto.AchievementEventType.CostFood);
 			foreach (var i in configs) {
 				var data = this [i.ID];
 				var num = Tools.UtilityTool.ConvertToInt (data.Pararms);
-				num += gold;
+				num += food;
 				data.Pararms = string.Format ("{0}", num);
 				if (TryToCompleteAchievement (data, i)) {
 					haveCompleted = true;
 				}
 			}
-        }
+		}
 
 		public void CostCoin(int coin)
 		{
@@ -107,7 +112,7 @@ namespace Assets.Scripts.DataManagers
 					}
 					return	t.ConditionType == (int)eventType;
 				});
-			return allAchievenments;
+			return allAchievenments.ToList();
 		}
 
 		private void OnCompletedAchievement(int id)

@@ -5,6 +5,7 @@ using System.Text;
 using Proto;
 using ExcelConfig;
 using Assets.Scripts.GameStates;
+using Assets.Scripts.UI.Windows;
 
 namespace Assets.Scripts.UI
 {
@@ -69,7 +70,7 @@ namespace Assets.Scripts.UI
 				var showMessage = GetMessage ();
 				uirender.ShowMessage (showMessage);			
 			} else {
-				message.Clear ();
+				//message.Clear ();
 				uirender.ShowMessage (string.Empty);
 			}
 		}
@@ -112,6 +113,8 @@ namespace Assets.Scripts.UI
 		//驿站UI
 		public void ShowRechargeUI(int mapID, int index,int itemID, int gold)
 		{
+			var ui = UIChargeShop.Show ();
+			ui.ShowFood (itemID, gold);
 			return;
 		}
     }

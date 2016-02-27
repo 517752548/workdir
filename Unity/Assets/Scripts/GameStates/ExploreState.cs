@@ -398,7 +398,7 @@ namespace Assets.Scripts.GameStates
 					Config.ID,
 					index, 
 					itemID,itemGold);
-				_tempPosIndex.Add (index);
+				//_tempPosIndex.Add (index);
 				RecordPos (oldPos, target);
 				break;
 			case Proto.MapEventType.ScrectShopPos:

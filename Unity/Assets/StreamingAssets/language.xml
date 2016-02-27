@@ -161,5 +161,6 @@
   <LanguageKey Key="PEOPLE_WORK">工匠们辛勤工作获得了:{0}</LanguageKey>  
   <LanguageKey Key="UI_GOTO_EXPLORE_FOOD_INFO">跑的远，战斗力强，都是吃干粮吃出来的。</LanguageKey> 
   <LanguageKey Key="GONextMapNoMap">击杀boss开启新的地图</LanguageKey>
-   
+
+  <LanguageKey Key="UI_CHARGE_PACKAGE_FULL">背包满了</LanguageKey> 
 </ArrayOfLanguageKey>
