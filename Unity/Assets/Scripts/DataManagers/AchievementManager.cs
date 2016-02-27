@@ -126,7 +126,37 @@ namespace Assets.Scripts.DataManagers
 
 		private bool TryToCompleteAchievement(AchievementData data, AchievementConfig config)
 		{
-			return false;
+            var type = (Proto.AchievementEventType)config.ConditionType;
+            bool completed = false;
+            switch (type)
+            {
+                case Proto.AchievementEventType.CostFood:
+                    break;
+                case Proto.AchievementEventType.ExploreValue:
+                    break;
+                case Proto.AchievementEventType.Gamable:
+                    break;
+                case Proto.AchievementEventType.GetItem:
+                    break;
+                case Proto.AchievementEventType.GetStarThree:
+                    break;
+                case Proto.AchievementEventType.GetStarTwo:
+                    break;
+                case Proto.AchievementEventType.KillBoss:
+                    break;
+                case Proto.AchievementEventType.KillMonsterCount:
+                    break;
+                case Proto.AchievementEventType.PackageSize:
+                    break;
+                case Proto.AchievementEventType.PKCount:
+                    break;
+                case Proto.AchievementEventType.ProduceGold:
+                    break;
+            }
+
+
+
+			return completed;
 		}
 
 

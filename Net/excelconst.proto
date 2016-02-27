@@ -178,3 +178,13 @@ enum MapUnlockModeType
    None =-1;//没有
    UnlockMap =1 ;//开启地图
 }
+
+//新手引导步骤
+enum GuideStep
+{
+   ProduceGold = 1; //铸币
+   EmployHero =2;//雇佣英雄
+   ConstructBuilding = 3 ;//建造建筑
+   ProduceFood = 4;//干粮
+   ExlporeMap = 5； //探索地图
+}
