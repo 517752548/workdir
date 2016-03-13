@@ -40,6 +40,11 @@ namespace Assets.Scripts.UI.Windows
 						()=>{App.GameAppliaction.Singleton.ResetPlayData(); this.HideWindow();},
 						()=>{ });
 			});
+
+			Bt_GameSkill.OnMouseClick ((s, e) => {
+				HideWindow();
+				UIPlaySKill.Show();
+			});
             //Write Code here
         }
         public override void OnShow()

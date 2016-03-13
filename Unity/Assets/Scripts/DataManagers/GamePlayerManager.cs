@@ -63,7 +63,8 @@ namespace Assets.Scripts.DataManagers
 		GoldProduceAppendValue = 18,//点金附加值
 		CalProuduceTime = 19,//游戏产量计算时间
 		WheatProduceAppend = 20,//小麦产量附加值
-		ProductOffLineTimeAppend =21 //离线产量计算时间
+		ProductOffLineTimeAppend =21, //离线产量计算时间
+		NoCDWhenBattleStart = 22 //战斗开始没有cd时间	
 	}
 
 	public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
@@ -256,6 +257,14 @@ namespace Assets.Scripts.DataManagers
 
 				return goldAppend;
 			}
+		}
+
+		public bool IsNoCdWhenBattleBegin{ 
+			get { return this [PlayDataKeys.NoCDWhenBattleStart] == 1; } 
+			set 
+			{
+				this [PlayDataKeys.NoCDWhenBattleStart] = value ? 1 : 0;
+			} 
 		}
 
 		internal float CallProduceGold ()

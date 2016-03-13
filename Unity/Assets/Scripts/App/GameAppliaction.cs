@@ -52,6 +52,8 @@ namespace Assets.Scripts.App
 				SoundManager.Singleton.SetSourceValue (0);
 			}
             Runner.DoRun(Run());
+
+			//UI.UIManager.Singleton.LoadAllResources ();
         }
 
         public void ResetPlayData()

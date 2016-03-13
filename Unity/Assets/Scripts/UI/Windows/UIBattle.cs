@@ -242,7 +242,12 @@ namespace Assets.Scripts.UI.Windows
 				() => { 
 					Per.State.JoinAllItem();
 					Per.ResetAllSkillCD();
-					Per.State.Enable = true;  
+					Per.State.Enable = true; 
+					if(DataManagers.GamePlayerManager.Singleton.IsNoCdWhenBattleBegin)
+					{
+						Per.ClearPlayerCD();
+					}
+					//IsNoCdWhenBattleBegin
 				},
 				() => {  ExitBattle(); }
 			);
