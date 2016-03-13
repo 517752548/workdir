@@ -205,7 +205,7 @@ namespace Assets.Scripts.UI.Windows
 			base.OnShow ();
 			var lastFood = GamePlayerManager.Singleton.LastFood;
 			PlayerItemManager.Singleton.AddItemIntoPack (App.GameAppliaction.Singleton.ConstValues.FoodItemID, lastFood);
-			UI.UIControllor.Singleton.HidenMessage = true;
+			UI.UIControllor.Singleton.ShowOrHideMessage(  false);
 			OnUpdateUIData ();
 			ClickCategory (Proto.HeroJob.Xian, to_xian);
 
@@ -319,7 +319,7 @@ namespace Assets.Scripts.UI.Windows
 		public override void OnHide ()
 		{
 			base.OnHide ();
-			UI.UIControllor.Singleton.HidenMessage = false;
+			UI.UIControllor.Singleton.ShowOrHideMessage(true);
 			UI.UIManager.Singleton.UpdateUIData ();
 		}
 	}

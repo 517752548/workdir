@@ -18,7 +18,7 @@ namespace Assets.Scripts.UI.Windows
 			public override void InitModel ()
 			{
 				//todo
-				Template.Bt_itemName.OnMouseClick((s,e)=>{
+				this.Template.Bt_itemName.OnMouseClick((s,e)=>{
 					if(Config ==null) return;
 					UI.UIControllor.Singleton.ShowInfo(Config.Description,3f);
 				});
@@ -26,7 +26,7 @@ namespace Assets.Scripts.UI.Windows
 
 			public void SetDrag (bool canDrag)
 			{
-				var d = this.Item.Root.GetComponent<UIDragScrollView> ();
+				var d = this.Template.Bt_itemName.GetComponent<UIDragScrollView> ();
 				d.enabled = canDrag;
 			}
 
@@ -36,6 +36,11 @@ namespace Assets.Scripts.UI.Windows
 				set {
 					_config = value;
 					Template.Bt_itemName.Text (value.Name);
+					var data = DataManagers.AchievementManager.Singleton [Config.ID];
+					if (data != null)
+						Template.s_completed.ActiveSelfObject (data.IsCompleted);
+					else
+						Template.s_completed.ActiveSelfObject (false);
 				}
 				get{ return _config; }
 			}

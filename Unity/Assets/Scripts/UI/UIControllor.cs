@@ -22,16 +22,6 @@ namespace Assets.Scripts.UI
             });
         }
 
-
-		private bool _hide = false;
-		public bool HidenMessage {
-			set {
-				_hide = value;	
-				ShowOrHideMessage (!_hide);
-			}
-			get{ return _hide; } 
-		}
-
 		private LinkedList<string> message = new LinkedList<string> ();
 
         internal void ShowMessage(string msg)
@@ -43,12 +33,8 @@ namespace Assets.Scripts.UI
 			message.AddLast (msg);
 			if (message.Count > 40)
 				message.RemoveFirst ();
-			
-			if (_hide)
-				return;
 			var showMessage = GetMessage ();
             var uirender = UIManager.Singleton.Render;
-		
 			uirender.ShowMessage(showMessage);
         }
 
@@ -61,21 +47,33 @@ namespace Assets.Scripts.UI
 			return sb.ToString ();
 		}
 
+		private int _lock = 0;
+
         public void ShowOrHideMessage(bool show)
 		{
+
+			if (show) {
+				_lock++;
+			} else {
 			
+				_lock--;
+			}
+
 			var uirender = UIManager.Singleton.Render;
 			uirender.ShowOrHideMessage (show);
-			if (show) {
+			if (show && _lock > 0) {
 				var showMessage = GetMessage ();
 				uirender.ShowMessage (showMessage);			
 			} else {
 				//message.Clear ();
+
 				uirender.ShowMessage (string.Empty);
 			}
+
+			uirender.ShowOrHideMessage(_lock>0);
 		}
 
-		public void ShowInfo(string message,float delay = 2f){
+		public void ShowInfo(string message,float delay = 4f){
 		
 			UIManager.Singleton.Render.ShowInfo (message, delay);
 		}

@@ -9,42 +9,42 @@
   <LanguageKey Key="APP_GOLD_Label">{0}</LanguageKey>  
   
   
-  <LanguageKey Key="NO_SCROLL">没有任何图纸，不能制造</LanguageKey>
-  <LanguageKey Key="NO_BUILD">请先建造生产类建筑</LanguageKey>
-  <LanguageKey Key="NO_HERO">请先从酒馆招募您喜爱的英雄</LanguageKey>
+  <LanguageKey Key="NO_SCROLL">麻烦弄个图纸先？商店就有嘛。。</LanguageKey>
+  <LanguageKey Key="NO_BUILD">哇，没有生产类建筑啊，什么良田美景的造个就好。</LanguageKey>
+  <LanguageKey Key="NO_HERO">收个妖怪做小弟吧，听话还能干活，走到哪打劫到哪。</LanguageKey>
   <LanguageKey Key="REWARD_ITEM">{0} +{1}</LanguageKey>
   <LanguageKey Key="UIShop_Require_Item_Enough">[000000]</LanguageKey>
   <LanguageKey Key="UIShop_Require_Item_Not_Enough">[00ff00]</LanguageKey>
   <LanguageKey Key="UIShop_Require_Item">{0} *{1}</LanguageKey>
-  <LanguageKey Key="BUY_ITEM_NO_ENOUGH">{0}不足，需要{1}个</LanguageKey>
-  <LanguageKey Key="MAKE_NOT_ENOUGHT">{0}不足</LanguageKey>
+  <LanguageKey Key="BUY_ITEM_NO_ENOUGH">耶，这个{0}没有哦，需要{1}个才能够哦。</LanguageKey>
+  <LanguageKey Key="MAKE_NOT_ENOUGHT">哇，{0}不足，怎么整？</LanguageKey>
   <LanguageKey Key="NOT_ENOUGHT">缺少</LanguageKey>
   <LanguageKey Key="Need_Item_Count">{0} *{1}</LanguageKey>
-  <LanguageKey Key="BUILD_LEVEL_MAX">MAX</LanguageKey> 
-  <LanguageKey Key="TRAIN_SOLDIER">成功训练{0}</LanguageKey>
-  <LanguageKey Key="TRAIN_BT_NAME">招募</LanguageKey>
+  <LanguageKey Key="BUILD_LEVEL_MAX">Max</LanguageKey> 
+  <LanguageKey Key="TRAIN_SOLDIER">哇，{0}变强了，是不是可以快乐的happy去呢？</LanguageKey>
+  <LanguageKey Key="TRAIN_BT_NAME">收下</LanguageKey>
   <LanguageKey Key="SOLDIER_SKILL">武器:{0}</LanguageKey>
   <LanguageKey Key="SOLDIER_HP">血量:{0:N0}</LanguageKey>
   <LanguageKey Key="SOLDIER_DAMAGE">伤害:{0:N0}</LanguageKey>
   <LanguageKey Key="SOLDIER_SPEED">速度:{0:0}</LanguageKey>	
-  <LanguageKey Key="MAX_LEVEL_SOLDIER">终极兵种无法训练</LanguageKey>
+  <LanguageKey Key="MAX_LEVEL_SOLDIER">太牛逼了，再修炼就上西天了。</LanguageKey>
   <LanguageKey Key="SOLDIER_NAME">{0}*{1}</LanguageKey>
   <LanguageKey Key="ID_EXISTS_ERROR">士兵配置错误！</LanguageKey>
   <LanguageKey Key="ProduceGoldPreTick">金币 +{0}</LanguageKey>
 	
-  <LanguageKey Key="BUILD_FRO_MORE_PEOPLE">建造民宿获得更多村民.</LanguageKey>
-  <LanguageKey Key="NO_PEOPLE_FREE">无空闲村民</LanguageKey>
-  <LanguageKey Key="PEOPLE_NAME">村民:</LanguageKey>
+  <LanguageKey Key="BUILD_FRO_MORE_PEOPLE">房子要大嘛，要大嘛，大嘛！</LanguageKey>
+  <LanguageKey Key="NO_PEOPLE_FREE">工匠这个，不是去泡妞的就是去搬砖了！</LanguageKey>
+  <LanguageKey Key="PEOPLE_NAME">工匠:</LanguageKey>
   <LanguageKey Key="PRODUCE_ITEM">{0} {1}</LanguageKey>
   <LanguageKey Key="MAKE_NOT_ENOUGHT_GOLD">金币不够.</LanguageKey>
   <LanguageKey Key="Build_NOT_ENOUGHT_GOLD">金币不够.</LanguageKey>
   <LanguageKey Key="BUY_ITEM_NO_ENOUGH_COIN">钻石不足</LanguageKey>
   <LanguageKey Key="BUY_ITEM_NO_ENOUGH_GOLD">金币不够</LanguageKey>
-  <LanguageKey Key="Build_event_add_companion">可出战人数{0}</LanguageKey>  
-  <LanguageKey Key="Build_event_open_produce">可以生产{0}</LanguageKey> 
-  <LanguageKey Key="Build_event_add_people">您的工匠数增加到了{0}</LanguageKey>     
+  <LanguageKey Key="Build_event_add_companion">随军人数{0}</LanguageKey>  
+  <LanguageKey Key="Build_event_open_produce">哇，可以生产{0}啦</LanguageKey> 
+  <LanguageKey Key="Build_event_add_people">一不小心，工匠数增加到了{0}，是不是可以开心的娱乐呢？</LanguageKey>     
   <LanguageKey Key="UI_GOTOEX_PACKAGE_LB">包裹:</LanguageKey>
-  <LanguageKey Key="UI_GOTOEX_ARMY_LB">军队:</LanguageKey> 
+  <LanguageKey Key="UI_GOTOEX_ARMY_LB">队伍:</LanguageKey> 
   
   <!--货郎-->
   <LanguageKey Key="UIShop_Model_Cost">{0:N0}</LanguageKey>
@@ -55,8 +55,8 @@
   <LanguageKey Key="UITavern_hp">{0:N0}</LanguageKey>  
   <LanguageKey Key="UITavern_speed">{0:N0}</LanguageKey>  
   <LanguageKey Key="UITavern_skill">{0}</LanguageKey>
-  <LanguageKey Key="UITavern_Title_MessageBox">招募{0}?</LanguageKey>
-  <LanguageKey Key="BUY_HERO_Message">消耗:{0} *{1}</LanguageKey>
+  <LanguageKey Key="UITavern_Title_MessageBox">收下{0}?or不？or收，是个大问题。</LanguageKey>
+  <LanguageKey Key="BUY_HERO_Message">收留小费:{0} *{1}</LanguageKey>
   <LanguageKey Key="UITavern_MessageBox_Job">类别:{0}</LanguageKey>	
   
   <LanguageKey Key="UI_Setting_version">版本 {0}.{1}.{2}</LanguageKey>
@@ -74,8 +74,8 @@
   <LanguageKey Key="UIStructureBuilding_Cost_Gold">金币 *{0:N0}</LanguageKey> 
   <LanguageKey Key="UIStructureBuilding_Cost_None">无</LanguageKey> 
   <LanguageKey Key="UIStructureBuilding_Cost_MaxLevel">最大等级</LanguageKey> 
-  <LanguageKey Key="UIStructureBuilding_Build_Success">成功升级建筑{0}到{1}</LanguageKey> 
-  <LanguageKey Key="UI_Struct_Need_Build">升级需要{1}级{0}</LanguageKey> 
+  <LanguageKey Key="UIStructureBuilding_Build_Success">哇，建筑{0}升级到了{1}，看看又出了啥东东！</LanguageKey> 
+  <LanguageKey Key="UI_Struct_Need_Build">建个房子，需要{1}到这个{0}Lv</LanguageKey> 
   
   <LanguageKey Key="UIMake_Cost_Title">制造消耗：\n</LanguageKey>
   <LanguageKey Key="UIMake_Cost_Item">{0} *{1} </LanguageKey> 
@@ -89,51 +89,51 @@
 
   
   
-  <LanguageKey Key="BuyHeroSuccess">成功雇佣{0}</LanguageKey>
-  <LanguageKey Key="BUY_HERO_NOT_ENOUGH_COIN">钻石不足不能招募</LanguageKey>
-  <LanguageKey Key="BUY_HERO_NOT_ENOUGH_GOLD">金币不足不能招募</LanguageKey>
+  <LanguageKey Key="BuyHeroSuccess">收服成功，{0}听你瞎指挥！</LanguageKey>
+  <LanguageKey Key="BUY_HERO_NOT_ENOUGH_COIN">钻石不足，他／它怎么会跟你呢？请土豪点好不好？</LanguageKey>
+  <LanguageKey Key="BUY_HERO_NOT_ENOUGH_GOLD">金币不足，钱这个嘛不够是不行的，先练练一阳指去吧。</LanguageKey>
   
 
   <LanguageKey Key="UI_LVLUP_Cost_Item">{0} 	{1} </LanguageKey> 
   <LanguageKey Key="UI_LVLUP_Cost_Gold">金币 	{0:N0}</LanguageKey> 
-  <LanguageKey Key="LVLUP_SUCCESS">{0}星级提升了 </LanguageKey> 
-  <LanguageKey Key="LVLUP_NOT_ENOUGH_GOLD">金币不足 </LanguageKey> 
-  <LanguageKey Key="LVLUP_NOT_ENOUGH_ITEM">{0}不足</LanguageKey>
+  <LanguageKey Key="LVLUP_SUCCESS">多个星星总是好，{0}变牛逼了！ </LanguageKey> 
+  <LanguageKey Key="LVLUP_NOT_ENOUGH_GOLD">金币不够啊！ </LanguageKey> 
+  <LanguageKey Key="LVLUP_NOT_ENOUGH_ITEM">{0}不够怎么办？</LanguageKey>
   
-  <LanguageKey Key="UI_GOEXPLORE_NO_PLACE">背包空间不足</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_NO_FOOD">没有足够的{0}</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NO_PLACE">带个购物袋你就想搬走高老庄，行行好买个大点的包包好不好。</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NO_FOOD">{0}没有了，等死吧，做做饿死鬼耶。</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_PACKAGE">背包:{0}/{1}</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_TEAM_SIZE">可出战人数:{0}/{1}</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_NO_TEAM_PLACE">已经到达最大出战人数上限</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NO_TEAM_PLACE">一个队伍就提供这个岗位，多了就超编制了。</LanguageKey>
   
-  <LanguageKey Key="UI_GOEXPLORE_Relive_Message">消耗{0} 复活{1}</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_Relive_OK">复活</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_Relive_NOT_ENOUGH_ITEM">{0}不足</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_Relive_Success">消耗{0} 使得{1}复活</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_NEED_ARMY">起码您也要带个猪出去吧！！！</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_NEED_FOOD">出门不带干粮，肯定要饿死啊～～</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_Relive_Message">吃个{0}{1}就活了，你说神奇不？</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_Relive_OK">招魂</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_Relive_NOT_ENOUGH_ITEM">没有{0}</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_Relive_Success">让{1}吃个{0}是不是就活奔乱跳呢？</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NEED_ARMY">取个经都要4个人一个马，你说这个出门打劫就让包包去不太好吧？</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NEED_FOOD">就算神仙出门也要带干粮的，这个你懂的？吃饭干活。不吃饭没得干</LanguageKey>
 
   <LanguageKey Key="BATTLE_UI_MONSTER_LVL">LV.{0}</LanguageKey>
   <LanguageKey Key="BATTLE_AUTO">自  动</LanguageKey>
   <LanguageKey Key="BATTLE_PLAYER">手  动</LanguageKey>
   <LanguageKey Key="ATTACK_MONSTER">怪物掉血:[FF0000]{0}</LanguageKey> 
   <LanguageKey Key="LOST_HP">我方掉血[00FF00]{0}</LanguageKey> 
-  <LanguageKey Key="CANCEL_TITLE">退出？</LanguageKey> 
-  <LanguageKey Key="CANCEL_MESSAGE">我要逃跑啊!</LanguageKey> 
+  <LanguageKey Key="CANCEL_TITLE">逃跑</LanguageKey> 
+  <LanguageKey Key="CANCEL_MESSAGE">留的青山在不怕跑的快，为了跑的快青山还的在！在逃跑与奔跑间总是哪么让人留恋！</LanguageKey> 
   
   <LanguageKey Key="UI_EXPLORE_VECTOR">坐标：{0:0},{1:0}</LanguageKey>
   <LanguageKey Key="UI_EXPLORE_FOOD">干粮：{0}</LanguageKey>
   <LanguageKey Key="UI_EXPLORE_EXPLOREVALUE">探索度：{0:0}%</LanguageKey>
-  <LanguageKey Key="UIEXPLORE_EXIT_TITLE">回城</LanguageKey> 
-  <LanguageKey Key="UIEXPLORE_EXIT_MESSGAE">回城需要消耗一个回城卷。</LanguageKey> 
-  <LanguageKey Key="JOIN_CASTLE_ITEM_NOT_ENOUGH">{0}不足</LanguageKey>
-  <LanguageKey Key="JOIN_CASTLE_ITEM_COST">消耗一个{0}</LanguageKey> 
-  <LanguageKey Key="UIEXPLORE_GOHOME">回城</LanguageKey>  
-  <LanguageKey Key="UIEXPLORE_STILL_HRER">取消</LanguageKey>  
+  <LanguageKey Key="UIEXPLORE_EXIT_TITLE">传送</LanguageKey> 
+  <LanguageKey Key="UIEXPLORE_EXIT_MESSGAE">传送到高老庄需要传送符文，俗称回城卷，就是高老庄门票啦！</LanguageKey> 
+  <LanguageKey Key="JOIN_CASTLE_ITEM_NOT_ENOUGH">{0}都没有，你还想干嘛？</LanguageKey>
+  <LanguageKey Key="JOIN_CASTLE_ITEM_COST">吃了一个{0}！</LanguageKey> 
+  <LanguageKey Key="UIEXPLORE_GOHOME">回城了</LanguageKey>  
+  <LanguageKey Key="UIEXPLORE_STILL_HRER">坚持下</LanguageKey>  
   
 
-  <LanguageKey Key="EXPLORE_NO_KEY">打开宝箱需要{0} *{1}</LanguageKey>
-  <LanguageKey Key="EXPLORE_NO_KEY_TITLE">道具不足</LanguageKey>
+  <LanguageKey Key="EXPLORE_NO_KEY">打劫和偷还是有区别的，没有{1}个{0}是不能对付这个箱子的！！</LanguageKey>
+  <LanguageKey Key="EXPLORE_NO_KEY_TITLE">道XX不足</LanguageKey>
 
   <LanguageKey Key="NEED_COMPLETE_MAP">需要探索完成地图 {0}</LanguageKey>
   <LanguageKey Key="CAN_EMPLOY">满足条件可以招募</LanguageKey>
@@ -141,7 +141,7 @@
   <LanguageKey Key="NEED_GET_ITEM">需要获得道具 {0}</LanguageKey>
   
   <LanguageKey Key="UIAchievement_Label">成就点 {0}</LanguageKey>
-  <LanguageKey Key="YOU_CAN_MAKE">获得制造 {0} 的图纸</LanguageKey>
+  <LanguageKey Key="YOU_CAN_MAKE">好牛逼，{0}的图纸是干嘛的啊？</LanguageKey>
 
   <LanguageKey Key="RESET_TITLE">重置游戏</LanguageKey>
   <LanguageKey Key="RESET_CONTENT">重置游戏将丢失所有数据，包括您的充值信息！！！</LanguageKey>
@@ -149,18 +149,24 @@
   <LanguageKey Key="Message_OK">确定</LanguageKey>
   <LanguageKey Key="Message_Cancel">取消</LanguageKey>
 
-  <LanguageKey Key="GET_FROM_EXPLORE">队伍带回了 {0}</LanguageKey>
-  <LanguageKey Key="EXPLORE_NO_FOOD">又要打仗，又要跑，还没干粮吃，活不了了！</LanguageKey>
-  <LanguageKey Key="EXPLORE_BATTLE_F">战败了!</LanguageKey>
+  <LanguageKey Key="GET_FROM_EXPLORE">包包太小，只带回了{0}</LanguageKey>
+  <LanguageKey Key="EXPLORE_NO_FOOD">在没有干粮吃的队伍，全队一致选择了上西天！！</LanguageKey>
+  <LanguageKey Key="EXPLORE_BATTLE_F">打不赢，也是一种体验吗！</LanguageKey>
   <LanguageKey Key="Battle_End_Reward_Gold">抢的金币{0}</LanguageKey>
-  <LanguageKey Key="NOFOOD_DEAD">{0}已经饿死</LanguageKey>
-  <LanguageKey Key="BATTLE_DEAD">{0}已经战死</LanguageKey>
+  <LanguageKey Key="NOFOOD_DEAD">{0}已经上西天！</LanguageKey>
+  <LanguageKey Key="BATTLE_DEAD">{0}死了！</LanguageKey>
 
   <LanguageKey Key="UI_RESULT_PACKAGE_SIZE">背包大小:{0}/{1}</LanguageKey>  
-  <LanguageKey Key="OPEN_MAP_NAME">开启地图:{0}</LanguageKey>
-  <LanguageKey Key="PEOPLE_WORK">工匠们辛勤工作获得了:{0}</LanguageKey>  
-  <LanguageKey Key="UI_GOTO_EXPLORE_FOOD_INFO">跑的远，战斗力强，都是吃干粮吃出来的。</LanguageKey> 
-  <LanguageKey Key="GONextMapNoMap">击杀boss开启新的地图</LanguageKey>
+  <LanguageKey Key="OPEN_MAP_NAME">开启地图{0}，是不是金灿灿的宝贝再等呢？</LanguageKey>
+  <LanguageKey Key="PEOPLE_WORK">工匠们在泡妞之余的工作中收获了:{0}</LanguageKey>  
+  <LanguageKey Key="UI_GOTO_EXPLORE_FOOD_INFO">跑的远，战斗力强，都是吃干粮吃出来的，别说妖怪了神仙也这样说！</LanguageKey> 
+  <LanguageKey Key="GONextMapNoMap">杀个BOSS，就可以去下个地图抢东西了，但是BOSS在哪里呢？</LanguageKey>
 
-  <LanguageKey Key="UI_CHARGE_PACKAGE_FULL">背包满了</LanguageKey> 
+  <LanguageKey Key="UI_CHARGE_PACKAGE_FULL">包包满了@！@</LanguageKey> 
+  <LanguageKey Key="Achievement_Completed">成功达成{0},偶也又牛逼了！</LanguageKey>
+
+  <LanguageKey Key="Charge_Shop_info">以个童叟无欺的价格购买干粮！</LanguageKey>
+  <LanguageKey Key="Charge_NOGOLD">没有了钱，在用力戳也是无济于事的！</LanguageKey>
+
+  <LanguageKey Key="Charge_BuySuccess">花费{0}金币，买{1}个干粮。</LanguageKey>
 </ArrayOfLanguageKey>

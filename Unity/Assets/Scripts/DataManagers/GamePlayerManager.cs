@@ -547,6 +547,7 @@ namespace Assets.Scripts.DataManagers
 		{
 			var current = this.PackageSize;
 			this [PlayDataKeys.PACKAGE_SIZE] = current + size;
+			DataManagers.AchievementManager.Singleton.PackageChanged (this.PackageSize);
 		}
 
 		//添加
@@ -583,7 +584,11 @@ namespace Assets.Scripts.DataManagers
 		public bool CostFood (int num)
 		{
 			int foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
-			return PlayerItemManager.Singleton.CalItemFromPack (foodEntry, num);
+			var success = PlayerItemManager.Singleton.CalItemFromPack (foodEntry, num);
+			if (success) {
+				DataManagers.AchievementManager.Singleton.CostFood (num);
+			}
+			return success;
 		}
 
 

@@ -25,8 +25,7 @@ public class UIRender :
 
     void LateUpdate()
     {
-
-        Assets.Scripts.UI.UITipManager.Singleton.OnLateUpdate();
+	    Assets.Scripts.UI.UITipManager.Singleton.OnLateUpdate();
         Assets.Scripts.UI.UIManager.Singleton.OnLateUpdate();
 
         if (delayTime > 0)
@@ -97,11 +96,14 @@ public class UIRender :
 		}
     }
 
-
+	//private bool ishow = true;
     public void ShowOrHideMessage(bool show)
     {
+		Debug.Log ("SHOW:" + show);
+		//ishow = show;
         if (MessagePanel == null) return;
-        MessagePanel.ActiveSelfObject(show);
+		MessagePanel.ActiveSelfObject(show);
+		//MessageLable.ActiveSelfObject (ishow);
     }
 
 	public TweenPosition tweenPosition;

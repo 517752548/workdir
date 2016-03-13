@@ -19,6 +19,10 @@ namespace Assets.Scripts.UI.Windows
 					OnClick(this);
 
 				});
+
+				Template.bt_info.OnMouseClick ((s, e) => {
+					UI.UIControllor.Singleton.ShowInfo(LanguageManager.Singleton["Charge_Shop_info"],3);
+				});
             }
 
 			public Action<ItemGridTableModel> OnClick;
@@ -30,9 +34,15 @@ namespace Assets.Scripts.UI.Windows
 				{
 					Config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig> (value);
 					Template.Bt_itemName.Text (Config.Name);
-					Template.lb_cost.text = string.Empty;
+
 				} 
 				get{ return Config.ID; }
+			}
+
+			public void SetPrice(int itemid,int gold)
+			{
+				Template.lb_cost.text = string.Format ("{0}", gold);
+				ItemID = itemid;
 			}
         }
 
@@ -54,7 +64,7 @@ namespace Assets.Scripts.UI.Windows
 			base.OnUpdateUIData ();
 
 			this.ItemGridTableManager.Count = 1;
-			this.ItemGridTableManager [0].Model.ItemID = itemid;
+			this.ItemGridTableManager [0].Model.SetPrice (itemid, gold);
 			this.ItemGridTableManager [0].Model.OnClick = OnClickBuy;
 		}
 
@@ -74,8 +84,19 @@ namespace Assets.Scripts.UI.Windows
 				UI.UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["UI_CHARGE_PACKAGE_FULL"]);
 				return;
 			}
-			DataManagers.PlayerItemManager.Singleton.AddItemIntoPack (this.itemid, 1);
-			UI.UIManager.Singleton.UpdateUIData ();
+			if (DataManagers.GamePlayerManager.Singleton.Gold >= gold) {
+				DataManagers.GamePlayerManager.Singleton.SubGold (this.gold);
+				DataManagers.PlayerItemManager.Singleton.AddItemIntoPack (this.itemid, 1);
+				UI.UIManager.Singleton.UpdateUIData ();
+				//Charge_BuySuccess
+
+				var config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ItemConfig> (this.itemid);
+				UI.UITipDrawer.Singleton.DrawNotify(
+					string.Format(LanguageManager.Singleton ["Charge_BuySuccess"],gold,config.Name));
+			} else {
+				
+				UI.UITipDrawer.Singleton.DrawNotify (LanguageManager.Singleton ["Charge_NOGOLD"]);
+			}
 		}
 
         public override void OnShow()

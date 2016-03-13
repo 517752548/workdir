@@ -29,9 +29,8 @@ namespace Assets.Scripts.UI.Windows
         }
 
 
-        public UIButton bt_close;
-        public UIPanel PackageView;
         public UIGrid ItemGrid;
+        public UIButton bt_close;
 
 
         public UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>> ItemGridTableManager = new UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>>();
@@ -40,9 +39,8 @@ namespace Assets.Scripts.UI.Windows
         public override void InitTemplate()
         {
             base.InitTemplate();
-            bt_close = FindChild<UIButton>("bt_close");
-            PackageView = FindChild<UIPanel>("PackageView");
             ItemGrid = FindChild<UIGrid>("ItemGrid");
+            bt_close = FindChild<UIButton>("bt_close");
 
             ItemGridTableManager.InitFromGrid(ItemGrid);
 

@@ -56,12 +56,14 @@ namespace Assets.Scripts.Combat.Battle.States
 		public List<Proto.Item> DropList{set;get;}
 		public int DropGold{ set; get; }
 		public bool Dead{ set; get; }
+		public List<int> MonsterIDS{ set; get; }
 		public BattleResult()
 		{
 			DropGold = 0;
 			Dead = false;
 			DropList = new List<Item> ();
 			Winner = ArmyCamp.Monster;
+			MonsterIDS = new List<int> ();
 		}
 	}
 

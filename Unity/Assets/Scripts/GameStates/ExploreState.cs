@@ -183,6 +183,8 @@ namespace Assets.Scripts.GameStates
 				GoBack ();
 				return;
 			}
+
+			SoundManager.Singleton.PlaySound ("Button48");
 			//处理回城
 			if (Map.IsOrgin (target)) {
 				JoinCastle ();
@@ -236,6 +238,7 @@ namespace Assets.Scripts.GameStates
 					StartBattle (battleGroups, index, (winner) => {
 						if (winner)
 						{
+							
 							RecordPos (oldPos, target, true);
 							PlayerMapManager.Singleton.RecordMap (
 								Config.ID, 
@@ -270,6 +273,7 @@ namespace Assets.Scripts.GameStates
 							StartBattle (pkBattleGroup, index, 
 								(winner) => {
 									if (winner) {
+										DataManagers.AchievementManager.Singleton.PKSuccess();
 										RecordPos (oldPos, target);
 									} else {
 										GoBack ();
@@ -303,6 +307,7 @@ namespace Assets.Scripts.GameStates
 						StartBattle (pkBattleGroup, index, 
 							(winner) => {
 								if (winner) {
+									DataManagers.AchievementManager.Singleton.PKSuccess();
 									RecordPos (oldPos, target);
 								} else {
 									GoBack ();
@@ -588,6 +593,8 @@ namespace Assets.Scripts.GameStates
 								ui.ShowResult (this.Config.ID, result.DropList, index);
 								ui.callAfterCollect = SaveBattlePos;
 							}
+							foreach(var i in result.MonsterIDS)
+								DataManagers.AchievementManager.Singleton.KillMonster(i);
 						}
 						if (result.Dead) {
 							PlayerItemManager.Singleton.EmptyPackage ();
