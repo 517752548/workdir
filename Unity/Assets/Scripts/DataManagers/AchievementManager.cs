@@ -122,7 +122,7 @@ namespace Assets.Scripts.DataManagers
 				foreach (var i in configs) {
 					var data = this [i.ID];
 					var num = Tools.UtilityTool.ConvertToInt (data.Pararms);
-					num = 2;
+					num += 1;
 					data.Pararms = string.Format ("{0}", num);
 					if (TryToCompleteAchievement (data, i)) {
 						haveCompleted = true;
@@ -135,7 +135,7 @@ namespace Assets.Scripts.DataManagers
 				foreach (var i in configs) {
 					var data = this [i.ID];
 					var num = Tools.UtilityTool.ConvertToInt (data.Pararms);
-					num = 2;
+					num += 1;
 					data.Pararms = string.Format ("{0}", num);
 					if (TryToCompleteAchievement (data, i)) {
 						haveCompleted = true;
@@ -258,15 +258,17 @@ namespace Assets.Scripts.DataManagers
 				break;
 			case Proto.AchievementEventType.GetStarThree:
 				{
-					int star =  Tools.UtilityTool.ConvertToInt (data.Pararms);
-					if (star == 3)
+					int star =  Tools.UtilityTool.ConvertToInt (config.Pars1);
+					int have = Tools.UtilityTool.ConvertToInt (data.Pararms);
+					if (star <= have)
 						completed = true;
 				}
 				break;
 			case Proto.AchievementEventType.GetStarTwo:
 				{
-					int star =  Tools.UtilityTool.ConvertToInt (data.Pararms);
-					if (star == 2)
+					int star =  Tools.UtilityTool.ConvertToInt (config.Pars1);
+					int have = Tools.UtilityTool.ConvertToInt (data.Pararms);
+					if (star <= have)
 						completed = true;
 				}
 				break;
