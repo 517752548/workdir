@@ -55,8 +55,8 @@
   <LanguageKey Key="UITavern_hp">{0:N0}</LanguageKey>  
   <LanguageKey Key="UITavern_speed">{0:N0}</LanguageKey>  
   <LanguageKey Key="UITavern_skill">{0}</LanguageKey>
-  <LanguageKey Key="UITavern_Title_MessageBox">收下{0}?or不？or收，是个大问题。</LanguageKey>
-  <LanguageKey Key="BUY_HERO_Message">收留小费:{0} *{1}</LanguageKey>
+  <LanguageKey Key="UITavern_Title_MessageBox">收编 {0}</LanguageKey>
+  <LanguageKey Key="BUY_HERO_Message">收编小费:{0} *{1}</LanguageKey>
   <LanguageKey Key="UITavern_MessageBox_Job">类别:{0}</LanguageKey>	
   
   <LanguageKey Key="UI_Setting_version">版本 {0}.{1}.{2}</LanguageKey>
