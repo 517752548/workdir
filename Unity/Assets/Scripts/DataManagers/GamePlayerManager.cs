@@ -64,7 +64,8 @@ namespace Assets.Scripts.DataManagers
 		CalProuduceTime = 19,//游戏产量计算时间
 		WheatProduceAppend = 20,//小麦产量附加值
 		ProductOffLineTimeAppend =21, //离线产量计算时间
-		NoCDWhenBattleStart = 22 //战斗开始没有cd时间	
+		NoCDWhenBattleStart = 22 ,//战斗开始没有cd时间
+		GuideStep = 23 //引导
 	}
 
 	public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
@@ -810,6 +811,12 @@ namespace Assets.Scripts.DataManagers
 		}
 
 		#endregion
+
+		public int GuideStep
+		{
+			set { this [PlayDataKeys.GuideStep] = value; }
+			get { return this [PlayDataKeys.GuideStep]; } 
+		}
 	}
 
 
