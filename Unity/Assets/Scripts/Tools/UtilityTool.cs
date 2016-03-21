@@ -83,6 +83,8 @@ namespace Assets.Scripts.Tools
 			if (int.TryParse (id, out r))
 				return r;
 			else {
+				if (string.IsNullOrEmpty (id))
+					return 0;
 				GameDebug.LogError(id+" can't convert to int!");
 			}
 			return r;

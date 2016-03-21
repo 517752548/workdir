@@ -183,6 +183,8 @@ namespace Assets.Scripts.GameStates
 				GoBack ();
 				return;
 			}
+
+			SoundManager.Singleton.PlaySound ("Button48");
 			//处理回城
 			if (Map.IsOrgin (target)) {
 				JoinCastle ();
@@ -236,6 +238,7 @@ namespace Assets.Scripts.GameStates
 					StartBattle (battleGroups, index, (winner) => {
 						if (winner)
 						{
+							
 							RecordPos (oldPos, target, true);
 							PlayerMapManager.Singleton.RecordMap (
 								Config.ID, 
@@ -250,12 +253,9 @@ namespace Assets.Scripts.GameStates
 					//return;
 				}
 				break;
-			case Proto.MapEventType.BronPos:
-				RecordPos (oldPos, target);
-				JoinCastle ();
-				break;
 			case Proto.MapEventType.GoHomePos:
-				RecordPos (oldPos, target);
+			case Proto.MapEventType.BronPos:
+				RecordPos (oldPos, target,true);
 				JoinCastle ();
 				break;
 			case Proto.MapEventType.GoToNextLvlPos:
@@ -273,6 +273,7 @@ namespace Assets.Scripts.GameStates
 							StartBattle (pkBattleGroup, index, 
 								(winner) => {
 									if (winner) {
+										DataManagers.AchievementManager.Singleton.PKSuccess();
 										RecordPos (oldPos, target);
 									} else {
 										GoBack ();
@@ -306,6 +307,7 @@ namespace Assets.Scripts.GameStates
 						StartBattle (pkBattleGroup, index, 
 							(winner) => {
 								if (winner) {
+									DataManagers.AchievementManager.Singleton.PKSuccess();
 									RecordPos (oldPos, target);
 								} else {
 									GoBack ();
@@ -401,7 +403,7 @@ namespace Assets.Scripts.GameStates
 					Config.ID,
 					index, 
 					itemID,itemGold);
-				_tempPosIndex.Add (index);
+				//_tempPosIndex.Add (index);
 				RecordPos (oldPos, target);
 				break;
 			case Proto.MapEventType.ScrectShopPos:
@@ -591,6 +593,8 @@ namespace Assets.Scripts.GameStates
 								ui.ShowResult (this.Config.ID, result.DropList, index);
 								ui.callAfterCollect = SaveBattlePos;
 							}
+							foreach(var i in result.MonsterIDS)
+								DataManagers.AchievementManager.Singleton.KillMonster(i);
 						}
 						if (result.Dead) {
 							PlayerItemManager.Singleton.EmptyPackage ();

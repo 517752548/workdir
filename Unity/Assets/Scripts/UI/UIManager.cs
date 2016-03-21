@@ -312,6 +312,15 @@ namespace Assets.Scripts.UI
         {
             Render = render;
             _windows = new Dictionary<string, UIWindow>();
+
+			//LoadAllResources
+			var windows = typeof(UIManager).Assembly.GetTypes().Where(t=> t.IsSubclassOf(typeof(UIWindow))).ToList();
+			foreach (var i in windows) {
+				var attris = i.GetCustomAttributes(typeof(UIWindowAttribute),false) as UIWindowAttribute[];
+				if (attris == null || attris.Length == 0)
+					continue;
+				Resources.Load ("UI/" + attris [0].Resource);
+			}
         }
 
         private float lastTime = 0f;

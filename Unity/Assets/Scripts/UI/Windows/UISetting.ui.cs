@@ -21,6 +21,7 @@ namespace Assets.Scripts.UI.Windows
         public UIButton Bt_Reset;
         public UIToggle Bt_Music;
         public UIToggle Bt_MusicEffect;
+        public UIButton Bt_GameSkill;
 
 
 
@@ -37,6 +38,7 @@ namespace Assets.Scripts.UI.Windows
             Bt_Reset = FindChild<UIButton>("Bt_Reset");
             Bt_Music = FindChild<UIToggle>("Bt_Music");
             Bt_MusicEffect = FindChild<UIToggle>("Bt_MusicEffect");
+            Bt_GameSkill = FindChild<UIButton>("Bt_GameSkill");
 
 
         }

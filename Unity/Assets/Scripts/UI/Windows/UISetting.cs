@@ -40,6 +40,11 @@ namespace Assets.Scripts.UI.Windows
 						()=>{App.GameAppliaction.Singleton.ResetPlayData(); this.HideWindow();},
 						()=>{ });
 			});
+
+			Bt_GameSkill.OnMouseClick ((s, e) => {
+				HideWindow();
+				UIPlaySKill.Show();
+			});
             //Write Code here
         }
         public override void OnShow()
@@ -50,12 +55,12 @@ namespace Assets.Scripts.UI.Windows
 
 			Bt_Music.value = DataManagers.GamePlayerManager.Singleton.IsMusicOn;
 			Bt_MusicEffect.value = DataManagers.GamePlayerManager.Singleton.EffectOn;
-			UI.UIControllor.Singleton.HidenMessage = true;
+			UI.UIControllor.Singleton.ShowOrHideMessage( false);
         }
         public override void OnHide()
         {
             base.OnHide();
-			UI.UIControllor.Singleton.HidenMessage = false;
+			UI.UIControllor.Singleton.ShowOrHideMessage( true);
         }
 
 

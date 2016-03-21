@@ -119,5 +119,16 @@ namespace Assets.Scripts.Combat.Battle.States
 				return false;
 			});
 		}
+
+		public void ClearPlayerCD()
+		{
+			State.Each<BattleArmy> (t => {
+				if(t.Camp != Proto.ArmyCamp.Player)return false;
+				foreach (var s in t.Soldiers) {
+					s.AttackCdTime = 0;//Time.time;
+				}
+				return false;
+			});
+		}
 	}
 }

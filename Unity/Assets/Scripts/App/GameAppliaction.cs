@@ -28,7 +28,8 @@ namespace Assets.Scripts.App
                 GamePlayerManager.Singleton,
                 BuildingManager.Singleton,
                 PlayerArmyManager.Singleton,
-                PlayerMapManager.Singleton
+                PlayerMapManager.Singleton,
+				AchievementManager.Singleton
             };
             foreach (var i in prisit)
                 i.Load();
@@ -51,6 +52,8 @@ namespace Assets.Scripts.App
 				SoundManager.Singleton.SetSourceValue (0);
 			}
             Runner.DoRun(Run());
+
+			//UI.UIManager.Singleton.LoadAllResources ();
         }
 
         public void ResetPlayData()

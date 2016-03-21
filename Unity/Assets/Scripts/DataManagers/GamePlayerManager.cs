@@ -63,7 +63,9 @@ namespace Assets.Scripts.DataManagers
 		GoldProduceAppendValue = 18,//点金附加值
 		CalProuduceTime = 19,//游戏产量计算时间
 		WheatProduceAppend = 20,//小麦产量附加值
-		ProductOffLineTimeAppend =21 //离线产量计算时间
+		ProductOffLineTimeAppend =21, //离线产量计算时间
+		NoCDWhenBattleStart = 22 ,//战斗开始没有cd时间
+		GuideStep = 23 //引导
 	}
 
 	public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
@@ -256,6 +258,14 @@ namespace Assets.Scripts.DataManagers
 
 				return goldAppend;
 			}
+		}
+
+		public bool IsNoCdWhenBattleBegin{ 
+			get { return this [PlayDataKeys.NoCDWhenBattleStart] == 1; } 
+			set 
+			{
+				this [PlayDataKeys.NoCDWhenBattleStart] = value ? 1 : 0;
+			} 
 		}
 
 		internal float CallProduceGold ()
@@ -547,6 +557,7 @@ namespace Assets.Scripts.DataManagers
 		{
 			var current = this.PackageSize;
 			this [PlayDataKeys.PACKAGE_SIZE] = current + size;
+			DataManagers.AchievementManager.Singleton.PackageChanged (this.PackageSize);
 		}
 
 		//添加
@@ -583,7 +594,11 @@ namespace Assets.Scripts.DataManagers
 		public bool CostFood (int num)
 		{
 			int foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
-			return PlayerItemManager.Singleton.CalItemFromPack (foodEntry, num);
+			var success = PlayerItemManager.Singleton.CalItemFromPack (foodEntry, num);
+			if (success) {
+				DataManagers.AchievementManager.Singleton.CostFood (num);
+			}
+			return success;
 		}
 
 
@@ -796,6 +811,12 @@ namespace Assets.Scripts.DataManagers
 		}
 
 		#endregion
+
+		public int GuideStep
+		{
+			set { this [PlayDataKeys.GuideStep] = value; }
+			get { return this [PlayDataKeys.GuideStep]; } 
+		}
 	}
 
 

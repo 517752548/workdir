@@ -14,10 +14,12 @@ namespace Assets.Scripts.UI.Windows
         {
             public ItemGridTableTemplate(){}
             public UIButton Bt_itemName;
+            public UISprite s_completed;
 
             public override void InitTemplate()
             {
                 Bt_itemName = FindChild<UIButton>("Bt_itemName");
+                s_completed = FindChild<UISprite>("s_completed");
 
             }
         }

@@ -1,0 +1,43 @@
+
+//use javescripte handler ui event 
+//javescripte as a executeable script.
+
+function bt_ok_click(this,sender,e)
+{
+	this.uimanager.updateuidate();
+	//send an message to server 
+	this.uimanager.socket.sendmsg("reg",
+	{ user: this.find("lb_username.").text,password:this.find("lb_pwd").text },callbackwhensend,this);
+
+}
+
+fucntion callbackwhensend(userdata,result)
+{
+	if(result.success)
+	{
+	    userdata.uimanager.updateuidata();
+	}
+}
+
+function _onload(this,sender,e)
+{
+	this.itemtable.count = 5
+	var i =0;
+	for(var i=0;i<this.itemtable.count;i++)
+	{
+	   var name = this.itemtable.get(i).model.getlabel("uilabel","name");
+	   name.text = ""
+	   var sprite = this.itemtable.get(i).model.gettexture("uitexture","icon");
+	   sprite.texture = bundlemgr.gettexture("icon");
+	} 
+}
+
+function _onupdateuidate(this,sender,e)
+{
+	_onload(this,sender,e);
+}
+
+function _onhide(this,sender ,e)
+{
+	
+}

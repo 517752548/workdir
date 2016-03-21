@@ -103,19 +103,17 @@ enum SkillEffectType
 //成就达成条件类型
 enum AchievementEventType
 {
-    GoldCost = 1;//盘缠消耗到指定量
-	BuildLevel = 2 ;//建筑到指定等级
-	AllBuildLevel =3;//指定组建筑到指定等级
-	Explore = 4;//探索度到指定数
-	ArmyLevel = 5;//兵种进化到指定等级
-	PlaySkill = 6;//获得指定天
-	CostFood = 7;//消耗干粮达指定数量
-	KillBoss = 8;//杀死boss
-	ShareGame = 9;//分享
-	KillMonster = 10 ;//杀死指定怪物数
-	EnterMap = 11;//进入神秘地图
-	OpenChest =12;//开启指定数量宝箱
-	DefenceEnemy =13;//成功抵御入侵
+  ProduceGold = 1; //1-点金累计至指定值
+  CostFood = 2; //2-干粮累计消耗
+  Gamable = 3; //3-赌博累计至指定值
+  KillBoss = 4; //4-击杀指定地图boss
+  ExploreValue = 5;//5-指定地图探索度达成
+  GetStarTwo = 6; //6-获取指定数2星角色
+  GetStarThree = 7 ;//7-获取指定数3星角色
+  PackageSize = 8 ;//8-背包扩充至指定大小
+  GetItem = 9 ;//9-获取指定道具
+  KillMonsterCount = 10;//10-累计击杀怪物数
+  PKCount = 11; //11-累计竞技次数
 }
 //随机事件类型
 enum RandomEventTickType
@@ -179,4 +177,14 @@ enum MapUnlockModeType
 {
    None =-1;//没有
    UnlockMap =1 ;//开启地图
+}
+
+//新手引导步骤
+enum GuideStep
+{
+   ProduceGold = 1; //铸币
+   EmployHero =2;//雇佣英雄
+   ConstructBuilding = 3 ;//建造建筑
+   ProduceFood = 4;//干粮
+   ExlporeMap = 5； //探索地图
 }

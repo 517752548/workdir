@@ -65,13 +65,20 @@ namespace Assets.Scripts.UI.Windows
 
             });
 
+			bt_package.OnMouseClick ((s, e) => {
+				ShowPackage();
+			});
+
+			bt_hide.OnMouseClick ((s, e) => {
+				var tween = this.s_bagRoot.GetComponent<TweenPosition> ();
+				tween.PlayReverse ();
+			});
             //Write Code here
         }
         public override void OnShow()
         {
             base.OnShow();
 			OnUpdateUIData ();
-			this.s_bagRoot.ActiveSelfObject (false);
         }
         public override void OnHide()
         {
@@ -97,12 +104,27 @@ namespace Assets.Scripts.UI.Windows
 			lb_package.text = string.Format ("{0}/{1}", packageCur, packageSize);
 			var cur = map.GetCurrent();
 			lb_vector.text = string.Format (LanguageManager.Singleton ["UI_EXPLORE_VECTOR"], cur.x, cur.y);
-			
+
+			var all =DataManagers.PlayerItemManager.Singleton.PackageToList;
+			BagGridTableManager.Count = all.Count;
+			int index = 0;
+			foreach (var i in BagGridTableManager) {
+				i.Model.GameItem = all [index];
+				i.Model.SetDrag (all.Count >= 10);
+				index ++;
+			}
 		}
 		private GameMap map;
 		public void SetMap(GameMap map)
 		{
 			this.map = map;
+		}
+
+		public void ShowPackage()
+		{
+			var tween = this.s_bagRoot.GetComponent<TweenPosition> ();
+			tween.PlayForward ();
+
 		}
     }
 }
