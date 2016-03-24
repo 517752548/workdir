@@ -72,6 +72,10 @@ namespace Assets.Scripts.DataManagers
                     var heroconfig = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.HeroConfig>( int.Parse(args[1]));
                     DataManagers.PlayerArmyManager.Singleton.DoAdd(heroconfig);
                     break;
+			case "clearmap":
+				DataManagers.PlayerMapManager.Singleton.Reset ();
+
+				break;
                 default: return;
 
             }

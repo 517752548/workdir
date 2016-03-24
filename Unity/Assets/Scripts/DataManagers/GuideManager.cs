@@ -5,7 +5,7 @@ namespace Assets.Scripts.DataManagers
 
 	public enum GuideStep
 	{
-		Welcome = 1,
+		Welcome = 1, //开始
 		ProduceGold,
 		BuyWood,
 		Build,
@@ -19,15 +19,13 @@ namespace Assets.Scripts.DataManagers
 		{
 			Step = GuideStep.Welcome;
 		}
-			
+
 
 		public GuideStep Step {
-			set
-			{
+			set {
 				GamePlayerManager.Singleton.GuideStep = (int)value;
 			} 
-			get
-			{
+			get {
 				int step = GamePlayerManager.Singleton.GuideStep;
 				if (step == -1)
 					return GuideStep.Welcome;
@@ -38,9 +36,18 @@ namespace Assets.Scripts.DataManagers
 
 
 
-		public void EventSystem()
+		public void EventSystem (GuideStep step)
 		{
-			
+			switch (step) {
+			case GuideStep.Welcome:
+				
+				break;
+			}
+		}
+
+		public void StepTo (GuideStep step)
+		{
+			this.Step = step;
 		}
 
 	}

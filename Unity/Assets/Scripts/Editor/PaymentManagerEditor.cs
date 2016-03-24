@@ -8,13 +8,20 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
+using System.IO;
 
 public class PaymentManagerEditor : EditorWindow
 {
 	[MenuItem("GAME/CONFIGS_INIT")]
 	public static void Init_Config()
 	{
-		//var list = new List<Assets.Scripts.AppConfig.KeyValue> ();
+		if (EditorUtility.DisplayDialog ("保存?", "初始化一般第一次时候使用!", "OK", "Cancel")) {
+			var list = new List<Assets.Scripts.KeyValue> ();
+			list.Add (new Assets.Scripts.KeyValue{ Key = "APPNAME", Value = "Name" });
+			var xml = XmlParser.Serialize (list);
+			var file = Utility.GetStreamingAssetByPath (Assets.Scripts.AppConfig.APP_CONFIG_PATH);
+			File.WriteAllText (file, xml, XmlParser.UTF8);
+		}
 	}
 
 

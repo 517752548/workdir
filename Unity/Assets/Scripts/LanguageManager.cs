@@ -25,7 +25,7 @@ namespace Assets.Scripts
         }
         public void InitLanauage()
         {
-            var file = App.GameAppliaction.Singleton.ReadStreamingFile(_LANGUAGE_);
+            var file = App.GameAppliaction.ReadStreamingFile(_LANGUAGE_);
 			var list = new List<LanguageKey> ();
             list = XmlParser.DeSerialize<List<LanguageKey>>(file);
             values = new Dictionary<string, string>();

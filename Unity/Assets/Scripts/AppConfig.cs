@@ -36,7 +36,7 @@ namespace Assets.Scripts
 		{
 			get{ 
 				if (keys.Count == 0) {
-					var str = App.GameAppliaction.Singleton.ReadStreamingFile (APP_CONFIG_PATH);
+					var str = App.GameAppliaction.ReadStreamingFile (APP_CONFIG_PATH);
 					if (string.IsNullOrEmpty (str))
 						return null;
 					var data = Tools.XmlParser.DeSerialize<List<KeyValue>> (str);

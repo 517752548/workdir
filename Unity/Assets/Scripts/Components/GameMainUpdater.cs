@@ -45,6 +45,7 @@ namespace Assets.Scripts
         void Start()
         {
             GameAppliaction.Singleton.Start(this);
+			showGM= AppConfig.Singleton.GetKeyBoolValue ("debugmode");
         }
 
         void LateUpdate()
@@ -78,10 +79,14 @@ namespace Assets.Scripts
 		private float fps = 0;
 		private float lastTime = 0;
 
+		private bool showGM = false;
 
         void OnGUI()
         {
-			//#if UNITY_EDITOR
+			
+			if (!showGM)
+				return;
+			#if UNITY_EDITOR
             int line = 1;
             var rect = new Rect(2, Screen.height - (line++ * 20), 120, 20);
             GM = GUI.TextField(rect, GM);
@@ -99,7 +104,7 @@ namespace Assets.Scripts
 
 			rect =new Rect(2, Screen.height - (line++ * 20), 120, 20);
 			GUI.Label( rect,string.Format("fps:{0:0} {1:0.00}",fps,1/Time.deltaTime));
-			//#endif
+			#endif
         }
 
         void OnGameTap(TapGesture tap)

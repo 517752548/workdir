@@ -17,6 +17,8 @@ namespace Assets.Scripts.App
     public class GameAppliaction:Tools.XSingleton<GameAppliaction>,ExcelConfig.IConfigLoader
     {
 
+		public const string APP_CONFIG = "AppConfig.xml";
+
 		public static bool BattleDebug = true;
 
         public void Start(IRuner runer)
@@ -178,7 +180,7 @@ namespace Assets.Scripts.App
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public string ReadStreamingFile(string fileName)
+		public static string ReadStreamingFile(string fileName)
         {
             var fileFullName = Tools.Utility.GetStreamingAssetByPath(fileName);
             Debug.Log(fileFullName);
