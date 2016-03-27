@@ -21,18 +21,20 @@ namespace Assets.Scripts
 
         void Update()
         {
-			frames.AddLast (1 / Time.deltaTime);
-			if (frames.Count > 200) {
-				frames.RemoveFirst ();
+			if (showGM) {
+				frames.AddLast (1 / Time.deltaTime);
+				if (frames.Count > 200) {
+					frames.RemoveFirst ();
 
-			}
+				}
 
-			if (lastTime + 1 > Time.time) {
-				pfs++;
-			} else {
-				fps = pfs;
-				pfs = 0;
-				lastTime = Time.time;
+				if (lastTime + 1 > Time.time) {
+					pfs++;
+				} else {
+					fps = pfs;
+					pfs = 0;
+					lastTime = Time.time;
+				}
 			}
             if (Input.GetKey(KeyCode.Escape))
             {
@@ -104,6 +106,9 @@ namespace Assets.Scripts
 
 			rect =new Rect(2, Screen.height - (line++ * 20), 120, 20);
 			GUI.Label( rect,string.Format("fps:{0:0} {1:0.00}",fps,1/Time.deltaTime));
+
+			rect =new Rect(2, Screen.height - (line++ * 20), 250, 20);
+			GUI.Label( rect,string.Format("当前EventMask:{0}",UI.UIControllor.Singleton.MaskEventObjectName));
 			#endif
         }
 

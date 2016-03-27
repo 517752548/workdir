@@ -128,7 +128,24 @@ namespace Assets.Scripts.UI.Windows
         {
             DataManagers.GamePlayerManager.Singleton.AddPeopleOnProduce(obj.Config.ID, 1);
             obj.Config = obj.Config;
-            ShowState();
+			ShowState ();
+			if (obj.Config.ID == this.produceID) {
+				num -= 1;
+				if (num <= 0) {
+
+					UI.UIControllor.Singleton.ClearMaskEvent ();
+
+					if (finger != null) {
+						GameObject.Destroy (finger);
+						finger = null;
+					}
+
+					if (Completed != null) {
+						Completed ();
+						Completed = null;
+					}
+				}
+			}
         }
 
         private void ClickSub(ItemGridTableModel obj)
@@ -241,5 +258,39 @@ namespace Assets.Scripts.UI.Windows
 			OnPreScecondUpdate ();
 
         }
+
+
+		public void GuideShowAddPeople(int produceID,int num,Action action)
+		{
+			if (finger != null) {
+				GameObject.Destroy (finger);
+			}
+
+			finger = null;
+			Transform root = null;
+			foreach (var i in ItemGridTableManager) 
+			{
+				if (i.Model.Config.ID == produceID) {
+					root = i.Template.bt_add.transform;
+				}
+			}
+
+			if (root == null)
+				return;
+			
+			UI.UIControllor.Singleton.SetMaskEventObject (root.gameObject);
+			finger = GameObject.Instantiate<GameObject> (DataManagers.GuideManager.Singleton.GetFinger ());
+			finger.transform.SetParent (root);
+			finger.transform.localPosition = new Vector3 (40, -40, 0);
+			finger.transform.localScale = Vector3.one;
+			this.produceID = produceID;
+			this.num = num;
+			Completed = action;
+		}
+
+		private GameObject finger;
+		private int produceID=-1;
+		private int num =0;
+		private Action Completed;
     }
 }

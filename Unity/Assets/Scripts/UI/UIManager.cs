@@ -172,6 +172,7 @@ namespace Assets.Scripts.UI
             OnShow();
             AfterShow();
             
+			DataManagers.GuideManager.Singleton.ShowGuild ();
         }
         public void ShowAsChildWindow(UIWindow window, bool hideParent = true)
         {

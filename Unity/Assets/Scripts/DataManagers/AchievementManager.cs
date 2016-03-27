@@ -105,6 +105,9 @@ namespace Assets.Scripts.DataManagers
 			var configs = GetAllConfigs (Proto.AchievementEventType.ExploreValue);
 			foreach (var i in configs) {
 				var data = this [i.ID];
+				int needMap =  Tools.UtilityTool.ConvertToInt (i.Pars1);
+				if (needMap != mapID)
+					continue;
 				var num = Tools.UtilityTool.ConvertToInt (data.Pararms);
 				num += exportValue;
 				data.Pararms = string.Format ("{0}", num);
@@ -232,7 +235,7 @@ namespace Assets.Scripts.DataManagers
 				break;
 			case Proto.AchievementEventType.ExploreValue:
 				{
-					int needFood = Tools.UtilityTool.ConvertToInt (config.Pars1);
+					int needFood = Tools.UtilityTool.ConvertToInt (config.Pars2);
 					int have = Tools.UtilityTool.ConvertToInt (data.Pararms);
 					if (needFood <= have) {
 						completed = true;
@@ -275,7 +278,7 @@ namespace Assets.Scripts.DataManagers
 			case Proto.AchievementEventType.KillBoss:
 				{
 					int bossID =  Tools.UtilityTool.ConvertToInt (data.Pararms);
-					int needBoss = Tools.UtilityTool.ConvertToInt (config.Pars1);
+					int needBoss = Tools.UtilityTool.ConvertToInt (config.Pars2);
 					if (bossID == needBoss)
 						completed = true;
 				}
@@ -340,13 +343,16 @@ namespace Assets.Scripts.DataManagers
 			}
 		}
 
-		public void KillMonster(int monsterID)
+		public void KillMonster(int mapID,int monsterID)
 		{
 			//checkBoss
 			var haveCompleted = false;
 			var configs = GetAllConfigs (Proto.AchievementEventType.KillBoss);
 			foreach (var i in configs) {
 				var data = this [i.ID];
+				int needMapID = Tools.UtilityTool.ConvertToInt (i.Pars1);
+				if (needMapID != mapID)
+					continue;
 				var num = Tools.UtilityTool.ConvertToInt (data.Pararms);
 				num = monsterID;
 				data.Pararms = string.Format ("{0}", num);

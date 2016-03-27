@@ -236,7 +236,21 @@ namespace Assets.Scripts.UI.Windows
         {
             if (DataManagers.BuildingManager.Singleton.ConstructBuild(obj.Build.BuildID, obj.Build.Level + 1))
             {
-                UIManager.Singleton.UpdateUIData();
+                
+				if (buildID == obj.Build.BuildID) 
+				{
+					if (finger != null) {
+						GameObject.Destroy (finger);
+						finger = null;
+					}
+					if (Completed != null) {
+						Completed ();
+					}
+					Completed = null;
+					buildID = -1;
+				}
+
+				UIManager.Singleton.UpdateUIData();
             }
         }
 
@@ -244,5 +258,35 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnHide();
         }
+
+		public void ShowStructuerBuild(int buildID,Action completed)
+		{
+			if (finger != null) {
+				GameObject.Destroy (finger);
+			}
+
+			Transform root = null;
+
+			foreach (var i in ItemGridTableManager)
+			{
+				if (i.Model.Build.BuildID == buildID) {
+					root = i.Root;
+				}
+			}
+
+			if (root == null)
+				return;
+
+			finger = GameObject.Instantiate<GameObject> (DataManagers.GuideManager.Singleton.GetFinger ());
+			finger.transform.SetParent (root);
+			finger.transform.localScale = Vector3.one;
+			finger.transform.localPosition = new Vector3 (120, -40,0);
+			this.buildID = buildID;
+			this.Completed = completed;
+		}
+
+		private GameObject finger;
+		private int buildID =-1;
+		private Action Completed;
     }
 }

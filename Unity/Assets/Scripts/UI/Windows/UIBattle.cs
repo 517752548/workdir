@@ -201,6 +201,8 @@ namespace Assets.Scripts.UI.Windows
             var config = monster.Soldiers[0].Config;
             DataManagers.PlayerArmyManager.Singleton.SetJob(jobicon, config);
             this.lb_monster_lvl.text = string.Format(LanguageManager.Singleton["BATTLE_UI_MONSTER_LVL"], config.Level);
+			this.lb_monster_lvl.text = string.Empty;
+			StarGridTableManager.Count = config.Star;
             DataManagers.PlayerArmyManager.Singleton.SetIcon(Monster_coin, config, DataManagers.TypeOfIcon.BattleMax);
         }
 

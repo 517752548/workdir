@@ -268,10 +268,11 @@ namespace Assets.Scripts.DataManagers
 			} 
 		}
 
-		internal float CallProduceGold ()
+		internal float CallProduceGold (out int addNum)
 		{
 			var goldProduce = App.GameAppliaction.Singleton.ConstValues.GoldProduceLvl1;// GetGoldProduce();
 			goldProduce += GoldProduceAppend;
+			addNum = goldProduce;
 			this.AddGold (goldProduce);
 			UITipDrawer.Singleton.DrawNotify (string.Format (LanguageManager.Singleton ["ProduceGoldPreTick"],
 				goldProduce));

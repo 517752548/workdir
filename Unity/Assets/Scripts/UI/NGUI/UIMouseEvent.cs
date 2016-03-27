@@ -46,6 +46,10 @@ public class UIMouseClick : UIEventBase
 
     void OnClick()
     {
+		if (!string.IsNullOrEmpty(Assets.Scripts.UI.UIControllor.Singleton.MaskEventObjectName)) {
+			if (this.gameObject.name != Assets.Scripts.UI.UIControllor.Singleton.MaskEventObjectName)
+				return;
+		}
 		if (time + 0.5f > Time.time)
 			return;
         if (Click != null)

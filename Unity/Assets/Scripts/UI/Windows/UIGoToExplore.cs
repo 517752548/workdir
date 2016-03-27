@@ -105,6 +105,22 @@ namespace Assets.Scripts.UI.Windows
 			});
 
 			bt_go.OnMouseClick ((s, e) => {
+
+				UIControllor.Singleton.ClearMaskEvent();
+
+				if(this.completed!=null)
+				{
+					this.completed ();
+					completed=null;
+
+				}
+
+				if(finger!=null)
+				{
+					GameObject.Destroy(finger);
+					finger =null;
+				}
+
 				var team = new List<int> ();
 				foreach (var i in AllHeros) {
 					if (i.IsSelectd) {
@@ -124,6 +140,10 @@ namespace Assets.Scripts.UI.Windows
 				DataManagers.PlayerArmyManager.Singleton.SetTeam (team);
 				GamePlayerManager.Singleton.LastFood = DataManagers.PlayerItemManager.Singleton.GetFoodNum();
 				App.GameAppliaction.Singleton.GoToExplore (DataManagers.GamePlayerManager.Singleton.CurrentMap);
+
+
+
+
 			});
 
 			bt_add.OnMouseClick ((s, e) => {
@@ -322,6 +342,28 @@ namespace Assets.Scripts.UI.Windows
 			UI.UIControllor.Singleton.ShowOrHideMessage(true);
 			UI.UIManager.Singleton.UpdateUIData ();
 		}
+
+
+		public void ShowGuide(Action competed)
+		{
+			if (finger != null)
+				GameObject.Destroy (finger);
+			if (AllHeros == null)
+				return;
+			
+			this.completed = competed;
+			this.finger = GameObject.Instantiate<GameObject> (DataManagers.GuideManager.Singleton.GetFinger ());
+			finger.transform.SetParent (this.bt_go.transform);
+			finger.transform.localPosition = new Vector3 (60, -60, 0);
+			finger.transform.localScale = Vector3.one;
+
+			ClickCategory (Proto.HeroJob.Yao, to_yao);
+
+			UIControllor.Singleton.SetMaskEventObject (bt_go.gameObject);
+		}
+
+		private  GameObject finger;
+		private Action completed;
 	}
 
    

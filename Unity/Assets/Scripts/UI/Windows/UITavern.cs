@@ -6,6 +6,7 @@ using Assets.Scripts.Tools;
 using ExcelConfig;
 using Proto;
 using Assets.Scripts.DataManagers;
+using UnityEngine;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -135,6 +136,20 @@ namespace Assets.Scripts.UI.Windows
             UITavernMessageBox.Show(obj.Hero, () => {
                 if (DataManagers.PlayerArmyManager.Singleton.BuyHero(obj.Hero))
                 {
+					if(this.heroID == obj.Hero.recruit_id)
+					{
+						if(finger!=null)
+						{
+							GameObject.Destroy(finger);
+							finger =null;
+						}
+						if(completed!=null)
+						{
+							completed();
+							completed = null;
+						}
+					}
+					
                     UIManager.Singleton.UpdateUIData();
                 }
             }, null);
@@ -147,5 +162,35 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnHide();
         }
+
+
+		public void EmployHero(int heroID,Action completed)
+		{
+			if (finger != null)
+				GameObject.Destroy (finger);
+
+			finger = null;
+			Transform root = null;
+			foreach (var i in this.ItemGridTableManager) {
+				if (i.Model.Hero.recruit_id == heroID) {
+					root = i.Template.Bt_Emp.transform;
+				}
+			}
+			if (root == null)
+				return;
+
+			finger = GameObject.Instantiate<GameObject> (GuideManager.Singleton.GetFinger ());
+			finger.transform.SetParent (root);
+			finger.transform.localPosition = new Vector3 (40, -40, 0);
+			finger.transform.localScale = Vector3.one;
+
+			this.heroID = heroID;
+			this.completed = completed;
+
+		}
+
+		private GameObject finger;
+		private int heroID;
+		private Action completed;
     }
 }

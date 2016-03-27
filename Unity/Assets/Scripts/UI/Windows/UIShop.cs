@@ -6,6 +6,7 @@ using System.Text;
 using Assets.Scripts.Tools;
 using ExcelConfig;
 using Proto;
+using UnityEngine;
 
 
 namespace Assets.Scripts.UI.Windows
@@ -149,6 +150,8 @@ namespace Assets.Scripts.UI.Windows
             base.OnShow();
             //¥¶¿Ì
             OnUpdateUIData();
+
+
         }
 
 
@@ -238,7 +241,9 @@ namespace Assets.Scripts.UI.Windows
         {
             if (DataManagers.PlayerItemManager.Singleton.BuyItem(obj.Config))
             {
-                UIManager.Singleton.UpdateUIData();
+                
+				OnBuySuccess (obj.Config.ItemId, 1);
+				UIManager.Singleton.UpdateUIData();
             }
         }
 
@@ -252,6 +257,8 @@ namespace Assets.Scripts.UI.Windows
 		{
 			if (DataManagers.PlayerItemManager.Singleton.BuyItemUseCoin(obj.Config))
 			{
+				
+				OnBuySuccess (Tools.UtilityTool.ConvertToInt(obj.Config.ItemKey), 1);
 				UIManager.Singleton.UpdateUIData();
 			}
 		}
@@ -262,9 +269,81 @@ namespace Assets.Scripts.UI.Windows
 		}
 
 
+		private void OnBuySuccess(int item,int num)
+		{
+			if (itemID != item)
+				return;
+		
+			this.num -= num;
+			if (this.num <= 0) {
+			   
+				this.num = 0;
+				itemID = -1;
+
+				if (this.buyCompleted != null) {
+					this.buyCompleted ();
+					this.buyCompleted = null;
+				}
+
+				if (_itemfinger != null) {
+					GameObject.Destroy (_itemfinger);
+					_itemfinger = null;
+				}
+
+			}
+		}
+
         public override void OnHide()
         {
             base.OnHide();
         }
+
+		public void ShowBuyItem(int itemID, int num,ShowType type, Action completed)
+		{
+			if (_itemfinger != null)
+				GameObject.Destroy (_itemfinger);
+
+			Transform root =null;
+
+			switch (Type)
+			{
+			case ShowType.Coin:
+				ShowCoin ();
+				foreach (var i in ItemGridCoinTableManager) {
+					if (Tools.UtilityTool.ConvertToInt(i.Model.Config.ItemKey) == itemID) {
+						root = i.Root;
+					}
+				}
+				break;
+			case ShowType.Gold:
+				ShowGold ();
+				foreach (var i in ItemGridTableManager) {
+					if (i.Model.Config.ItemId == itemID) {
+						root = i.Root;
+					}
+				}
+				break;
+			}
+
+			if (root == null)
+				return;
+
+			_itemfinger = GameObject.Instantiate<GameObject> (DataManagers.GuideManager.Singleton.GetFinger ());
+			_itemfinger.transform.SetParent (root);
+			_itemfinger.transform.localScale = Vector3.one;
+			_itemfinger.transform.localPosition = new Vector3 (120, -40,0);
+
+			buyCompleted = completed;
+			this.itemID = itemID;
+			this.num = num;
+		}
+
+		private GameObject _itemfinger;
+		private Action buyCompleted;
+		private int itemID;
+		private int num;
     }
+
+
+
 }

@@ -6,6 +6,7 @@ using Proto;
 using ExcelConfig;
 using Assets.Scripts.GameStates;
 using Assets.Scripts.UI.Windows;
+using UnityEngine;
 
 namespace Assets.Scripts.UI
 {
@@ -114,6 +115,21 @@ namespace Assets.Scripts.UI
 			var ui = UIChargeShop.Show ();
 			ui.ShowFood (itemID, gold);
 			return;
+		}
+
+		public string MaskEventObjectName = string.Empty;
+
+
+		public void SetMaskEventObject(GameObject obj)
+		{
+			MaskEventObjectName = obj.name;
+			//Debug.LogError ("Mask:" + obj.name);
+
+		}
+		public void ClearMaskEvent()
+		{
+			MaskEventObjectName = string.Empty;
+			//Debug.LogError ("Mask clear!!!");
 		}
     }
 }

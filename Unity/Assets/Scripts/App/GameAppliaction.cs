@@ -122,6 +122,8 @@ namespace Assets.Scripts.App
             Current = target;
 			if(Current!=null)
             Current.OnEnter();
+
+			DataManagers.GuideManager.Singleton.	ShowGuild ();
         }
 
         /// <summary>

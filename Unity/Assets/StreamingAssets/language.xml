@@ -100,7 +100,7 @@
   <LanguageKey Key="LVLUP_NOT_ENOUGH_GOLD">金币不够啊！ </LanguageKey> 
   <LanguageKey Key="LVLUP_NOT_ENOUGH_ITEM">{0}不够怎么办？</LanguageKey>
   
-  <LanguageKey Key="UI_GOEXPLORE_NO_PLACE">带个购物袋你就想搬走高老庄，行行好买个大点的包包好不好。</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NO_PLACE">背包满了！</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_NO_FOOD">{0}没有了，等死吧，做做饿死鬼耶。</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_PACKAGE">背包:{0}/{1}</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_TEAM_SIZE">可出战人数:{0}/{1}</LanguageKey>
@@ -110,7 +110,7 @@
   <LanguageKey Key="UI_GOEXPLORE_Relive_OK">招魂</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_Relive_NOT_ENOUGH_ITEM">没有{0}</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_Relive_Success">让{1}吃个{0}是不是就活奔乱跳呢？</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_NEED_ARMY">取个经都要4个人一个马，你说这个出门打劫就让包包去不太好吧？</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NEED_ARMY">取个经都要4个人一个马，你说这个出门打劫就只让包包去不太好吧？</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_NEED_FOOD">就算神仙出门也要带干粮的，这个你懂的？吃饭干活。不吃饭没得干</LanguageKey>
 
   <LanguageKey Key="BATTLE_UI_MONSTER_LVL">LV.{0}</LanguageKey>
@@ -163,10 +163,43 @@
   <LanguageKey Key="GONextMapNoMap">杀个BOSS，就可以去下个地图抢东西了，但是BOSS在哪里呢？</LanguageKey>
 
   <LanguageKey Key="UI_CHARGE_PACKAGE_FULL">包包满了@！@</LanguageKey> 
-  <LanguageKey Key="Achievement_Completed">成功达成{0},偶也又牛逼了！</LanguageKey>
+  <LanguageKey Key="Achievement_Completed">成功达成{0},偶也,又牛逼了！</LanguageKey>
 
   <LanguageKey Key="Charge_Shop_info">以个童叟无欺的价格购买干粮！</LanguageKey>
   <LanguageKey Key="Charge_NOGOLD">没有了钱，在用力戳也是无济于事的！</LanguageKey>
 
   <LanguageKey Key="Charge_BuySuccess">花费{0}金币，买{1}个干粮。</LanguageKey>
+
+  <!--新手引导-->
+  <LanguageKey Key="GUILD_WELCOME">欢迎您来到高老庄，现在由我来告诉你这里的规则。</LanguageKey>
+  <LanguageKey Key="GUILD_GOLD">看来你很穷啊，先自己铸造点钱呗？</LanguageKey>
+  <LanguageKey Key="GUILD_GOLD2">啊呀，太厉害了，看到金币变化了吗？继续铸造吧！我们还等着钱造房子呢。</LanguageKey>
+
+  <LanguageKey Key="GUILD_BuildHouse">终于有钱了，建造房子好像还需要圆木呢，我们去商店看看吧。</LanguageKey>
+  <LanguageKey Key="GUILD_BuildHouse_BuyWood">商店的东西有点多了，找到圆木，买一个就好了</LanguageKey>
+  <LanguageKey Key="GUILD_BuildHouse_BuildOpen">有了圆木就可以建造民宿了，好吧，我们开始建造吧！</LanguageKey>
+  <LanguageKey Key="GUILD_BuildHouse_BuildHouse">点击民宿，建造名宿吧！</LanguageKey>
+ 
+  <LanguageKey Key="GUILD_BuildFort">我们有了农夫，现在我们建造个麦田吧</LanguageKey>
+  <LanguageKey Key="GUILD_BuildFort_Produce_Gold">让我们在铸币一会，这样我们才能建造麦田！</LanguageKey>
+  <LanguageKey Key="GUILD_BuildFort_Shop_Open">建造麦田需要地契，我们去商店看看吧。</LanguageKey>
+  <LanguageKey Key="GUILD_BuildFort_Buy_item">找到地契并买下来。</LanguageKey>  
+  <LanguageKey Key="GUILD_BuildFort_OpenBuild">有了地契就可以建造麦田了，好吧，我们开始建造吧！</LanguageKey>
+  <LanguageKey Key="GUILD_BuildFort_Build">点击麦田开始建造吧。</LanguageKey>
+
+  <LanguageKey Key="GUILD_Produce_Wheat">让我们安排农夫去种植小麦吧！</LanguageKey>
+  <LanguageKey Key="GUILD_Produce_Wheat_Add">点击＋分配农夫。</LanguageKey>
+
+  <LanguageKey Key="GUILD_Produce_Food">有了小麦我们就制作粮食的原材料了，现在让我们去建造一个斋戒方吧。这样我们就可以制作干粮了</LanguageKey>
+  <LanguageKey Key="ProduceFood_Produce_Gold">斋戒方需要20个金币和4个圆木，先让我们铸币多一会吧！！！</LanguageKey>
+  <LanguageKey Key="ProduceFood_BuyWood">让我们购买4个圆木。</LanguageKey>
+  <LanguageKey Key="ProduceFood_Build">现在让我们建造一个斋戒方.</LanguageKey>
+  <LanguageKey Key="ProduceFood_Add">让我们安排几个农夫到斋戒方干活。</LanguageKey> 
+
+  <LanguageKey Key="EmployHero">现在我们有干粮了，让我们去招个小妖吧。</LanguageKey>
+  <LanguageKey Key="EmployHero_Employ">找到混世小妖并招下</LanguageKey>
+  <LanguageKey Key="GoToExplore">让我们开始新的冒险吧！！</LanguageKey>
+  <LanguageKey Key="BeginExplore">点击出发开始探索地图</LanguageKey>
+  <!--结束新手引导-->
+
 </ArrayOfLanguageKey>
