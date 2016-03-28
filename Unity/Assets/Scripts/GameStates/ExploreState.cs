@@ -594,7 +594,7 @@ namespace Assets.Scripts.GameStates
 								ui.callAfterCollect = SaveBattlePos;
 							}
 							foreach(var i in result.MonsterIDS)
-								DataManagers.AchievementManager.Singleton.KillMonster(i);
+								DataManagers.AchievementManager.Singleton.KillMonster( Config.ID, i);
 						}
 						if (result.Dead) {
 							PlayerItemManager.Singleton.EmptyPackage ();
