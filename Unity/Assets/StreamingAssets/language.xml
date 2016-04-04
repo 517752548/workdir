@@ -90,7 +90,7 @@
   
   
   <LanguageKey Key="BuyHeroSuccess">收服成功，{0}听你瞎指挥！</LanguageKey>
-  <LanguageKey Key="BUY_HERO_NOT_ENOUGH_COIN">钻石不足，他／它怎么会跟你呢？请土豪点好不好？</LanguageKey>
+  <LanguageKey Key="BUY_HERO_NOT_ENOUGH_COIN">没有足够的钻石</LanguageKey>
   <LanguageKey Key="BUY_HERO_NOT_ENOUGH_GOLD">金币不足，钱这个嘛不够是不行的，先练练一阳指去吧。</LanguageKey>
   
 
@@ -98,20 +98,20 @@
   <LanguageKey Key="UI_LVLUP_Cost_Gold">金币 	{0:N0}</LanguageKey> 
   <LanguageKey Key="LVLUP_SUCCESS">多个星星总是好，{0}变牛逼了！ </LanguageKey> 
   <LanguageKey Key="LVLUP_NOT_ENOUGH_GOLD">金币不够啊！ </LanguageKey> 
-  <LanguageKey Key="LVLUP_NOT_ENOUGH_ITEM">{0}不够怎么办？</LanguageKey>
+  <LanguageKey Key="LVLUP_NOT_ENOUGH_ITEM">{0}不够</LanguageKey>
   
-  <LanguageKey Key="UI_GOEXPLORE_NO_PLACE">背包满了！</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_NO_FOOD">{0}没有了，等死吧，做做饿死鬼耶。</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NO_PLACE">行李包空间不够.</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NO_FOOD">外出打劫需要携带{0}！</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_PACKAGE">背包:{0}/{1}</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_TEAM_SIZE">可出战人数:{0}/{1}</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_NO_TEAM_PLACE">一个队伍就提供这个岗位，多了就超编制了。</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NO_TEAM_PLACE">一个队伍就提供这个几个岗位，多了就超编制了。</LanguageKey>
   
   <LanguageKey Key="UI_GOEXPLORE_Relive_Message">吃个{0}{1}就活了，你说神奇不？</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_Relive_OK">招魂</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_Relive_NOT_ENOUGH_ITEM">没有{0}</LanguageKey>
   <LanguageKey Key="UI_GOEXPLORE_Relive_Success">让{1}吃个{0}是不是就活奔乱跳呢？</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_NEED_ARMY">取个经都要4个人一个马，你说这个出门打劫就只让包包去不太好吧？</LanguageKey>
-  <LanguageKey Key="UI_GOEXPLORE_NEED_FOOD">就算神仙出门也要带干粮的，这个你懂的？吃饭干活。不吃饭没得干</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NEED_ARMY">取个经都要4个人一个马，还是派个小妖去吧。</LanguageKey>
+  <LanguageKey Key="UI_GOEXPLORE_NEED_FOOD">就算神仙出门也要带干粮的,吃饭谁的饭干谁。</LanguageKey>
 
   <LanguageKey Key="BATTLE_UI_MONSTER_LVL">LV.{0}</LanguageKey>
   <LanguageKey Key="BATTLE_AUTO">自  动</LanguageKey>
@@ -119,7 +119,7 @@
   <LanguageKey Key="ATTACK_MONSTER">怪物掉血:[FF0000]{0}</LanguageKey> 
   <LanguageKey Key="LOST_HP">我方掉血[00FF00]{0}</LanguageKey> 
   <LanguageKey Key="CANCEL_TITLE">逃跑</LanguageKey> 
-  <LanguageKey Key="CANCEL_MESSAGE">留的青山在不怕跑的快，为了跑的快青山还的在！在逃跑与奔跑间总是哪么让人留恋！</LanguageKey> 
+  <LanguageKey Key="CANCEL_MESSAGE">留的青山在不怕跑的快，在逃跑与奔跑间总是哪么让人留恋！</LanguageKey> 
   
   <LanguageKey Key="UI_EXPLORE_VECTOR">坐标：{0:0},{1:0}</LanguageKey>
   <LanguageKey Key="UI_EXPLORE_FOOD">干粮：{0}</LanguageKey>
@@ -129,11 +129,11 @@
   <LanguageKey Key="JOIN_CASTLE_ITEM_NOT_ENOUGH">{0}都没有，你还想干嘛？</LanguageKey>
   <LanguageKey Key="JOIN_CASTLE_ITEM_COST">吃了一个{0}！</LanguageKey> 
   <LanguageKey Key="UIEXPLORE_GOHOME">回城了</LanguageKey>  
-  <LanguageKey Key="UIEXPLORE_STILL_HRER">坚持下</LanguageKey>  
+  <LanguageKey Key="UIEXPLORE_STILL_HRER">取消</LanguageKey>  
   
 
   <LanguageKey Key="EXPLORE_NO_KEY">打劫和偷还是有区别的，没有{1}个{0}是不能对付这个箱子的！！</LanguageKey>
-  <LanguageKey Key="EXPLORE_NO_KEY_TITLE">道XX不足</LanguageKey>
+  <LanguageKey Key="EXPLORE_NO_KEY_TITLE">道{0}不足</LanguageKey>
 
   <LanguageKey Key="NEED_COMPLETE_MAP">需要探索完成地图 {0}</LanguageKey>
   <LanguageKey Key="CAN_EMPLOY">满足条件可以招募</LanguageKey>

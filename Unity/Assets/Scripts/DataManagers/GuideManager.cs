@@ -111,9 +111,10 @@ namespace Assets.Scripts.DataManagers
 						return;
 					//GUILD_GOLD
 					UI.UIControllor.Singleton.ShowInfo (LanguageManager.Singleton ["GUILD_GOLD2"], 105);
-					castle.ShowGoldProcess (24, 
+					castle.ShowGoldProcess (2, 
 						() => {
 							this.CurrentStep = GuideStep.BuildHouse;
+							GamePlayerManager.Singleton.AddGold(22);
 							UI.UIControllor.Singleton.ShowInfo ("", 0.1f);
 							ShowGuild ();
 						});
@@ -196,8 +197,9 @@ namespace Assets.Scripts.DataManagers
 					if (castle == null)
 						return;
 					UI.UIControllor.Singleton.ShowInfo (LanguageManager.Singleton ["GUILD_BuildFort_Produce_Gold"], 105);
-					castle.ShowGoldProcess (20, 
+					castle.ShowGoldProcess (2, 
 						() => {
+							GamePlayerManager.Singleton.AddGold(20);
 							this.CurrentStep = GuideStep.BuildFort_Shop_Open;
 							UI.UIControllor.Singleton.ShowInfo ("", 0.1f);
 							ShowGuild ();
@@ -309,8 +311,9 @@ namespace Assets.Scripts.DataManagers
 						return;
 					//GUILD_GOLD
 					UI.UIControllor.Singleton.ShowInfo (LanguageManager.Singleton ["ProduceFood_Produce_Gold"], 105);
-					castle.ShowGoldProcess (60, 
+					castle.ShowGoldProcess (2, 
 						() => {
+							GamePlayerManager.Singleton.AddGold(60);
 							this.CurrentStep = GuideStep.ProduceFood_BuyWood;
 							UI.UIControllor.Singleton.ShowInfo ("", 0.1f);
 							UI.Windows.UIShop.Show();
