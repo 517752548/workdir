@@ -12,13 +12,13 @@ message RegServer
 //上传服务器状态
 message ReportServerStatus 
 {
-    required int32 CurrentClient;//当前访问数
+  required int32 CurrentClient;//当前访问数
 	required int32 MaxClient;//最大访问数
 }
 //游戏中的会话
 message GameSession 
 {
-    required int32 SessionID;//会话id
+  required int32 SessionID;//会话id
 	required int32 UserID;//
 	required string SessionKey;
 }

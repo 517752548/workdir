@@ -1,11 +1,14 @@
 ﻿<Properties StartupItem="UServer/UServer.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../src/NetSources/GameConst.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../xxp/Net/MessageHandler.cs">
     <Files>
-      <File FileName="UServer/Program.cs" Line="1" Column="1" />
-      <File FileName="UServer/Responsers/LoginMessageResponser.cs" Line="19" Column="25" />
+      <File FileName="UServer/Program.cs" Line="50" Column="3" />
+      <File FileName="UServer/Responsers/LoginMessageResponser.cs" Line="1" Column="1" />
       <File FileName="../../src/NetSources/ISerializerable.cs" Line="1" Column="1" />
-      <File FileName="../../src/NetSources/GameConst.cs" Line="12" Column="19" />
+      <File FileName="../../src/NetSources/GameConst.cs" Line="20" Column="16" />
+      <File FileName="UServer/GameServerAppliaction.cs" Line="1" Column="1" />
+      <File FileName="MasterServer/Program.cs" Line="44" Column="46" />
+      <File FileName="../xxp/Net/MessageHandler.cs" Line="50" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

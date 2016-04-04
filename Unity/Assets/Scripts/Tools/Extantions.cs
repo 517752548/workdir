@@ -41,6 +41,13 @@ namespace Assets.Scripts.Tools
                 return child.GetComponent<T>();
         }
 
+		public static UITexture Gray(this UITexture texture,bool isGray)
+		{
+			texture.material = new Material (!isGray ?
+				Shader.Find ("Unlit/Transparent Colored") : Shader.Find ("Unlit/Transparent Colored (Gray)"));
+			return texture;
+		}
+
         /// <summary>
         /// 获取所有子元素
         /// </summary>
@@ -142,5 +149,7 @@ namespace Assets.Scripts.Tools
                 (Proto.SkillEffectType)skill.StatusType,(Proto.SkillEffectTaget) skill.StatusTarget,
                 (Proto.SkillEffectTaget) skill.MainEffectTarget);
         }
+
+
     }
 }

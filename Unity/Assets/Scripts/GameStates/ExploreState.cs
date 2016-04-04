@@ -577,6 +577,7 @@ namespace Assets.Scripts.GameStates
 					battleIndex,
 					soldiers,
 					(result) => {
+						
 						SoundManager.Singleton.PlaySound ("battle_complete");
 						callBack (result.Winner == Proto.ArmyCamp.Player);
 						if (result.Winner == Proto.ArmyCamp.Player) {

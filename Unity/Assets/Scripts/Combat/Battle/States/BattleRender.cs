@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExcelConfig;
+using Assets.Scripts.Combat.Battle.Elements;
 
 namespace Assets.Scripts.Combat.Battle.States
 {
@@ -15,11 +17,11 @@ namespace Assets.Scripts.Combat.Battle.States
 
         int ReleaseTapIndex();
 
-        void ShowDialog(ExcelConfig.BattleConfig battleConfig);
+        void ShowDialog(BattleConfig battleConfig);
 
-        void ShowBattleName(ExcelConfig.BattleConfig config);
+        void ShowBattleName(BattleConfig config);
 
-        void OnAttack(Elements.DamageResult result, Elements.BattleArmy cur);
+        void OnAttack(DamageResult result,BattleArmy cur);
 
         bool Cancel { get; }
 

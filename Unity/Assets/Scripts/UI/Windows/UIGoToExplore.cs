@@ -61,9 +61,12 @@ namespace Assets.Scripts.UI.Windows
 				Template.lb_skill.text = string.Format (LanguageManager.Singleton ["UITavern_skill"], skillName);
 				Template.lb_name.text = monster.Name;
 				DataManagers.PlayerArmyManager.Singleton.SetJob (Template.s_job, monster);
-				DataManagers.PlayerArmyManager.Singleton.SetIcon (Template.icon, monster);
+
 
 				startTable.Count = monster.Star;
+
+				Template.icon.Gray (!PlayerArmyManager.Singleton.IsAlive (hero.Soldier.SoldierID));
+				DataManagers.PlayerArmyManager.Singleton.SetIcon (Template.icon, monster);
 			}
 
 

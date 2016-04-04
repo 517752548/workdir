@@ -211,8 +211,24 @@ namespace Assets.Scripts.DataManagers
 				return;//error will crash or not?
 			//oncompleted?
 
+			var item = (config.itmeReward);
+			if (item > 0) {
+			
+				var itemnum = Tools.UtilityTool.ConvertToInt (config.RewardPar1);
+				var itemConfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (item);
+				PlayerItemManager.Singleton.AddItem (item, itemnum);
+				if (itemConfig != null) {
+					UI.UITipDrawer.Singleton.DrawNotify (
+						string.Format (LanguageManager.Singleton ["Achievement_Reward_item"], itemConfig.Name, itemnum));
+					
+				}
+					
+			}
+
 			DataManagers.GamePlayerManager.Singleton.AddAchievementPoint (config.RewardPoint);
-			UI.UIControllor.Singleton.ShowInfo (string.Format ( LanguageManager.Singleton[ "Achievement_Completed"], config.Name));
+			UI.UIControllor.Singleton.ShowInfo (
+				string.Format ( LanguageManager.Singleton[ "Achievement_Completed"], config.Name)
+			);
 
 		}
 
