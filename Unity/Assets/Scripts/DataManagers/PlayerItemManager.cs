@@ -346,7 +346,8 @@ namespace Assets.Scripts.DataManagers
 
 			PlayerItemManager.Singleton.AddItem(config.ItemId, 1);
 			PlayerItemManager.Singleton.BuyGoldShopItem (config);
-			UIControllor.Singleton.ShowMessage(
+			//UIControllor.Singleton.ShowMessage(
+				UITipDrawer.Singleton.DrawNotify(
 				string.Format(LanguageManager.Singleton["COST_GOLD_REWARD_ITEM"],
 					price, itemconfig.Name, 1));
             return true;
@@ -387,7 +388,9 @@ namespace Assets.Scripts.DataManagers
 
 			PlayerItemManager.Singleton.AddItem(entry, 1);
 			PlayerItemManager.Singleton.BuyCoinShopItem (config);
-			UIControllor.Singleton.ShowMessage(
+			//UIControllor.Singleton.ShowMessage(
+			UITipDrawer.Singleton.DrawNotify(
+
 				string.Format(LanguageManager.Singleton["COST_COIN_REWARD_ITEM"],
 					price, itemconfig.Name, 1));
 			return true;

@@ -119,4 +119,14 @@ public class UIRender :
 			tweenPosition.Play (true);
 		}
 	}
+
+	public GameObject mask;
+	public void ShowOrHideMask(bool show)
+	{
+
+		if (mask == null)
+			return;
+		mask.SetActive (show);
+
+	}
 }

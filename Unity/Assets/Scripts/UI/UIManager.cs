@@ -63,6 +63,7 @@ namespace Assets.Scripts.UI
         void ShowMessage(string message);
 		void ShowInfo (string message, float delay);
         void ShowOrHideMessage(bool show);
+		void ShowOrHideMask (bool show);
     }
 
     /// <summary>

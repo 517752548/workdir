@@ -146,13 +146,26 @@ namespace Assets.Scripts.App
         /// 进入城堡
         /// </summary>
         public void JoinCastle() 
-        {
-            //SceneManager.LoadScene("Castle",LoadSceneMode.Single);
-            Application.LoadLevel("Castle");
-
-            var state = new CastleState();
-            ChangeState(state);
+        {    
+			ChangeState (null);
+			works.Enqueue (GoJoinCastle ());
         }
+
+		private IEnumerator GoJoinCastle()
+		{
+			UI.UIManager.Singleton.Render.ShowOrHideMask (true);
+			var run = Application.LoadLevelAsync("Castle");
+			while (!run.isDone)
+				yield return null;
+			yield return null;
+
+			var state = new CastleState();
+			ChangeState(state);
+
+			yield return  null;
+			yield return null;
+			UI.UIManager.Singleton.Render.ShowOrHideMask (false);
+		}
 
         /// <summary>
         /// 开始探索
@@ -168,6 +181,7 @@ namespace Assets.Scripts.App
 
         private IEnumerator DoGoToExplore(int configID)
         {
+			UI.UIManager.Singleton.Render.ShowOrHideMask (true);
             var map = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.MapConfig>(configID);
 			var run = Application.LoadLevelAsync (map.MapResName);  //SceneManager.LoadSceneAsync(map.MapResName);
             while (!run.isDone)
@@ -175,6 +189,8 @@ namespace Assets.Scripts.App
             yield return null;
             var state = new ExploreState(map);
             ChangeState(state);
+			yield return null;
+			UI.UIManager.Singleton.Render.ShowOrHideMask (false);
         }
 
         /// <summary>

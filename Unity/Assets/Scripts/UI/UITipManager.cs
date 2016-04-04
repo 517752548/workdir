@@ -37,6 +37,7 @@ namespace Assets.Scripts.UI
     public interface ITipRender
     {
         void RenderTip(GameObject tip);
+
     }
     
     /// <summary>
