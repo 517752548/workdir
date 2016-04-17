@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Proto;
+using Assets.Scripts.UI.Windows;
 
 namespace Assets.Scripts.GameStates
 {
@@ -441,15 +442,30 @@ namespace Assets.Scripts.GameStates
 				return;
 
 			var foodEmpty = false;
-			if (!DataManagers.GamePlayerManager.Singleton.CostFood (1)) {
-				if (Food >= App.GameAppliaction.Singleton.ConstValues.OutOffeedMoving)
+			if (!DataManagers.GamePlayerManager.Singleton.CostFood (1)) 
+			{
+				if (Food >= App.GameAppliaction.Singleton.ConstValues.OutOffeedMoving) 
+				{
 					foodEmpty = true;
+				}
+				if (Food == 0)
+				{
+					UIMessageBox.ShowMessage (
+						LanguageManager.Singleton ["UI_Explore_No_Food_Title"],
+						LanguageManager.Singleton ["UI_Explore_No_Food_Message"],
+						LanguageManager.Singleton ["UI_Explore_No_Food_Ok"],
+						string.Empty,
+						null,null,
+						true);
+				}
 				Food++;
+
 			} else {
 				Food = 0;
 			}
 
-			if (!isEnter && foodEmpty) {
+			if (!isEnter && foodEmpty)
+			{
 				DataManagers.PlayerItemManager.Singleton.EmptyPackage ();
 				var deads = DataManagers.PlayerArmyManager.Singleton.DeadAllSoldiersInTeam ();
 				StringBuilder sb = new StringBuilder ();

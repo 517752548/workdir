@@ -20,9 +20,9 @@ namespace Assets.Scripts.UI.Windows
 
             c_close.OnMouseClick((s, e) => {
 				return;
-                if (Cancel != null)
-                    Cancel();
-                HideWindow();
+                //if (Cancel != null)
+                //    Cancel();
+                //HideWindow();
             });
 
             bt_cancel.OnMouseClick((s, e) =>
@@ -61,17 +61,22 @@ namespace Assets.Scripts.UI.Windows
 			string message,
 			string okTile,
 			string cancelTitle,
-			Action clickOK,Action clickCancel)
+			Action clickOK,
+			Action clickCancel, 
+			bool onlyOk = false)
 		{
 
-			var ui = UIManager.Singleton.CreateOrGetWindow<UIMessageBox>();
-			ui.ShowWindow();
+			var ui = UIManager.Singleton.CreateOrGetWindow<UIMessageBox> ();
+			ui.ShowWindow ();
 			ui.OK = clickOK;
 			ui.Cancel = clickCancel;
 			ui.lb_Message.text = message;
 			ui.lb_Title.text = title;
 			ui.bt_ok.Text (okTile);
 			ui.bt_cancel.Text (cancelTitle);
+			var p = ui.bt_ok.transform.localPosition;
+			ui.bt_ok.transform.localPosition = new UnityEngine.Vector3 (onlyOk ? 0 : -120.34f, p.y, p.z);
+		   	ui.bt_cancel.ActiveSelfObject (!onlyOk);
 
 		}
 

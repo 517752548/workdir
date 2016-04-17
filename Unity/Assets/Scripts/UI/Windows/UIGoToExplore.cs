@@ -64,8 +64,9 @@ namespace Assets.Scripts.UI.Windows
 
 
 				startTable.Count = monster.Star;
-
-				Template.icon.Gray (!PlayerArmyManager.Singleton.IsAlive (hero.Soldier.SoldierID));
+				var isdeath = !PlayerArmyManager.Singleton.IsAlive (hero.Soldier.SoldierID);
+				Template.icon.Gray (isdeath);
+				Template.s_death.ActiveSelfObject (isdeath);
 				DataManagers.PlayerArmyManager.Singleton.SetIcon (Template.icon, monster);
 			}
 

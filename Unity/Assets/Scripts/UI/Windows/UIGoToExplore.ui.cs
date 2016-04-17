@@ -14,6 +14,7 @@ namespace Assets.Scripts.UI.Windows
         {
             public ItemGridTableTemplate(){}
             public UITexture icon;
+            public UISprite s_death;
             public UILabel lb_name;
             public UISprite s_job;
             public UIGrid StartGrid;
@@ -26,6 +27,7 @@ namespace Assets.Scripts.UI.Windows
             public override void InitTemplate()
             {
                 icon = FindChild<UITexture>("icon");
+                s_death = FindChild<UISprite>("s_death");
                 lb_name = FindChild<UILabel>("lb_name");
                 s_job = FindChild<UISprite>("s_job");
                 StartGrid = FindChild<UIGrid>("StartGrid");

@@ -170,6 +170,9 @@
 
   <LanguageKey Key="Charge_BuySuccess">花费{0}金币，买{1}个干粮。</LanguageKey>
   <LanguageKey Key="Achievement_Reward_item">获得道具{0}*{1}</LanguageKey>
+  <LanguageKey Key="UI_Explore_No_Food_Title">干粮没了</LanguageKey>
+  <LanguageKey Key="UI_Explore_No_Food_Message">没有干粮了，队伍忍饿前行！</LanguageKey>
+  <LanguageKey Key="UI_Explore_No_Food_Ok">知道了</LanguageKey>
 
   <!--新手引导-->
   <LanguageKey Key="GUILD_WELCOME">欢迎您来到高老庄，现在由我来告诉你这里的规则。</LanguageKey>

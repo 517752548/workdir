@@ -48,7 +48,7 @@ namespace Assets.Scripts.UI
 			return sb.ToString ();
 		}
 
-		private int _lock = 0;
+		private int _lock = 1;
 
         public void ShowOrHideMessage(bool show)
 		{
