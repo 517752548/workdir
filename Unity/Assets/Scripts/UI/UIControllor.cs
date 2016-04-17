@@ -48,7 +48,7 @@ namespace Assets.Scripts.UI
 			return sb.ToString ();
 		}
 
-		private int _lock = 1;
+		private int _lock = 0;
 
         public void ShowOrHideMessage(bool show)
 		{
@@ -61,13 +61,10 @@ namespace Assets.Scripts.UI
 			}
 
 			var uirender = UIManager.Singleton.Render;
-			uirender.ShowOrHideMessage (show);
 			if (show && _lock > 0) {
 				var showMessage = GetMessage ();
 				uirender.ShowMessage (showMessage);			
 			} else {
-				//message.Clear ();
-
 				uirender.ShowMessage (string.Empty);
 			}
 
