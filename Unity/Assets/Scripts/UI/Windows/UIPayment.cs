@@ -86,8 +86,9 @@ namespace Assets.Scripts.UI.Windows
 
         private void OnBuy()
         {
-            GamePlayerManager.Singleton.DoPayment(last.Data);
-            UITipDrawer.Singleton.DrawNotify("Buy OK");
+			IAPExample.Current.BuyItem (last.Data.BundleID);
+            //GamePlayerManager.Singleton.DoPayment(last.Data);
+            //UITipDrawer.Singleton.DrawNotify("Buy OK");
             
         }
         public override void OnHide()

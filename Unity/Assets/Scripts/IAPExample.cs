@@ -45,10 +45,27 @@ public class IAPExample : MonoBehaviour {
 	void ShowProductList(string s){
 		productInfo.Add (s);
 	}
-	
+
+
+	public void BuyItem(string Item)
+	{
+		if (!IsProductAvailable())
+			return;
+		foreach (var i in productInfo) {
+			if (i == Item) {
+				BuyProduct (Item);
+				break;
+			}
+		}
+
+
+	}
 	//获取商品回执
-	void ProvideContent(string s){
-		Debug.Log ("[MsgFrom ios]proivideContent : "+s);
+	void ProvideContent(string s)
+	{
+		Debug.Log ("[MsgFrom ios]proivideContent : " + s);
+		Assets.Scripts.DataManagers.GamePlayerManager.Singleton.DoPaymentBuyKey (s);
+
 	}
 	
 	

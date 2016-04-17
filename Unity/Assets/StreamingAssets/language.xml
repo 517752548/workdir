@@ -9,7 +9,7 @@
   <LanguageKey Key="APP_GOLD_Label">{0}</LanguageKey>  
   
   
-  <LanguageKey Key="NO_SCROLL">麻烦弄个图纸先？商店就有嘛。。</LanguageKey>
+  <LanguageKey Key="NO_SCROLL">麻烦弄个图纸先？</LanguageKey>
   <LanguageKey Key="NO_BUILD">哇，没有生产类建筑啊，什么良田美景的造个就好。</LanguageKey>
   <LanguageKey Key="NO_HERO">收个妖怪做小弟吧，听话还能干活，走到哪打劫到哪。</LanguageKey>
   <LanguageKey Key="REWARD_ITEM">{0} +{1}</LanguageKey>
@@ -32,8 +32,8 @@
   <LanguageKey Key="ID_EXISTS_ERROR">士兵配置错误！</LanguageKey>
   <LanguageKey Key="ProduceGoldPreTick">金币 +{0}</LanguageKey>
 	
-  <LanguageKey Key="BUILD_FRO_MORE_PEOPLE">房子要大嘛，要大嘛，大嘛！</LanguageKey>
-  <LanguageKey Key="NO_PEOPLE_FREE">工匠这个，不是去泡妞的就是去搬砖了！</LanguageKey>
+  <LanguageKey Key="BUILD_FRO_MORE_PEOPLE">没有空闲的工匠！</LanguageKey>
+  <LanguageKey Key="NO_PEOPLE_FREE">工匠都去搬砖了！</LanguageKey>
   <LanguageKey Key="PEOPLE_NAME">工匠:</LanguageKey>
   <LanguageKey Key="PRODUCE_ITEM">{0} {1}</LanguageKey>
   <LanguageKey Key="MAKE_NOT_ENOUGHT_GOLD">金币不够.</LanguageKey>
@@ -157,8 +157,8 @@
   <LanguageKey Key="BATTLE_DEAD">{0}死了！</LanguageKey>
 
   <LanguageKey Key="UI_RESULT_PACKAGE_SIZE">背包大小:{0}/{1}</LanguageKey>  
-  <LanguageKey Key="OPEN_MAP_NAME">开启地图{0}，是不是金灿灿的宝贝再等呢？</LanguageKey>
-  <LanguageKey Key="PEOPLE_WORK">工匠们在泡妞之余的工作中收获了:{0}</LanguageKey>  
+  <LanguageKey Key="OPEN_MAP_NAME">开启地图{0}，是不是金灿灿的宝贝在等呢？</LanguageKey>
+  <LanguageKey Key="PEOPLE_WORK">工匠们努力干活收获了:{0}</LanguageKey>  
   <LanguageKey Key="UI_GOTO_EXPLORE_FOOD_INFO">跑的远，战斗力强，都是吃干粮吃出来的，别说妖怪了神仙也这样说！</LanguageKey> 
   <LanguageKey Key="GONextMapNoMap">杀个BOSS，就可以去下个地图抢东西了，但是BOSS在哪里呢？</LanguageKey>
 

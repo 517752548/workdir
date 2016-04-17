@@ -804,13 +804,25 @@ namespace Assets.Scripts.DataManagers
 		}
 
 
-		internal bool DoPayment (PersistStructs.PaymentData paymentData)
+		private bool DoPayment (PersistStructs.PaymentData paymentData)
 		{
 			this.AddCoin (paymentData.Reward);
 			UIManager.Singleton.UpdateUIData ();
 			return true;
 		}
 
+
+		public bool DoPaymentBuyKey(string id)
+		{
+			foreach (var i in PaymentData) {
+				if (i.BundleID == id)
+				{
+					return	DoPayment (i);
+					//break;
+				}
+			}
+			return false;
+		}
 		#endregion
 
 		public int GuideStep
