@@ -489,6 +489,11 @@
             初始移动格数
             </summary>
         </member>
+        <member name="P:ExcelConfig.ConstAttConfig.RandEventTime">
+            <summary>
+            秒 随机事件间隔时间
+            </summary>
+        </member>
         <member name="P:ExcelConfig.ConstAttConfig.OutOffeedMoving">
             <summary>
             零干粮移动距离

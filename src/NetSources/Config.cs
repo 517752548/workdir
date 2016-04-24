@@ -616,9 +616,15 @@ namespace ExcelConfig
         public int OrignalMoveStep { set; get; }
         
         /// <summary>
-        /// 零干粮移动距离
+        /// 秒 随机事件间隔时间
         /// </summary>
         [ExcelConfigColIndex(15)]
+        public int RandEventTime { set; get; }
+        
+        /// <summary>
+        /// 零干粮移动距离
+        /// </summary>
+        [ExcelConfigColIndex(16)]
         public int OutOffeedMoving { set; get; }
 
     }
