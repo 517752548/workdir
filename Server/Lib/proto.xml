@@ -1189,6 +1189,16 @@
             介绍
             </summary>
         </member>
+        <member name="P:ExcelConfig.RandomEventConfig.Cancel">
+            <summary>
+            取消
+            </summary>
+        </member>
+        <member name="P:ExcelConfig.RandomEventConfig.OK">
+            <summary>
+            确定
+            </summary>
+        </member>
         <member name="P:ExcelConfig.RandomEventConfig.CostType">
             <summary>
             消耗类型

@@ -532,31 +532,4 @@ namespace Proto
         UnlockMap=1,
 
     }
-   /// <summary>
-    /// 新手引导步骤
-    /// </summary>
-    public enum GuideStep
-    {
-        /// <summary>
-        /// 铸币
-        /// </summary>
-        ProduceGold=1,
-        /// <summary>
-        /// 雇佣英雄
-        /// </summary>
-        EmployHero=2,
-        /// <summary>
-        /// 建造建筑
-        /// </summary>
-        ConstructBuilding=3,
-        /// <summary>
-        /// 干粮
-        /// </summary>
-        ProduceFood=4,
-        /// <summary>
-        /// 探索地图
-        /// </summary>
-        ExlporeMap=5；,
-
-    }
 }
