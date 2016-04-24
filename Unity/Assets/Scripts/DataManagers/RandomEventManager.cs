@@ -2,6 +2,7 @@
 using ExcelConfig;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.App;
 
 namespace Assets.Scripts.DataManagers
 {
@@ -56,7 +57,8 @@ namespace Assets.Scripts.DataManagers
 			if (!GamePlayerManager.Singleton.IsEventTimeout)
 				return;
 
-			GamePlayerManager.Singleton.SetEventTimeTo (60 * 10);
+			//GamePlayerManager.Singleton.SetEventTimeTo (60 * 10);
+			GamePlayerManager.Singleton.SetEventTimeTo (GameAppliaction.Singleton.ConstValues.RandEventTime);
 
 			var configs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.RandomEventConfig> ();
 			//unlock;

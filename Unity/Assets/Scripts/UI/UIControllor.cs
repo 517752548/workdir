@@ -42,8 +42,10 @@ namespace Assets.Scripts.UI
 		private string GetMessage()
 		{
 			var sb = new StringBuilder ();
-			foreach (var i in message) {
-				sb.AppendLine (i);
+			var per = message.Last;
+			while (per!=null) {
+				sb.AppendLine (per.Value);
+				per = per.Previous;
 			}
 			return sb.ToString ();
 		}

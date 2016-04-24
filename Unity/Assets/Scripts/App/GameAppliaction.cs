@@ -36,10 +36,12 @@ namespace Assets.Scripts.App
 				TalentManager.Singleton
             };
 
-			GamePlayerManager.Singleton.SetEventTimeTo (60 * 10);
+
 
             foreach (var i in prisit)
                 i.Load();
+
+			GamePlayerManager.Singleton.SetEventTimeTo (ConstValues.RandEventTime);
             //初始化道具
             Debug.Log(LanguageManager.Singleton["APP_NAME"]);
             //进入游戏
