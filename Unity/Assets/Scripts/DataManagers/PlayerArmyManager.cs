@@ -16,6 +16,7 @@ namespace Assets.Scripts.DataManagers
 		public const string PLAYER_EMPLOY_SOLDIER = "_PLAYER_EMPLOY_ARMY.json";
 		public const string GO_TO_EXPLORE_TEAM = "_PALYER_GO_TO_EXPLORE_TEAM.json";
 
+
 		private Dictionary<int, bool> Soldiers = new Dictionary<int, bool> ();
 		private HashSet<int> _explore_team = new HashSet<int> ();
 		private HashSet<int> _employSoldier = new HashSet<int> ();
@@ -383,6 +384,28 @@ namespace Assets.Scripts.DataManagers
 			return _explore_team.Contains (soldierID);
 		}
 
+
+		public int HPAppendTeam{ 
+			get
+			{
+				return Mathf.Max (0, GamePlayerManager.Singleton [PlayDataKeys.TeamHPAppend]);
+			}
+		}
+
+		public int DamageAppendTeam
+		{
+			get{
+				return Mathf.Max (0, GamePlayerManager.Singleton [PlayDataKeys.TeamDamage]);
+			}
+		}
+
+		public int DamageSubAppendTeam
+		{
+			get
+			{
+				return Mathf.Max (0, GamePlayerManager.Singleton [PlayDataKeys.TeamDamageSub]);
+			}
+		}
 	}
 
 
@@ -400,7 +423,8 @@ namespace Assets.Scripts.DataManagers
 		MainUI,
 		List,
 		LvlUp,
-BattleMax,
+        BattleMax,
 		BattleMin
 	}
+		
 }

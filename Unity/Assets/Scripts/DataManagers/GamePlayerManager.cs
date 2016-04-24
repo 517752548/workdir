@@ -66,7 +66,13 @@ namespace Assets.Scripts.DataManagers
 		ProductOffLineTimeAppend =21, //离线产量计算时间
 		NoCDWhenBattleStart = 22 ,//战斗开始没有cd时间
 		GuideStep = 23, //引导
-		RandomEventTime = 24 //上次随机事件时间
+		RandomEventTime = 24 ,//上次随机事件时间
+		ExploreView = 25,//当前视野
+		TeamHPAppend = 26,//血量附加
+		TeamDamage = 27 ,//伤害附加
+		TeamDamageSub = 28,//队伍伤害减免
+		TeamPrecision = 29,//命中
+		TeamJouk = 30,//闪避
 	}
 
 	public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist

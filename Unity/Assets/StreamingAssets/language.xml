@@ -87,7 +87,13 @@
   <LanguageKey Key="UIProduce_worker">工匠：{0}/{1}</LanguageKey>
   <LanguageKey Key="PRODUCE_TIME">收获时间:{0}:{1:00}</LanguageKey>
   
-
+  <LanguageKey Key="Event_No_Gold">金币足，需要金币*{0}</LanguageKey>
+  <LanguageKey Key="Event_No_Item">道具不足,需要{0}*{1}</LanguageKey>
+  <LanguageKey Key="Event_reward_gold">获得金币*{0}</LanguageKey>
+  <LanguageKey Key="Event_reward_talent">学会了{0}</LanguageKey>
+  <LanguageKey Key="Event_reward_item">得到道具{0}*{1}</LanguageKey>
+  <LanguageKey Key="Event_Cost_gold">消耗金币{0}</LanguageKey>
+  <LanguageKey Key="Event_Cost_Item">消耗{0}*{1}</LanguageKey>
   
   
   <LanguageKey Key="BuyHeroSuccess">收服成功，{0}听你瞎指挥！</LanguageKey>

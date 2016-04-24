@@ -55,6 +55,9 @@ namespace Assets.Scripts.DataManagers
 		{
 			if (!GamePlayerManager.Singleton.IsEventTimeout)
 				return;
+
+			GamePlayerManager.Singleton.SetEventTimeTo (60 * 10);
+
 			var configs = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<ExcelConfig.RandomEventConfig> ();
 			//unlock;
 
@@ -109,6 +112,8 @@ namespace Assets.Scripts.DataManagers
 			UI.Windows.UIMessageBox.ShowMessage (
 				result.Name,
 				result.Dialog1,
+				result.OK,
+				result.Cancel,
 				() => {
 					SelectOk(result);
 				},
@@ -118,7 +123,84 @@ namespace Assets.Scripts.DataManagers
 
 		private void SelectOk(RandomEventConfig config)
 		{
-			
+			switch (config.CostType) {
+			case 1:  //gold
+				{
+					var gold = Tools.UtilityTool.ConvertToInt (config.NeedItem);
+					if (gold > GamePlayerManager.Singleton.Gold) {
+						UI.UITipDrawer.Singleton.DrawNotify (
+							string.Format (LanguageManager.Singleton ["Event_No_Gold"], gold));
+						return;
+					}
+					GamePlayerManager.Singleton.SubGold (gold) ;
+					UI.UIControllor.Singleton.ShowMessage (
+						string.Format(LanguageManager.Singleton["Event_Cost_gold"],gold));
+					ProcessReward(config);
+				}
+				break;
+			case 3: //item 11:2
+				{
+					var items = Tools.UtilityTool.SplitKeyValues (config.NeedItem);
+					foreach (var i in items) {
+						if (PlayerItemManager.Singleton.GetItemCount (i.Key) < i.Value) {
+							var itemConfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (i.Key);
+							UI.UITipDrawer.Singleton.DrawNotify (
+								string.Format (LanguageManager.Singleton ["Event_No_Item"], itemConfig.Name,i.Value));
+							return;
+						}
+					}
+
+					foreach (var i in items) {
+						PlayerItemManager.Singleton.SubItem (i.Key, i.Value);
+						var itemConfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (i.Key);
+						UI.UIControllor.Singleton.ShowMessage (string.Format (LanguageManager.Singleton ["Event_Cost_Item"],
+							itemConfig.Name,i.Value));
+					}
+
+					ProcessReward (config);
+				}
+				break;
+			}
+		}
+
+		private void ProcessReward(RandomEventConfig config)
+		{
+			if (!this._events.ContainsKey (config.ID))
+				this._events.Add (config.ID, 1);
+			else
+				this._events [config.ID] += 1;
+
+
+			switch (config.RewardType) {
+			case 1:
+				{
+					var rewardGold = Tools.UtilityTool.ConvertToInt (config.RewardConditon);
+					GamePlayerManager.Singleton.AddGold (rewardGold);
+					UI.UITipDrawer.Singleton.DrawNotify (
+						string.Format (LanguageManager.Singleton ["Event_reward_gold"], rewardGold));
+				}
+				break;
+			case 2:
+				{
+					var talentID = Tools.UtilityTool.ConvertToInt (config.RewardConditon);
+					var talentConfig = ExcelToJSONConfigManager.Current.GetConfigByID<TalentConfig> (talentID);
+					TalentManager.Singleton.ActiveTalent (talentID);
+					UI.UITipDrawer.Singleton.DrawNotify (
+						string.Format (LanguageManager.Singleton ["Event_reward_talent"], talentConfig.Name));
+				}
+				break;
+			case 3:
+				{
+					var items = Tools.UtilityTool.SplitKeyValues (config.RewardConditon);
+					foreach (var i in items) {
+						var itemConfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (i.Key);
+						PlayerItemManager.Singleton.AddItem (i.Key, i.Value);
+						UI.UITipDrawer.Singleton.DrawNotify (
+							string.Format (LanguageManager.Singleton ["Event_reward_item"], itemConfig.Name,i.Value));
+					}
+				}
+				break;
+			}
 		}
 	}
 

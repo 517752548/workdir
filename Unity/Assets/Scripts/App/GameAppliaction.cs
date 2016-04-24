@@ -32,8 +32,12 @@ namespace Assets.Scripts.App
                 PlayerArmyManager.Singleton,
                 PlayerMapManager.Singleton,
 				AchievementManager.Singleton,
-				RandomEventManager.Singleton
+				RandomEventManager.Singleton,
+				TalentManager.Singleton
             };
+
+			GamePlayerManager.Singleton.SetEventTimeTo (60 * 10);
+
             foreach (var i in prisit)
                 i.Load();
             //初始化道具
