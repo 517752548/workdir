@@ -291,7 +291,7 @@ namespace Assets.Scripts.GameStates
 						}
 						//no item
 						UI.Windows.UIMessageBox.ShowMessage (
-							LanguageManager.Singleton ["EXPLORE_NO_KEY_TITLE"],
+							string.Format(LanguageManager.Singleton ["EXPLORE_NO_KEY_TITLE"],pkNeedItemName),
 							String.Format (LanguageManager.Singleton ["EXPLORE_NO_KEY"], 
 								pkNeedItemName, pkNeedItem [1]), 
 							() => {
@@ -466,6 +466,8 @@ namespace Assets.Scripts.GameStates
 
 			if (!isEnter && foodEmpty)
 			{
+				
+
 				DataManagers.PlayerItemManager.Singleton.EmptyPackage ();
 				var deads = DataManagers.PlayerArmyManager.Singleton.DeadAllSoldiersInTeam ();
 				StringBuilder sb = new StringBuilder ();
@@ -476,10 +478,20 @@ namespace Assets.Scripts.GameStates
 					sb.Append (string.Format (LanguageManager.Singleton ["NOFOOD_DEAD"], config.Name));
 				}
 
-				JoinCastle ();
+
 				var str = LanguageManager.Singleton ["EXPLORE_NO_FOOD"] + sb.ToString ();
 				UI.UIControllor.Singleton.ShowMessage (str);
 				//UI.UITipDrawer.Singleton.DrawNotify (str);
+				UIMessageBox.ShowMessage (LanguageManager.Singleton ["EXPLORE_NO_FOOD_Dead_Title"],
+					LanguageManager.Singleton ["EXPLORE_NO_FOOD_Dead_Message"],
+					LanguageManager.Singleton ["EXPLORE_NO_FOOD_Dead_Ok"],
+					string.Empty,
+					() => {
+						JoinCastle ();
+					}, () => {
+					JoinCastle ();
+				},
+					true);
 				return;
 			}
 
@@ -601,7 +613,8 @@ namespace Assets.Scripts.GameStates
 							if (result.DropGold > 0) {						
 								GamePlayerManager.Singleton.AddGold (result.DropGold);	
 								UI.UITipDrawer.Singleton.DrawNotify (
-									string.Format (LanguageManager.Singleton ["Battle_End_Reward_Gold"], result.DropGold));
+									string.Format (LanguageManager.Singleton ["Battle_End_Reward_Gold"], 
+										result.DropGold));
 							}
 
 							//战斗
@@ -623,10 +636,22 @@ namespace Assets.Scripts.GameStates
 									continue;
 								sb.Append (string.Format (LanguageManager.Singleton ["BATTLE_DEAD"], config.Name));
 							}
-							JoinCastle ();
+							//JoinCastle ();
 							RecordPos (null, null);
 							var str = LanguageManager.Singleton ["EXPLORE_BATTLE_F"] + sb.ToString ();
 							UI.UIControllor.Singleton.ShowMessage (str);
+
+
+							UIMessageBox.ShowMessage (LanguageManager.Singleton ["EXPLORE_Battle_Dead_Title"],
+								LanguageManager.Singleton ["EXPLORE_Battle_Dead_Message"],
+								LanguageManager.Singleton ["EXPLORE_Battle_Dead_Ok"],
+								string.Empty,
+								() => {
+									JoinCastle ();
+								}, () => {
+									JoinCastle ();
+								},
+								true);
 							//UI.UITipDrawer.Singleton.DrawNotify (str);
 						}
 						//战斗失败处理
@@ -638,9 +663,6 @@ namespace Assets.Scripts.GameStates
 #endregion
 			ok ();
 
-			// UI.Windows.UIMessageBox.ShowMessage(group.Name, group.battleDiscribtion, ok, () => { callBack(false); });
-			//showUI 
-			//On 
            
 		}
 

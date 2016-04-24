@@ -109,6 +109,7 @@ namespace Assets.Scripts.UI.Windows
 				if(DataManagers.PlayerItemManager.Singleton.CalItemFromPack(foodEntry,1))
 				{	
 					Per.PlayerAddHp(hp);
+					DataManagers.AchievementManager.Singleton.BattleCostFood (1);
 					UIManager.Singleton.UpdateUIData();
 				}
 			});
@@ -196,6 +197,8 @@ namespace Assets.Scripts.UI.Windows
         public void ShowMonster(Combat.Battle.Elements.BattleArmy monster)
         {
 			MonsterRoot.ActiveSelfObject (true);
+			this.Dead_Effect.ActiveSelfObject (false);
+			Monster_coin.Gray (false);
             Monster = monster;
             lb_monsterName.text = Monster.Soldiers[0].Config.Name;
             var config = monster.Soldiers[0].Config;
@@ -290,6 +293,11 @@ namespace Assets.Scripts.UI.Windows
                 var an = daoguangFX.GetComponent<Animator>();
                 an.SetTrigger("Start");
                 UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["ATTACK_MONSTER"], result.Damage));
+				if (result.IsDead) {
+					this.Dead_Effect.ActiveSelfObject (true);
+					this.Dead_Effect.GetComponent<TweenScale> ().PlayForward ();
+				}
+				Monster_coin.Gray (true);
             }
             else
             {
@@ -298,6 +306,7 @@ namespace Assets.Scripts.UI.Windows
 				//StopAllCoroutines ();
 				StartCoroutine(DoetScale ());
                 UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["LOST_HP"], result.Damage));
+
             }
         }
 

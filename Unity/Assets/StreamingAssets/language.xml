@@ -2,8 +2,8 @@
 <ArrayOfLanguageKey xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <LanguageKey Key="APP_NAME">高老庄</LanguageKey>
   <LanguageKey Key="APP_NUM_FORMAT">{0:N0}</LanguageKey>
-  <LanguageKey Key="APP_RED">[8B0000]{0}[-]</LanguageKey>
-  <LanguageKey Key="APP_GREEN">{0}</LanguageKey> <!--[006400] 绿色-->
+  <LanguageKey Key="APP_RED">[fff000]{0}[-]</LanguageKey>
+  <LanguageKey Key="APP_GREEN">[ffffff]{0}[-]</LanguageKey> <!--[006400] 绿色-->
   <LanguageKey Key="APP_COIN">钻石</LanguageKey> 
   <LanguageKey Key="APP_GOLD">金币</LanguageKey>
   <LanguageKey Key="APP_GOLD_Label">{0}</LanguageKey>  
@@ -66,8 +66,8 @@
   <LanguageKey Key="UI_Payment_paymessage">{0}</LanguageKey>  
   <LanguageKey Key="UI_PaymenShop_bt_buy">购买</LanguageKey> 
   <LanguageKey Key="UI_PaymenShop_buy_item">消耗{1:N0}钻石购买{0}？\n（点击黑背景取消）</LanguageKey>
-  <LanguageKey Key="UI_Payment_address_Url">论坛地址 www.xsoft.com</LanguageKey>
-  <LanguageKey Key="UI_Payment_address_qq">QQ群 54249636</LanguageKey>
+  <LanguageKey Key="UI_Payment_address_Url"></LanguageKey><!--论坛地址 www.xsoft.com</LanguageKey>-->
+  <LanguageKey Key="UI_Payment_address_qq"></LanguageKey><!--QQ群 54249636</LanguageKey>-->
   
   <LanguageKey Key="UIStructureBuilding_Cost_Title">建造消耗：</LanguageKey>
   <LanguageKey Key="UIStructureBuilding_Cost_Item">{0} *{1} </LanguageKey> 
@@ -160,7 +160,7 @@
   <LanguageKey Key="OPEN_MAP_NAME">开启地图{0}，是不是金灿灿的宝贝在等呢？</LanguageKey>
   <LanguageKey Key="PEOPLE_WORK">工匠们努力干活收获了:{0}</LanguageKey>  
   <LanguageKey Key="UI_GOTO_EXPLORE_FOOD_INFO">跑的远，战斗力强，都是吃干粮吃出来的，别说妖怪了神仙也这样说！</LanguageKey> 
-  <LanguageKey Key="GONextMapNoMap">杀个BOSS，就可以去下个地图抢东西了，但是BOSS在哪里呢？</LanguageKey>
+  <LanguageKey Key="GONextMapNoMap">杀掉了地图BOSS，就可以去下个地图抢东西了，但是BOSS在哪里呢？</LanguageKey>
 
   <LanguageKey Key="UI_CHARGE_PACKAGE_FULL">包包满了@！@</LanguageKey> 
   <LanguageKey Key="Achievement_Completed">成功达成{0},偶也,又牛逼了！</LanguageKey>
@@ -173,6 +173,19 @@
   <LanguageKey Key="UI_Explore_No_Food_Title">干粮没了</LanguageKey>
   <LanguageKey Key="UI_Explore_No_Food_Message">没有干粮了，队伍忍饿前行！</LanguageKey>
   <LanguageKey Key="UI_Explore_No_Food_Ok">知道了</LanguageKey>
+
+  <LanguageKey Key="EXPLORE_NO_FOOD_Dead_Title">死亡了</LanguageKey>
+  <LanguageKey Key="EXPLORE_NO_FOOD_Dead_Message">队伍因为饥饿死亡，随身物品全丢失了。</LanguageKey>
+  <LanguageKey Key="EXPLORE_NO_FOOD_Dead_Ok">确定</LanguageKey>
+
+  <LanguageKey Key="No_Rilve_Title">道具不足</LanguageKey>
+  <LanguageKey Key="No_Rilve_Message">{0}不足，点击前往购买</LanguageKey>
+  <LanguageKey Key="No_Rilve_OK">确定</LanguageKey>
+  <LanguageKey Key="No_Rilve_Cancel">确定</LanguageKey>
+
+  <LanguageKey Key="EXPLORE_Battle_Dead_Title">战败了</LanguageKey>
+  <LanguageKey Key="EXPLORE_Battle_Dead_Message">战败了，升级升级小妖，记得吃个补给。</LanguageKey>
+  <LanguageKey Key="EXPLORE_Battle_Dead_Ok">确定</LanguageKey>
 
   <!--新手引导-->
   <LanguageKey Key="GUILD_WELCOME">欢迎您来到高老庄，现在由我来告诉你这里的规则。</LanguageKey>

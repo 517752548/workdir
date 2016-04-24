@@ -326,19 +326,27 @@ namespace Assets.Scripts.DataManagers
 			if (times > maxTime)
 				times = maxTime;
 			
-			for (var t = times; t > 0; t--) {
+			for (var t = times; t > 0; t--) 
+			{
 				foreach (var i in ProduceOpenState) {
 					//不存在
 					if (!i.Value.IsOpen || i.Value.PeopleNum <= 0)
 						continue;
-					var produce = ExcelToJSONConfigManager.Current.GetConfigByID<ExcelConfig.ResourcesProduceConfig> (i.Value.ProduceID);
+					
+					var produce = ExcelToJSONConfigManager.Current.GetConfigByID<ResourcesProduceConfig> (i.Value.ProduceID);
 					if (produce == null)
 						continue;
 					var requires = Tools.UtilityTool.SplitKeyValues (produce.CostItems, produce.CostItemsNumber);
 					var rewards = Tools.UtilityTool.SplitKeyValues (produce.RewardItems, produce.RewardItemsNumber);
 					var engough = true;
-					foreach (var r in requires) {
-						if (PlayerItemManager.Singleton.GetItemCount (r.Key) < (r.Value * i.Value.PeopleNum)) {
+
+					foreach (var r in requires) 
+					{
+						var haveCount = PlayerItemManager.Singleton.GetItemCount (r.Key);
+						var need = r.Value * i.Value.PeopleNum;
+						Debug.LogFormat ("Have:{0} need:{1}", haveCount, need);
+						if (haveCount<need) 
+						{
 							engough = false;
 							break;
 						}
@@ -346,7 +354,8 @@ namespace Assets.Scripts.DataManagers
 					//不够
 					if (!engough)
 						continue;
-					foreach (var r in requires) {
+					foreach (var r in requires) 
+					{
 						var diffNum = (r.Value * i.Value.PeopleNum);
 						PlayerItemManager.Singleton.SubItem (r.Key, diffNum);
 						if (dict.ContainsKey (r.Key)) {				
@@ -356,7 +365,8 @@ namespace Assets.Scripts.DataManagers
 						}
 
 					}
-					foreach (var r in rewards) {
+					foreach (var r in rewards) 
+					{
 						var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig> (r.Key);
 						if (config == null)
 							continue;
@@ -596,9 +606,6 @@ namespace Assets.Scripts.DataManagers
 		{
 			int foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
 			var success = PlayerItemManager.Singleton.CalItemFromPack (foodEntry, num);
-			if (success) {
-				DataManagers.AchievementManager.Singleton.CostFood (num);
-			}
 			return success;
 		}
 

@@ -300,19 +300,42 @@ namespace Assets.Scripts.UI.Windows
 			if (!PlayerArmyManager.Singleton.IsAlive(soldier)) {
 				var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemConfig>
 					(App.GameAppliaction.Singleton.ConstValues.ReliveNeedItem);
+				bool have = DataManagers.PlayerItemManager.Singleton.GetItemCount (config.ID) > 0;
+			
+				if (!have) {
+					UIMessageBox.ShowMessage (LanguageManager.Singleton ["No_Rilve_Title"],
+						string.Format (LanguageManager.Singleton ["No_Rilve_Message"], config.Name),
+						LanguageManager.Singleton ["No_Rilve_OK"],
+						LanguageManager.Singleton ["No_Rilve_Cancel"],
+						() => {
+							this.HideWindow();
+							UIShop.Show();
+						},
+						null);
+				} else {
 
-				UIMessageBox.ShowMessage (LanguageManager.Singleton ["UI_GOEXPLORE_Relive_OK"],
-					string.Format (LanguageManager.Singleton ["UI_GOEXPLORE_Relive_Message"], 
-						config.Name, obj.Monster.Name),
-					() => {
-						if (DataManagers.PlayerArmyManager.Singleton.Relive (obj.PlayerSoldier.Soldier.SoldierID)) {
-							//UIManager.Singleton.UpdateUIData ();
-							obj.PlayerSoldier.Soldier.IsAlive =true;
-							obj.PlayerSoldier = obj.PlayerSoldier;
-						}
-					},
-					null);
-
+					UIMessageBox.ShowMessage (LanguageManager.Singleton ["UI_GOEXPLORE_Relive_OK"],
+						string.Format (LanguageManager.Singleton ["UI_GOEXPLORE_Relive_Message"], 
+							config.Name, obj.Monster.Name),
+						() => {
+							if (DataManagers.PlayerArmyManager.Singleton.Relive (obj.PlayerSoldier.Soldier.SoldierID)) {
+								//UIManager.Singleton.UpdateUIData ();
+								obj.PlayerSoldier.Soldier.IsAlive = true;
+								obj.PlayerSoldier = obj.PlayerSoldier;
+								var selectCount = 0;
+								foreach (var i in  AllHeros) {
+									if (i.IsSelectd)
+										selectCount++;
+								}
+								if (selectCount < DataManagers.GamePlayerManager.Singleton.TeamSize) {
+									
+									OnClickItem (obj);
+								
+								}
+							}
+						},
+						null);
+				}
 				return;
 				//¸´»î
 			}
@@ -358,7 +381,7 @@ namespace Assets.Scripts.UI.Windows
 			this.completed = competed;
 			this.finger = GameObject.Instantiate<GameObject> (DataManagers.GuideManager.Singleton.GetFinger ());
 			finger.transform.SetParent (this.bt_go.transform);
-			finger.transform.localPosition = new Vector3 (60, -60, 0);
+			finger.transform.localPosition = new Vector3 (75, -60, 0);
 			finger.transform.localScale = Vector3.one;
 
 			ClickCategory (Proto.HeroJob.Yao, to_yao);

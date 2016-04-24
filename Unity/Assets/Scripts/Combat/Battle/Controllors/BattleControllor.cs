@@ -37,7 +37,7 @@ namespace Assets.Scripts.Combat.Battle.Controllors
 						battle.ProcessDrop ();
 						if (battle.BattleIndex < battle.Battles.Length) {
 							if(battle.BattleIndex>0)
-							  state.WaitForSeconds (2);
+							  state.WaitForSeconds (3);
 							
 							battle.State = Assets.Scripts.Combat.Battle.Elements.BattleStateType.AddMonster;
 							return GAction.Empty;

@@ -109,7 +109,11 @@ namespace Assets.Scripts.Combat.Simulate
 
 		public void WaitForSeconds(float seconds)
 		{
-			waitTime = Time.time + seconds;
+			if (waitTime > Time.time) {
+				waitTime += seconds;
+			} else {
+				waitTime = Time.time + seconds;
+			}
 		}
     }
 }

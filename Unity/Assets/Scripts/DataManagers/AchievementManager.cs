@@ -59,7 +59,7 @@ namespace Assets.Scripts.DataManagers
 			
 		}
 
-		public void CostFood (int food)
+		public void BattleCostFood (int food)
 		{
 			var haveCompleted = false;
 			var configs = GetAllConfigs (Proto.AchievementEventType.CostFood);

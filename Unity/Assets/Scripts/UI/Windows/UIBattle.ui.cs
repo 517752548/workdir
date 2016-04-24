@@ -49,6 +49,7 @@ namespace Assets.Scripts.UI.Windows
         public UIGrid StarGrid;
         public UITexture Monster_coin;
         public UILabel lb_monster_lvl;
+        public UISprite Dead_Effect;
         public Transform daoguangFX;
         public Transform zhuahenFx;
         public UITexture battleground;
@@ -78,6 +79,7 @@ namespace Assets.Scripts.UI.Windows
             StarGrid = FindChild<UIGrid>("StarGrid");
             Monster_coin = FindChild<UITexture>("Monster_coin");
             lb_monster_lvl = FindChild<UILabel>("lb_monster_lvl");
+            Dead_Effect = FindChild<UISprite>("Dead_Effect");
             daoguangFX = FindChild<Transform>("daoguangFX");
             zhuahenFx = FindChild<Transform>("zhuahenFx");
             battleground = FindChild<UITexture>("battleground");

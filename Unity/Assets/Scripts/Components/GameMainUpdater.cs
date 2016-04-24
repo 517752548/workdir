@@ -22,7 +22,7 @@ namespace Assets.Scripts
         void Update()
         {
 			if (showGM) {
-				frames.AddLast (1 / Time.deltaTime);
+				frames.AddLast (1f / Time.deltaTime);
 				if (frames.Count > 200) {
 					frames.RemoveFirst ();
 
