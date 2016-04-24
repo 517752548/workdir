@@ -1482,39 +1482,51 @@ namespace ExcelConfig
         public String Dialog1 { set; get; }
         
         /// <summary>
-        /// 消耗类型
+        /// 取消
         /// </summary>
         [ExcelConfigColIndex(6)]
+        public String Cancel { set; get; }
+        
+        /// <summary>
+        /// 确定
+        /// </summary>
+        [ExcelConfigColIndex(7)]
+        public String OK { set; get; }
+        
+        /// <summary>
+        /// 消耗类型
+        /// </summary>
+        [ExcelConfigColIndex(8)]
         public int CostType { set; get; }
         
         /// <summary>
         /// 需要消耗材料
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(9)]
         public String NeedItem { set; get; }
         
         /// <summary>
         /// 确定
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(10)]
         public String DialogOK { set; get; }
         
         /// <summary>
         /// 取消
         /// </summary>
-        [ExcelConfigColIndex(9)]
+        [ExcelConfigColIndex(11)]
         public String DialogFaiuler { set; get; }
         
         /// <summary>
         /// 奖励类别
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(12)]
         public int RewardType { set; get; }
         
         /// <summary>
         /// 参数
         /// </summary>
-        [ExcelConfigColIndex(11)]
+        [ExcelConfigColIndex(13)]
         public String RewardConditon { set; get; }
 
     }
