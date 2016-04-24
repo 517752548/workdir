@@ -65,7 +65,8 @@ namespace Assets.Scripts.DataManagers
 		WheatProduceAppend = 20,//小麦产量附加值
 		ProductOffLineTimeAppend =21, //离线产量计算时间
 		NoCDWhenBattleStart = 22 ,//战斗开始没有cd时间
-		GuideStep = 23 //引导
+		GuideStep = 23, //引导
+		RandomEventTime = 24 //上次随机事件时间
 	}
 
 	public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
@@ -166,6 +167,40 @@ namespace Assets.Scripts.DataManagers
 			PlayerData.Clear ();
 			ProduceOpenState.Clear ();
 			Presist ();
+		}
+
+		public int EventLastTime{
+			get{ 
+				var eventTime = this [PlayDataKeys.RandomEventTime];
+				if (eventTime <= 0) {
+					SetEventTimeTo (10 * 60);
+				}
+
+				return this [PlayDataKeys.RandomEventTime];
+			}
+
+			set{
+				this [PlayDataKeys.RandomEventTime] = value;
+			}
+		}
+
+		public bool IsEventTimeout{ 
+			get {
+				var ticks = DateTime.UtcNow - TimeZero;
+				if (ticks.TotalSeconds > this.EventLastTime) 
+				{
+					return true;
+				}
+				return false;
+			} 
+		}
+
+		public void SetEventTimeTo(int pastOfSeconds)
+		{
+			var ticks = DateTime.UtcNow - TimeZero; 
+			var seconds = (int)ticks.TotalSeconds;
+			EventLastTime = seconds + pastOfSeconds;
+
 		}
 
 		#region 生产相关

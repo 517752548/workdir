@@ -31,7 +31,8 @@ namespace Assets.Scripts.App
                 BuildingManager.Singleton,
                 PlayerArmyManager.Singleton,
                 PlayerMapManager.Singleton,
-				AchievementManager.Singleton
+				AchievementManager.Singleton,
+				RandomEventManager.Singleton
             };
             foreach (var i in prisit)
                 i.Load();

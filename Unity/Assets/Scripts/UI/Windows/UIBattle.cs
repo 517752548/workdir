@@ -287,17 +287,16 @@ namespace Assets.Scripts.UI.Windows
 
             if (cur.Camp == Proto.ArmyCamp.Player)
             {
-                if (MonsterRoot.GetComponent<iTween>() == null)
-                    iTween.shake(MonsterRoot.gameObject, 0.3f, 0.2f, new UnityEngine.Vector3(30, 20, 0));
-
+				if (MonsterRoot.GetComponent<iTween> () == null) {
+					iTween.shake (MonsterRoot.gameObject, 0.3f, 0.2f, new UnityEngine.Vector3 (30, 20, 0));
+				}
                 var an = daoguangFX.GetComponent<Animator>();
                 an.SetTrigger("Start");
                 UITipDrawer.Singleton.DrawNotify(string.Format(LanguageManager.Singleton["ATTACK_MONSTER"], result.Damage));
 				if (result.IsDead) {
-					this.Dead_Effect.ActiveSelfObject (true);
-					this.Dead_Effect.GetComponent<TweenScale> ().PlayForward ();
+					StartCoroutine (ShowDead ());
 				}
-				Monster_coin.Gray (true);
+
             }
             else
             {
@@ -309,6 +308,19 @@ namespace Assets.Scripts.UI.Windows
 
             }
         }
+
+		private IEnumerator ShowDead()
+		{
+			yield return new WaitForSeconds (.8f);
+			this.Dead_Effect.ActiveSelfObject (true);
+			var itween = this.Dead_Effect.GetComponent<TweenScale> ();
+			itween.ResetToBeginning ();
+			itween.PlayForward ();
+
+			yield return new WaitForSeconds (0.1f);
+			Monster_coin.Gray (true);
+
+		}
 
 		private IEnumerator DoetScale()
 		{

@@ -161,6 +161,11 @@ namespace Assets.Scripts.DataManagers
 			return MapIDS.ToList ();
 		}
 
+		public bool MapIsOpen(int mapID)
+		{
+			return MapIDS.Contains (mapID);
+		}
+
 		public List<int> GetCompletedMaps()
 		{
 			return MapCompleteds.ToList ();

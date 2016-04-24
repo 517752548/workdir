@@ -331,7 +331,7 @@ namespace Assets.Scripts.UI.Windows
 			_itemfinger = GameObject.Instantiate<GameObject> (DataManagers.GuideManager.Singleton.GetFinger ());
 			_itemfinger.transform.SetParent (root);
 			_itemfinger.transform.localScale = Vector3.one;
-			_itemfinger.transform.localPosition = new Vector3 (120, -40,0);
+			_itemfinger.transform.localPosition = new Vector3 (180, -40,0);
 
 			buyCompleted = completed;
 			this.itemID = itemID;

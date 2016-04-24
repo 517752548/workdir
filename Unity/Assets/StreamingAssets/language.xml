@@ -8,7 +8,7 @@
   <LanguageKey Key="APP_GOLD">金币</LanguageKey>
   <LanguageKey Key="APP_GOLD_Label">{0}</LanguageKey>  
   
-  
+  <LanguageKey Key="Random_Event">随机事件</LanguageKey>
   <LanguageKey Key="NO_SCROLL">麻烦弄个图纸先？</LanguageKey>
   <LanguageKey Key="NO_BUILD">哇，没有生产类建筑啊，什么良田美景的造个就好。</LanguageKey>
   <LanguageKey Key="NO_HERO">收个妖怪做小弟吧，听话还能干活，走到哪打劫到哪。</LanguageKey>
@@ -31,6 +31,7 @@
   <LanguageKey Key="SOLDIER_NAME">{0}*{1}</LanguageKey>
   <LanguageKey Key="ID_EXISTS_ERROR">士兵配置错误！</LanguageKey>
   <LanguageKey Key="ProduceGoldPreTick">金币 +{0}</LanguageKey>
+  <LanguageKey Key="UIChargeShop_Cost">消耗金币:{0}</LanguageKey>
 	
   <LanguageKey Key="BUILD_FRO_MORE_PEOPLE">没有空闲的工匠！</LanguageKey>
   <LanguageKey Key="NO_PEOPLE_FREE">工匠都去搬砖了！</LanguageKey>
@@ -168,7 +169,7 @@
   <LanguageKey Key="Charge_Shop_info">以个童叟无欺的价格购买干粮！</LanguageKey>
   <LanguageKey Key="Charge_NOGOLD">没有了钱，在用力戳也是无济于事的！</LanguageKey>
 
-  <LanguageKey Key="Charge_BuySuccess">花费{0}金币，买{1}个干粮。</LanguageKey>
+  <LanguageKey Key="Charge_BuySuccess">花费{0}金币，买{1}*{2}。</LanguageKey>
   <LanguageKey Key="Achievement_Reward_item">获得道具{0}*{1}</LanguageKey>
   <LanguageKey Key="UI_Explore_No_Food_Title">干粮没了</LanguageKey>
   <LanguageKey Key="UI_Explore_No_Food_Message">没有干粮了，队伍忍饿前行！</LanguageKey>

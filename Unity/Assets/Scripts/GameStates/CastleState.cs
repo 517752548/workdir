@@ -9,15 +9,19 @@ namespace Assets.Scripts.GameStates
     class CastleState:App.GameState
     {
         public override void OnEnter()
-        {
-            base.OnEnter();
+		{
+			base.OnEnter ();
 			UI.UIControllor.Singleton.HideAllUI ();
-            UI.UIControllor.Singleton.ShowOrHideMessage(true);
+			UI.UIControllor.Singleton.ShowOrHideMessage (true);
 
-            var ui = UI.UIManager.Singleton.CreateOrGetWindow<UI.Windows.UICastlePanel>();
-            ui.ShowWindow();
+			var ui = UI.UIManager.Singleton.CreateOrGetWindow<UI.Windows.UICastlePanel> ();
+			ui.ShowWindow ();
 
-        }
+			if (DataManagers.GuideManager.Singleton.CurrentStep == Assets.Scripts.DataManagers.GuideStep.Completed)
+			{
+				DataManagers.RandomEventManager.Singleton.TryToRandom ();
+			}
+		}
 
         public override void OnExit()
         {

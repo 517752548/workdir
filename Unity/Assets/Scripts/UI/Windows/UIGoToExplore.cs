@@ -231,7 +231,29 @@ namespace Assets.Scripts.UI.Windows
 			PlayerItemManager.Singleton.AddItemIntoPack (App.GameAppliaction.Singleton.ConstValues.FoodItemID, lastFood);
 			UI.UIControllor.Singleton.ShowOrHideMessage(  false);
 			OnUpdateUIData ();
-			ClickCategory (Proto.HeroJob.Xian, to_xian);
+
+			foreach (var i in AllHeros) {
+
+				var type = (Proto.HeroJob)i.Monster.Type;
+				switch (type) {
+				case Proto.HeroJob.Fo:
+					ClickCategory (Proto.HeroJob.Fo,to_fo);
+					break;
+				case Proto.HeroJob.Ming:
+					ClickCategory (Proto.HeroJob.Ming, to_ming);
+					break;
+				case Proto.HeroJob.Xian:
+					ClickCategory (Proto.HeroJob.Xian, to_xian);
+					break;
+				case Proto.HeroJob.Yao:
+					ClickCategory (Proto.HeroJob.Yao, to_yao);
+					break;
+				}
+
+				break;
+			}
+
+
 
 		}
 

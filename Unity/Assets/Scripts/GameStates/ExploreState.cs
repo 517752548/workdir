@@ -59,7 +59,7 @@ namespace Assets.Scripts.GameStates
 
 		private Vector2 TargetPos;
 
-		private GameMap Map;
+		public GameMap Map{ private set; get; }
 
 		public int TotalExploreValue{ private set; get; }
 
@@ -81,6 +81,8 @@ namespace Assets.Scripts.GameStates
 
 		private Vector3 lastPos;
 
+		private float start = 0;
+
 		public override void OnPinch (PinchGesture gesture)
 		{
 			base.OnPinch (gesture);
@@ -88,11 +90,14 @@ namespace Assets.Scripts.GameStates
 			//Debug.Log ("Pinch:"+gesture.State);
 			if (gesture.State == GestureRecognitionState.Ended) {
 				Map.SetZone (zone);
+				start = 0;
 			} else if (gesture.State == GestureRecognitionState.InProgress) {
 				
-				var target = zone + 20 * (gesture.Gap / 640);
-				target = Mathf.Clamp (target, 6, 20);
+				start += gesture.Delta;
+				var target = Mathf.Clamp ((start/640) *20 , 6, 40);
 				Map.SetZone (target);
+			} else if (gesture.State == GestureRecognitionState.Started) {
+				start = 0;
 			}
 
 		}

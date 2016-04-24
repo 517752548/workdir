@@ -18,12 +18,14 @@ public class ScaleShowEffect : MonoBehaviour , IEffect{
         {
             tween = this.gameObject.AddComponent<TweenScale>();
         }
+
         tween.enabled = true;
         tween.from = this.From;
         tween.to = this.OrScale.Value;
         tween.eventReceiver = this.gameObject;
         tween.callWhenFinished = "Completed";
         tween.duration = durtion;
+		tween.ResetToBeginning ();
         return tween;
 
     }
@@ -36,6 +38,7 @@ public class ScaleShowEffect : MonoBehaviour , IEffect{
             OrScale = this.gameObject.transform.localScale;
         }
         this.gameObject.transform.localScale = From;
+
     }
 
     [SerializeField]

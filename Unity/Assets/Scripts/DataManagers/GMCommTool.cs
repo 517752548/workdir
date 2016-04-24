@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Assets.Scripts.Tools;
 
 namespace Assets.Scripts.DataManagers
 {
@@ -77,6 +78,19 @@ namespace Assets.Scripts.DataManagers
 
 				break;
                 default: return;
+			case "fireevent":
+				DataManagers.GamePlayerManager.Singleton.SetEventTimeTo (-20 * 60);
+				DataManagers.RandomEventManager.Singleton.TryToRandom ();
+				break;
+			case "openmark":
+				{
+					var state = App.GameAppliaction.Singleton.Current as GameStates.ExploreState;
+					var pos = state.Map.Orgin;
+
+					DataManagers.PlayerMapManager.Singleton.OpenNearIndex (state.Config.ID, pos.ToIndex (),
+						30, state.Map);
+				}
+				break;
 
             }
 

@@ -48,6 +48,14 @@ namespace Assets.Scripts.DataManagers
 			}
 		}
 
+		public bool HadGet(int id)
+		{
+			var data = this [id];
+			if (data.IsCompleted)
+				return true;
+			return false;
+		}
+
 		public void Reset ()
 		{
 			_datas.Clear ();

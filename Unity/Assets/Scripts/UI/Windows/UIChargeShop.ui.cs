@@ -14,16 +14,16 @@ namespace Assets.Scripts.UI.Windows
         {
             public ItemGridTableTemplate(){}
             public UIButton Bt_itemName;
-            public UILabel lb_cost;
-            public UISprite s_coin;
-            public UIButton bt_info;
+            public UILabel lb_s_cost;
+            public UIButton bt_add;
+            public UIButton bt_sub;
 
             public override void InitTemplate()
             {
                 Bt_itemName = FindChild<UIButton>("Bt_itemName");
-                lb_cost = FindChild<UILabel>("lb_cost");
-                s_coin = FindChild<UISprite>("s_coin");
-                bt_info = FindChild<UIButton>("bt_info");
+                lb_s_cost = FindChild<UILabel>("lb_s_cost");
+                bt_add = FindChild<UIButton>("bt_add");
+                bt_sub = FindChild<UIButton>("bt_sub");
 
             }
         }
@@ -31,6 +31,8 @@ namespace Assets.Scripts.UI.Windows
 
         public UIGrid ItemGrid;
         public UIButton bt_close;
+        public UIButton bt_Ok;
+        public UILabel lb_cost;
 
 
         public UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>> ItemGridTableManager = new UITableManager<AutoGenTableItem<ItemGridTableTemplate, ItemGridTableModel>>();
@@ -41,6 +43,8 @@ namespace Assets.Scripts.UI.Windows
             base.InitTemplate();
             ItemGrid = FindChild<UIGrid>("ItemGrid");
             bt_close = FindChild<UIButton>("bt_close");
+            bt_Ok = FindChild<UIButton>("bt_Ok");
+            lb_cost = FindChild<UILabel>("lb_cost");
 
             ItemGridTableManager.InitFromGrid(ItemGrid);
 
