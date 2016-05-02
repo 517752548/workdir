@@ -56,7 +56,9 @@ namespace Assets.Scripts.UI.Windows
 			Bt_Music.value = DataManagers.GamePlayerManager.Singleton.IsMusicOn;
 			Bt_MusicEffect.value = DataManagers.GamePlayerManager.Singleton.EffectOn;
 			UI.UIControllor.Singleton.ShowOrHideMessage( false);
-			Bt_GameSkill.ActiveSelfObject (false);
+			//Bt_GameSkill.ActiveSelfObject (false);
+			Bt_shard.ActiveSelfObject (false);
+			lb_idName.ActiveSelfObject (false);
         }
         public override void OnHide()
         {

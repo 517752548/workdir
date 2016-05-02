@@ -69,35 +69,36 @@ namespace Assets.Scripts.Combat.Battle.Actions
                     break;
             }
 
-            switch ((SkillEffectType)Soldier.SkillConfig.StatusType)
-            {
-                case SkillEffectType.Hot:
+			switch ((SkillEffectType)Soldier.SkillConfig.StatusType) {
+			case SkillEffectType.Hot:
                     //加护盾
                     //治疗
                     //effectTarget.AddAppendHP(Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1));
-                    GameDebug.LogDebug("Adddef: num !" + Soldier.SkillConfig.Pars1);
-                    break;
-                case SkillEffectType.Dot:
-                    GameDebug.LogDebug("dot: num !" + Soldier.SkillConfig.Pars1 + " " + Soldier.SkillConfig.Pars2 + " " + Soldier.SkillConfig.Pars3);
-                    battle.DoDotEffect(Obj as BattleArmy, target, this.Soldier,
-                        Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars2),
-                        Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars3),
-                        Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1));
-                    break;
-                case SkillEffectType.Giddy:
+				GameDebug.LogDebug ("Adddef: num !" + Soldier.SkillConfig.Pars1);
+				break;
+			case SkillEffectType.Dot:
+				GameDebug.LogDebug ("dot: num !" + Soldier.SkillConfig.Pars1 + " " + Soldier.SkillConfig.Pars2 + " " + Soldier.SkillConfig.Pars3);
+				battle.DoDotEffect (Obj as BattleArmy, target, this.Soldier,
+					Tools.UtilityTool.ConvertToInt (Soldier.SkillConfig.Pars2),
+					Tools.UtilityTool.ConvertToInt (Soldier.SkillConfig.Pars3),
+					Tools.UtilityTool.ConvertToInt (Soldier.SkillConfig.Pars1));
+				break;
+			case SkillEffectType.Giddy:
                     //眩晕
-                    battle.DoGiddyEeffect(Obj as BattleArmy, Soldier, target, Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1));
-                    GameDebug.LogDebug("giddy: num !" + Soldier.SkillConfig.Pars1);
-                    break;
-                case SkillEffectType.ReduceDamage:
-                    GameDebug.LogDebug("ReduceDamage: num !" + Soldier.SkillConfig.Pars1);
-                    battle.DoReduceDamage(Obj as BattleArmy, Soldier, target, Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1), Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars2));
-                    break;
-                case SkillEffectType.Cure:
-                    GameDebug.LogDebug("SuckBlood: num !" + Soldier.SkillConfig.Pars1);
-                    target.CalHp(Tools.UtilityTool.ConvertToInt(Soldier.SkillConfig.Pars1));//加血
-                    break;
-            }
+				{
+					battle.DoGiddyEeffect (Obj as BattleArmy, Soldier, target, (int)(Tools.UtilityTool.ConvertToFloat (Soldier.SkillConfig.Pars1) * 1000));
+					GameDebug.LogDebug ("giddy: num !" + Soldier.SkillConfig.Pars1);
+				}
+				break;
+			case SkillEffectType.ReduceDamage:
+				GameDebug.LogDebug ("ReduceDamage: num !" + Soldier.SkillConfig.Pars1);
+				battle.DoReduceDamage (Obj as BattleArmy, Soldier, target, Tools.UtilityTool.ConvertToInt (Soldier.SkillConfig.Pars1), Tools.UtilityTool.ConvertToInt (Soldier.SkillConfig.Pars2));
+				break;
+			case SkillEffectType.Cure:
+				GameDebug.LogDebug ("SuckBlood: num !" + Soldier.SkillConfig.Pars1);
+				target.CalHp (Tools.UtilityTool.ConvertToInt (Soldier.SkillConfig.Pars1));//加血
+				break;
+			}
 
 
 
@@ -118,5 +119,5 @@ namespace Assets.Scripts.Combat.Battle.Actions
 
 
         //战斗计算在这里
-    }
+	}
 }

@@ -90,6 +90,19 @@ namespace Assets.Scripts.Tools
 			return r;
         }
 
+		public static float ConvertToFloat(string id)
+		{
+			float r = 0;
+			if (float.TryParse (id, out r))
+				return r;
+			else {
+				if (string.IsNullOrEmpty (id))
+					return 0;
+				GameDebug.LogError(id+" can't convert to int!");
+			}
+			return r;	
+		}
+
         public static List<SplitKeyValue> SplitKeyValues(string keys, string values)
         {
             var keyValue = SplitIDS(keys);

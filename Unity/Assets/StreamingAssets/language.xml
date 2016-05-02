@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <ArrayOfLanguageKey xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LanguageKey Key="APP_NAME">高老庄</LanguageKey>
+  <LanguageKey Key="APP_NAME">魔怔西游</LanguageKey>
   <LanguageKey Key="APP_NUM_FORMAT">{0:N0}</LanguageKey>
   <LanguageKey Key="APP_RED">[fff000]{0}[-]</LanguageKey>
   <LanguageKey Key="APP_GREEN">[ffffff]{0}[-]</LanguageKey> <!--[006400] 绿色-->
@@ -132,7 +132,7 @@
   <LanguageKey Key="UI_EXPLORE_FOOD">干粮：{0}</LanguageKey>
   <LanguageKey Key="UI_EXPLORE_EXPLOREVALUE">探索度：{0:0}%</LanguageKey>
   <LanguageKey Key="UIEXPLORE_EXIT_TITLE">传送</LanguageKey> 
-  <LanguageKey Key="UIEXPLORE_EXIT_MESSGAE">传送到高老庄需要传送符文，俗称回城卷，就是高老庄门票啦！</LanguageKey> 
+  <LanguageKey Key="UIEXPLORE_EXIT_MESSGAE">传送到魔怔西游需要传送符文，俗称回城卷，就是魔怔西游门票啦！</LanguageKey> 
   <LanguageKey Key="JOIN_CASTLE_ITEM_NOT_ENOUGH">{0}都没有，你还想干嘛？</LanguageKey>
   <LanguageKey Key="JOIN_CASTLE_ITEM_COST">吃了一个{0}！</LanguageKey> 
   <LanguageKey Key="UIEXPLORE_GOHOME">回城了</LanguageKey>  
@@ -188,14 +188,14 @@
   <LanguageKey Key="No_Rilve_Title">道具不足</LanguageKey>
   <LanguageKey Key="No_Rilve_Message">{0}不足，点击前往购买</LanguageKey>
   <LanguageKey Key="No_Rilve_OK">确定</LanguageKey>
-  <LanguageKey Key="No_Rilve_Cancel">确定</LanguageKey>
+  <LanguageKey Key="No_Rilve_Cancel">取消</LanguageKey>
 
   <LanguageKey Key="EXPLORE_Battle_Dead_Title">战败了</LanguageKey>
   <LanguageKey Key="EXPLORE_Battle_Dead_Message">战败了，升级升级小妖，记得吃个补给。</LanguageKey>
   <LanguageKey Key="EXPLORE_Battle_Dead_Ok">确定</LanguageKey>
 
   <!--新手引导-->
-  <LanguageKey Key="GUILD_WELCOME">欢迎您来到高老庄，现在由我来告诉你这里的规则。</LanguageKey>
+  <LanguageKey Key="GUILD_WELCOME">欢迎您来到魔怔西游，现在由我来告诉你这里的规则。</LanguageKey>
   <LanguageKey Key="GUILD_GOLD">看来你很穷啊，先自己铸造点钱呗？</LanguageKey>
   <LanguageKey Key="GUILD_GOLD2">啊呀，太厉害了，看到金币变化了吗？继续铸造吧！我们还等着钱造房子呢。</LanguageKey>
 

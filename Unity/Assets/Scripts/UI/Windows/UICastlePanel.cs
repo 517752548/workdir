@@ -264,6 +264,7 @@ namespace Assets.Scripts.UI.Windows
         public override void OnShow()
         {
             base.OnShow();
+			lb_title.text = LanguageManager.Singleton ["APP_NAME"];
             OnUpdateUIData();
             ShowOrHideBag(false);
 			//ShowGoldProcess (20,null);
