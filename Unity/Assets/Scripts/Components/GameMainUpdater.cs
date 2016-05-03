@@ -81,7 +81,7 @@ namespace Assets.Scripts
 		private float fps = 0;
 		private float lastTime = 0;
 
-		private bool showGM = false;
+		public bool showGM = false;
 
         void OnGUI()
         {
