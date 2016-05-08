@@ -260,6 +260,17 @@ namespace Assets.Scripts.GameStates
 				}
 				break;
 			case Proto.MapEventType.GoHomePos:
+				UI.Windows.UIMessageBox.ShowMessage(
+					LanguageManager.Singleton["GoHome_Title"],
+					LanguageManager.Singleton["GoHome_message"],
+					()=>{
+						RecordPos (oldPos, target,true);
+						JoinCastle ();
+					},
+					()=>{
+						RecordPos (oldPos, target,true);
+					});
+				break;
 			case Proto.MapEventType.BronPos:
 				RecordPos (oldPos, target,true);
 				JoinCastle ();

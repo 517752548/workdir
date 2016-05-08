@@ -132,7 +132,7 @@
   <LanguageKey Key="UI_EXPLORE_FOOD">干粮：{0}</LanguageKey>
   <LanguageKey Key="UI_EXPLORE_EXPLOREVALUE">探索度：{0:0}%</LanguageKey>
   <LanguageKey Key="UIEXPLORE_EXIT_TITLE">传送</LanguageKey> 
-  <LanguageKey Key="UIEXPLORE_EXIT_MESSGAE">传送到魔怔西游需要传送符文，俗称回城卷，就是魔怔西游门票啦！</LanguageKey> 
+  <LanguageKey Key="UIEXPLORE_EXIT_MESSGAE">传送到主城需要传送符文，俗称回城卷！</LanguageKey> 
   <LanguageKey Key="JOIN_CASTLE_ITEM_NOT_ENOUGH">{0}都没有，你还想干嘛？</LanguageKey>
   <LanguageKey Key="JOIN_CASTLE_ITEM_COST">吃了一个{0}！</LanguageKey> 
   <LanguageKey Key="UIEXPLORE_GOHOME">回城了</LanguageKey>  
@@ -193,7 +193,9 @@
   <LanguageKey Key="EXPLORE_Battle_Dead_Title">战败了</LanguageKey>
   <LanguageKey Key="EXPLORE_Battle_Dead_Message">战败了，升级升级小妖，记得吃个补给。</LanguageKey>
   <LanguageKey Key="EXPLORE_Battle_Dead_Ok">确定</LanguageKey>
-
+   
+  <LanguageKey Key="GoHome_Title">返回</LanguageKey>
+  <LanguageKey Key="GoHome_message">返回主城？</LanguageKey>
   <!--新手引导-->
   <LanguageKey Key="GUILD_WELCOME">欢迎您来到魔怔西游，现在由我来告诉你这里的规则。</LanguageKey>
   <LanguageKey Key="GUILD_GOLD">看来你很穷啊，先自己铸造点钱呗？</LanguageKey>
