@@ -61,20 +61,38 @@ namespace Assets.Scripts.UI.Windows
 			});
 
 			bt_collectall.OnMouseClick ((s, e) => {
+
+				var count =0;
+				foreach(var i in items)
+				{
+					count += i.Num;
+				}
+
+				int limit = DataManagers.GamePlayerManager.Singleton.PackageSize-
+					DataManagers.PlayerItemManager.Singleton.CurrentSize;
+				if(limit < count)
+				{
+					UI.UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["Collect_All_Full_package"]);
+					return;
+				}
+
 				foreach(var i in items)
 				{
 					var currentSize = DataManagers.PlayerItemManager.Singleton.CurrentSize;
 					var maxSize = DataManagers.GamePlayerManager.Singleton.PackageSize;
 					int max = maxSize - currentSize;
 					int diff = Mathf.Min(max,i.Num);
+
 					i.Num -=diff;
 					DataManagers.PlayerItemManager.Singleton.AddItemIntoPack(i.Entry,diff);
+
 				}
+
 				items.RemoveAll(t=>t.Num<=0);
 				UIManager.Singleton.UpdateUIData();
 
 				if(callAfterCollect ==null ) return;
-				callAfterCollect(this.mapID,this.posIndex, items);
+				   callAfterCollect(this.mapID,this.posIndex, items);
 
 				if(items.Count==0)
 					StartCoroutine(DelayClose());
@@ -84,7 +102,7 @@ namespace Assets.Scripts.UI.Windows
 
 		private IEnumerator DelayClose()
 		{
-			yield return new WaitForSeconds (0.3f);
+			yield return new WaitForSeconds (0.5f);
 			HideWindow();
 		}
 

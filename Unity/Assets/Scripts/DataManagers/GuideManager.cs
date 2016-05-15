@@ -66,6 +66,12 @@ namespace Assets.Scripts.DataManagers
 			}
 		}
 
+		public bool IsCompleted(GuideStep step)
+		{
+			if((int)this.CurrentStep >= (int)step) return true;
+			return false;
+		}
+
 		public const string FingerProcess = "UIGuideWindow";
 
 

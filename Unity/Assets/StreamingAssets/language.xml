@@ -196,6 +196,11 @@
    
   <LanguageKey Key="GoHome_Title">返回</LanguageKey>
   <LanguageKey Key="GoHome_message">返回主城？</LanguageKey>
+
+  <LanguageKey Key="UI_Explore_Full_Food_Title">赠送</LanguageKey> 
+  <LanguageKey Key="UI_Explore_Full_Food_Message">干粮没有，别急！先给借点给你吧。下次要注意哦</LanguageKey>
+  <LanguageKey Key="UI_Explore_Full_Food_Ok">谢谢</LanguageKey>
+  <LanguageKey Key="Collect_All_Full_package">背包满了，没办法全部拿走，赶紧回家吧。</LanguageKey>
   <!--新手引导-->
   <LanguageKey Key="GUILD_WELCOME">欢迎您来到魔怔西游，现在由我来告诉你这里的规则。</LanguageKey>
   <LanguageKey Key="GUILD_GOLD">看来你很穷啊，先自己铸造点钱呗？</LanguageKey>

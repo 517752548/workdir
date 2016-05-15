@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Assets.Scripts.Tools;
 using UnityEngine;
+using Assets.Scripts.DataManagers;
 
 namespace Assets.Scripts.UI.Windows
 {
@@ -305,6 +306,14 @@ namespace Assets.Scripts.UI.Windows
             bt_Coin.Text(string.Format(LanguageManager.Singleton["APP_NUM_FORMAT"], DataManagers.GamePlayerManager.Singleton.Coin));
             ShowBag();
           
+			bt_battle.ActiveSelfObject(GuideManager.Singleton.IsCompleted(GuideStep.EmployHero_Employ));
+			bt_contruct.ActiveSelfObject (GuideManager.Singleton.IsCompleted (GuideStep.ProduceGold2));
+			bt_make.ActiveSelfObject(GuideManager.Singleton.IsCompleted(GuideStep.Completed));
+			bt_produce.ActiveSelfObject(GuideManager.Singleton.IsCompleted(GuideStep.BuildFort_Build));
+			bt_train.ActiveSelfObject(GuideManager.Singleton.IsCompleted(GuideStep.Completed));
+			bt_bar.ActiveSelfObject(GuideManager.Singleton.IsCompleted(GuideStep.ProduceFood_Add));	
+
+				
         }
 
         private void ShowBag()

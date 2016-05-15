@@ -458,22 +458,33 @@ namespace Assets.Scripts.GameStates
 				return;
 
 			var foodEmpty = false;
-			if (!DataManagers.GamePlayerManager.Singleton.CostFood (1)) 
-			{
-				if (Food >= App.GameAppliaction.Singleton.ConstValues.OutOffeedMoving) 
-				{
-					foodEmpty = true;
+			if (!DataManagers.GamePlayerManager.Singleton.CostFood (1)) {
+				//out of food 
+				if (Food >= App.GameAppliaction.Singleton.ConstValues.OutOffeedMoving) {
+					if (GamePlayerManager.Singleton.FullFood ()) {
+						UIMessageBox.ShowMessage (
+							LanguageManager.Singleton ["UI_Explore_Full_Food_Title"],
+							LanguageManager.Singleton ["UI_Explore_Full_Food_Message"],
+							LanguageManager.Singleton ["UI_Explore_Full_Food_Ok"],
+							string.Empty,
+							null, null,
+							true);
+					} else {
+						foodEmpty = true;
+					}
+
 				}
-				if (Food == 0)
-				{
+				//begin
+				if (Food == 0) {
 					UIMessageBox.ShowMessage (
 						LanguageManager.Singleton ["UI_Explore_No_Food_Title"],
 						LanguageManager.Singleton ["UI_Explore_No_Food_Message"],
 						LanguageManager.Singleton ["UI_Explore_No_Food_Ok"],
 						string.Empty,
-						null,null,
+						null, null,
 						true);
 				}
+
 				Food++;
 
 			} else {

@@ -471,6 +471,14 @@ namespace Assets.Scripts.DataManagers
 				}
 				return count;
 			}}
+		
+		public bool FullByItem(int id)
+		{
+			var count =GamePlayerManager.Singleton.PackageSize- CurrentSize;
+
+			 return AddItemIntoPack (id, count);
+
+		}
 
 		public bool AddItemIntoPack(int entry,int num)
 		{

@@ -73,6 +73,7 @@ namespace Assets.Scripts.DataManagers
 		TeamDamageSub = 28,//队伍伤害减免
 		TeamPrecision = 29,//命中
 		TeamJouk = 30,//闪避
+		GiveFoodTimes = 31,//空干粮补满
 	}
 
 	public class GamePlayerManager : Tools.XSingleton<GamePlayerManager>, IPresist
@@ -650,6 +651,18 @@ namespace Assets.Scripts.DataManagers
 			return success;
 		}
 
+
+		public bool FullFood()
+		{
+			var maxTimes = 3;
+			var current = Mathf.Max (0, this [PlayDataKeys.GiveFoodTimes]);
+			if (current >= maxTimes)
+				return false;
+			this [PlayDataKeys.GiveFoodTimes] = current++;
+			int foodEntry = App.GameAppliaction.Singleton.ConstValues.FoodItemID;
+			PlayerItemManager.Singleton.FullByItem (foodEntry);
+			return true;
+		}
 
 		/// <summary>
 		/// 当前可出战人数
