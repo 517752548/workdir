@@ -307,7 +307,7 @@ namespace Assets.Scripts.UI.Windows
             ShowBag();
           
 			bt_battle.ActiveSelfObject(GuideManager.Singleton.IsCompleted(GuideStep.EmployHero_Employ));
-			bt_contruct.ActiveSelfObject (GuideManager.Singleton.IsCompleted (GuideStep.ProduceGold2));
+			bt_contruct.ActiveSelfObject (GuideManager.Singleton.IsCompleted (GuideStep.BuildHouse_BuyWood));
 			bt_make.ActiveSelfObject(GuideManager.Singleton.IsCompleted(GuideStep.Completed));
 			bt_produce.ActiveSelfObject(GuideManager.Singleton.IsCompleted(GuideStep.BuildFort_Build));
 			bt_train.ActiveSelfObject(GuideManager.Singleton.IsCompleted(GuideStep.Completed));
@@ -384,8 +384,8 @@ namespace Assets.Scripts.UI.Windows
 			buildFinger = GameObject.Instantiate<GameObject> (finger);
 			buildFinger.transform.SetParent (bt_contruct.transform);
 			buildFinger.transform.localScale = Vector3.one;
-			buildFinger.transform.localPosition = new Vector3(-40,-40,0);
-			buildFinger.transform.localRotation = Quaternion.Euler (0, 180, 0);
+			buildFinger.transform.localPosition = new Vector3(40,-40,0);
+			buildFinger.transform.localRotation = Quaternion.Euler (0, 0, 0);
 
 			buildCompleted = completed;
 			UIControllor.Singleton.SetMaskEventObject (bt_contruct.gameObject);
@@ -401,8 +401,8 @@ namespace Assets.Scripts.UI.Windows
 			produceFinger = GameObject.Instantiate<GameObject> (finger);
 			produceFinger.transform.SetParent (bt_produce.transform);
 			produceFinger.transform.localScale = Vector3.one;
-			produceFinger.transform.localPosition = new Vector3(-40,-40,0);
-			produceFinger.transform.localRotation = Quaternion.Euler (0, 180, 0);
+			produceFinger.transform.localPosition = new Vector3(40,-40,0);
+			produceFinger.transform.localRotation = Quaternion.Euler (0, 0, 0);
 			produceCompleted = completed;
 			UIControllor.Singleton.SetMaskEventObject (bt_produce.gameObject);
 		}
@@ -419,8 +419,8 @@ namespace Assets.Scripts.UI.Windows
 			traveFinger = GameObject.Instantiate<GameObject> (finger);
 			traveFinger.transform.SetParent (bt_bar.transform);
 			traveFinger.transform.localScale = Vector3.one;
-			traveFinger.transform.localPosition = new Vector3(40,-40,0);
-			//traveFinger.transform.localRotation = Quaternion.Euler (0, 180, 0);
+			traveFinger.transform.localPosition = new Vector3(-40,-40,0);
+			traveFinger.transform.localRotation = Quaternion.Euler (0, 180, 0);
 			traveCompleted = completed;
 			UIControllor.Singleton.SetMaskEventObject (bt_bar.gameObject);
 		}

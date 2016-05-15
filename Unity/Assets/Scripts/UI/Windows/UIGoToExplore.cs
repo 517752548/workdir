@@ -403,9 +403,9 @@ namespace Assets.Scripts.UI.Windows
 			this.completed = competed;
 			this.finger = GameObject.Instantiate<GameObject> (DataManagers.GuideManager.Singleton.GetFinger ());
 			finger.transform.SetParent (this.bt_go.transform);
-			finger.transform.localPosition = new Vector3 (75, -60, 0);
+			finger.transform.localPosition = new Vector3 (-75, 60, 0);
 			finger.transform.localScale = Vector3.one;
-
+			finger.transform.localRotation = Quaternion.Euler (180, 180, 0);
 			ClickCategory (Proto.HeroJob.Yao, to_yao);
 
 			UIControllor.Singleton.SetMaskEventObject (bt_go.gameObject);

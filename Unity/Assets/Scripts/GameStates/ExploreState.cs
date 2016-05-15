@@ -458,6 +458,8 @@ namespace Assets.Scripts.GameStates
 				return;
 
 			var foodEmpty = false;
+			//处理干粮探索消耗
+
 			if (!DataManagers.GamePlayerManager.Singleton.CostFood (1)) {
 				//out of food 
 				if (Food >= App.GameAppliaction.Singleton.ConstValues.OutOffeedMoving) {
@@ -469,7 +471,7 @@ namespace Assets.Scripts.GameStates
 							string.Empty,
 							null, null,
 							true);
-					} else {
+					}else {
 						foodEmpty = true;
 					}
 
