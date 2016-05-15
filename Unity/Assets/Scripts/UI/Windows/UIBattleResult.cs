@@ -70,12 +70,7 @@ namespace Assets.Scripts.UI.Windows
 
 				int limit = DataManagers.GamePlayerManager.Singleton.PackageSize-
 					DataManagers.PlayerItemManager.Singleton.CurrentSize;
-				if(limit < count)
-				{
-					UI.UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["Collect_All_Full_package"]);
-					return;
-				}
-
+				
 				foreach(var i in items)
 				{
 					var currentSize = DataManagers.PlayerItemManager.Singleton.CurrentSize;
@@ -96,6 +91,12 @@ namespace Assets.Scripts.UI.Windows
 
 				if(items.Count==0)
 					StartCoroutine(DelayClose());
+				if(limit < count)
+				{
+					UI.UITipDrawer.Singleton.DrawNotify(LanguageManager.Singleton["Collect_All_Full_package"]);
+					return;
+				}
+
 			});
             //Write Code here
         }
