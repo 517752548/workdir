@@ -60,6 +60,9 @@ namespace Assets.Scripts.UI.Windows
         {
             base.OnShow();
             UIControllor.Singleton.ShowOrHideMessage(false);
+			if (!IAPExample.Current.IsPaymentAvailabel) {
+				UITipDrawer.Singleton.DrawNotify ("Payment is not avilable!!!");
+			}
             var data = DataManagers.GamePlayerManager.Singleton.PaymentData;
             ItemGridTableManager.Count = data.Count;
             int index = 0;

@@ -48,7 +48,7 @@ public class BuildTools
 			}
 
 			PlayerSettings.bundleVersion = string.Format ("{0}.{1}.{2}", major, build, develop);
-
+			//PlayerSettings. = PlayerSettings.bundleVersion;
 			EditorUtility.DisplayDialog ("Version Increased", 
 				string.Format ("Version From {0} To {1}", buildVersion, PlayerSettings.bundleVersion),
 				"Close");

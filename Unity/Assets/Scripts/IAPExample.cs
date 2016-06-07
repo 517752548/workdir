@@ -15,14 +15,7 @@ public class IAPExample : MonoBehaviour {
 	{
 		_example = this;
 	}
-	[DllImport("__Internal")]
-	private static extern void TestMsg();//测试信息发送
-	
-	[DllImport("__Internal")]
-	private static extern void TestSendString(string s);//测试发送字符串
-	
-	[DllImport("__Internal")]
-	private static extern void TestGetString();//测试接收字符串
+
 	
 	[DllImport("__Internal")]
 	private static extern void InitIAPManager();//初始化
@@ -44,26 +37,24 @@ public class IAPExample : MonoBehaviour {
 	//获取product列表
 	void ShowProductList(string s){
 		productInfo.Add (s);
+		Debug.Log ("GetList:"+s);
 	}
 
 
 	public void BuyItem(string Item)
 	{
-		if (!IsProductAvailable())
-			return;
-		foreach (var i in productInfo) {
-			if (i == Item) {
-				BuyProduct (Item);
-				break;
-			}
-		}
-
+		Debug.Log (Item);
+		//Assets.Scripts.UI.UIControllor.Singleton.MaskEventObjectName = Item;
+		BuyProduct (Item);
 
 	}
 	//获取商品回执
 	void ProvideContent(string s)
 	{
+		//Assets.Scripts.UI.UIControllor.Singleton.ClearMaskEvent ();
+
 		Debug.Log ("[MsgFrom ios]proivideContent : " + s);
+		if(!string.IsNullOrEmpty(s))
 		Assets.Scripts.DataManagers.GamePlayerManager.Singleton.DoPaymentBuyKey (s);
 
 	}
@@ -75,6 +66,7 @@ public class IAPExample : MonoBehaviour {
 		 Destroy(this);
 		#else
 		 InitIAPManager();
+		 Debug.Log("init iapmanager!");
 		#endif
 	}
 	

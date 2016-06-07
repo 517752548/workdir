@@ -85,6 +85,9 @@ namespace Assets.Scripts.DataManagers
 			this.Presist ();
 			GamePlayerManager.Singleton.Presist ();
 		}
+
+
+
 	}
 }
 
