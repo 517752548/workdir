@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditorInternal;
-using UnityEditor.XCodeEditor;
+using UnityEditor.iOS.Xcode;
 
 
 public class BuildTools
@@ -12,13 +12,18 @@ public class BuildTools
 	}
 
 	[PostProcessBuildAttribute(999)]
-	public static void OnPostBuild(BuildTarget target)
+	public static void OnPostBuild(BuildTarget targetF,string path)
 	{
-		if (target != BuildTarget.iOS) {
+		if (targetF != BuildTarget.iOS) {
 			return;
 		}
 
-
+		var proPath = PBXProject.GetPBXProjectPath (path);
+		var obj = new UnityEditor.iOS.Xcode.PBXProject ();
+		obj.ReadFromFile (proPath);
+		string target = obj.TargetGuidByName("Unity-iPhone");
+		obj.AddFrameworkToProject (target, "StoreKit.framework", false);
+		obj.WriteToFile (proPath);
 	}
 
 	[MenuItem("GAME/INCREASE_VERSION")]

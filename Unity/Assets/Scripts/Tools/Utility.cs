@@ -113,7 +113,7 @@ namespace Assets.Scripts.Tools
                 }
             }
             System.IO.File.WriteAllBytes(path, data);
-            Debug.Log(string.Format("SaveTO:{0} Data:{1}", path, data.Length));
+            //Debug.Log(string.Format("SaveTO:{0} Data:{1}", path, data.Length));
         }
 
         public static void SaveTextFileToPersistentPath(string path, string str, bool append)
@@ -132,7 +132,7 @@ namespace Assets.Scripts.Tools
                 File.AppendAllText(path, str, XmlParser.UTF8);
             else
                 File.WriteAllText(path, str, XmlParser.UTF8);
-            Debug.Log(string.Format("SaveTO:{0} Data:{1}", path, str));
+            //Debug.Log(string.Format("SaveTO:{0} Data:{1}", path, str));
         }
 
         public static string ReadTextFileFromPersistentPath(string path)
@@ -159,7 +159,7 @@ namespace Assets.Scripts.Tools
                     data = br.ReadBytes((int)file.Length);
                 }
             }
-            Debug.Log(string.Format("ReadFrom:{0} Data:{1}", path, data.Length));
+            //Debug.Log(string.Format("ReadFrom:{0} Data:{1}", path, data.Length));
             return data;
         }
         public static string GetPersistentPath(string path)

@@ -10,6 +10,4 @@
 
 @interface IAPInterface : NSObject
 
-//- (void)receiveProduct:(SKProduct *);
-
 @end

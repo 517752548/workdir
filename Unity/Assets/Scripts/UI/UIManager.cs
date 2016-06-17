@@ -493,5 +493,12 @@ namespace Assets.Scripts.UI
                 if (w.Value.State == WindowStates.Show)
                     w.Value.OnLanguage();
         }
+
+		public void TryToHide<T>()where T : UIWindow
+		{
+			var u = this.GetUIWindow<T>();
+			if(u==null) return;
+			u.HideWindow();
+		}
     }
 }

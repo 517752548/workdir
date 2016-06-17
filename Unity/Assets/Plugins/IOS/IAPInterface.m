@@ -7,15 +7,11 @@
 //
 
 #import "IAPInterface.h"
-#import "MLIAPManager.h"
-//static IAPInterface * sharedInstance = nil;
-@interface IAPInterface() <MLIAPManagerDelegate>
+#import "IAPManager.h"
 
-@end
+//const char* __UIROOT ="UI Root";
 
 @implementation IAPInterface
-
-
 
 void TestMsg(){
     NSLog(@"Msg received");
@@ -35,30 +31,33 @@ void TestSendString(void *p){
 void TestGetString(){
     NSArray *test = [NSArray arrayWithObjects:@"t1",@"t2",@"t3", nil];
     NSString *join = [test componentsJoinedByString:@"\n"];
+    
+    
     UnitySendMessage("UI Root", "IOSToU", [join UTF8String]);
 }
 
+IAPManager *iapManager = nil;
+
+void InitIAPManager(){
+    iapManager = [[IAPManager alloc] init];
+    [iapManager attachObserver];
+    
+}
+
+bool IsProductAvailable(){
+    return [iapManager CanMakePayment];
+}
 
 void RequstProductInfo(void *p){
     NSString *list = [NSString stringWithUTF8String:p];
     NSLog(@"productKey:%@",list);
+    [iapManager requestProductData:list];
 }
-
-
-void InitIAPManager(){
-    IAPInterface * ipa = [[IAPInterface alloc] init];
-    [MLIAPManager sharedManager].delegate = ipa;
-}
-
-bool IsProductAvailable(){
-    return [SKPaymentQueue canMakePayments];
-}
-
 
 void BuyProduct(void *p){
-    NSString *str  = [NSString stringWithUTF8String: p];
-    [[MLIAPManager sharedManager] requestProductWithId:str];
+    NSString * str = [NSString stringWithUTF8String:p];
+    NSLog(@"Buy:%@",str);
+    [iapManager buyRequest:str];
 }
-
 
 @end

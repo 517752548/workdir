@@ -92,7 +92,14 @@ namespace Assets.Scripts.DataManagers
 				}
 				break;
 
+			case "payment":
+				//ProvideContent
+				var obj = GameObject.Find ("UI Root");
+				var payement = GamePlayerManager.Singleton.PaymentData [0];
+				obj.SendMessage ("ProvideContent", payement.BundleID);
+				break;
             }
+		
 
             UI.UIManager.Singleton.UpdateUIData();
             Debug.Log(comm);

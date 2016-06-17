@@ -54,16 +54,21 @@ public class IAPExample : MonoBehaviour {
 		//Assets.Scripts.UI.UIControllor.Singleton.ClearMaskEvent ();
 
 		Debug.Log ("[MsgFrom ios]proivideContent : " + s);
-		if(!string.IsNullOrEmpty(s))
-		Assets.Scripts.DataManagers.GamePlayerManager.Singleton.DoPaymentBuyKey (s);
+		if (!string.IsNullOrEmpty (s)) {
+			//Assets.Scripts.DataManagers.PaymentManager.Singleton.Add (s);
 
+			Assets.Scripts.DataManagers.GamePlayerManager.Singleton.DoPaymentBuyKey (s);
+		}
+
+
+	   
 	}
 	
 	
 	// Use this for initialization
 	void Start () {
 		#if !UNITY_IOS || UNITY_EDITOR
-		 Destroy(this);
+		 //Destroy(this);
 		#else
 		 InitIAPManager();
 		 Debug.Log("init iapmanager!");
@@ -72,7 +77,7 @@ public class IAPExample : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		//Assets.Scripts.DataManagers.PaymentManager.Singleton.Tick ();
 	}
 
 	public bool IsPaymentAvailabel { 

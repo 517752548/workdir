@@ -868,6 +868,11 @@ namespace Assets.Scripts.DataManagers
 		private bool DoPayment (PersistStructs.PaymentData paymentData)
 		{
 			this.AddCoin (paymentData.Reward);
+			var log = string.Format (LanguageManager.Singleton ["PaymentSuccess"],
+				          paymentData.Des, paymentData.Reward);
+			UITipDrawer.Singleton.DrawNotify (log);
+			UIControllor.Singleton.ShowMessage (log);
+			UIManager.Singleton.TryToHide<UI.Windows.UIPayment> ();
 			UIManager.Singleton.UpdateUIData ();
 			return true;
 		}
